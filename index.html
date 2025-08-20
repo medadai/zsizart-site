@@ -3,182 +3,198 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZSIZART — 3D Visualization & CGI</title>
-  <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Artist & Architectural Visualizer (3ds Max, Corona Renderer, Unreal Engine)." />
-  <meta property="og:title" content="ZSIZART — 3D Visualization & CGI" />
-  <meta property="og:description" content="Photoreal interiors & exteriors, cinematic visuals, and product CGI." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="./assets/cover.jpg" />
-  <meta name="theme-color" content="#0f172a" />
+  <title>ZSIZART — Images We Are Proud Of</title>
+  <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Artist & Architectural Visualizer. Cinematic interiors, exteriors, and product CGI." />
   <link rel="icon" href="./assets/favicon.png" />
   <style>
     :root{
-      --bg:#0b0f1a; --ink:#e5e7eb; --muted:#94a3b8; --accent:#38bdf8; --card:#0f172a; --border:#1f2937;
-      --max:1200px; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --bg:#0a0a0a; --ink:#eaeaea; --muted:#b4b4b4; --accent:#ffffff; --card:#101010; --border:#1d1d1d;
+      --max:1200px; --radius:18px; --shadow:0 10px 40px rgba(0,0,0,.45);
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b0f1a,#0b1220 40%,#0b0f1a);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji"}
-    a{color:var(--ink);text-decoration:none}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial}
     img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+
+    /* Header */
     .wrap{max-width:var(--max);margin:auto;padding:28px}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
-    .brand .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#6366f1);display:grid;place-items:center;box-shadow:var(--shadow)}
-    .brand .logo span{font-weight:800;color:#0b0f1a}
-    .nav a.btn{padding:10px 14px;border:1px solid var(--border);border-radius:12px}
+    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(10,10,10,.95),rgba(10,10,10,.75));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border)}
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.03em}
+    .badge{width:36px;height:36px;border-radius:12px;background:#fff;color:#111;display:grid;place-items:center;font-weight:900}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap}
+    .tab{padding:8px 12px;border:1px solid var(--border);border-radius:999px;color:var(--muted);cursor:pointer}
+    .tab.active{color:#111;background:#fff;border-color:#fff}
 
-    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;margin-top:28px;align-items:center}
-    .hero .card{background:radial-gradient(1200px 500px at 20% -10%,rgba(56,189,248,.18),transparent),var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
-    .eyebrow{color:var(--muted);text-transform:uppercase;letter-spacing:.25em;font-size:.75rem}
-    h1{font-size:clamp(28px,6vw,48px);line-height:1.1;margin:8px 0 10px}
-    .lead{color:#cdd6e5;font-size:1.05rem}
-    .chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px}
-    .chip{font-size:.85rem;color:var(--muted);border:1px dashed var(--border);padding:6px 10px;border-radius:999px}
+    /* Hero title */
+    .hero{display:flex;align-items:end;justify-content:space-between;gap:16px;padding-top:10px}
+    .hero h1{font-size:clamp(26px,6vw,46px);margin:18px 0 6px;line-height:1.1}
+    .sub{color:var(--muted)}
 
-    .cta{margin-top:18px;display:flex;gap:12px}
-    .btn{display:inline-flex;align-items:center;gap:8px;background:#111827;color:#e5e7eb;padding:12px 16px;border-radius:12px;border:1px solid var(--border)}
-    .btn.primary{background:linear-gradient(135deg,#38bdf8,#6366f1)}
+    /* Masonry grid */
+    .grid{column-count:3;column-gap:16px;margin-top:18px}
+    .tile{position:relative;break-inside:avoid;border-radius:16px;overflow:hidden;background:#0f0f0f;border:1px solid var(--border);margin:0 0 16px}
+    .tile img{width:100%;height:auto;filter:grayscale(100%) contrast(1.05) brightness(.9);transition:filter .35s ease, transform .35s ease}
+    .tile:hover img{filter:none;transform:scale(1.02)}
+    .cap{position:absolute;left:14px;bottom:14px;color:#fff;text-shadow:0 8px 20px rgba(0,0,0,.6);font-weight:700}
+    .cap small{display:block;font-weight:600;opacity:.9}
 
-    .gallery{margin-top:38px;display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-    .tile{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#0b0f1a}
-    .tile::after{content:attr(data-cap);position:absolute;left:10px;bottom:10px;background:rgba(2,6,23,.7);backdrop-filter:blur(6px);border:1px solid var(--border);padding:6px 10px;border-radius:10px;color:#dbeafe;font-size:.8rem}
-    .t-6{grid-column:span 6}
-    .t-4{grid-column:span 4}
-    .t-8{grid-column:span 8}
-    .tile img{aspect-ratio:16/10;object-fit:cover}
+    /* Sections */
+    section{margin-top:42px}
+    h2{font-size:clamp(22px,4vw,30px);margin:0 0 12px}
 
-    .section{margin-top:54px}
-    .section h2{font-size:clamp(22px,4vw,32px);margin:0 0 14px}
-    .about p{color:#cbd5e1;max-width:70ch}
+    /* Courses */
+    .courses{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .course{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+    .course a.button{display:inline-block;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#161616}
 
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+    /* Contact */
+    .contact{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+    form label{display:block;font-size:.9rem;color:var(--muted);margin:6px 0 4px}
+    input,textarea,select{width:100%;background:#0f0f0f;border:1px solid var(--border);border-radius:12px;color:var(--ink);padding:12px}
+    textarea{min-height:120px}
+    .row{display:flex;gap:10px}
+    .btn{margin-top:10px;display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:#111;font-weight:700}
+    .muted{color:var(--muted)}
 
-    .contact .card a{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-top:8px}
+    footer{margin:40px 0 20px;color:var(--muted);text-align:center}
 
-    footer{margin:40px 0 16px;color:var(--muted);display:flex;justify-content:center}
-
-    @media (max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .gallery{grid-template-columns:repeat(6,1fr)}
-      .t-8{grid-column:span 6}
-      .t-6{grid-column:span 6}
-      .t-4{grid-column:span 6}
-      .grid{grid-template-columns:1fr}
-    }
+    @media (max-width:1000px){.grid{column-count:2}.contact{grid-template-columns:1fr}}
+    @media (max-width:640px){.grid{column-count:1}}
   </style>
 </head>
 <body>
-  <header class="wrap nav">
-    <div class="brand">
-      <div class="logo"><span>Z</span></div>
-      <div>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="badge">Z</div>
         <div>ZSIZART</div>
-        <small style="color:var(--muted)">3D Visualization & CGI</small>
       </div>
+      <nav class="tabs" id="tabs">
+        <div class="tab active" data-filter="all">All</div>
+        <div class="tab" data-filter="exterior">Exterior</div>
+        <div class="tab" data-filter="interior">Interior</div>
+        <div class="tab" data-filter="product">Product</div>
+        <a class="tab" href="#courses">Courses</a>
+        <a class="tab" href="#contact">Contact</a>
+      </nav>
     </div>
-    <nav>
-      <a class="btn" href="#work">Work</a>
-      <a class="btn" href="#about">About</a>
-      <a class="btn" href="#contact">Contact</a>
-    </nav>
   </header>
 
   <main class="wrap">
-    <section class="hero">
-      <div class="card">
-        <div class="eyebrow">Portfolio</div>
-        <h1>Photoreal CGI for interiors, exteriors & products.</h1>
-        <p class="lead">Hi, I’m <strong>Mahmoud Refaey</strong>. I craft cinematic visuals using 3ds Max, Corona Renderer, and Unreal. I also integrate AI tools like ComfyUI to boost speed without losing quality.</p>
-        <div class="chips">
-          <span class="chip">3ds Max</span>
-          <span class="chip">Corona Renderer</span>
-          <span class="chip">Unreal Engine</span>
-          <span class="chip">Photoshop</span>
-          <span class="chip">ComfyUI</span>
-        </div>
-        <div class="cta">
-          <a class="btn primary" href="#contact">Start a project</a>
-          <a class="btn" href="#work">See selected work</a>
-        </div>
+    <div class="hero">
+      <div>
+        <h1>Images we are proud of</h1>
+        <div class="sub">Cinematic CGI across architecture and products. Hover to reveal color.</div>
       </div>
-      <div class="card">
-        <img src="./assets/cover.jpg" alt="Hero render preview" />
-      </div>
-    </section>
+    </div>
 
-    <section id="work" class="section">
-      <h2>Selected Work</h2>
-      <div class="gallery">
-        <figure class="tile t-8" data-cap="ARK EAST — Living Room">
-          <img src="./assets/work-01.jpg" alt="Project 1" />
+    <!-- Masonry Portfolio Grid -->
+    <section id="work">
+      <div class="grid" id="grid">
+        <!-- Example items (replace images from /assets) -->
+        <figure class="tile" data-cat="exterior">
+          <img loading="lazy" src="./assets/work-01.jpg" alt="Oxo Living - The Pavillions" />
+          <figcaption class="cap"><small>Chris Precht</small>Oxo Living – The Pavillions</figcaption>
         </figure>
-        <figure class="tile t-4" data-cap="Minimal Kitchen Study">
-          <img src="./assets/work-02.jpg" alt="Project 2" />
+        <figure class="tile" data-cat="exterior">
+          <img loading="lazy" src="./assets/work-03.jpg" alt="Signature Villas" />
+          <figcaption class="cap"><small>Oppenheim Architecture</small>Signature Villas</figcaption>
         </figure>
-        <figure class="tile t-6" data-cap="Exterior — Golden Hour">
-          <img src="./assets/work-03.jpg" alt="Project 3" />
+        <figure class="tile" data-cat="interior">
+          <img loading="lazy" src="./assets/work-02.jpg" alt="Minimal Kitchen Study" />
+          <figcaption class="cap"><small>Study</small>Minimal Kitchen</figcaption>
         </figure>
-        <figure class="tile t-6" data-cap="Product CGI — Chair">
-          <img src="./assets/work-04.jpg" alt="Project 4" />
+        <figure class="tile" data-cat="product">
+          <img loading="lazy" src="./assets/work-04.jpg" alt="Product CGI – Chair" />
+          <figcaption class="cap"><small>Product CGI</small>Chair Concept</figcaption>
         </figure>
       </div>
     </section>
 
-    <section id="about" class="section about">
-      <h2>About</h2>
-      <div class="grid">
+    <!-- Courses -->
+    <section id="courses">
+      <h2>Courses & Downloads</h2>
+      <p class="muted">ارفع ملفات الكورسات داخل <code>/assets/courses/</code> ثم حدّث الروابط هنا. GitHub Pages موقع ثابت؛ للرفع من المتصفح استخدم رفع ملفات مباشرة إلى الريبو.</p>
+      <div class="courses">
+        <div class="course">
+          <h3>3ds Max + Corona — Interior Lighting</h3>
+          <p class="muted">PDF + scene notes</p>
+          <a class="button" href="./assets/courses/interior-lighting.pdf" download>Download</a>
+        </div>
+        <div class="course">
+          <h3>Gaea Terrain Starter</h3>
+          <p class="muted">Quickstart cheatsheet</p>
+          <a class="button" href="./assets/courses/gaea-starter.pdf" download>Download</a>
+        </div>
+        <div class="course">
+          <h3>ComfyUI for Viz</h3>
+          <p class="muted">Workflow overview</p>
+          <a class="button" href="./assets/courses/comfyui-overview.pdf" download>Download</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Collaboration -->
+    <section id="contact">
+      <h2>Work together</h2>
+      <div class="contact">
         <div class="card">
+          <form method="POST" action="https://formspree.io/f/your-form-id">
+            <div class="row">
+              <div style="flex:1">
+                <label>Your name</label>
+                <input name="name" required />
+              </div>
+              <div style="flex:1">
+                <label>Email</label>
+                <input type="email" name="email" required />
+              </div>
+            </div>
+            <label>Topic</label>
+            <select name="topic">
+              <option>Project inquiry</option>
+              <option>Course question</option>
+              <option>Collaboration</option>
+            </select>
+            <label>Message</label>
+            <textarea name="message" placeholder="Tell me about your project…" required></textarea>
+            <button class="btn" type="submit">Send message</button>
+          </form>
+        </div>
+        <div class="card">
+          <p class="muted">بديل سريع: راسلني مباشرة</p>
           <p>
-            I’m a 3D Artist and Architectural Visualizer with 3+ years of experience.
-            I focus on realism, mood, and storytelling. Comfortable with test tasks,
-            remote or on-site collaboration, and fast iteration.
+            <a class="btn" href="mailto:hello@zsizart.com">hello@zsizart.com</a>
           </p>
-        </div>
-        <div class="card">
-          <ul>
-            <li>• Interiors & exteriors (photoreal)</li>
-            <li>• Product CGI & turntables</li>
-            <li>• Moodboards & look‑dev</li>
-            <li>• Animation & camera work</li>
-          </ul>
-        </div>
-        <div class="card">
-          <p><strong>Recent tools:</strong> 3ds Max, Corona, Unreal, Blender, Photoshop, After Effects, Gaea, ComfyUI.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section contact">
-      <h2>Contact</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Work with me</h3>
-          <p>Tell me about your project. I’ll reply within 24 hours.</p>
-          <a href="mailto:hello@zsizart.com">hello@zsizart.com</a>
-        </div>
-        <div class="card">
-          <h3>Links</h3>
           <p>
-            <a href="https://bit.ly/ZSIZART" target="_blank" rel="noopener">Full Portfolio</a><br/>
-            <a href="https://bit.ly/zsizart" target="_blank" rel="noopener">Animation Reel</a>
+            <a class="btn" href="https://wa.me/201234567890" target="_blank" rel="noopener">WhatsApp</a>
           </p>
-        </div>
-        <div class="card">
-          <h3>Business</h3>
-          <p>Available for remote or on‑site. Test tasks welcome.</p>
-          <a href="./assets/CV.pdf" target="_blank" rel="noopener">Download CV (PDF)</a>
+          <p class="muted">استبدل <code>your-form-id</code> في action بفورمسبري Formspree الخاص بك (مجاني)، أو احذف الفورم واستخدم البريد مباشرة.</p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    © <span id="y"></span> ZSIZART — Mahmoud Refaey
-  </footer>
+  <footer>© <span id="y"></span> ZSIZART — Mahmoud Refaey</footer>
 
   <script>
+    // year
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // filter tabs
+    const tabs = document.querySelectorAll('.tab[data-filter]');
+    const grid = document.getElementById('grid');
+    tabs.forEach(t=>t.addEventListener('click',()=>{
+      tabs.forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      const f = t.dataset.filter;
+      grid.querySelectorAll('.tile').forEach(tile=>{
+        const show = f==='all' || tile.dataset.cat===f;
+        tile.style.display = show? 'block':'none';
+      });
+    }));
   </script>
 </body>
 </html>
