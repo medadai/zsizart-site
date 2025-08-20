@@ -4,17 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART — Images We Are Proud Of</title>
-  <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Artist & Architectural Visualizer. Cinematic interiors, exteriors, and product CGI." />
+  <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Visualizer & CG Artist." />
   <link rel="icon" href="./assets/favicon.png" />
   <style>
-    :root{ --bg:#0a0a0a; --ink:#eaeaea; --muted:#b4b4b4; --card:#101010; --border:#1d1d1d; --max:1200px; }
+    :root{ --bg:#111; --ink:#eaeaea; --muted:#b4b4b4; --border:#1d1d1d; --max:1200px; }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial}
     img{max-width:100%;display:block}
     a{color:inherit;text-decoration:none}
 
     .wrap{max-width:var(--max);margin:auto;padding:28px}
-    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(10,10,10,.95),rgba(10,10,10,.75));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border)}
+    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(17,17,17,.95),rgba(17,17,17,.75));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border)}
     .nav{display:flex;align-items:center;justify-content:space-between}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.03em}
     .badge{width:36px;height:36px;border-radius:12px;background:#fff;color:#111;display:grid;place-items:center;font-weight:900}
@@ -26,22 +26,25 @@
     .hero h1{font-size:clamp(26px,6vw,46px);margin:18px 0 6px;line-height:1.1}
     .sub{color:#b4b4b4}
 
-    .grid{column-count:3;column-gap:16px;margin-top:18px}
-    .tile{position:relative;break-inside:avoid;border-radius:16px;overflow:hidden;background:#0f0f0f;border:1px solid var(--border);margin:0 0 16px}
-    .tile img{width:100%;height:auto;filter:grayscale(100%) contrast(1.05) brightness(.9);transition:filter .35s ease, transform .35s ease}
-    .tile:hover img{filter:none;transform:scale(1.02)}
-    .cap{position:absolute;left:14px;bottom:14px;color:#fff;text-shadow:0 8px 20px rgba(0,0,0,.6);font-weight:700}
-    .cap small{display:block;font-weight:600;opacity:.9}
+    /* ZORE-like gallery */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .item{position:relative;overflow:hidden;border-radius:14px}
+    .item img{width:100%;height:auto;filter:grayscale(100%);transition:filter .5s ease, transform .5s ease}
+    .item:hover img{filter:grayscale(0%);transform:scale(1.03)}
+    .caption{position:absolute;left:14px;bottom:14px;color:#fff;font-weight:700;text-shadow:0 6px 16px rgba(0,0,0,.65)}
 
     section{margin-top:42px}
     h2{font-size:clamp(22px,4vw,30px);margin:0 0 12px}
 
+    .resume{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{background:#161616;border:1px solid var(--border);border-radius:16px;padding:18px}
+    .muted{color:#b4b4b4}
+
     .courses{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .course{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
-    .course a.button{display:inline-block;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#161616}
+    .course{background:#161616;border:1px solid var(--border);border-radius:16px;padding:16px}
+    .course a.button{display:inline-block;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#202020}
 
     .contact{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
     form label{display:block;font-size:.9rem;color:#b4b4b4;margin:6px 0 4px}
     input,textarea,select{width:100%;background:#0f0f0f;border:1px solid var(--border);border-radius:12px;color:#eaeaea;padding:12px}
     textarea{min-height:120px}
@@ -50,8 +53,8 @@
 
     footer{margin:40px 0 20px;color:#b4b4b4;text-align:center}
 
-    @media (max-width:1000px){.grid{column-count:2}.contact{grid-template-columns:1fr}}
-    @media (max-width:640px){.grid{column-count:1}}
+    @media (max-width:1100px){.gallery{grid-template-columns:repeat(2,1fr)}.contact{grid-template-columns:1fr}.resume{grid-template-columns:1fr}}
+    @media (max-width:640px){.gallery{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -63,6 +66,7 @@
         <div class="tab" data-filter="exterior">Exterior</div>
         <div class="tab" data-filter="interior">Interior</div>
         <div class="tab" data-filter="product">Product</div>
+        <a class="tab" href="#resume">Resume</a>
         <a class="tab" href="#courses">Courses</a>
         <a class="tab" href="#contact">Contact</a>
       </nav>
@@ -73,84 +77,91 @@
     <div class="hero">
       <div>
         <h1>Images we are proud of</h1>
-        <div class="sub">Cinematic CGI across architecture and products. Hover to reveal color.</div>
+        <div class="sub">Hover to reveal color — ZORE-style gallery.</div>
       </div>
     </div>
 
     <section id="work">
-      <div class="grid" id="grid">
-        <figure class="tile" data-cat="exterior">
-          <img loading="lazy" src="./assets/work-01.jpg" alt="Oxo Living - The Pavillions" />
-          <figcaption class="cap"><small>Chris Precht</small>Oxo Living – The Pavillions</figcaption>
+      <div class="gallery" id="gallery">
+        <figure class="item" data-cat="exterior">
+          <img src="./assets/work-01.jpg" alt="Project 1">
+          <figcaption class="caption">Exterior — 01</figcaption>
         </figure>
-        <figure class="tile" data-cat="exterior">
-          <img loading="lazy" src="./assets/work-03.jpg" alt="Signature Villas" />
-          <figcaption class="cap"><small>Oppenheim Architecture</small>Signature Villas</figcaption>
+        <figure class="item" data-cat="exterior">
+          <img src="./assets/work-03.jpg" alt="Project 2">
+          <figcaption class="caption">Exterior — 02</figcaption>
         </figure>
-        <figure class="tile" data-cat="interior">
-          <img loading="lazy" src="./assets/work-02.jpg" alt="Minimal Kitchen Study" />
-          <figcaption class="cap"><small>Study</small>Minimal Kitchen</figcaption>
+        <figure class="item" data-cat="interior">
+          <img src="./assets/work-02.jpg" alt="Project 3">
+          <figcaption class="caption">Interior — 01</figcaption>
         </figure>
-        <figure class="tile" data-cat="product">
-          <img loading="lazy" src="./assets/work-04.jpg" alt="Product CGI – Chair" />
-          <figcaption class="cap"><small>Product CGI</small>Chair Concept</figcaption>
+        <figure class="item" data-cat="product">
+          <img src="./assets/work-04.jpg" alt="Project 4">
+          <figcaption class="caption">Product — 01</figcaption>
         </figure>
+      </div>
+    </section>
+
+    <section id="resume">
+      <h2>About & Resume</h2>
+      <div class="resume">
+        <div class="card">
+          <h3>About</h3>
+          <p class="muted">I’m a 3D Visualizer and CG Artist with 3+ years of experience in architectural visualization, specializing in both interior and exterior design.</p>
+          <a class="btn" href="./assets/Mahmoud Refaey-CV.pdf" target="_blank" rel="noopener">Download CV (PDF)</a>
+        </div>
+        <div class="card">
+          <h3>Education</h3>
+          <p class="muted">B.Arch — Higher Technological Institute (2017–2022)</p>
+          <h3 style="margin-top:10px">Skills</h3>
+          <p class="muted">3ds Max, Corona, Unreal, Blender, Photoshop, After Effects, Gaea, ComfyUI.</p>
+        </div>
+        <div class="card">
+          <h3>Experience</h3>
+          <ul class="muted">
+            <li>Interior Designer — Evento Designs (2021–2023)</li>
+            <li>Interior CG Artist — Nara Studios (2022–2023)</li>
+            <li>3D Visualization Mentor — SAE (2023–2024)</li>
+            <li>Exterior CG Artist — Nara Studios (2024–2025)</li>
+          </ul>
+        </div>
       </div>
     </section>
 
     <section id="courses">
       <h2>Courses & Downloads</h2>
-      <p style="color:#b4b4b4">ارفع ملفات الكورسات داخل <code>/assets/courses/</code> ثم حدّث الروابط هنا.</p>
+      <p class="muted">Upload files inside <code>/assets/courses/</code> and update links.</p>
       <div class="courses">
         <div class="course">
           <h3>3ds Max + Corona — Interior Lighting</h3>
-          <p style="color:#b4b4b4">PDF + scene notes</p>
           <a class="button" href="./assets/courses/interior-lighting.pdf" download>Download</a>
         </div>
         <div class="course">
           <h3>Gaea Terrain Starter</h3>
-          <p style="color:#b4b4b4">Quickstart cheatsheet</p>
           <a class="button" href="./assets/courses/gaea-starter.pdf" download>Download</a>
         </div>
         <div class="course">
           <h3>ComfyUI for Viz</h3>
-          <p style="color:#b4b4b4">Workflow overview</p>
           <a class="button" href="./assets/courses/comfyui-overview.pdf" download>Download</a>
         </div>
       </div>
     </section>
 
     <section id="contact">
-      <h2>Work together</h2>
-      <div class="contact">
+      <h2>Contact</h2>
+      <div class="resume">
         <div class="card">
-          <form method="POST" action="https://formspree.io/f/your-form-id">
-            <div class="row">
-              <div style="flex:1">
-                <label>Your name</label>
-                <input name="name" required />
-              </div>
-              <div style="flex:1">
-                <label>Email</label>
-                <input type="email" name="email" required />
-              </div>
-            </div>
-            <label>Topic</label>
-            <select name="topic">
-              <option>Project inquiry</option>
-              <option>Course question</option>
-              <option>Collaboration</option>
-            </select>
-            <label>Message</label>
-            <textarea name="message" placeholder="Tell me about your project…" required></textarea>
-            <button class="btn" type="submit">Send message</button>
-          </form>
-        </div>
-        <div class="card">
-          <p style="color:#b4b4b4">بديل سريع: راسلني مباشرة</p>
-          <p><a class="btn" href="mailto:hello@zsizart.com">hello@zsizart.com</a></p>
-          <p><a class="btn" href="https://wa.me/201234567890" target="_blank" rel="noopener">WhatsApp</a></p>
-          <p style="color:#b4b4b4">استبدل <code>your-form-id</code> في action بفورمسبري الخاص بك.</p>
+          <h3>Work with me</h3>
+          <p class="muted">I’ll reply within 24 hours.</p>
+          <p>Phone: <a href="tel:+201111429884">+20 111 142 9884</a></p>
+          <p>Email: <a href="mailto:arc.mahmoud.refaey@gmail.com">arc.mahmoud.refaey@gmail.com</a></p>
+          <p>Location: Zizinia, District 5, New Cairo, Egypt</p>
+          <div class="row">
+            <a class="btn" href="https://wa.me/201111429884" target="_blank">WhatsApp</a>
+            <a class="btn" href="https://www.behance.net/zsizart" target="_blank">Behance</a>
+            <a class="btn" href="https://www.instagram.com/zsizart/" target="_blank">Instagram</a>
+            <a class="btn" href="https://www.linkedin.com/in/zsizart/" target="_blank">LinkedIn</a>
+          </div>
         </div>
       </div>
     </section>
@@ -160,15 +171,16 @@
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
+    // simple tab filter
     const tabs = document.querySelectorAll('.tab[data-filter]');
-    const grid = document.getElementById('grid');
+    const items = document.querySelectorAll('.item');
     tabs.forEach(t=>t.addEventListener('click',()=>{
       tabs.forEach(x=>x.classList.remove('active'));
       t.classList.add('active');
       const f = t.dataset.filter;
-      grid.querySelectorAll('.tile').forEach(tile=>{
-        const show = f==='all' || tile.dataset.cat===f;
-        tile.style.display = show? 'block':'none';
+      items.forEach(it=>{
+        const show = f==='all' || it.dataset.cat===f;
+        it.style.display = show ? 'block' : 'none';
       });
     }));
   </script>
