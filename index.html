@@ -1,85 +1,177 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART — Images We Are Proud Of</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Visualizer & CG Artist." />
+  <link rel="icon" href="assets/favicon.png" />
+  <style>
+    :root{ --bg:#111; --ink:#eaeaea; --muted:#b4b4b4; --border:#1d1d1d; --max:1200px; }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+
+    .wrap{max-width:var(--max);margin:auto;padding:28px}
+
+    /* Header / Nav */
+    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(17,17,17,.95),rgba(17,17,17,.75));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.03em}
+    .badge{width:36px;height:36px;border-radius:12px;background:#fff;color:#111;display:grid;place-items:center;font-weight:900}
+    .menu{display:flex;gap:10px;flex-wrap:wrap}
+    .menu a{padding:10px 14px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
+    .menu a:hover{background:#fff;color:#111;border-color:#fff}
+
+    h1{font-size:clamp(26px,6vw,46px);margin:18px 0 6px;line-height:1.1}
+    h2{font-size:clamp(22px,4vw,30px);margin:0 0 12px}
+    .muted{color:var(--muted)}
+
+    /* Gallery (ZORE-style) */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .item{position:relative;overflow:hidden;border-radius:16px;background:#161616;border:1px solid var(--border)}
+    .item img{width:100%;height:auto;filter:grayscale(100%);transition:filter .5s ease, transform .5s ease}
+    .item:hover img{filter:grayscale(0%);transform:scale(1.03)}
+    .caption{position:absolute;left:14px;bottom:14px;color:#fff;font-weight:700;text-shadow:0 6px 16px rgba(0,0,0,.65)}
+
+    /* About */
+    .about{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:12px}
+    .about .photo{border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#161616}
+
+    /* Contact & Cards */
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .card{background:#161616;border:1px solid var(--border);border-radius:16px;padding:18px}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:#111;font-weight:700}
+
+    footer{margin:40px 0 20px;color:#b4b4b4;text-align:center}
+
+    @media (max-width:1100px){
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      .about{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){.gallery{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-
   <!-- HEADER -->
   <header>
-    <h1>ZSIZART</h1>
-    <nav>
-      <ul>
-        <li><a href="#work">All</a></li>
-        <li><a href="#exterior">Exterior</a></li>
-        <li><a href="#interior">Interior</a></li>
-        <li><a href="#product">Product</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#courses">Courses</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+    <div class="wrap nav">
+      <div class="brand"><div class="badge">Z</div><div>ZSIZART</div></div>
+      <nav class="menu">
+        <a href="#work">Work</a>
+        <a href="#courses">Courses</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
   </header>
 
-  <!-- GALLERY -->
-  <section id="work">
-    <h2>Images we are proud of</h2>
-    <p>Hover to reveal color — ZORE-style gallery.</p>
+  <main class="wrap">
+    <!-- WORK -->
+    <section id="work">
+      <h1>Images we are proud of</h1>
+      <p class="muted">Hover to reveal color — ZORE-style gallery.</p>
 
-    <div class="gallery" id="gallery">
-      <figure class="item" data-cat="exterior">
-        <img src="assets/work-01.jpg" alt="Project 1">
-        <figcaption class="caption">Exterior — 01</figcaption>
-      </figure>
+      <div class="gallery">
+        <figure class="item">
+          <img src="assets/work-01.jpg" alt="Project 1">
+          <figcaption class="caption">Project — 01</figcaption>
+        </figure>
 
-      <figure class="item" data-cat="exterior">
-        <img src="assets/work-03.jpg" alt="Project 2">
-        <figcaption class="caption">Exterior — 02</figcaption>
-      </figure>
+        <figure class="item">
+          <img src="assets/work-02.jpg" alt="Project 2">
+          <figcaption class="caption">Project — 02</figcaption>
+        </figure>
 
-      <figure class="item" data-cat="interior">
-        <img src="assets/work-02.jpg" alt="Project 3">
-        <figcaption class="caption">Interior — 01</figcaption>
-      </figure>
+        <figure class="item">
+          <img src="assets/work-03.jpg" alt="Project 3">
+          <figcaption class="caption">Project — 03</figcaption>
+        </figure>
 
-      <figure class="item" data-cat="product">
-        <img src="assets/work-04.jpg" alt="Project 4">
-        <figcaption class="caption">Product — 01</figcaption>
-      </figure>
-    </div>
-  </section>
+        <figure class="item">
+          <img src="assets/work-04.jpg" alt="Project 4">
+          <figcaption class="caption">Project — 04</figcaption>
+        </figure>
+      </div>
+    </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <h2>About</h2>
-    <img src="assets/me.jpg" alt="About Me" style="max-width:300px;">
-    <p>
-      I’m Mahmoud Refaey, 3D Artist and Architectural Visualizer.  
-      Specialized in 3ds Max, Corona Renderer, and AI-driven workflows.  
-      Passionate about creating cinematic, emotionally immersive visuals.
-    </p>
-  </section>
+    <!-- COURSES -->
+    <section id="courses">
+      <h2>Courses</h2>
+      <p class="muted">Coming soon.</p>
+    </section>
 
-  <!-- COURSES -->
-  <section id="courses">
-    <h2>Courses</h2>
-    <p>Coming soon…</p>
-  </section>
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Work with me</h3>
+          <p class="muted">I’ll reply within 24 hours.</p>
+          <p>Phone: <a href="tel:+201111429884">+20 111 142 9884</a></p>
+          <p>Email: <a href="mailto:arc.mahmoud.refaey@gmail.com">arc.mahmoud.refaey@gmail.com</a></p>
+          <p>Location: Zizinia, District 5, New Cairo, Egypt</p>
+          <div class="row">
+            <a class="btn" href="https://wa.me/201111429884" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn" href="https://www.behance.net/zsizart" target="_blank" rel="noopener">Behance</a>
+            <a class="btn" href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener">Instagram</a>
+            <a class="btn" href="https://www.linkedin.com/in/zsizart/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Direct Message</h3>
+          <form method="POST" action="https://formspree.io/f/your-form-id">
+            <label>Name</label>
+            <input name="name" required />
+            <label>Email</label>
+            <input type="email" name="email" required />
+            <label>Message</label>
+            <textarea name="message" required placeholder="Tell me about your project…"></textarea>
+            <button class="btn" type="submit">Send</button>
+          </form>
+          <p class="muted" style="margin-top:8px">Replace <code>your-form-id</code> with your Formspree ID (optional).</p>
+        </div>
+      </div>
+    </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:mahmoud@zsizart.com">mahmoud@zsizart.com</a></p>
-    <p>Portfolio: <a href="https://zsizart.com">zsizart.com</a></p>
-  </section>
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About</h2>
+      <div class="about">
+        <div class="photo">
+          <img src="assets/me.jpg" alt="Mahmoud Refaey portrait">
+        </div>
+        <div>
+          <p class="muted">
+            I’m a 3D Artist with over three years of experience producing high-end visualizations
+            for both interior and exterior architecture using 3ds Max, Corona Renderer, and Photoshop.
+            I also integrate AI tools like ComfyUI to enhance both creativity and production efficiency.
+          </p>
+          <p class="muted">
+            What drives my work is visual storytelling that combines technical precision with emotional depth.
+            I aim to create imagery that not only meets architectural standards but also evokes mood and narrative.
+          </p>
+          <p class="muted">
+            I bring hands-on experience working onsite and remotely across large-scale projects, sharpening
+            adaptability, collaboration, and problem-solving. My strengths lie in lighting, materials, and
+            cinematic composition—skills I use to produce visuals that resonate artistically and professionally.
+          </p>
+          <div class="row" style="margin-top:6px">
+            <a class="btn" href="assets/mahmoud-refaey-cv.pdf" target="_blank" rel="noopener">Download CV</a>
+            <a class="btn" href="mailto:arc.mahmoud.refaey@gmail.com">Email me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 ZSIZART. All Rights Reserved.</p>
-  </footer>
+  <footer>© <span id="y"></span> ZSIZART — Mahmoud Refaey</footer>
 
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
