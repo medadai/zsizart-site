@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART — Images We Are Proud Of</title>
-  <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Visualizer & CG Artist." />
+  <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Visualizer & CG Artist. Cinematic interiors, exteriors, and product CGI." />
   <link rel="icon" href="./assets/favicon.png" />
   <style>
     :root{ --bg:#111; --ink:#eaeaea; --muted:#b4b4b4; --border:#1d1d1d; --max:1200px; }
@@ -36,10 +36,15 @@
     section{margin-top:42px}
     h2{font-size:clamp(22px,4vw,30px);margin:0 0 12px}
 
-    .resume{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .card{background:#161616;border:1px solid var(--border);border-radius:16px;padding:18px}
+    /* About */
+    .about{display:grid;grid-template-columns:320px 1fr;gap:18px}
+    .about .photo{border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#161616}
+    .about .card{background:#161616;border:1px solid var(--border);border-radius:16px;padding:18px}
     .muted{color:#b4b4b4}
 
+    /* Resume / Courses / Contact */
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{background:#161616;border:1px solid var(--border);border-radius:16px;padding:18px}
     .courses{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .course{background:#161616;border:1px solid var(--border);border-radius:16px;padding:16px}
     .course a.button{display:inline-block;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#202020}
@@ -53,7 +58,13 @@
 
     footer{margin:40px 0 20px;color:#b4b4b4;text-align:center}
 
-    @media (max-width:1100px){.gallery{grid-template-columns:repeat(2,1fr)}.contact{grid-template-columns:1fr}.resume{grid-template-columns:1fr}}
+    @media (max-width:1100px){
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      .about{grid-template-columns:1fr}
+      .contact{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr}
+      .courses{grid-template-columns:1fr}
+    }
     @media (max-width:640px){.gallery{grid-template-columns:1fr}}
   </style>
 </head>
@@ -66,7 +77,7 @@
         <div class="tab" data-filter="exterior">Exterior</div>
         <div class="tab" data-filter="interior">Interior</div>
         <div class="tab" data-filter="product">Product</div>
-        <a class="tab" href="#resume">Resume</a>
+        <a class="tab" href="#about">About</a>
         <a class="tab" href="#courses">Courses</a>
         <a class="tab" href="#contact">Contact</a>
       </nav>
@@ -81,6 +92,7 @@
       </div>
     </div>
 
+    <!-- GALLERY -->
     <section id="work">
       <div class="gallery" id="gallery">
         <figure class="item" data-cat="exterior">
@@ -102,35 +114,39 @@
       </div>
     </section>
 
-    <section id="resume">
-      <h2>About & Resume</h2>
-      <div class="resume">
-        <div class="card">
-          <h3>About</h3>
-          <p class="muted">I’m a 3D Visualizer and CG Artist with 3+ years of experience in architectural visualization, specializing in both interior and exterior design.</p>
-          <a class="btn" href="./assets/Mahmoud Refaey-CV.pdf" target="_blank" rel="noopener">Download CV (PDF)</a>
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About</h2>
+      <div class="about">
+        <div class="photo">
+          <img src="./assets/me.jpg" alt="Mahmoud Refaey portrait">
         </div>
         <div class="card">
-          <h3>Education</h3>
-          <p class="muted">B.Arch — Higher Technological Institute (2017–2022)</p>
-          <h3 style="margin-top:10px">Skills</h3>
-          <p class="muted">3ds Max, Corona, Unreal, Blender, Photoshop, After Effects, Gaea, ComfyUI.</p>
-        </div>
-        <div class="card">
-          <h3>Experience</h3>
-          <ul class="muted">
-            <li>Interior Designer — Evento Designs (2021–2023)</li>
-            <li>Interior CG Artist — Nara Studios (2022–2023)</li>
-            <li>3D Visualization Mentor — SAE (2023–2024)</li>
-            <li>Exterior CG Artist — Nara Studios (2024–2025)</li>
-          </ul>
+          <p class="muted">
+            I’m a 3D Artist with 3+ years of experience producing high-end visualizations for
+            interior and exterior architecture using 3ds Max, Corona Renderer, and Photoshop.
+            I also integrate AI tools like ComfyUI to boost both creativity and production speed.
+          </p>
+          <p class="muted">
+            What drives my work is visual storytelling that blends technical precision with emotional depth.
+            I aim to create imagery that not only meets architectural standards but also evokes mood and narrative.
+          </p>
+          <p class="muted">
+            I’ve worked on-site and remotely across large-scale projects, sharpening adaptability, collaboration,
+            and problem-solving in diverse environments. My strengths are lighting, materials, and cinematic composition—
+            skills I use to create visuals that resonate artistically and professionally.
+          </p>
+          <div class="row">
+            <a class="btn" href="./assets/Mahmoud Refaey-CV.pdf" target="_blank" rel="noopener">Download CV</a>
+            <a class="btn" href="mailto:arc.mahmoud.refaey@gmail.com">Email me</a>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- COURSES -->
     <section id="courses">
       <h2>Courses & Downloads</h2>
-      <p class="muted">Upload files inside <code>/assets/courses/</code> and update links.</p>
       <div class="courses">
         <div class="course">
           <h3>3ds Max + Corona — Interior Lighting</h3>
@@ -147,9 +163,10 @@
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact">
       <h2>Contact</h2>
-      <div class="resume">
+      <div class="contact">
         <div class="card">
           <h3>Work with me</h3>
           <p class="muted">I’ll reply within 24 hours.</p>
@@ -163,6 +180,19 @@
             <a class="btn" href="https://www.linkedin.com/in/zsizart/" target="_blank">LinkedIn</a>
           </div>
         </div>
+        <div class="card">
+          <h3>Direct Message</h3>
+          <form method="POST" action="https://formspree.io/f/your-form-id">
+            <label>Your name</label>
+            <input name="name" required>
+            <label>Email</label>
+            <input type="email" name="email" required>
+            <label>Message</label>
+            <textarea name="message" required placeholder="Tell me about your project…"></textarea>
+            <button class="btn" type="submit">Send</button>
+          </form>
+          <p class="muted" style="margin-top:8px">Replace <code>your-form-id</code> with your Formspree ID.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -171,7 +201,7 @@
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
-    // simple tab filter
+    // Simple filter tabs
     const tabs = document.querySelectorAll('.tab[data-filter]');
     const items = document.querySelectorAll('.item');
     tabs.forEach(t=>t.addEventListener('click',()=>{
