@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART — Portfolio</title>
 
-  <!-- Lightbox2 (CSS) -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet"/>
-
   <style>
   :root{
     --bg:#0b0d0d;
@@ -19,110 +16,65 @@
     --radius:18px;
     --shadow:0 12px 40px rgba(0,0,0,.35);
     --max:1160px;
+    --pv-dur:.45s;
+    --pv-ease:cubic-bezier(.4,.14,.3,1);
   }
 
-  /* Reset + Base */
   *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;overflow-x:hidden}
   img{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
   /* Header */
-  header{
-    position:sticky;top:0;z-index:70;
+  header{position:sticky;top:0;z-index:70;
     background:rgba(15,17,21,.65);
     backdrop-filter:saturate(160%) blur(10px);
-    border-bottom:1px solid #1a1f27;
-  }
+    border-bottom:1px solid #1a1f27;}
   .nav-row{display:flex;align-items:center;justify-content:space-between}
   .brand{margin:0;font-size:20px;letter-spacing:.08em}
-
-  .menu-btn{
-    width:44px;height:36px;border:1px solid #2a3140;border-radius:10px;
-    background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer
-  }
+  .menu-btn{width:44px;height:36px;border:1px solid #2a3140;border-radius:10px;
+    background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer}
   .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
-    content:"";display:block;width:18px;height:2px;background:#cfe2ff;border-radius:1px;position:relative;transition:.25s
-  }
+    content:"";display:block;width:18px;height:2px;background:#cfe2ff;border-radius:1px;position:relative;transition:.25s}
   .menu-btn .bars::before{position:absolute;top:-6px}
   .menu-btn .bars::after{position:absolute;top:6px}
   .menu-open .menu-btn .bars{transform:rotate(45deg)}
   .menu-open .menu-btn .bars::before{opacity:0}
   .menu-open .menu-btn .bars::after{transform:rotate(-90deg) translate(-6px,0)}
 
-  .overlay{
-    position:fixed;inset:0;
-    background:rgba(0,0,0,.35);
-    backdrop-filter:blur(2px);
-    opacity:0;pointer-events:none;
-    transition:.25s;
-    z-index:80
-  }
-  .menu-panel{
-    position:fixed;top:0;right:0;
-    height:100%;width:min(360px,90vw);
-    background:rgba(0,0,0,.75);
-    border-left:1px solid #1a1f27;
-    box-shadow:-20px 0 50px rgba(0,0,0,.4);
-    transform:translateX(100%);
-    transition:.3s;
-    z-index:90;display:flex;flex-direction:column
-  }
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
+    background:rgba(0,0,0,.75);border-left:1px solid #1a1f27;
+    box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;
+    z-index:90;display:flex;flex-direction:column}
   .menu-open .overlay{opacity:1;pointer-events:auto}
   .menu-open .menu-panel{transform:translateX(0)}
-
   .menu-header{display:flex;justify-content:space-between;padding:18px;border-bottom:1px solid #1a1f27}
   .menu-title{margin:0;font-weight:700;font-size:16px;color:#cfe2ff}
-  .menu-close{
-    border:1px solid #2a3140;border-radius:10px;background:transparent;color:var(--ink);
-    padding:8px 12px;cursor:pointer
-  }
-
-  /* Links */
+  .menu-close{border:1px solid #2a3140;border-radius:10px;background:transparent;color:var(--ink);padding:8px 12px;cursor:pointer}
   .menu-links{display:flex;flex-direction:column;gap:16px;padding:28px}
-  .menu-links a{
-    font-size:20px;font-weight:600;color:#fff;padding:8px 0;border:none;background:transparent;
-    transition:color .25s ease;
-  }
+  .menu-links a{font-size:20px;font-weight:600;color:#fff;padding:8px 0;border:none;background:transparent;transition:color .25s ease}
   .menu-links a:hover{color:var(--accent1)}
 
-  /* Hero */
   .hero{padding:64px 0}
-  .hero h2{
-    font-size:42px;margin:0 0 12px;font-weight:700;
+  .hero h2{font-size:42px;margin:0 0 12px;font-weight:700;
     background:linear-gradient(135deg,var(--accent1),var(--accent2));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
+    -webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p{margin:0;color:var(--muted);font-size:18px}
 
-  /* Grid */
   .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
 
-  /* Tile */
-  .tile{
-    position:relative;overflow:hidden;border-radius:var(--radius);
-    background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230
-  }
+  .tile{position:relative;overflow:hidden;border-radius:var(--radius);
+    background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230;cursor:pointer}
   .tile img{filter:grayscale(100%);transition:filter .35s ease}
   .tile:hover img{filter:none}
-
-  /* Card stack area inside tile */
-  .stack{position:relative;width:100%;aspect-ratio:3/2}
-  .stack>img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    filter:grayscale(100%);transition:transform .45s ease,opacity .35s ease,filter .35s ease
-  }
-  .stack>img.leave{transform:translateY(-110%);opacity:0;pointer-events:none}
-  .stack>img.enter{transform:translateY(110%)}
-  .stack>img.enter.show{transform:translateY(0)}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
   @media(max-width:860px){.about{grid-template-columns:1fr}}
-
   .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
   .me{aspect-ratio:1/1;border-radius:50%;border:6px solid #0b0d0d;outline:1px solid #1a1f27}
 
@@ -134,375 +86,162 @@
 
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
-  /* Lightbox center tweaks */
-  .lightbox .lb-outerContainer{position:fixed!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;margin:0!important}
-  .lightbox .lb-container{padding:0!important}
-  .lightbox .lb-image{max-width:calc(100vw - 120px)!important;max-height:calc(100vh - 160px)!important}
-  @media(max-width:640px){.lightbox .lb-image{max-width:calc(100vw - 32px)!important;max-height:calc(100vh - 32px)!important}}
-  .lightbox .lb-close{display:none!important}
-  .lb-data .lb-number{display:none!important}
-
-  /* ===== Project Viewer (Bottom Sheet + Split) ===== */
-  :root{ --pv-dur: .45s; --pv-ease: cubic-bezier(.22,.61,.36,1); }
-  .pv.hidden{display:none}
-  .pv{position:fixed; inset:0; z-index:120}
-  .pv__overlay{
-    position:absolute; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(2px);
-    opacity:0; transition:opacity var(--pv-dur) ease;
-  }
-  .pv__panel{
-    position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center;
-    padding:0 20px 20px;
-  }
-  .pv__content{
-    width:min(1160px,96vw); height:min(86vh,820px);
-    display:grid; grid-template-columns:1.35fr 1fr; gap:22px;
-    background:rgba(12,14,18,.82); border:1px solid #1a1f27; border-radius:18px 18px 14px 14px;
-    box-shadow:0 30px 80px rgba(0,0,0,.45); overflow:hidden; position:relative;
-    transform:translateY(100%); transition:transform var(--pv-dur) var(--pv-ease);
-  }
-  .pv.is-open .pv__content{transform:translateY(0)}
-  .pv.is-open .pv__overlay{opacity:1}
-  @media (max-width:900px){.pv__content{grid-template-columns:1fr;height:min(92vh,860px)}}
-
-  .pv__image{position:relative;background:#090b0f}
-  .pv__image img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-right:1px solid #151a23;
-    filter:grayscale(100%);
-    transition:filter var(--pv-dur) ease, transform var(--pv-dur) var(--pv-ease), opacity calc(var(--pv-dur) - .1s) ease;
-  }
-  .pv__image:hover img{filter:none}
-  .pv__image img.enter{transform:translateY(110%);opacity:.6}
-  .pv__image img.fromTop{transform:translateY(-110%);opacity:.6}
-  .pv__image img.show{transform:translateY(0);opacity:1}
-  .pv__image img.leave{transform:translateY(-110%);opacity:0}
-
-  .pv__info{
-    padding:22px 22px 22px 0; display:flex; flex-direction:column; gap:14px;
-    transform:translateY(18px); opacity:0;
-    transition:transform var(--pv-dur) var(--pv-ease), opacity var(--pv-dur) ease;
-  }
-  .pv.is-open .pv__info{transform:translateY(0);opacity:1}
-  .pv__info h3{margin:0;font-size:28px;font-weight:800}
-  .pv__info p{margin:0;color:#aab8cc;line-height:1.7}
-  .pv__meta{margin-top:auto;display:flex;gap:16px;color:#8ea6c7;font-size:14px}
-
-  .pv__close{
-    position:absolute;top:12px;right:12px;z-index:3;width:40px;height:40px;border-radius:12px;
-    border:1px solid #2a3140;background:#0e1116;color:#dce8ff;cursor:pointer;font-size:22px;line-height:1;
-  }
-  .body--pv-open{overflow:hidden}
+  /* Project Viewer */
+  .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
+  .pv.show{opacity:1;pointer-events:auto}
+  .pv__content{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+  .pv__image img{max-width:100%;max-height:100%;object-fit:contain;animation:pvIn var(--pv-dur) var(--pv-ease)}
+  @keyframes pvIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .pv__info{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.65);padding:22px 28px;font-size:15px;line-height:1.5;transform:translateY(100%);opacity:0;transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease)}
+  .pv.show .pv__info{transform:translateY(0);opacity:1}
+  .pv__nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:72px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.18);background:rgba(15,18,25,.55);backdrop-filter:blur(2px);color:#e9edf0;
+    font-size:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:filter .2s ease}
+  .pv__nav:hover{filter:brightness(1.15)}
+  .pv__prev{left:12px}
+  .pv__next{right:12px}
+  @media(max-width:700px){.pv__nav{display:none}}
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="wrap nav-row">
-      <h1 class="brand">ZSIZART</h1>
-      <button class="menu-btn" id="menuBtn"><span class="bars"></span></button>
-    </div>
-  </header>
-
-  <!-- Slide-out menu -->
-  <div class="overlay" id="overlay"></div>
-  <aside class="menu-panel" id="menuPanel">
-    <div class="menu-header">
-      <p class="menu-title">Menu</p>
-      <button class="menu-close" id="menuClose">Close</button>
-    </div>
-    <nav class="menu-links">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#courses">Courses</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </aside>
-
-  <!-- Main -->
-  <main class="wrap">
-    <section class="hero">
-      <h2>We bring imagination to life</h2>
-      <p>High-end 3D visualization & architectural CGI</p>
-    </section>
-
-    <!-- Work -->
-    <section id="work">
-      <h2>Work</h2>
-
-      <div class="grid">
-        <a class="tile"
-           href="assets/work-01.jpg"
-           data-lightbox="zsizart"
-           data-title="Como Gardens Project"
-           data-desc="مشروع سكني بواجهات خضراء وإضاءة طبيعية."
-           data-images="assets/work-01.jpg, assets/work-01b.jpg, assets/work-01c.jpg">
-          <div class="stack"></div>
-        </a>
-
-        <a class="tile"
-           href="assets/work-02.jpg"
-           data-lightbox="zsizart"
-           data-title="Hillside Serenity — A Modern Retreat in Nature"
-           data-desc="فيلا على التلال بتكوين حديث متناغم مع الطبيعة."
-           data-images="assets/work-02.jpg, assets/work-02b.jpg">
-          <div class="stack"></div>
-        </a>
-
-        <a class="tile"
-           href="assets/work-03.jpg"
-           data-lightbox="zsizart"
-           data-title="Retro Home Sweet"
-           data-desc="روح ريترو دافئة بخامات ناعمة وألوان مريحة."
-           data-images="assets/work-03.jpg, assets/work-03b.jpg, assets/work-03c.jpg">
-          <div class="stack"></div>
-        </a>
-
-        <a class="tile" href="assets/work-04.jpg" data-lightbox="zsizart" data-title="Serene Lines" data-desc="خطوط هادئة ولمسات خشبية طبيعية.">
-          <img src="assets/work-04.jpg" alt="Serene Lines">
-        </a>
-
-        <a class="tile" href="assets/work-05.jpg" data-lightbox="zsizart" data-title="Modern Haven" data-desc="غرفة نوم معاصرة بإضاءة محيطية دافئة.">
-          <img src="assets/work-05.jpg" alt="Modern Haven">
-        </a>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about">
-      <h2>About</h2>
-      <div class="about">
-        <img class="me" src="assets/me.jpg" alt="Mahmoud Refaey" />
-        <div class="card">
-          <p>
-            Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling.
-            I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look-dev
-            while keeping a high creative bar.
-          </p>
-          <p>
-            My process blends cinematic composition, precise lighting, and material realism to deliver emotionally
-            engaging visuals. I collaborate smoothly onsite and remotely with architects, designers, and developers, taking
-            projects from early concept to polished marketing imagery with consistent quality and reliability.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Courses -->
-    <section id="courses">
-      <h2>Courses</h2>
-      <div class="card">Coming soon…</div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <div class="card">
-        <form id="contact-form">
-          <input type="text" name="from_name" placeholder="Your Name" required>
-          <input type="email" name="reply_to" placeholder="Your Email" required>
-          <textarea name="message" placeholder="Your Message…" required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-        <p id="status" style="margin-top:8px;color:#9ec2ff"></p>
-      </div>
-    </section>
-  </main>
-
-  <footer>© 2025 ZSIZART. All rights reserved.</footer>
-
-  <!-- Lightbox2 (JS) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox-plus-jquery.min.js"></script>
-
-  <script>
-    /* Lightbox options */
-    if (window.lightbox) {
-      lightbox.option({
-        resizeDuration: 200,
-        wrapAround: true,
-        fadeDuration: 180,
-        imageFadeDuration: 180,
-        disableScrolling: true
-      });
-    }
-
-    /* Hamburger menu */
-    const body = document.body;
-    const menuBtn   = document.getElementById('menuBtn');
-    const overlay   = document.getElementById('overlay');
-    const menuPanel = document.getElementById('menuPanel');
-    const menuClose = document.getElementById('menuClose');
-    function openMenu(){ body.classList.add('menu-open'); }
-    function closeMenu(){ body.classList.remove('menu-open'); }
-    menuBtn.onclick=openMenu; overlay.onclick=closeMenu; menuClose.onclick=closeMenu;
-
-    /* Grid: show only the first image in each stack */
-    document.querySelectorAll('.tile').forEach(tile => {
-      const stack = tile.querySelector('.stack');
-      const list  = (tile.getAttribute('data-images') || '')
-        .split(',').map(s => s.trim()).filter(Boolean);
-      if (!stack || list.length === 0) return;
-      const first = new Image();
-      first.alt = tile.getAttribute('data-title') || '';
-      first.src = list[0];
-      stack.appendChild(first);
-      tile.href = first.src;
-    });
-
-    /* Reduce image drag */
-    document.addEventListener('dragstart', e => {
-      if (e.target.tagName === 'IMG') e.preventDefault();
-    });
-  </script>
-
-  <!-- Project Viewer HTML -->
-  <div id="project-viewer" class="pv hidden" aria-hidden="true">
-    <div class="pv__overlay" data-close></div>
-    <div class="pv__panel">
-      <button class="pv__close" data-close>&times;</button>
-      <div class="pv__content">
-        <div class="pv__image"><img id="pvImage" alt=""></div>
-        <aside class="pv__info">
-          <h3 id="pvTitle">Project Title</h3>
-          <p id="pvDesc">Description…</p>
-          <div class="pv__meta">
-            <span id="pvCounter">1 / N</span>
-            <span class="pv__hint">Middle-Click للتقليب</span>
-          </div>
-        </aside>
-      </div>
-    </div>
+<header>
+  <div class="wrap nav-row">
+    <h1 class="brand">ZSIZART</h1>
+    <button class="menu-btn" id="menuBtn"><span class="bars"></span></button>
   </div>
+</header>
+<div class="overlay" id="overlay"></div>
+<aside class="menu-panel" id="menuPanel">
+  <div class="menu-header">
+    <p class="menu-title">Menu</p>
+    <button class="menu-close" id="menuClose">Close</button>
+  </div>
+  <nav class="menu-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#courses">Courses</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</aside>
 
-  <!-- Project Viewer JS (Middle-Click only) -->
-  <script>
-  (() => {
-    const viewer = document.getElementById('project-viewer');
-    const imgEl  = document.getElementById('pvImage');
-    const ttlEl  = document.getElementById('pvTitle');
-    const dscEl  = document.getElementById('pvDesc');
-    const cntEl  = document.getElementById('pvCounter');
+<main class="wrap">
+  <section class="hero">
+    <h2>We bring imagination to life</h2>
+    <p>High-end 3D visualization & architectural CGI</p>
+  </section>
 
-    let images = [];
-    let idx    = 0;
+  <section id="work">
+    <h2>Work</h2>
+    <div class="grid">
+      <div class="tile" data-project="work-01" data-title="Como Gardens Project" data-desc="Como Gardens Project — modern villas surrounded by greenery.">
+        <img src="assets/work-01.jpg" alt="">
+      </div>
+      <div class="tile" data-project="work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape.">
+        <img src="assets/work-02.jpg" alt="">
+      </div>
+      <div class="tile" data-project="work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living.">
+        <img src="assets/work-03.jpg" alt="">
+      </div>
+    </div>
+  </section>
+</main>
 
-    const preload = (src) => new Promise(res => {
-      const im = new Image();
-      im.onload = () => res(true);
-      im.onerror = () => res(false);
-      im.src = src;
+<footer>© 2025 ZSIZART. All rights reserved.</footer>
+
+<!-- Project Viewer -->
+<div class="pv hidden" id="pv">
+  <div class="pv__content">
+    <div class="pv__image"><img id="pvImage" alt=""></div>
+    <button class="pv__nav pv__prev" aria-label="Previous">&#10094;</button>
+    <button class="pv__nav pv__next" aria-label="Next">&#10095;</button>
+    <aside class="pv__info">
+      <h3 id="pvTitle"></h3>
+      <p id="pvDesc"></p>
+    </aside>
+  </div>
+</div>
+
+<script>
+const body=document.body,menuBtn=document.getElementById('menuBtn'),
+overlay=document.getElementById('overlay'),menuPanel=document.getElementById('menuPanel'),
+menuClose=document.getElementById('menuClose');
+function openMenu(){body.classList.add('menu-open');}
+function closeMenu(){body.classList.remove('menu-open');}
+menuBtn.onclick=openMenu;overlay.onclick=closeMenu;menuClose.onclick=closeMenu;
+
+// Project Viewer
+(function(){
+  const viewer=document.getElementById('pv'),
+        imgEl=document.getElementById('pvImage'),
+        titleEl=document.getElementById('pvTitle'),
+        descEl=document.getElementById('pvDesc');
+  let idx=0, list=[];
+
+  function setIdx(i){
+    idx=(i+list.length)%list.length;
+    imgEl.src=list[idx];
+    titleEl.textContent=viewer.dataset.title||"";
+    descEl.textContent=viewer.dataset.desc||"";
+  }
+  function next(){ setIdx(idx+1); }
+  function prev(){ setIdx(idx-1); }
+
+  document.querySelectorAll('.tile').forEach(tile=>{
+    tile.addEventListener('click',()=>{
+      const base=tile.dataset.project;
+      list=[`${base}.jpg`,`${base}-01.jpg`,`${base}-02.jpg`]; // auto pattern
+      idx=0;
+      viewer.dataset.title=tile.dataset.title;
+      viewer.dataset.desc=tile.dataset.desc;
+      setIdx(idx);
+      viewer.classList.add('show');
     });
+  });
 
-    async function buildSequence(primarySrc){
-      const url  = new URL(primarySrc, location.href);
-      const ext  = url.pathname.split('.').pop();             // jpg/png
-      const base = url.pathname.replace(/\.[^.]+$/, '');      // /assets/work-01
-      const list = [primarySrc];
-      for (let i=1;i<=50;i++){
-        const suf = String(i).padStart(2,'0');
-        const cand = `${base}-${suf}.${ext}`;
-        const ok = await preload(cand);
-        if (!ok) break;
-        list.push(cand);
-      }
-      return list;
-    }
+  viewer.addEventListener('click',e=>{
+    if(e.target===viewer) viewer.classList.remove('show');
+  });
 
-    // فعّل العارض لكل التايلات
-    document.querySelectorAll('.grid .tile').forEach(tile => {
-      tile.addEventListener('click', async (e) => {
-        e.preventDefault(); // بدلاً من Lightbox
+  // nav buttons
+  const btnPrev=viewer.querySelector('.pv__prev'),
+        btnNext=viewer.querySelector('.pv__next');
+  btnPrev.addEventListener('click',()=>prev());
+  btnNext.addEventListener('click',()=>next());
 
-        const imgsAttr = (tile.getAttribute('data-images') || '')
-          .split(',').map(s => s.trim()).filter(Boolean);
-        const primary = imgsAttr[0] || tile.getAttribute('href');
+  // keyboard
+  document.addEventListener('keydown',e=>{
+    if(!viewer.classList.contains('show'))return;
+    if(e.key==='Escape')viewer.classList.remove('show');
+    if(e.key==='ArrowRight')next();
+    if(e.key==='ArrowLeft')prev();
+  });
 
-        images = await buildSequence(primary);
-        if (!images.length) return;
+  // wheel
+  let wheelLock=false;
+  viewer.addEventListener('wheel',e=>{
+    if(!viewer.classList.contains('show'))return;
+    e.preventDefault();
+    if(wheelLock)return;
+    wheelLock=true;
+    const dir=e.deltaY||e.deltaX;
+    if(dir>0)next(); else if(dir<0)prev();
+    setTimeout(()=>wheelLock=false,420);
+  },{passive:false});
 
-        idx = 0;
-        ttlEl.textContent = tile.getAttribute('data-title') || 'Project';
-        dscEl.textContent = tile.getAttribute('data-desc') || (tile.getAttribute('data-title') || '');
-        updateImage(true);  // أول مرة: الصورة تنـزل من فوق
-
-        viewer.classList.remove('hidden');
-        viewer.classList.add('is-open');
-        document.body.classList.add('body--pv-open');
-      });
-    });
-
-    // إغلاق
-    viewer.addEventListener('click', (e) => {
-      if (e.target.hasAttribute('data-close')) closePV();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (viewer.classList.contains('hidden')) return;
-      if (e.key === 'Escape') closePV(); // ESC فقط
-    });
-
-    // Middle-Click فقط للتقليب للأمام
-    viewer.addEventListener('auxclick', (e) => {
-      if (viewer.classList.contains('hidden')) return;
-      if (e.button === 1) { e.preventDefault(); next(); }
-    });
-
-    function closePV(){
-      viewer.classList.remove('is-open');
-      document.body.classList.remove('body--pv-open');
-      setTimeout(()=>{ viewer.classList.add('hidden'); imgEl.className=''; }, 460);
-    }
-
-    function next(){ setIdx(idx + 1); }
-    function setIdx(newIdx){
-      const old = idx;
-      idx = (newIdx + images.length) % images.length;
-      if (old === idx) return;
-      updateImage(false);
-    }
-
-    function updateImage(first=false){
-      cntEl.textContent = (idx+1) + ' / ' + images.length;
-
-      if (!first){
-        imgEl.classList.remove('show');
-        imgEl.classList.add('leave');
-        setTimeout(() => {
-          imgEl.src = images[idx];
-          imgEl.onload = () => {
-            imgEl.className = 'enter';
-            requestAnimationFrame(() => {
-              imgEl.classList.add('show');
-              imgEl.classList.remove('enter');
-            });
-          };
-        }, 180);
-      } else {
-        imgEl.src = images[idx];
-        imgEl.onload = () => {
-          imgEl.className = 'fromTop';
-          requestAnimationFrame(() => {
-            imgEl.classList.add('show');
-            imgEl.classList.remove('fromTop');
-          });
-        };
-      }
-    }
-  })();
-  </script>
-
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
-    const EMAILJS_SERVICE_ID="service_m1dfwio";
-    const EMAILJS_TEMPLATE_ID="template_kuqk13r";
-    try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
-
-    document.getElementById("contact-form").addEventListener("submit",function(e){
-      e.preventDefault();
-      emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
-        .then(()=>{document.getElementById("status").textContent="Message sent!";this.reset();})
-        .catch(()=>{document.getElementById("status").textContent="Failed, try again.";});
-    });
-  </script>
+  // touch swipe
+  let startX=0,startY=0,swiping=false;
+  viewer.addEventListener('touchstart',e=>{
+    if(!viewer.classList.contains('show'))return;
+    const t=e.changedTouches[0];
+    startX=t.clientX;startY=t.clientY;swiping=true;
+  });
+  viewer.addEventListener('touchend',e=>{
+    if(!swiping)return;
+    const t=e.changedTouches[0],dx=t.clientX-startX,dy=t.clientY-startY;
+    swiping=false;
+    if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){dx<0?next():prev();}
+  });
+})();
+</script>
 </body>
 </html>
