@@ -51,58 +51,41 @@
   .menu-open .menu-btn .bars::before{opacity:0}
   .menu-open .menu-btn .bars::after{transform:rotate(-90deg) translate(-6px,0)}
 
- .overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.35);
-  backdrop-filter:blur(2px);
-  opacity:0;pointer-events:none;
-  transition:.25s;
-  z-index:80
-}
-.menu-panel{
-  position:fixed;top:0;right:0;
-  height:100%;width:min(360px,90vw);
-  background:rgba(0,0,0,.75); /* شفاف بدل الأسود */
-  border-left:1px solid #1a1f27;
-  box-shadow:-20px 0 50px rgba(0,0,0,.4);
-  transform:translateX(100%);
-  transition:.3s;
-  z-index:90;display:flex;flex-direction:column
-}
-.menu-open .overlay{
-  opacity:1;
-  pointer-events:auto;
-}
+  .overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.35);
+    backdrop-filter:blur(2px);
+    opacity:0;pointer-events:none;
+    transition:.25s;
+    z-index:80
+  }
+  .menu-panel{
+    position:fixed;top:0;right:0;
+    height:100%;width:min(360px,90vw);
+    background:rgba(0,0,0,.75);
+    border-left:1px solid #1a1f27;
+    box-shadow:-20px 0 50px rgba(0,0,0,.4);
+    transform:translateX(100%);
+    transition:.3s;
+    z-index:90;display:flex;flex-direction:column
+  }
+  .menu-open .overlay{opacity:1;pointer-events:auto}
+  .menu-open .menu-panel{transform:translateX(0)}
 
-.menu-open .menu-panel{
-  transform:translateX(0);
-}
+  .menu-header{display:flex;justify-content:space-between;padding:18px;border-bottom:1px solid #1a1f27}
+  .menu-title{margin:0;font-weight:700;font-size:16px;color:#cfe2ff}
+  .menu-close{
+    border:1px solid #2a3140;border-radius:10px;background:transparent;color:var(--ink);
+    padding:8px 12px;cursor:pointer
+  }
 
-.menu-header{
-  display:flex;justify-content:space-between;
-  padding:18px;border-bottom:1px solid #1a1f27
-}
-.menu-title{margin:0;font-weight:700;font-size:16px;color:#cfe2ff}
-.menu-close{
-  border:1px solid #2a3140;border-radius:10px;
-  background:transparent;color:var(--ink);
-  padding:8px 12px;cursor:pointer
-}
-
-/* الروابط */
-.menu-links{display:flex;flex-direction:column;gap:16px;padding:28px}
-.menu-links a{
-  font-size:20px; /* أكبر شويه */
-  font-weight:600;
-  color:#ffffff;
-  padding:8px 0;   /* بدون بوكسات */
-  border:none;     
-  background:transparent;
-  transition:color .25s ease;
-}
-.menu-links a:hover{
-  color:var(--accent1); /* يتلوّن عند الهوفر */
-}
+  /* Links */
+  .menu-links{display:flex;flex-direction:column;gap:16px;padding:28px}
+  .menu-links a{
+    font-size:20px;font-weight:600;color:#fff;padding:8px 0;border:none;background:transparent;
+    transition:color .25s ease;
+  }
+  .menu-links a:hover{color:var(--accent1)}
 
   /* Hero */
   .hero{padding:64px 0}
@@ -123,34 +106,19 @@
     position:relative;overflow:hidden;border-radius:var(--radius);
     background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230
   }
-  /* اجعل كل صور التايل أبيض/أسود وتتلوّن عند الهوفر (يغطي صور stack و <img> مباشر) */
-  .tile img{
-    filter: grayscale(100%);
-    transition: filter .35s ease;
-  }
-  .tile:hover img{
-    filter: none;
-  }
+  .tile img{filter:grayscale(100%);transition:filter .35s ease}
+  .tile:hover img{filter:none}
 
-/* Card stack area inside tile */
-.stack{
-  position:relative;
-  width:100%;
-  aspect-ratio: 3 / 2;     /* يثبت نسبة الأبعاد بدل hack الـ ::before */
-}
-.stack > img{
-  position:absolute;
-  inset:0;                 /* top/right/bottom/left = 0 */
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter: grayscale(100%);
-  transition: transform .45s ease, opacity .35s ease, filter .35s ease;
-}
-/* لو هتحتاجها لاحقًا للحركات تسيبها زي ما هي */
-.stack > img.leave{ transform:translateY(-110%); opacity:0; pointer-events:none; }
-.stack > img.enter{ transform:translateY(110%); }
-.stack > img.enter.show{ transform:translateY(0); }
+  /* Card stack area inside tile */
+  .stack{position:relative;width:100%;aspect-ratio:3/2}
+  .stack>img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:grayscale(100%);transition:transform .45s ease,opacity .35s ease,filter .35s ease
+  }
+  .stack>img.leave{transform:translateY(-110%);opacity:0;pointer-events:none}
+  .stack>img.enter{transform:translateY(110%)}
+  .stack>img.enter.show{transform:translateY(0)}
+
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
   @media(max-width:860px){.about{grid-template-columns:1fr}}
@@ -166,26 +134,64 @@
 
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
-  /* Lightbox — centered vertically */
-  .lightbox .lb-outerContainer{
-    position:fixed !important;
-    top:50% !important; left:50% !important;
-    transform:translate(-50%,-50%) !important;
-    margin:0 !important;
-  }
-  .lightbox .lb-container{padding:0 !important}
-  .lightbox .lb-image{
-    max-width:calc(100vw - 120px) !important;
-    max-height:calc(100vh - 160px) !important;
-  }
-  @media (max-width:640px){
-    .lightbox .lb-image{
-      max-width:calc(100vw - 32px) !important;
-      max-height:calc(100vh - 32px) !important;
-    }
-  }
+  /* Lightbox center tweaks */
+  .lightbox .lb-outerContainer{position:fixed!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;margin:0!important}
+  .lightbox .lb-container{padding:0!important}
+  .lightbox .lb-image{max-width:calc(100vw - 120px)!important;max-height:calc(100vh - 160px)!important}
+  @media(max-width:640px){.lightbox .lb-image{max-width:calc(100vw - 32px)!important;max-height:calc(100vh - 32px)!important}}
   .lightbox .lb-close{display:none!important}
   .lb-data .lb-number{display:none!important}
+
+  /* ===== Project Viewer (Bottom Sheet + Split) ===== */
+  :root{ --pv-dur: .45s; --pv-ease: cubic-bezier(.22,.61,.36,1); }
+  .pv.hidden{display:none}
+  .pv{position:fixed; inset:0; z-index:120}
+  .pv__overlay{
+    position:absolute; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(2px);
+    opacity:0; transition:opacity var(--pv-dur) ease;
+  }
+  .pv__panel{
+    position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center;
+    padding:0 20px 20px;
+  }
+  .pv__content{
+    width:min(1160px,96vw); height:min(86vh,820px);
+    display:grid; grid-template-columns:1.35fr 1fr; gap:22px;
+    background:rgba(12,14,18,.82); border:1px solid #1a1f27; border-radius:18px 18px 14px 14px;
+    box-shadow:0 30px 80px rgba(0,0,0,.45); overflow:hidden; position:relative;
+    transform:translateY(100%); transition:transform var(--pv-dur) var(--pv-ease);
+  }
+  .pv.is-open .pv__content{transform:translateY(0)}
+  .pv.is-open .pv__overlay{opacity:1}
+  @media (max-width:900px){.pv__content{grid-template-columns:1fr;height:min(92vh,860px)}}
+
+  .pv__image{position:relative;background:#090b0f}
+  .pv__image img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-right:1px solid #151a23;
+    filter:grayscale(100%);
+    transition:filter var(--pv-dur) ease, transform var(--pv-dur) var(--pv-ease), opacity calc(var(--pv-dur) - .1s) ease;
+  }
+  .pv__image:hover img{filter:none}
+  .pv__image img.enter{transform:translateY(110%);opacity:.6}
+  .pv__image img.fromTop{transform:translateY(-110%);opacity:.6}
+  .pv__image img.show{transform:translateY(0);opacity:1}
+  .pv__image img.leave{transform:translateY(-110%);opacity:0}
+
+  .pv__info{
+    padding:22px 22px 22px 0; display:flex; flex-direction:column; gap:14px;
+    transform:translateY(18px); opacity:0;
+    transition:transform var(--pv-dur) var(--pv-ease), opacity var(--pv-dur) ease;
+  }
+  .pv.is-open .pv__info{transform:translateY(0);opacity:1}
+  .pv__info h3{margin:0;font-size:28px;font-weight:800}
+  .pv__info p{margin:0;color:#aab8cc;line-height:1.7}
+  .pv__meta{margin-top:auto;display:flex;gap:16px;color:#8ea6c7;font-size:14px}
+
+  .pv__close{
+    position:absolute;top:12px;right:12px;z-index:3;width:40px;height:40px;border-radius:12px;
+    border:1px solid #2a3140;background:#0e1116;color:#dce8ff;cursor:pointer;font-size:22px;line-height:1;
+  }
+  .body--pv-open{overflow:hidden}
   </style>
 </head>
 <body>
@@ -228,6 +234,7 @@
            href="assets/work-01.jpg"
            data-lightbox="zsizart"
            data-title="Como Gardens Project"
+           data-desc="مشروع سكني بواجهات خضراء وإضاءة طبيعية."
            data-images="assets/work-01.jpg, assets/work-01b.jpg, assets/work-01c.jpg">
           <div class="stack"></div>
         </a>
@@ -236,6 +243,7 @@
            href="assets/work-02.jpg"
            data-lightbox="zsizart"
            data-title="Hillside Serenity — A Modern Retreat in Nature"
+           data-desc="فيلا على التلال بتكوين حديث متناغم مع الطبيعة."
            data-images="assets/work-02.jpg, assets/work-02b.jpg">
           <div class="stack"></div>
         </a>
@@ -244,15 +252,16 @@
            href="assets/work-03.jpg"
            data-lightbox="zsizart"
            data-title="Retro Home Sweet"
+           data-desc="روح ريترو دافئة بخامات ناعمة وألوان مريحة."
            data-images="assets/work-03.jpg, assets/work-03b.jpg, assets/work-03c.jpg">
           <div class="stack"></div>
         </a>
 
-        <a class="tile" href="assets/work-04.jpg" data-lightbox="zsizart" data-title="Serene Lines">
+        <a class="tile" href="assets/work-04.jpg" data-lightbox="zsizart" data-title="Serene Lines" data-desc="خطوط هادئة ولمسات خشبية طبيعية.">
           <img src="assets/work-04.jpg" alt="Serene Lines">
         </a>
 
-        <a class="tile" href="assets/work-05.jpg" data-lightbox="zsizart" data-title="Modern Haven">
+        <a class="tile" href="assets/work-05.jpg" data-lightbox="zsizart" data-title="Modern Haven" data-desc="غرفة نوم معاصرة بإضاءة محيطية دافئة.">
           <img src="assets/work-05.jpg" alt="Modern Haven">
         </a>
       </div>
@@ -326,26 +335,158 @@
     function closeMenu(){ body.classList.remove('menu-open'); }
     menuBtn.onclick=openMenu; overlay.onclick=closeMenu; menuClose.onclick=closeMenu;
 
-    /* ===== No flipping in grid: show only the first image in each stack ===== */
+    /* Grid: show only the first image in each stack */
     document.querySelectorAll('.tile').forEach(tile => {
       const stack = tile.querySelector('.stack');
       const list  = (tile.getAttribute('data-images') || '')
         .split(',').map(s => s.trim()).filter(Boolean);
-
       if (!stack || list.length === 0) return;
-
       const first = new Image();
       first.alt = tile.getAttribute('data-title') || '';
       first.src = list[0];
       stack.appendChild(first);
-
-      tile.href = first.src; // Lightbox opens the same image; navigation via arrows
+      tile.href = first.src;
     });
 
     /* Reduce image drag */
     document.addEventListener('dragstart', e => {
       if (e.target.tagName === 'IMG') e.preventDefault();
     });
+  </script>
+
+  <!-- Project Viewer HTML -->
+  <div id="project-viewer" class="pv hidden" aria-hidden="true">
+    <div class="pv__overlay" data-close></div>
+    <div class="pv__panel">
+      <button class="pv__close" data-close>&times;</button>
+      <div class="pv__content">
+        <div class="pv__image"><img id="pvImage" alt=""></div>
+        <aside class="pv__info">
+          <h3 id="pvTitle">Project Title</h3>
+          <p id="pvDesc">Description…</p>
+          <div class="pv__meta">
+            <span id="pvCounter">1 / N</span>
+            <span class="pv__hint">Middle-Click للتقليب</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Viewer JS (Middle-Click only) -->
+  <script>
+  (() => {
+    const viewer = document.getElementById('project-viewer');
+    const imgEl  = document.getElementById('pvImage');
+    const ttlEl  = document.getElementById('pvTitle');
+    const dscEl  = document.getElementById('pvDesc');
+    const cntEl  = document.getElementById('pvCounter');
+
+    let images = [];
+    let idx    = 0;
+
+    const preload = (src) => new Promise(res => {
+      const im = new Image();
+      im.onload = () => res(true);
+      im.onerror = () => res(false);
+      im.src = src;
+    });
+
+    async function buildSequence(primarySrc){
+      const url  = new URL(primarySrc, location.href);
+      const ext  = url.pathname.split('.').pop();             // jpg/png
+      const base = url.pathname.replace(/\.[^.]+$/, '');      // /assets/work-01
+      const list = [primarySrc];
+      for (let i=1;i<=50;i++){
+        const suf = String(i).padStart(2,'0');
+        const cand = `${base}-${suf}.${ext}`;
+        const ok = await preload(cand);
+        if (!ok) break;
+        list.push(cand);
+      }
+      return list;
+    }
+
+    // فعّل العارض لكل التايلات
+    document.querySelectorAll('.grid .tile').forEach(tile => {
+      tile.addEventListener('click', async (e) => {
+        e.preventDefault(); // بدلاً من Lightbox
+
+        const imgsAttr = (tile.getAttribute('data-images') || '')
+          .split(',').map(s => s.trim()).filter(Boolean);
+        const primary = imgsAttr[0] || tile.getAttribute('href');
+
+        images = await buildSequence(primary);
+        if (!images.length) return;
+
+        idx = 0;
+        ttlEl.textContent = tile.getAttribute('data-title') || 'Project';
+        dscEl.textContent = tile.getAttribute('data-desc') || (tile.getAttribute('data-title') || '');
+        updateImage(true);  // أول مرة: الصورة تنـزل من فوق
+
+        viewer.classList.remove('hidden');
+        viewer.classList.add('is-open');
+        document.body.classList.add('body--pv-open');
+      });
+    });
+
+    // إغلاق
+    viewer.addEventListener('click', (e) => {
+      if (e.target.hasAttribute('data-close')) closePV();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (viewer.classList.contains('hidden')) return;
+      if (e.key === 'Escape') closePV(); // ESC فقط
+    });
+
+    // Middle-Click فقط للتقليب للأمام
+    viewer.addEventListener('auxclick', (e) => {
+      if (viewer.classList.contains('hidden')) return;
+      if (e.button === 1) { e.preventDefault(); next(); }
+    });
+
+    function closePV(){
+      viewer.classList.remove('is-open');
+      document.body.classList.remove('body--pv-open');
+      setTimeout(()=>{ viewer.classList.add('hidden'); imgEl.className=''; }, 460);
+    }
+
+    function next(){ setIdx(idx + 1); }
+    function setIdx(newIdx){
+      const old = idx;
+      idx = (newIdx + images.length) % images.length;
+      if (old === idx) return;
+      updateImage(false);
+    }
+
+    function updateImage(first=false){
+      cntEl.textContent = (idx+1) + ' / ' + images.length;
+
+      if (!first){
+        imgEl.classList.remove('show');
+        imgEl.classList.add('leave');
+        setTimeout(() => {
+          imgEl.src = images[idx];
+          imgEl.onload = () => {
+            imgEl.className = 'enter';
+            requestAnimationFrame(() => {
+              imgEl.classList.add('show');
+              imgEl.classList.remove('enter');
+            });
+          };
+        }, 180);
+      } else {
+        imgEl.src = images[idx];
+        imgEl.onload = () => {
+          imgEl.className = 'fromTop';
+          requestAnimationFrame(() => {
+            imgEl.classList.add('show');
+            imgEl.classList.remove('fromTop');
+          });
+        };
+      }
+    }
+  })();
   </script>
 
   <!-- EmailJS -->
