@@ -16,23 +16,35 @@
     --muted:#9fb3c8;
     --accent1:#ff7a18;
     --accent2:#a855f7;
-    --accent3:#38bdf8;
     --radius:18px;
     --shadow:0 12px 40px rgba(0,0,0,.35);
     --max:1160px;
   }
+
+  /* Reset + Base */
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial}
   img{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-  header{position:sticky;top:0;z-index:70;background:rgba(15,17,21,.65);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #1a1f27;}
+  /* Header (brand + hamburger) */
+  header{
+    position:sticky;top:0;z-index:70;
+    background:rgba(15,17,21,.65);
+    backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid #1a1f27;
+  }
   .nav-row{display:flex;align-items:center;justify-content:space-between}
   .brand{margin:0;font-size:20px;letter-spacing:.08em}
 
-  .menu-btn{width:44px;height:36px;border:1px solid #2a3140;border-radius:10px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer}
-  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2px;background:#cfe2ff;border-radius:1px;position:relative;transition:.25s}
+  .menu-btn{
+    width:44px;height:36px;border:1px solid #2a3140;border-radius:10px;
+    background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer
+  }
+  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
+    content:"";display:block;width:18px;height:2px;background:#cfe2ff;border-radius:1px;position:relative;transition:.25s
+  }
   .menu-btn .bars::before{position:absolute;top:-6px}
   .menu-btn .bars::after{position:absolute;top:6px}
   .menu-open .menu-btn .bars{transform:rotate(45deg)}
@@ -40,7 +52,11 @@
   .menu-open .menu-btn .bars::after{transform:rotate(-90deg) translate(-6px,0)}
 
   .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
-  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);background:#0e1116;border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column}
+  .menu-panel{
+    position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
+    background:#0e1116;border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);
+    transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column
+  }
   .menu-header{display:flex;justify-content:space-between;padding:18px;border-bottom:1px solid #1a1f27}
   .menu-title{margin:0;font-weight:700;font-size:14px;color:#cfe2ff}
   .menu-close{border:1px solid #2a3140;border-radius:10px;background:transparent;color:var(--ink);padding:8px 12px;cursor:pointer}
@@ -50,33 +66,58 @@
   .menu-open .overlay{opacity:1;pointer-events:auto}
   .menu-open .menu-panel{transform:translateX(0)}
 
+  /* Hero */
   .hero{padding:64px 0}
-  .hero h2{font-size:42px;margin:0 0 12px;font-weight:700}
+  .hero h2{
+    font-size:42px;margin:0 0 12px;font-weight:700;
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
   .hero p{margin:0;color:var(--muted);font-size:18px}
 
+  /* Grid */
   .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
-  .tile{overflow:hidden;border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230}
-  .tile img{width:100%;object-fit:cover;filter:grayscale(100%);transition:.6s}
-  .tile:hover img{filter:none;transform:scale(1.03)}
+
+  /* Tile + stacked slideshow */
+  .tile{
+    position:relative;overflow:hidden;border-radius:var(--radius);
+    background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230
+  }
+  .stack{position:relative;inset:0;width:100%;height:100%}
+  /* نستخدم نسبة أبعاد لطيفة للتايل */
+  .stack::before{content:"";display:block;padding-top:66.6667%} /* 3:2 aspect */
+  .stack > img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;transition:opacity .8s ease;will-change:opacity;user-select:none;-webkit-user-drag:none
+  }
+  .stack > img.active{opacity:1;z-index:2}
+  .tile:hover .stack > img.active{transform:none} /* بدون أي سكِيل/فلاتر */
+  /* ما فيش تأثير أبيض وأسود على الصور بناءً على طلبك */
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
   @media(max-width:860px){.about{grid-template-columns:1fr}}
+
   .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
   .me{aspect-ratio:1/1;border-radius:50%;border:6px solid #0b0d0d;outline:1px solid #1a1f27}
 
   form{display:grid;gap:10px}
   input,textarea,button{font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px}
+  textarea{min-height:120px;resize:vertical}
   button{background:#1a68ff;border-color:#1a68ff;cursor:pointer;font-weight:600}
+  button:hover{filter:brightness(1.08)}
 
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
+
+  /* Lightbox tweaks */
   .lightbox .lb-close{display:none!important}
   .lb-data .lb-number{display:none!important}
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="wrap nav-row">
       <h1 class="brand">ZSIZART</h1>
@@ -84,6 +125,7 @@
     </div>
   </header>
 
+  <!-- Slide-out menu -->
   <div class="overlay" id="overlay"></div>
   <aside class="menu-panel" id="menuPanel">
     <div class="menu-header">
@@ -98,54 +140,64 @@
     </nav>
   </aside>
 
+  <!-- Main -->
   <main class="wrap">
     <section class="hero">
       <h2>We bring imagination to life</h2>
       <p>High-end 3D visualization & architectural CGI</p>
     </section>
 
+    <!-- Portfolio -->
     <section id="work">
       <h2>Portfolio</h2>
+
       <div class="grid">
-        <a class="tile" href="assets/work-01.jpg" data-lightbox="zsizart"><img src="assets/work-01.jpg" alt=""></a>
-        <a class="tile" href="assets/work-02.jpg" data-lightbox="zsizart"><img src="assets/work-02.jpg" alt=""></a>
-        <a class="tile" href="assets/work-03.jpg" data-lightbox="zsizart"><img src="assets/work-03.jpg" alt=""></a>
-        <a class="tile" href="assets/work-04.jpg" data-lightbox="zsizart"><img src="assets/work-04.jpg" alt=""></a>
-        <a class="tile" href="assets/work-05.jpg" data-lightbox="zsizart"><img src="assets/work-05.jpg" alt=""></a>
+        <!-- مثال مع صور متعددة داخل data-images (افصلها بفواصل) -->
+        <a class="tile" data-lightbox="zsizart" data-title="Como Gardens Project"
+           data-images="assets/work-01.jpg,assets/work-04.jpg,assets/work-05.jpg">
+          <div class="stack"></div>
+        </a>
+
+        <a class="tile" data-lightbox="zsizart" data-title="Hillside Serenity — A Modern Retreat in Nature"
+           data-images="assets/work-02.jpg,assets/work-03.jpg">
+          <div class="stack"></div>
+        </a>
+
+        <!-- لو ما عندكش غير صورة واحدة، ممكن تسيبها كصورة واحدة بس -->
+        <a class="tile" data-lightbox="zsizart" data-title="Retro Home Sweet"
+           data-images="assets/work-03.jpg">
+          <div class="stack"></div>
+        </a>
       </div>
     </section>
 
+    <!-- About -->
     <section id="about">
       <h2>About</h2>
       <div class="about">
-        <img class="me" src="assets/me.jpg" alt="Me">
+        <img class="me" src="assets/me.jpg" alt="Mahmoud Refaey" />
         <div class="card">
-            <h3 style="margin:0 0 10px;">Mahmoud Refaey — 3D Artist & ArchViz</h3>
           <p>
-       I’m a 3D Artist and Architectural Visualizer specializing in
-            photorealistic interior and exterior imagery. I work primarily with
-            3ds&nbsp;Max and Corona Renderer, and I integrate AI tools such as
-            ComfyUI to accelerate look-dev and expand creative exploration.
-            My process blends cinematic composition, precise lighting, and
-            material fidelity to deliver visuals that are both technically accurate
-            and emotionally engaging.
+            Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling.
+            I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look-dev
+            while keeping a high creative bar.
           </p>
           <p>
-            I’ve delivered work for residential, hospitality, and mixed-use
-            developments—onsite and remotely—collaborating smoothly with architects,
-            designers, and developers. Core strengths include lighting direction,
-            material realism, and color grading, taking projects from early concept
-            to polished marketing imagery with consistent quality and reliability.
+            My process blends cinematic composition, precise lighting, and material realism to deliver emotionally
+            engaging visuals. I collaborate smoothly onsite and remotely with architects, designers, and developers, taking
+            projects from early concept to polished marketing imagery with consistent quality and reliability.
           </p>
         </div>
       </div>
     </section>
 
+    <!-- Courses -->
     <section id="courses">
       <h2>Courses</h2>
       <div class="card">Coming soon…</div>
     </section>
 
+    <!-- Contact -->
     <section id="contact">
       <h2>Contact</h2>
       <div class="card">
@@ -155,30 +207,105 @@
           <textarea name="message" placeholder="Your Message…" required></textarea>
           <button type="submit">Send Message</button>
         </form>
-        <p id="status"></p>
+        <p id="status" style="margin-top:8px;color:#9ec2ff"></p>
       </div>
     </section>
   </main>
 
   <footer>© 2025 ZSIZART. All rights reserved.</footer>
 
+  <!-- Lightbox2 (JS) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox-plus-jquery.min.js"></script>
+
   <script>
-    lightbox.option({resizeDuration:200,wrapAround:true});
-    const body=document.body,menuBtn=document.getElementById('menuBtn'),overlay=document.getElementById('overlay'),menuPanel=document.getElementById('menuPanel'),menuClose=document.getElementById('menuClose');
-    function openMenu(){body.classList.add('menu-open');}
-    function closeMenu(){body.classList.remove('menu-open');}
-    menuBtn.onclick=openMenu;overlay.onclick=closeMenu;menuClose.onclick=closeMenu;
+    /* Lightbox basic options */
+    if (window.lightbox) {
+      lightbox.option({
+        resizeDuration: 200,
+        wrapAround: true,
+        fadeDuration: 180,
+        imageFadeDuration: 180,
+        positionFromTop: 60
+      });
+    }
+
+    /* Hamburger menu open/close */
+    const body = document.body;
+    const menuBtn   = document.getElementById('menuBtn');
+    const overlay   = document.getElementById('overlay');
+    const menuPanel = document.getElementById('menuPanel');
+    const menuClose = document.getElementById('menuClose');
+    function openMenu(){ body.classList.add('menu-open'); }
+    function closeMenu(){ body.classList.remove('menu-open'); }
+    menuBtn.onclick=openMenu; overlay.onclick=closeMenu; menuClose.onclick=closeMenu;
+
+    /* ===== Stacked slideshow per tile =====
+       - اقرأ قائمة الصور من data-images
+       - ابنِ طبقات IMG داخل .stack
+       - بدّل بينها تلقائياً
+       - حدّث href عشان يفتح الصورة المعروضة في Lightbox
+    */
+    const STACK_INTERVAL = 3000; // كل 3 ثواني
+
+    document.querySelectorAll('.tile').forEach(tile => {
+      const stack = tile.querySelector('.stack');
+      const list  = (tile.getAttribute('data-images') || '').split(',')
+                    .map(s => s.trim()).filter(Boolean);
+
+      // لو مفيش صور معرفة، بلاش نكمل (أمان)
+      if (!stack || list.length === 0) return;
+
+      // ابنِ الصور داخل الstack
+      const imgs = list.map(src => {
+        const img = new Image();
+        img.src = src;
+        stack.appendChild(img);
+        return img;
+      });
+
+      // الحالة الأولى
+      let i = 0;
+      imgs[i].classList.add('active');
+      tile.href = imgs[i].src; // عشان Lightbox
+
+      let timer;
+      const start = () => {
+        timer = setInterval(() => {
+          imgs[i].classList.remove('active');
+          i = (i + 1) % imgs.length;
+          imgs[i].classList.add('active');
+          tile.href = imgs[i].src; // حدّث الرابط للصورة الحالية
+        }, STACK_INTERVAL);
+      };
+      const stop  = () => clearInterval(timer);
+
+      // شغّل/وقّف على حسب الهوفر
+      tile.addEventListener('mouseenter', stop);
+      tile.addEventListener('mouseleave', start);
+
+      // ابدأ التقليب
+      start();
+    });
+
+    /* تقليل سحب/حفظ الصور (مش منع تام) */
+    document.addEventListener('dragstart', e => {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
   </script>
+
+  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
     const EMAILJS_SERVICE_ID="service_m1dfwio";
     const EMAILJS_TEMPLATE_ID="template_kuqk13r";
-    emailjs.init(EMAILJS_PUBLIC_KEY);
+    try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
+
     document.getElementById("contact-form").addEventListener("submit",function(e){
       e.preventDefault();
-      emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this).then(()=>{document.getElementById("status").textContent="Message sent!";this.reset();}).catch(()=>{document.getElementById("status").textContent="Failed, try again.";});
+      emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
+        .then(()=>{document.getElementById("status").textContent="Message sent!";this.reset();})
+        .catch(()=>{document.getElementById("status").textContent="Failed, try again.";});
     });
   </script>
 </body>
