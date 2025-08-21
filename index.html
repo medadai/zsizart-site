@@ -85,6 +85,14 @@
     position:relative;overflow:hidden;border-radius:var(--radius);
     background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230
   }
+  /* اجعل كل صور التايل أبيض/أسود وتتلوّن عند الهوفر (يغطي صور stack و <img> مباشر) */
+  .tile img{
+    filter: grayscale(100%);
+    transition: filter .35s ease;
+  }
+  .tile:hover img{
+    filter: none;
+  }
 
   /* Card stack area inside tile */
   .stack{
@@ -94,18 +102,11 @@
   .stack > img{
     position:absolute;left:0;bottom:0;width:100%;height:100%;object-fit:cover;
     transform:translateY(0);opacity:1;transition:transform .45s ease, opacity .35s ease, filter .35s ease;
-    filter:grayscale(100%);
+    /* أبقينا الفلتر هنا أيضًا، لكن القاعدة العامة فوق بتضمن الاتساق لكل الصور */
   }
-  .tile:hover .stack > img{filter:none}
-  .stack > img.leave{
-    transform:translateY(-110%);opacity:0;pointer-events:none;
-  }
-  .stack > img.enter{
-    transform:translateY(110%);
-  }
-  .stack > img.enter.show{
-    transform:translateY(0);
-  }
+  .stack > img.leave{ transform:translateY(-110%);opacity:0;pointer-events:none; }
+  .stack > img.enter{ transform:translateY(110%); }
+  .stack > img.enter.show{ transform:translateY(0); }
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
@@ -180,7 +181,6 @@
       <h2>Work</h2>
 
       <div class="grid">
-        <!-- زوّد data-images لو عايز نفس الصورة تظهر أولاً والباقي في اللايت بوكس -->
         <a class="tile"
            href="assets/work-01.jpg"
            data-lightbox="zsizart"
@@ -283,9 +283,7 @@
     function closeMenu(){ body.classList.remove('menu-open'); }
     menuBtn.onclick=openMenu; overlay.onclick=closeMenu; menuClose.onclick=closeMenu;
 
-    /* ===== Vertical card-stack slideshow (bottom -> top) ===== */
-    // تم إيقاف التقليب في الجريد. نعرض أول صورة فقط داخل التايل،
-    // والتقليب يتم فقط داخل الـ Lightbox بالأسهم.
+    /* ===== No flipping in grid: show only the first image in each stack ===== */
     document.querySelectorAll('.tile').forEach(tile => {
       const stack = tile.querySelector('.stack');
       const list  = (tile.getAttribute('data-images') || '')
@@ -293,17 +291,15 @@
 
       if (!stack || list.length === 0) return;
 
-      // أعرض أول صورة فقط داخل التايل
       const first = new Image();
       first.alt = tile.getAttribute('data-title') || '';
       first.src = list[0];
       stack.appendChild(first);
 
-      // افتح نفس الصورة في اللايت بوكس — الباقي هتتنقّل بينهم بأسهم اللايت بوكس
-      tile.href = first.src;
+      tile.href = first.src; // Lightbox opens the same image; navigation via arrows
     });
 
-    /* تقليل سحب الصور */
+    /* Reduce image drag */
     document.addEventListener('dragstart', e => {
       if (e.target.tagName === 'IMG') e.preventDefault();
     });
