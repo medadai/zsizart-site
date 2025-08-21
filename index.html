@@ -28,7 +28,7 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-  /* Header (brand + hamburger) */
+  /* Header */
   header{
     position:sticky;top:0;z-index:70;
     background:rgba(15,17,21,.65);
@@ -85,12 +85,27 @@
     position:relative;overflow:hidden;border-radius:var(--radius);
     background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230
   }
-  .tile img{
-    width:100%;height:100%;object-fit:cover;
-    filter:grayscale(100%);
-    transition:filter .35s ease, transform .3s ease;
+
+  /* Card stack area inside tile */
+  .stack{
+    position:relative;width:100%;height:100%;
   }
-  .tile:hover img{filter:none}
+  .stack::before{content:"";display:block;padding-top:66.6667%} /* 3:2 aspect */
+  .stack > img{
+    position:absolute;left:0;bottom:0;width:100%;height:100%;object-fit:cover;
+    transform:translateY(0);opacity:1;transition:transform .45s ease, opacity .35s ease, filter .35s ease;
+    filter:grayscale(100%);
+  }
+  .tile:hover .stack > img{filter:none}
+  .stack > img.leave{
+    transform:translateY(-110%);opacity:0;pointer-events:none;
+  }
+  .stack > img.enter{
+    transform:translateY(110%);
+  }
+  .stack > img.enter.show{
+    transform:translateY(0);
+  }
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
@@ -107,7 +122,7 @@
 
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
-  /* Lightbox tweaks — center vertically & fit viewport */
+  /* Lightbox — centered vertically */
   .lightbox .lb-outerContainer{
     position:fixed !important;
     top:50% !important; left:50% !important;
@@ -165,16 +180,29 @@
       <h2>Work</h2>
 
       <div class="grid">
-        <a class="tile" href="assets/work-01.jpg" data-lightbox="zsizart" data-title="Como Gardens Project">
-          <img src="assets/work-01.jpg" alt="Como Gardens Project">
+        <!-- مثـال: زوّد data-images بأي عدد صور؛ أول صورة هتظهر كبداية -->
+        <a class="tile"
+           href="assets/work-01.jpg"
+           data-lightbox="zsizart"
+           data-title="Como Gardens Project"
+           data-images="assets/work-01.jpg, assets/work-01b.jpg, assets/work-01c.jpg">
+          <div class="stack"></div>
         </a>
 
-        <a class="tile" href="assets/work-02.jpg" data-lightbox="zsizart" data-title="Hillside Serenity — A Modern Retreat in Nature">
-          <img src="assets/work-02.jpg" alt="Hillside Serenity — A Modern Retreat in Nature">
+        <a class="tile"
+           href="assets/work-02.jpg"
+           data-lightbox="zsizart"
+           data-title="Hillside Serenity — A Modern Retreat in Nature"
+           data-images="assets/work-02.jpg, assets/work-02b.jpg">
+          <div class="stack"></div>
         </a>
 
-        <a class="tile" href="assets/work-03.jpg" data-lightbox="zsizart" data-title="Retro Home Sweet">
-          <img src="assets/work-03.jpg" alt="Retro Home Sweet">
+        <a class="tile"
+           href="assets/work-03.jpg"
+           data-lightbox="zsizart"
+           data-title="Retro Home Sweet"
+           data-images="assets/work-03.jpg, assets/work-03b.jpg, assets/work-03c.jpg">
+          <div class="stack"></div>
         </a>
 
         <a class="tile" href="assets/work-04.jpg" data-lightbox="zsizart" data-title="Serene Lines">
@@ -234,10 +262,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox-plus-jquery.min.js"></script>
 
   <script>
-    /* Lightbox options
-       - شلت positionFromTop لأننا مركّزين بالـ CSS
-       - بتقفل الاسكرول لتجربة أنظف
-    */
+    /* Lightbox options */
     if (window.lightbox) {
       lightbox.option({
         resizeDuration: 200,
@@ -248,7 +273,7 @@
       });
     }
 
-    /* Hamburger menu open/close */
+    /* Hamburger menu */
     const body = document.body;
     const menuBtn   = document.getElementById('menuBtn');
     const overlay   = document.getElementById('overlay');
@@ -258,7 +283,72 @@
     function closeMenu(){ body.classList.remove('menu-open'); }
     menuBtn.onclick=openMenu; overlay.onclick=closeMenu; menuClose.onclick=closeMenu;
 
-    /* منع سحب الصور (تقليل حفظها) */
+    /* ===== Vertical card-stack slideshow (bottom -> top) ===== */
+    const INTERVAL = 2800; // ms
+
+    document.querySelectorAll('.tile').forEach(tile => {
+      const stack = tile.querySelector('.stack');
+      const list  = (tile.getAttribute('data-images') || '')
+        .split(',').map(s => s.trim()).filter(Boolean);
+
+      // لو مفيش ستاك/ليست، سيب التايل بصورته العادية
+      if (!stack || list.length === 0) return;
+
+      // ابنِ الصور كطبقات
+      const imgs = list.map((src, idx) => {
+        const img = new Image();
+        img.alt = tile.getAttribute('data-title') || '';
+        img.src = src;
+        if (idx > 0) img.classList.add('enter'); // محضّرينها لتطلع لفوق لاحقًا
+        stack.appendChild(img);
+        return img;
+      });
+
+      // الحالة الأولية
+      let current = 0;
+      tile.href = imgs[current].src;
+
+      let timer;
+      const step = () => {
+        const cur = imgs[current];
+        const nextIndex = (current + 1) % imgs.length;
+        const nxt = imgs[nextIndex];
+
+        // حرك الحالية لفوق وتخفيها
+        cur.classList.add('leave');
+
+        // جهّز اللي تحت يطلع من تحت لفوق
+        nxt.classList.add('show');
+
+        // بعد الحركة… نظّف الكلاسات وبدّل المؤشرات
+        setTimeout(() => {
+          cur.classList.remove('leave');
+          // ارجع الصورة “القديمة” تحت الستاك
+          cur.classList.add('enter');
+          cur.classList.remove('show');
+          // الصورة الجديدة تبقى ثابتة مكانها
+          nxt.classList.remove('enter');
+          nxt.classList.add('show'); // لضمان بقاءها مرئية
+
+          current = nextIndex;
+          tile.href = imgs[current].src; // حدّث رابط اللايت بوكس
+        }, 460); // مطابق تقريبًا لزمن transition
+      };
+
+      const start = () => { timer = setInterval(step, INTERVAL); };
+      const stop  = () => { clearInterval(timer); };
+
+      // وقّف/كمّل على الهوفر
+      tile.addEventListener('mouseenter', stop);
+      tile.addEventListener('mouseleave', start);
+
+      // أول فريم: خلّي الطبقة الأولى “show”
+      imgs[0].classList.add('show');
+
+      start();
+    });
+
+    /* تقليل سحب الصور */
     document.addEventListener('dragstart', e => {
       if (e.target.tagName === 'IMG') e.preventDefault();
     });
