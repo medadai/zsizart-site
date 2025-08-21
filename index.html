@@ -8,110 +8,141 @@
   <!-- Lightbox2 (CSS) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet"/>
 
- <style>
-:root{
-  --bg:#0b0d0d;           /* خلفية عامة */
-  --card:#141414;         /* كروت */
-  --ink:#e9edf0;          /* نص أساسي */
-  --muted:#9fb3c8;        /* نص ثانوي */
-  --accent1:#ff7a18;      /* جراديانت: برتقالي */
-  --accent2:#a855f7;      /* جراديانت: بنفسجي */
-  --accent3:#38bdf8;      /* سماوي للفوكس */
-  --radius:18px;
-  --shadow:0 12px 40px rgba(0,0,0,.35);
-  --max:1160px;
-}
+  <style>
+  :root{
+    --bg:#0b0d0d;           /* خلفية عامة */
+    --card:#141414;         /* كروت */
+    --ink:#e9edf0;          /* نص أساسي */
+    --muted:#9fb3c8;        /* نص ثانوي */
+    --accent1:#ff7a18;      /* جراديانت: برتقالي */
+    --accent2:#a855f7;      /* جراديانت: بنفسجي */
+    --accent3:#38bdf8;      /* سماوي للفوكس */
+    --radius:18px;
+    --shadow:0 12px 40px rgba(0,0,0,.35);
+    --max:1160px;
+  }
 
-/* Reset + Base */
-*{box-sizing:border-box}
-html,body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial
-}
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--max);margin:auto;padding:28px}
+  /* Reset + Base */
+  *{box-sizing:border-box}
+  html,body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-/* Header */
-header{
-  position:sticky;top:0;z-index:50;
-  background:rgba(15,17,21,.65);
-  backdrop-filter:saturate(160%) blur(10px);
-  border-bottom:1px solid #1a1f27;
-}
-nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-nav h1{margin:0;font-size:20px;letter-spacing:.08em}
-nav ul{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:10px}
-nav a{
-  display:inline-block;padding:8px 14px;
-  border:1px solid #2a3140;border-radius:999px;
-  color:var(--muted);
-  transition:border-color .25s,color .25s,background .25s;
-}
-nav a:hover{
-  border-color:#3b465a;color:var(--ink);
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(15,17,21,.65);
+    backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid #1a1f27;
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  nav h1{margin:0;font-size:20px;letter-spacing:.08em}
+  nav ul{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:10px}
+  nav a{
+    display:inline-block;padding:8px 14px;
+    border:1px solid #2a3140;border-radius:999px;
+    color:var(--muted);
+    transition:border-color .25s,color .25s,background .25s;
+  }
+  nav a:hover{
+    border-color:#3b465a;color:var(--ink);
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
 
-/* Hero */
-.hero{padding:64px 0}
-.hero h2{
-  font-size:42px;margin:0 0 12px;font-weight:700;
-}
-.hero h2 .grad{
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.hero p{margin:0;color:var(--muted);font-size:18px}
+  /* Hero */
+  .hero{padding:64px 0}
+  .hero h2{
+    font-size:42px;margin:0 0 12px;font-weight:700;
+  }
+  .hero h2 .grad{
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{margin:0;color:var(--muted);font-size:18px}
 
-/* Gallery grid */
-.grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
-@media (max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:640px){.grid{grid-template-columns:1fr}}
+  /* Gallery grid */
+  .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
+  @media (max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}}
 
-.tile{
-  position:relative;overflow:hidden;
-  border-radius:var(--radius);
-  background:var(--card);
-  box-shadow:var(--shadow);
-  transform:translateZ(0);
-  border:1px solid #1a2230;
-}
-.tile img{
-  width:100%;height:100%;object-fit:cover;
-  filter:grayscale(100%);
-  transition:filter .6s ease, transform .28s ease;
-  will-change:filter,transform;
-  user-select:none; -webkit-user-drag:none;
-}
-.tile:hover img{filter:none;transform:scale(1.03)}
-.tile::after{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
-  background:radial-gradient(60% 60% at 50% 50%, rgba(168,85,247,.12), transparent 70%);
-  transition:opacity .3s ease;
-}
-.tile:hover::after{opacity:1}
-/* مفيش كتابة على الصور في الجريد */
-.tile .cap{display:none}
+  .tile{
+    position:relative;overflow:hidden;
+    border-radius:var(--radius);
+    background:var(--card);
+    box-shadow:var(--shadow);
+    transform:translateZ(0);
+    border:1px solid #1a2230;
+  }
+  .tile img{
+    width:100%;height:100%;object-fit:cover;
+    filter:grayscale(100%);
+    transition:filter .6s ease, transform .28s ease;
+    will-change:filter,transform;
+    user-select:none; -webkit-user-drag:none;
+  }
+  .tile:hover img{filter:none;transform:scale(1.03)}
+  .tile::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+    background:radial-gradient(60% 60% at 50% 50%, rgba(168,85,247,.12), transparent 70%);
+    transition:opacity .3s ease;
+  }
+  .tile:hover::after{opacity:1}
+  /* مفيش كتابة على الصور في الجريد */
+  .tile .cap{display:none}
 
-/* Section titles */
-section h2{margin:26px 0 18px;font-size:28px;font-weight:700;color:var(--ink)}
+  /* Section titles */
+  section h2{margin:26px 0 18px;font-size:28px;font-weight:700;color:var(--ink)}
 
-/* About + Contact */
-.about{display:grid;grid-template-columns:320px 1fr;gap:28px}
-@media (max-width:860px){.about{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
-.me{border-radius:var(--radius)}
-form{display:grid;gap:10px}
-input,textarea,button{
-  font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px
-}
-textarea{min-height:120px;resize:vertical}
-button{background:#1a68ff;border-color:#1a68ff;cursor:pointer;font-weight:600}
-button:hover{filter:brightness(1.08)}
-footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px}
-</style>
+  /* About + Contact */
+  /* خلت عمود الصورة أصغر + ظبطت المحاذاة */
+  .about{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    gap:28px;
+    align-items:center;
+  }
+  @media (max-width:860px){
+    .about{grid-template-columns:1fr}
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid #1a1f27;
+    border-radius:var(--radius);
+    padding:18px;
+  }
+
+  /* كارت للصورة + الصورة دايرة */
+  .avatar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+  }
+  .me{
+    width:100%;
+    max-width:220px;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #1f2430;
+    box-shadow:0 10px 36px rgba(0,0,0,.45);
+  }
+
+  form{display:grid;gap:10px}
+  input,textarea,button{
+    font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px
+  }
+  textarea{min-height:120px;resize:vertical}
+  button{background:#1a68ff;border-color:#1a68ff;cursor:pointer;font-weight:600}
+  button:hover{filter:brightness(1.08)}
+  footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px}
+  </style>
 
 </head>
 
@@ -168,16 +199,26 @@ footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px}
     <section id="about">
       <h2>About</h2>
       <div class="about">
-        <img class="me card" src="assets/me.jpg" alt="Mahmoud Refaey" />
+        <div class="avatar card">
+          <img class="me" src="assets/me.jpg" alt="Mahmoud Refaey" />
+        </div>
         <div class="card">
+          <h3 style="margin:0 0 10px;">Mahmoud Refaey — 3D Artist & ArchViz</h3>
           <p>
-            I’m Mahmoud Refaey, a 3D Artist & Architectural Visualizer with expertise in 3ds Max, Corona Renderer,
-            and AI-assisted workflows (ComfyUI). I focus on photorealistic visuals with cinematic composition,
-            lighting, and materials to tell strong, emotive stories.
+            I’m a 3D Artist and Architectural Visualizer specializing in
+            photorealistic interior and exterior imagery. I work primarily with
+            3ds&nbsp;Max and Corona Renderer, and I integrate AI tools such as
+            ComfyUI to accelerate look-dev and expand creative exploration.
+            My process blends cinematic composition, precise lighting, and
+            material fidelity to deliver visuals that are both technically accurate
+            and emotionally engaging.
           </p>
           <p>
-            I’ve worked onsite and remotely across large-scale projects, building adaptability and collaboration skills
-            in diverse teams.
+            I’ve delivered work for residential, hospitality, and mixed-use
+            developments—onsite and remotely—collaborating smoothly with architects,
+            designers, and developers. Core strengths include lighting direction,
+            material realism, and color grading, taking projects from early concept
+            to polished marketing imagery with consistent quality and reliability.
           </p>
         </div>
       </div>
