@@ -6,6 +6,10 @@
   <title>ZSIZART — Images We Are Proud Of</title>
   <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Visualizer & CG Artist." />
   <link rel="icon" href="assets/favicon.png" />
+
+  <!-- Lightbox2 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
   <style>
     :root{ --bg:#111; --ink:#eaeaea; --muted:#b4b4b4; --border:#1d1d1d; --max:1200px; }
     *{box-sizing:border-box}
@@ -26,8 +30,9 @@
     h1{font-size:clamp(26px,6vw,46px);margin:18px 0 6px;line-height:1.1}
     h2{font-size:clamp(22px,4vw,30px);margin:0 0 12px}
     .muted{color:var(--muted)}
+    .slogan{font-style:italic;font-weight:600;color:#f0c040}
 
-    /* Gallery (ZORE-style) */
+    /* Gallery */
     .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
     .item{position:relative;overflow:hidden;border-radius:16px;background:#161616;border:1px solid var(--border)}
     .item img{width:100%;height:auto;filter:grayscale(100%);transition:filter .5s ease, transform .5s ease}
@@ -44,7 +49,15 @@
     .row{display:flex;gap:10px;flex-wrap:wrap}
     .btn{display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:#111;font-weight:700}
 
+    /* Inputs */
+    input,textarea{width:100%;background:#0f0f0f;border:1px solid var(--border);border-radius:10px;color:var(--ink);padding:10px}
+    textarea{min-height:120px;resize:vertical}
+    label{display:block;margin:8px 0 6px;color:#e0e0e0}
+
     footer{margin:40px 0 20px;color:#b4b4b4;text-align:center}
+
+    /* make saving/dragging harder */
+    .no-save { -webkit-user-drag:none; user-select:none; -webkit-touch-callout:none; }
 
     @media (max-width:1100px){
       .gallery{grid-template-columns:repeat(2,1fr)}
@@ -72,23 +85,34 @@
     <!-- WORK -->
     <section id="work">
       <h1>Images we are proud of</h1>
-      <p class="muted">Hover to reveal color — ZORE-style gallery.</p>
+      <p class="muted">Hover to reveal color — <span class="slogan">Keep going, you will growing</span>.</p>
 
       <div class="gallery">
         <figure class="item">
-          <img src="assets/work-01.jpg" alt="Work 1">
+          <a href="assets/work-01.jpg" data-lightbox="portfolio" data-title="Project — 01">
+            <img class="no-save" src="assets/work-01.jpg" alt="Project 1">
+          </a>
           <figcaption class="caption">Project — 01</figcaption>
         </figure>
+
         <figure class="item">
-          <img src="assets/work-02.jpg" alt="Work 2">
+          <a href="assets/work-02.jpg" data-lightbox="portfolio" data-title="Project — 02">
+            <img class="no-save" src="assets/work-02.jpg" alt="Project 2">
+          </a>
           <figcaption class="caption">Project — 02</figcaption>
         </figure>
+
         <figure class="item">
-          <img src="assets/work-03.jpg" alt="Work 3">
+          <a href="assets/work-03.jpg" data-lightbox="portfolio" data-title="Project — 03">
+            <img class="no-save" src="assets/work-03.jpg" alt="Project 3">
+          </a>
           <figcaption class="caption">Project — 03</figcaption>
         </figure>
+
         <figure class="item">
-          <img src="assets/work-04.jpg" alt="Work 4">
+          <a href="assets/work-04.jpg" data-lightbox="portfolio" data-title="Project — 04">
+            <img class="no-save" src="assets/work-04.jpg" alt="Project 4">
+          </a>
           <figcaption class="caption">Project — 04</figcaption>
         </figure>
       </div>
@@ -117,18 +141,22 @@
             <a class="btn" href="https://www.linkedin.com/in/zsizart/" target="_blank" rel="noopener">LinkedIn</a>
           </div>
         </div>
+
         <div class="card">
           <h3>Direct Message</h3>
-          <form method="POST" action="https://formspree.io/f/your-form-id">
+          <form id="contact-form">
             <label>Name</label>
-            <input name="name" required />
+            <input name="from_name" required />
+
             <label>Email</label>
-            <input type="email" name="email" required />
+            <input type="email" name="reply_to" required />
+
             <label>Message</label>
             <textarea name="message" required placeholder="Tell me about your project…"></textarea>
+
             <button class="btn" type="submit">Send</button>
+            <p id="form-status" class="muted" style="margin-top:8px"></p>
           </form>
-          <p class="muted" style="margin-top:8px">Replace <code>your-form-id</code> with your Formspree ID (optional).</p>
         </div>
       </div>
     </section>
@@ -138,7 +166,7 @@
       <h2>About</h2>
       <div class="about">
         <div class="photo">
-          <img src="assets/me.jpg" alt="Mahmoud Refaey portrait">
+          <img class="no-save" src="assets/me.jpg" alt="Mahmoud Refaey portrait">
         </div>
         <div>
           <p class="muted">
@@ -165,6 +193,55 @@
   </main>
 
   <footer>© <span id="y"></span> ZSIZART — Mahmoud Refaey</footer>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+
+  <!-- Lightbox2 JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+  <!-- EmailJS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <script>
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Disable right click / drag / some shortcuts
+    document.addEventListener('contextmenu', e => e.preventDefault(), {capture:true});
+    document.querySelectorAll('img').forEach(img => img.addEventListener('dragstart', e => e.preventDefault()));
+    document.addEventListener('keydown', e => {
+      const k = e.key.toLowerCase();
+      if ((e.ctrlKey||e.metaKey) && ['s','u','p'].includes(k)) e.preventDefault();
+    });
+
+    // Lightbox options
+    if (window.lightbox) {
+      lightbox.option({ resizeDuration:200, wrapAround:true, positionFromTop:60 });
+    }
+
+    // ===== EmailJS =====
+    // استبدل القيم الثلاثة بالمفاتيح من لوحة EmailJS
+    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+
+    (function(){ try{ emailjs.init(EMAILJS_PUBLIC_KEY); }catch(e){} })();
+
+    const form = document.getElementById('contact-form');
+    const statusEl = document.getElementById('form-status');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      statusEl.textContent = "Sending…";
+
+      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+      .then(() => {
+        statusEl.textContent = "Message sent. Thank you!";
+        form.reset();
+      })
+      .catch(err => {
+        console.error(err);
+        statusEl.textContent = "Something went wrong. Please try again later.";
+      });
+    });
+  </script>
 </body>
 </html>
