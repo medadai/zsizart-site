@@ -10,11 +10,17 @@
 
   <!-- Basic styles (مباشر هنا عشان يبقى مضمون) -->
   <style>
-    :root{
-      --bg:#0f1115; --ink:#e8eef6; --muted:#a3adba;
-      --card:#12151b; --brand:#6ab0ff; --radius:16px;
-      --max:1200px;
-    }
+   :root {
+  --bg: #000000;      /* Pure black background */
+  --ink: #e9edf0;     /* Main text color */
+  --muted: #b5bec7;   /* Secondary/Muted text */
+  --accent: #36a3ff;  /* Accent color (links, hover, etc.) */
+  --card: #111111;    /* Slightly lighter black for cards/containers */
+  --card-ink: #f7f9fb;/* Card text */
+  --radius: 18px;     /* Border radius */
+  --shadow: 0 12px 40px rgba(0,0,0,.35); /* Shadow */
+  --max: 1160px;      /* Max width */
+}
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial}
     a{color:inherit;text-decoration:none}
