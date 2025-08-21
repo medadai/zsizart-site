@@ -115,20 +115,25 @@
     filter: none;
   }
 
-  /* Card stack area inside tile */
-  .stack{
-    position:relative;width:100%;height:100%;
-  }
-  .stack::before{content:"";display:block;padding-top:66.6667%} /* 3:2 aspect */
-  .stack > img{
-    position:absolute;left:0;bottom:0;width:100%;height:100%;object-fit:cover;
-    transform:translateY(0);opacity:1;transition:transform .45s ease, opacity .35s ease, filter .35s ease;
-    /* أبقينا الفلتر هنا أيضًا، لكن القاعدة العامة فوق بتضمن الاتساق لكل الصور */
-  }
-  .stack > img.leave{ transform:translateY(-110%);opacity:0;pointer-events:none; }
-  .stack > img.enter{ transform:translateY(110%); }
-  .stack > img.enter.show{ transform:translateY(0); }
-
+/* Card stack area inside tile */
+.stack{
+  position:relative;
+  width:100%;
+  aspect-ratio: 3 / 2;     /* يثبت نسبة الأبعاد بدل hack الـ ::before */
+}
+.stack > img{
+  position:absolute;
+  inset:0;                 /* top/right/bottom/left = 0 */
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter: grayscale(100%);
+  transition: transform .45s ease, opacity .35s ease, filter .35s ease;
+}
+/* لو هتحتاجها لاحقًا للحركات تسيبها زي ما هي */
+.stack > img.leave{ transform:translateY(-110%); opacity:0; pointer-events:none; }
+.stack > img.enter{ transform:translateY(110%); }
+.stack > img.enter.show{ transform:translateY(0); }
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
   @media(max-width:860px){.about{grid-template-columns:1fr}}
