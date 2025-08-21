@@ -1,246 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZSIZART — Images We Are Proud Of</title>
-  <meta name="description" content="Portfolio of Mahmoud Refaey — 3D Visualizer & CG Artist." />
-  <link rel="icon" href="assets/favicon.png" />
-
-  <!-- Lightbox2 CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
-
-  <style>
-    :root{ --bg:#111; --ink:#eaeaea; --muted:#b4b4b4; --border:#1d1d1d; --max:1200px; }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial}
-    img{max-width:100%;display:block}
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max);margin:auto;padding:28px}
-
-    /* Header / Nav */
-    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(17,17,17,.95),rgba(17,17,17,.75));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border)}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.03em}
-    .badge{width:36px;height:36px;border-radius:12px;background:#fff;color:#111;display:grid;place-items:center;font-weight:900}
-    .menu{display:flex;gap:10px;flex-wrap:wrap}
-    .menu a{padding:10px 14px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
-    .menu a:hover{background:#fff;color:#111;border-color:#fff}
-
-    h1{font-size:clamp(26px,6vw,46px);margin:18px 0 6px;line-height:1.1}
-    h2{font-size:clamp(22px,4vw,30px);margin:0 0 12px}
-    .muted{color:var(--muted)}
-    .slogan{font-style:italic;font-weight:600;color:#f0c040}
-
-    /* Gallery */
-    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-    .item{position:relative;overflow:hidden;border-radius:16px;background:#161616;border:1px solid var(--border)}
-    .item img{width:100%;height:auto;filter:grayscale(100%);transition:filter .5s ease, transform .5s ease}
-    .item:hover img{filter:grayscale(0%);transform:scale(1.03)}
-    .caption{position:absolute;left:14px;bottom:14px;color:#fff;font-weight:700;text-shadow:0 6px 16px rgba(0,0,0,.65)}
-
-    /* About */
-    .about{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:12px}
-    .about .photo{border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#161616}
-
-    /* Contact & Cards */
-    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-    .card{background:#161616;border:1px solid var(--border);border-radius:16px;padding:18px}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:#111;font-weight:700}
-
-    /* Inputs */
-    input,textarea{width:100%;background:#0f0f0f;border:1px solid var(--border);border-radius:10px;color:var(--ink);padding:10px}
-    textarea{min-height:120px;resize:vertical}
-    label{display:block;margin:8px 0 6px;color:#e0e0e0}
-
-    footer{margin:40px 0 20px;color:#b4b4b4;text-align:center}
-
-    /* make saving/dragging harder */
-    .no-save { -webkit-user-drag:none; user-select:none; -webkit-touch-callout:none; }
-
-    @media (max-width:1100px){
-      .gallery{grid-template-columns:repeat(2,1fr)}
-      .about{grid-template-columns:1fr}
-      .cards{grid-template-columns:1fr}
-    }
-    @media (max-width:640px){.gallery{grid-template-columns:1fr}}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZSIZART Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="lightbox.css" />
 </head>
 <body>
-  <!-- HEADER -->
+  <!-- ===== Navigation ===== -->
   <header>
-    <div class="wrap nav">
-      <div class="brand"><div class="badge">Z</div><div>ZSIZART</div></div>
-      <nav class="menu">
-        <a href="#work">Work</a>
-        <a href="#courses">Courses</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-      </nav>
-    </div>
+    <nav>
+      <h1>ZSIZART</h1>
+      <ul>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main class="wrap">
-    <!-- WORK -->
-    <section id="work">
-      <h1>Images we are proud of</h1>
-      <p class="muted">Hover to reveal color — <span class="slogan">Keep going, you will growing</span>.</p>
+  <!-- ===== Hero Section ===== -->
+  <section class="hero">
+    <h2>We bring imagination to life</h2>
+    <p>High-end 3D visualization & architectural CGI</p>
+  </section>
 
-      <div class="gallery">
-        <figure class="item">
-          <a href="assets/work-01.jpg" data-lightbox="portfolio" data-title="Project — 01">
-            <img class="no-save" src="assets/work-01.jpg" alt="Project 1">
-          </a>
-          <figcaption class="caption">Project — 01</figcaption>
-        </figure>
+  <!-- ===== Portfolio ===== -->
+  <section id="portfolio">
+    <h2>Portfolio</h2>
+    <div class="gallery">
+      <a href="images/work1.jpg" data-lightbox="zsizart"><img src="images/work1_thumb.jpg" alt="Work 1"></a>
+      <a href="images/work2.jpg" data-lightbox="zsizart"><img src="images/work2_thumb.jpg" alt="Work 2"></a>
+      <a href="images/work3.jpg" data-lightbox="zsizart"><img src="images/work3_thumb.jpg" alt="Work 3"></a>
+    </div>
+  </section>
 
-        <figure class="item">
-          <a href="assets/work-02.jpg" data-lightbox="portfolio" data-title="Project — 02">
-            <img class="no-save" src="assets/work-02.jpg" alt="Project 2">
-          </a>
-          <figcaption class="caption">Project — 02</figcaption>
-        </figure>
+  <!-- ===== About ===== -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I’m Mahmoud Refaey, a 3D Artist & Architectural Visualizer with expertise in 3ds Max, Corona Renderer, and AI-assisted workflows.  
+      My goal is to deliver photorealistic visuals with cinematic storytelling.
+    </p>
+  </section>
 
-        <figure class="item">
-          <a href="assets/work-03.jpg" data-lightbox="portfolio" data-title="Project — 03">
-            <img class="no-save" src="assets/work-03.jpg" alt="Project 3">
-          </a>
-          <figcaption class="caption">Project — 03</figcaption>
-        </figure>
+  <!-- ===== Contact ===== -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <form id="contact-form">
+      <input type="text" name="from_name" placeholder="Your Name" required />
+      <input type="email" name="reply_to" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="status"></p>
+  </section>
 
-        <figure class="item">
-          <a href="assets/work-04.jpg" data-lightbox="portfolio" data-title="Project — 04">
-            <img class="no-save" src="assets/work-04.jpg" alt="Project 4">
-          </a>
-          <figcaption class="caption">Project — 04</figcaption>
-        </figure>
-      </div>
-    </section>
+  <footer>
+    <p>© 2025 ZSIZART. All rights reserved.</p>
+  </footer>
 
-    <!-- COURSES -->
-    <section id="courses">
-      <h2>Courses</h2>
-      <p class="muted">Coming soon.</p>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <div class="cards">
-        <div class="card">
-          <h3>Work with me</h3>
-          <p class="muted">I’ll reply within 24 hours.</p>
-          <p>Phone: <a href="tel:+201111429884">+20 111 142 9884</a></p>
-          <p>Email: <a href="mailto:arc.mahmoud.refaey@gmail.com">arc.mahmoud.refaey@gmail.com</a></p>
-          <p>Location: Zizinia, District 5, New Cairo, Egypt</p>
-          <div class="row">
-            <a class="btn" href="https://wa.me/201111429884" target="_blank" rel="noopener">WhatsApp</a>
-            <a class="btn" href="https://www.behance.net/zsizart" target="_blank" rel="noopener">Behance</a>
-            <a class="btn" href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener">Instagram</a>
-            <a class="btn" href="https://www.linkedin.com/in/zsizart/" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Direct Message</h3>
-          <form id="contact-form">
-            <label>Name</label>
-            <input name="from_name" required />
-
-            <label>Email</label>
-            <input type="email" name="reply_to" required />
-
-            <label>Message</label>
-            <textarea name="message" required placeholder="Tell me about your project…"></textarea>
-
-            <button class="btn" type="submit">Send</button>
-            <p id="form-status" class="muted" style="margin-top:8px"></p>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about">
-      <h2>About</h2>
-      <div class="about">
-        <div class="photo">
-          <img class="no-save" src="assets/me.jpg" alt="Mahmoud Refaey portrait">
-        </div>
-        <div>
-          <p class="muted">
-            I’m a 3D Artist with over three years of experience producing high-end visualizations
-            for both interior and exterior architecture using 3ds Max, Corona Renderer, and Photoshop.
-            I also integrate AI tools like ComfyUI to enhance both creativity and production efficiency.
-          </p>
-          <p class="muted">
-            What drives my work is visual storytelling that combines technical precision with emotional depth.
-            I aim to create imagery that not only meets architectural standards but also evokes mood and narrative.
-          </p>
-          <p class="muted">
-            I bring hands-on experience working onsite and remotely across large-scale projects, sharpening
-            adaptability, collaboration, and problem-solving. My strengths lie in lighting, materials, and
-            cinematic composition—skills I use to produce visuals that resonate artistically and professionally.
-          </p>
-          <div class="row" style="margin-top:6px">
-            <a class="btn" href="assets/mahmoud-refaey-cv.pdf" target="_blank" rel="noopener">Download CV</a>
-            <a class="btn" href="mailto:arc.mahmoud.refaey@gmail.com">Email me</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>© <span id="y"></span> ZSIZART — Mahmoud Refaey</footer>
-
-  <!-- Lightbox2 JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-
-  <!-- EmailJS CDN -->
+  <!-- ===== Scripts ===== -->
+  <script src="lightbox-plus-jquery.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
   <script>
-    // Year
-    document.getElementById('y').textContent = new Date().getFullYear();
-
-    // Disable right click / drag / some shortcuts
-    document.addEventListener('contextmenu', e => e.preventDefault(), {capture:true});
-    document.querySelectorAll('img').forEach(img => img.addEventListener('dragstart', e => e.preventDefault()));
-    document.addEventListener('keydown', e => {
-      const k = e.key.toLowerCase();
-      if ((e.ctrlKey||e.metaKey) && ['s','u','p'].includes(k)) e.preventDefault();
-    });
-
     // Lightbox options
     if (window.lightbox) {
-      lightbox.option({ resizeDuration:200, wrapAround:true, positionFromTop:60 });
+      lightbox.option({
+        resizeDuration: 200,
+        wrapAround: true,
+        positionFromTop: 60
+      });
     }
 
-    // ===== EmailJS =====
-    // استبدل القيم الثلاثة بالمفاتيح من لوحة EmailJS
-    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+    // ===== EmailJS Setup =====
+    const EMAILJS_PUBLIC_KEY  = "JdZK05NoMso2b9lHe";  // ← public key
+    const EMAILJS_SERVICE_ID  = "service_m1dfwio";    // ← service id
+    const EMAILJS_TEMPLATE_ID = "template_kuqk13r";   // ← template id
 
-    (function(){ try{ emailjs.init(EMAILJS_PUBLIC_KEY); }catch(e){} })();
+    try {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    } catch (e) {
+      console.error("EmailJS init error:", e);
+    }
 
-    const form = document.getElementById('contact-form');
-    const statusEl = document.getElementById('form-status');
-
-    form.addEventListener('submit', function(e){
+    // Handle form submission
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
       e.preventDefault();
-      statusEl.textContent = "Sending…";
-
       emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-      .then(() => {
-        statusEl.textContent = "Message sent. Thank you!";
-        form.reset();
-      })
-      .catch(err => {
-        console.error(err);
-        statusEl.textContent = "Something went wrong. Please try again later.";
-      });
+        .then(() => {
+          document.getElementById("status").innerText = "Message sent successfully!";
+          this.reset();
+        }, (error) => {
+          document.getElementById("status").innerText = "Failed to send message. Please try again.";
+          console.error("EmailJS Error:", error);
+        });
     });
   </script>
 </body>
