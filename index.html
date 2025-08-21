@@ -180,7 +180,7 @@
       <h2>Work</h2>
 
       <div class="grid">
-        <!-- مثـال: زوّد data-images بأي عدد صور؛ أول صورة هتظهر كبداية -->
+        <!-- زوّد data-images لو عايز نفس الصورة تظهر أولاً والباقي في اللايت بوكس -->
         <a class="tile"
            href="assets/work-01.jpg"
            data-lightbox="zsizart"
@@ -284,68 +284,23 @@
     menuBtn.onclick=openMenu; overlay.onclick=closeMenu; menuClose.onclick=closeMenu;
 
     /* ===== Vertical card-stack slideshow (bottom -> top) ===== */
-    const INTERVAL = 2800; // ms
-
+    // تم إيقاف التقليب في الجريد. نعرض أول صورة فقط داخل التايل،
+    // والتقليب يتم فقط داخل الـ Lightbox بالأسهم.
     document.querySelectorAll('.tile').forEach(tile => {
       const stack = tile.querySelector('.stack');
       const list  = (tile.getAttribute('data-images') || '')
         .split(',').map(s => s.trim()).filter(Boolean);
 
-      // لو مفيش ستاك/ليست، سيب التايل بصورته العادية
       if (!stack || list.length === 0) return;
 
-      // ابنِ الصور كطبقات
-      const imgs = list.map((src, idx) => {
-        const img = new Image();
-        img.alt = tile.getAttribute('data-title') || '';
-        img.src = src;
-        if (idx > 0) img.classList.add('enter'); // محضّرينها لتطلع لفوق لاحقًا
-        stack.appendChild(img);
-        return img;
-      });
+      // أعرض أول صورة فقط داخل التايل
+      const first = new Image();
+      first.alt = tile.getAttribute('data-title') || '';
+      first.src = list[0];
+      stack.appendChild(first);
 
-      // الحالة الأولية
-      let current = 0;
-      tile.href = imgs[current].src;
-
-      let timer;
-      const step = () => {
-        const cur = imgs[current];
-        const nextIndex = (current + 1) % imgs.length;
-        const nxt = imgs[nextIndex];
-
-        // حرك الحالية لفوق وتخفيها
-        cur.classList.add('leave');
-
-        // جهّز اللي تحت يطلع من تحت لفوق
-        nxt.classList.add('show');
-
-        // بعد الحركة… نظّف الكلاسات وبدّل المؤشرات
-        setTimeout(() => {
-          cur.classList.remove('leave');
-          // ارجع الصورة “القديمة” تحت الستاك
-          cur.classList.add('enter');
-          cur.classList.remove('show');
-          // الصورة الجديدة تبقى ثابتة مكانها
-          nxt.classList.remove('enter');
-          nxt.classList.add('show'); // لضمان بقاءها مرئية
-
-          current = nextIndex;
-          tile.href = imgs[current].src; // حدّث رابط اللايت بوكس
-        }, 460); // مطابق تقريبًا لزمن transition
-      };
-
-      const start = () => { timer = setInterval(step, INTERVAL); };
-      const stop  = () => { clearInterval(timer); };
-
-      // وقّف/كمّل على الهوفر
-      tile.addEventListener('mouseenter', stop);
-      tile.addEventListener('mouseleave', start);
-
-      // أول فريم: خلّي الطبقة الأولى “show”
-      imgs[0].classList.add('show');
-
-      start();
+      // افتح نفس الصورة في اللايت بوكس — الباقي هتتنقّل بينهم بأسهم اللايت بوكس
+      tile.href = first.src;
     });
 
     /* تقليل سحب الصور */
