@@ -110,19 +110,24 @@
     .about{grid-template-columns:1fr}
   }
 
+    /* لغيت الخلفية + البورد + الشادو */
   .card{
-    background:var(--card);
-    border:1px solid #1a1f27;
-    border-radius:var(--radius);
-    padding:18px;
+    background:none;
+    border:none;
+    border-radius:0;
+    padding:0;
+    box-shadow:none;
   }
 
-  /* كارت للصورة + الصورة دايرة */
+  /* صورة دايرة من غير مربع حواليها */
   .avatar{
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:16px;
+    padding:0;
+    background:none;
+    border:none;
+    box-shadow:none;
   }
   .me{
     width:100%;
