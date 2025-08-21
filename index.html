@@ -1,178 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART — Portfolio</title>
 
-  <!-- Lightbox (CDN) -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css"
-        integrity="sha512-M8b8+5d+q0Vq2S0zq5yqKJ9Wl4YcXnq0o6g2kRPtH4Xb8zQ8aQ+9m/Ss1k+o5s1zWVw1nB2pJwX8z6k0Kk9w9g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Lightbox2 via CDN (CSS) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet"/>
 
-  <!-- تصليح سريع: ستايل أساسي داخل الصفحة -->
+  <!-- Basic styles (مباشر هنا عشان يبقى مضمون) -->
   <style>
     :root{
-      --bg:#0d0f13; --ink:#e8eef7; --muted:#9aa4af; --card:#12151b; --brand:#ffffff;
-      --pill:#1f2430; --accent:#ffffff;
+      --bg:#0f1115; --ink:#e8eef6; --muted:#a3adba;
+      --card:#12151b; --brand:#6ab0ff; --radius:16px;
+      --max:1200px;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Roboto,Arial}
-    img{max-width:100%;display:block}
-
-    header{
-      position:sticky;top:0;z-index:50;background:rgba(13,15,19,.75);
-      backdrop-filter:saturate(150%) blur(8px); border-bottom:1px solid #161a21;
-    }
-    nav{max-width:1200px;margin:auto;display:flex;align-items:center;gap:24px;padding:12px 20px}
-    nav h1{margin:0;font-size:18px;letter-spacing:.2em}
-    nav ul{margin:0 0 0 auto;display:flex;gap:10px;list-style:none;padding:0}
-    nav a{color:var(--ink);text-decoration:none;padding:8px 14px;border:1px solid #222834;border-radius:999px}
-    nav a:hover{background:var(--pill)}
-
-    .hero{max-width:1200px;margin:32px auto 16px;padding:0 20px}
-    .hero h2{margin:0 0 6px;font-size:clamp(26px,3vw,38px)}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .wrap{max-width:var(--max);margin:auto;padding:28px}
+    header{position:sticky;top:0;z-index:50;background:rgba(15,17,21,.6);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid #1a1f27}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    nav h1{margin:0;font-size:20px;letter-spacing:.08em}
+    nav ul{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:10px}
+    nav a{display:inline-block;padding:8px 14px;border:1px solid #2a3140;border-radius:999px;color:var(--muted)}
+    nav a:hover{border-color:#3b465a;color:var(--ink)}
+    .hero{padding:48px 0}
+    .hero h2{font-size:40px;margin:0 0 10px}
     .hero p{margin:0;color:var(--muted)}
 
-    section{max-width:1200px;margin:24px auto;padding:0 20px}
-    h2{font-size:clamp(22px,2.4vw,28px);margin:0 0 16px}
+    /* Gallery */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+    @media (max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
 
-    /* جاليري */
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
-    .tile{
-      background:var(--card);border:1px solid #161a21;border-radius:18px;overflow:hidden;position:relative
-    }
-    .tile img{filter:grayscale(100%);transition:filter .6s ease;display:block}
-    .tile:hover img{filter:grayscale(0%)}
-    .cap{
-      position:absolute;left:14px;bottom:14px;background:rgba(0,0,0,.55);color:#fff;
-      padding:8px 12px;border-radius:999px;font-size:14px
-    }
+    .tile{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--card)}
+    .tile img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter .6s ease, transform .6s ease; user-select:none; -webkit-user-drag:none; pointer-events:none;}
+    .tile:hover img{filter:grayscale(0%); transform:scale(1.02);}
+    .cap{position:absolute;left:14px;bottom:12px;font-weight:600;text-shadow:0 2px 12px rgba(0,0,0,.7)}
 
-    /* About & Contact */
-    .about{display:grid;grid-template-columns:260px 1fr;gap:26px;align-items:start}
-    .about .me{border-radius:18px;border:1px solid #161a21;overflow:hidden}
-    .about p{color:var(--muted)}
+    section h2{margin:26px 0 18px;font-size:28px}
 
-    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    form textarea{grid-column:1/-1;min-height:120px;resize:vertical}
+    /* Lightbox tweaks: نخفي عنوان فوق الصورة ونظهره تحت */
+    .lb-data .lb-caption{font-size:14px; color:#dbe7ff;}
+    .lb-data .lb-number{display:none;} /* اخفاء "image 1 of 4" */
+    .lb-outerContainer{border-radius:12px}
+    .lb-nav a.lb-prev, .lb-nav a.lb-next{opacity:.9}
+    .lb-close{opacity:1}
+
+    /* About + Contact */
+    .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
+    @media (max-width:860px){.about{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
+    .me{border-radius:var(--radius)}
+    form{display:grid;gap:10px}
     input,textarea,button{
-      background:#0f1218;border:1px solid #161a21;border-radius:12px;padding:12px 14px;color:var(--ink)
+      font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px
     }
-    button{background:#ffffff;border-color:#ffffff;color:#0a0c10;font-weight:600;cursor:pointer}
-    button:hover{filter:brightness(.92)}
-    #status{color:#8bd38b}
-
-    footer{max-width:1200px;margin:32px auto;padding:14px 20px;color:var(--muted);border-top:1px solid #161a21}
-    @media (max-width:800px){.about{grid-template-columns:1fr}}
+    textarea{min-height:120px;resize:vertical}
+    button{background:#1a68ff;border-color:#1a68ff;cursor:pointer;font-weight:600}
+    button:hover{filter:brightness(1.08)}
+    footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px}
   </style>
 </head>
+
 <body>
-  <!-- ===== Navigation ===== -->
   <header>
-    <nav>
-      <h1>ZSIZART</h1>
-      <ul>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+    <div class="wrap">
+      <nav>
+        <h1>ZSIZART</h1>
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- ===== Hero ===== -->
-  <section class="hero">
-    <h2>We bring imagination to life</h2>
-    <p>High-end 3D visualization & architectural CGI</p>
-  </section>
+  <main class="wrap">
+    <!-- Hero -->
+    <section class="hero">
+      <h2>We bring imagination to life</h2>
+      <p>High-end 3D visualization & architectural CGI</p>
+    </section>
 
-  <!-- ===== Portfolio ===== -->
-  <section id="portfolio">
-    <h2>Portfolio</h2>
-<div class="gallery">
-  <a href="assets/work-01.jpg" data-lightbox="zsizart" data-title="Project 01 - Exterior View">
-    <img src="assets/work-01.jpg" alt="Project 01">
-  </a>
+    <!-- Work / Portfolio -->
+    <section id="work">
+      <h2>Portfolio</h2>
 
-  <a href="assets/work-02.jpg" data-lightbox="zsizart" data-title="Project 02 - Interior Living Room">
-    <img src="assets/work-02.jpg" alt="Project 02">
-  </a>
+      <!-- نفس group name علشان الأسهم تظهر وتتنقل بين الصور -->
+      <div class="grid">
+        <a class="tile" href="assets/work-01.jpg" data-lightbox="zsizart" data-title="Project — 01">
+          <img src="assets/work-01.jpg" alt="Project 01">
+          <span class="cap">Project — 01</span>
+        </a>
 
-  <a href="assets/work-03.jpg" data-lightbox="zsizart" data-title="Project 03 - Landscape Design">
-    <img src="assets/work-03.jpg" alt="Project 03">
-  </a>
+        <a class="tile" href="assets/work-02.jpg" data-lightbox="zsizart" data-title="Project — 02">
+          <img src="assets/work-02.jpg" alt="Project 02">
+          <span class="cap">Project — 02</span>
+        </a>
 
-  <a href="assets/work-04.jpg" data-lightbox="zsizart" data-title="Project 04 - Commercial Building">
-    <img src="assets/work-04.jpg" alt="Project 04">
-  </a>
-</div>
-  </section>
+        <a class="tile" href="assets/work-03.jpg" data-lightbox="zsizart" data-title="Project — 03">
+          <img src="assets/work-03.jpg" alt="Project 03">
+          <span class="cap">Project — 03</span>
+        </a>
 
-  <!-- ===== About ===== -->
-  <section id="about">
-    <h2>About</h2>
-    <div class="about">
-      <div class="me">
-        <img src="assets/me.jpg" alt="Mahmoud Refaey">
+        <a class="tile" href="assets/work-04.jpg" data-lightbox="zsizart" data-title="Project — 04">
+          <img src="assets/work-04.jpg" alt="Project 04">
+          <span class="cap">Project — 04</span>
+        </a>
       </div>
-      <div>
-        <p>
-          I’m Mahmoud Refaey, a 3D Artist & Architectural Visualizer with expertise in 3ds Max, Corona Renderer,
-          and AI-assisted workflows. I deliver photorealistic visuals with cinematic storytelling.
-        </p>
-        <p>
-          I work onsite and remotely on diverse projects, with strengths in lighting, materials and composition.
-        </p>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <h2>About</h2>
+      <div class="about">
+        <img class="me card" src="assets/me.jpg" alt="Mahmoud Refaey" />
+        <div class="card">
+          <p>
+            I’m Mahmoud Refaey, a 3D Artist & Architectural Visualizer with expertise in 3ds Max, Corona Renderer, and AI-assisted workflows (ComfyUI).
+            I focus on photorealistic visuals with cinematic composition, lighting, and materials to tell strong, emotive stories.
+          </p>
+          <p>
+            I’ve worked onsite and remotely across large-scale projects, building adaptability and collaboration skills in diverse teams.
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Contact ===== -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <form id="contact-form">
-      <input type="text"  name="from_name" placeholder="Your Name"  required />
-      <input type="email" name="reply_to"  placeholder="Your Email" required />
-      <textarea name="message" placeholder="Tell me about your project…" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-    <p id="status"></p>
-  </section>
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="card">
+        <form id="contact-form">
+          <input type="text"   name="from_name" placeholder="Your Name" required />
+          <input type="email"  name="reply_to"  placeholder="Your Email" required />
+          <textarea name="message" placeholder="Tell me about your project…" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+        <p id="status" style="margin-top:8px;color:#9ec2ff"></p>
+      </div>
+    </section>
+  </main>
 
-  <footer>
-    <p>© 2025 ZSIZART. All rights reserved.</p>
+  <footer class="wrap">
+    © 2025 ZSIZART. All rights reserved.
   </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox-plus-jquery.min.js"
-          integrity="sha512-2qf1jUQloamBJe0+3f4ZB9h9qTt1k4x7VtZs4uG0n8tXxvqc4w69i4s2PZr4xYk6bqHgrfG5E8Z9I8N2Bq3c8w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <!-- Lightbox2 via CDN (JS) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox-plus-jquery.min.js"></script>
   <script>
-    // Lightbox options (السحب بين الصور شغال)
+    // إعدادات Lightbox (أسهم + X + كابشن تحت الصورة)
     if (window.lightbox) {
-      lightbox.option({ resizeDuration: 200, wrapAround: true, positionFromTop: 60 });
+      lightbox.option({
+        resizeDuration: 200,
+        wrapAround: true,         // التنقل يمين/يسار
+        fadeDuration: 180,
+        imageFadeDuration: 180,
+        positionFromTop: 60
+      });
     }
 
-    // EmailJS (استخدم المفاتيح بتاعتك)
+    // تعطيل سحب الصور Right-drag (مش منع تام للتحميل، بس يقلله)
+    document.querySelectorAll('img').forEach(img=>{
+      img.addEventListener('dragstart', e=>e.preventDefault());
+    });
+  </script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    // مفاتيح EmailJS اللي اديتني: (تأكد إنها صحيحة)
     const EMAILJS_PUBLIC_KEY  = "JdZK05NoMso2b9lHe";
     const EMAILJS_SERVICE_ID  = "service_m1dfwio";
     const EMAILJS_TEMPLATE_ID = "template_kuqk13r";
 
-    try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){ console.error(e); }
+    try { emailjs.init(EMAILJS_PUBLIC_KEY); }
+    catch(e){ console.error("EmailJS init error:", e); }
 
-    document.getElementById("contact-form").addEventListener("submit", function (e) {
+    document.getElementById("contact-form").addEventListener("submit", function(e){
       e.preventDefault();
       emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-        .then(() => {
-          document.getElementById("status").innerText = "Message sent successfully!";
+        .then(()=>{
+          document.getElementById("status").textContent = "Message sent successfully!";
           this.reset();
         })
-        .catch((err) => {
-          document.getElementById("status").innerText = "Failed to send message. Please try again.";
+        .catch(err=>{
           console.error(err);
+          document.getElementById("status").textContent = "Failed to send message. Please try again.";
         });
     });
   </script>
