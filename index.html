@@ -52,19 +52,40 @@
   .menu-open .menu-btn .bars::after{transform:rotate(-90deg) translate(-6px,0)}
 
   .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
-  .menu-panel{
-    position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
-    background:#0e1116;border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);
-    transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column
-  }
-  .menu-header{display:flex;justify-content:space-between;padding:18px;border-bottom:1px solid #1a1f27}
-  .menu-title{margin:0;font-weight:700;font-size:14px;color:#cfe2ff}
-  .menu-close{border:1px solid #2a3140;border-radius:10px;background:transparent;color:var(--ink);padding:8px 12px;cursor:pointer}
-  .menu-links{display:flex;flex-direction:column;gap:8px;padding:18px}
-  .menu-links a{padding:14px 16px;border:1px solid #1f2733;border-radius:12px;background:#0c0e12;color:#d8e7ff}
-  .menu-links a:hover{filter:brightness(1.08);border-color:#2a3242}
-  .menu-open .overlay{opacity:1;pointer-events:auto}
-  .menu-open .menu-panel{transform:translateX(0)}
+ .menu-panel{
+  position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
+  background:rgba(0,0,0,0.75); /* شفاف بدل الأسود الصريح */
+  border-left:1px solid #1a1f27;
+  box-shadow:-20px 0 50px rgba(0,0,0,.4);
+  transform:translateX(100%);transition:.3s;
+  z-index:90;display:flex;flex-direction:column
+}
+
+.menu-header{
+  display:flex;justify-content:space-between;
+  padding:18px;border-bottom:1px solid #1a1f27
+}
+.menu-title{margin:0;font-weight:700;font-size:16px;color:#cfe2ff}
+.menu-close{
+  border:1px solid #2a3140;border-radius:10px;
+  background:transparent;color:var(--ink);
+  padding:8px 12px;cursor:pointer
+}
+
+/* الروابط */
+.menu-links{display:flex;flex-direction:column;gap:16px;padding:28px}
+.menu-links a{
+  font-size:20px; /* أكبر شويه */
+  font-weight:600;
+  color:#ffffff;
+  padding:8px 0;   /* بدون بوكسات */
+  border:none;     
+  background:transparent;
+  transition:color .25s ease;
+}
+.menu-links a:hover{
+  color:var(--accent1); /* يتلوّن عند الهوفر */
+}
 
   /* Hero */
   .hero{padding:64px 0}
