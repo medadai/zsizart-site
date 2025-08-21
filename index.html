@@ -80,21 +80,17 @@
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
 
-  /* Tile + stacked slideshow */
+  /* Tile */
   .tile{
     position:relative;overflow:hidden;border-radius:var(--radius);
     background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230
   }
-  .stack{position:relative;inset:0;width:100%;height:100%}
-  /* نستخدم نسبة أبعاد لطيفة للتايل */
-  .stack::before{content:"";display:block;padding-top:66.6667%} /* 3:2 aspect */
-  .stack > img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    opacity:0;transition:opacity .8s ease;will-change:opacity;user-select:none;-webkit-user-drag:none
+  .tile img{
+    width:100%;height:100%;object-fit:cover;
+    filter:grayscale(100%);
+    transition:filter .35s ease, transform .3s ease;
   }
-  .stack > img.active{opacity:1;z-index:2}
-  .tile:hover .stack > img.active{transform:none} /* بدون أي سكِيل/فلاتر */
-  /* ما فيش تأثير أبيض وأسود على الصور بناءً على طلبك */
+  .tile:hover img{filter:none}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
@@ -111,7 +107,24 @@
 
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
-  /* Lightbox tweaks */
+  /* Lightbox tweaks — center vertically & fit viewport */
+  .lightbox .lb-outerContainer{
+    position:fixed !important;
+    top:50% !important; left:50% !important;
+    transform:translate(-50%,-50%) !important;
+    margin:0 !important;
+  }
+  .lightbox .lb-container{padding:0 !important}
+  .lightbox .lb-image{
+    max-width:calc(100vw - 120px) !important;
+    max-height:calc(100vh - 160px) !important;
+  }
+  @media (max-width:640px){
+    .lightbox .lb-image{
+      max-width:calc(100vw - 32px) !important;
+      max-height:calc(100vh - 32px) !important;
+    }
+  }
   .lightbox .lb-close{display:none!important}
   .lb-data .lb-number{display:none!important}
   </style>
@@ -151,7 +164,7 @@
     <section id="work">
       <h2>Work</h2>
 
-    <div class="grid">
+      <div class="grid">
         <a class="tile" href="assets/work-01.jpg" data-lightbox="zsizart" data-title="Como Gardens Project">
           <img src="assets/work-01.jpg" alt="Como Gardens Project">
         </a>
@@ -221,14 +234,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox-plus-jquery.min.js"></script>
 
   <script>
-    /* Lightbox basic options */
+    /* Lightbox options
+       - شلت positionFromTop لأننا مركّزين بالـ CSS
+       - بتقفل الاسكرول لتجربة أنظف
+    */
     if (window.lightbox) {
       lightbox.option({
         resizeDuration: 200,
         wrapAround: true,
         fadeDuration: 180,
         imageFadeDuration: 180,
-        positionFromTop: 60
+        disableScrolling: true
       });
     }
 
@@ -242,55 +258,7 @@
     function closeMenu(){ body.classList.remove('menu-open'); }
     menuBtn.onclick=openMenu; overlay.onclick=closeMenu; menuClose.onclick=closeMenu;
 
-    /* ===== Stacked slideshow per tile =====
-       - اقرأ قائمة الصور من data-images
-       - ابنِ طبقات IMG داخل .stack
-       - بدّل بينها تلقائياً
-       - حدّث href عشان يفتح الصورة المعروضة في Lightbox
-    */
-    const STACK_INTERVAL = 3000; // كل 3 ثواني
-
-    document.querySelectorAll('.tile').forEach(tile => {
-      const stack = tile.querySelector('.stack');
-      const list  = (tile.getAttribute('data-images') || '').split(',')
-                    .map(s => s.trim()).filter(Boolean);
-
-      // لو مفيش صور معرفة، بلاش نكمل (أمان)
-      if (!stack || list.length === 0) return;
-
-      // ابنِ الصور داخل الstack
-      const imgs = list.map(src => {
-        const img = new Image();
-        img.src = src;
-        stack.appendChild(img);
-        return img;
-      });
-
-      // الحالة الأولى
-      let i = 0;
-      imgs[i].classList.add('active');
-      tile.href = imgs[i].src; // عشان Lightbox
-
-      let timer;
-      const start = () => {
-        timer = setInterval(() => {
-          imgs[i].classList.remove('active');
-          i = (i + 1) % imgs.length;
-          imgs[i].classList.add('active');
-          tile.href = imgs[i].src; // حدّث الرابط للصورة الحالية
-        }, STACK_INTERVAL);
-      };
-      const stop  = () => clearInterval(timer);
-
-      // شغّل/وقّف على حسب الهوفر
-      tile.addEventListener('mouseenter', stop);
-      tile.addEventListener('mouseleave', start);
-
-      // ابدأ التقليب
-      start();
-    });
-
-    /* تقليل سحب/حفظ الصور (مش منع تام) */
+    /* منع سحب الصور (تقليل حفظها) */
     document.addEventListener('dragstart', e => {
       if (e.target.tagName === 'IMG') e.preventDefault();
     });
