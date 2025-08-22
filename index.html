@@ -308,7 +308,7 @@ applyBtn.addEventListener('click',applyFilters);
 resetBtn.addEventListener('click',resetFilters);
 qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-/* ===== Project Viewer (تقليب بالسكرول + cross-fade) ===== */
+/* ===== Project Viewer ===== */
 (function(){
   const viewer  = document.getElementById('pv'),
         imgA    = document.getElementById('pvImageA'),
@@ -316,9 +316,20 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         titleEl = document.getElementById('pvTitle'),
         descEl  = document.getElementById('pvDesc');
 
-  let idx=0, list=[], topIsA=true;
+  // كل المشاريع من التايلات (للتنقل بينها بزرار السهم)
+  const tiles = [...document.querySelectorAll('.tile')];
+  const projects = tiles.map(t => ({
+    base : t.dataset.project,
+    title: t.dataset.title || '',
+    desc : t.dataset.desc  || ''
+  }));
 
-  // تبديل ناعم بين الصورتين
+  let projectIdx = 0;   // مؤشر المشروع الحالي
+  let list = [];        // صور المشروع الحالي
+  let idx = 0;          // مؤشر الصورة الحالية
+  let topIsA = true;    // cross-fade بين صورتين
+
+  // cross-fade helper
   function show(src){
     const top   = topIsA ? imgA : imgB;
     const under = topIsA ? imgB : imgA;
@@ -332,19 +343,16 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   }
 
   function setIdx(i){
-    if(!list.length) return;
+    if (!list.length) return;
     idx = (i + list.length) % list.length;
     show(list[idx]);
-    titleEl.textContent = viewer.dataset.title || '';
-    descEl.textContent  = viewer.dataset.desc  || '';
+    titleEl.textContent = viewer.dataset.title || "";
+    descEl.textContent  = viewer.dataset.desc  || "";
   }
+  const nextImg = () => setIdx(idx+1);
+  const prevImg = () => setIdx(idx-1);
 
-  const next=()=>setIdx(idx+1);
-  const prev=()=>setIdx(idx-1);
-
-  function openPV(){ viewer.classList.add('show'); viewer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-  function closePV(){ viewer.classList.remove('show'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-
+  // حمّل لست صور المشروع (يدعم .list.json أو النمط -01,-02…)
   async function buildList(base, max=20){
     try{
       const res = await fetch(`${base}.list.json`, {cache:'no-store'});
@@ -364,56 +372,75 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     return found.length?found:[tryList[0]];
   }
 
-  document.querySelectorAll('.tile').forEach(tile=>{
+  // افتح مشروع وابدأ من أول صورة
+  async function openProject(pIdx){
+    projectIdx = (pIdx + projects.length) % projects.length;
+    const p = projects[projectIdx];
+    viewer.dataset.title = p.title;
+    viewer.dataset.desc  = p.desc;
+    list = await buildList(p.base);
+    idx = 0;
+    (topIsA ? imgA : imgB).src = list[0];
+    (topIsA ? imgA : imgB).classList.add('is-top');
+    setIdx(0);
+  }
+
+  function openPV(){
+    viewer.classList.add('show');
+    viewer.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  }
+  function closePV(){
+    viewer.classList.remove('show');
+    viewer.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+
+  // click على أي تايل → افتح نفس المشروع
+  tiles.forEach((tile,i)=>{
     tile.addEventListener('click', async ()=>{
-      const base=tile.dataset.project;
-      viewer.dataset.title=tile.dataset.title||'';
-      viewer.dataset.desc =tile.dataset.desc ||'';
-      list = await buildList(base);
-      idx=0;
-      // أول صورة تظهر فورًا
-      (topIsA ? imgA : imgB).src = list[0];
-      (topIsA ? imgA : imgB).classList.add('is-top');
+      // حدّد المشروع الحالي حسب التايل
+      projectIdx = i;
+      await openProject(projectIdx);
       openPV();
     });
   });
 
-  // Click خارج المحتوى يغلق
+  // اضغط برة الصورة → اقفل
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
-  viewer.querySelector('.pv__prev').addEventListener('click',prev);
-  viewer.querySelector('.pv__next').addEventListener('click',next);
 
-  // Keyboard
+  // أزرار السهم: تغيّر "المشروع" (مش الصورة)
+  const btnPrev=viewer.querySelector('.pv__prev'),
+        btnNext=viewer.querySelector('.pv__next');
+  btnPrev.addEventListener('click',()=>openProject(projectIdx-1));
+  btnNext.addEventListener('click',()=>openProject(projectIdx+1));
+
+  // الكيبورد: يغيّر الصور داخل نفس المشروع
   document.addEventListener('keydown',e=>{
     if(!viewer.classList.contains('show'))return;
     if(e.key==='Escape') closePV();
-    if(e.key==='ArrowRight'||e.key==='PageDown') next();
-    if(e.key==='ArrowLeft' ||e.key==='PageUp')   prev();
+    if(e.key==='ArrowRight'||e.key==='PageDown') nextImg();
+    if(e.key==='ArrowLeft' ||e.key==='PageUp')   prevImg();
   });
 
-  // Scroll: نجمع النبضات + تهدئة
-  let wheelCooldown = false;
-  let wheelBurstTimer = null;
-  let wheelDir = 0;
-
+  // Scroll داخل العارض: يغيّر الصور بسلاسة داخل نفس المشروع
+  let wheelCooldown = false, wheelBurstTimer = null, wheelDir = 0;
   viewer.addEventListener('wheel', (e) => {
     if (!viewer.classList.contains('show')) return;
     e.preventDefault();
-
     wheelDir += Math.sign(e.deltaY || e.deltaX);
-
     clearTimeout(wheelBurstTimer);
     wheelBurstTimer = setTimeout(() => {
       if (wheelCooldown) { wheelDir = 0; return; }
-      if (wheelDir > 0) next();
-      else if (wheelDir < 0) prev();
+      if (wheelDir > 0) nextImg();
+      else if (wheelDir < 0) prevImg();
       wheelDir = 0;
       wheelCooldown = true;
       setTimeout(() => (wheelCooldown = false), 650);
     }, 90);
   }, { passive: false });
 
-  // سوايب للموبايل
+  // Swipe عمودي للموبايل: يغيّر الصور داخل المشروع
   let startY=0, swiping=false;
   viewer.addEventListener('touchstart',e=>{
     if(!viewer.classList.contains('show'))return;
@@ -422,7 +449,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   viewer.addEventListener('touchend',e=>{
     if(!swiping)return;
     const dy=e.changedTouches[0].clientY-startY; swiping=false;
-    if(Math.abs(dy)>40){ dy<0?next():prev(); }
+    if(Math.abs(dy)>40){ dy<0?nextImg():prevImg(); }
   },{passive:true});
 })();
   
