@@ -28,61 +28,86 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-  /* Header */
+  /* ================= Header ================ */
   /* Header Layout */
-.header-layout{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:relative;
-}
-
-/* Left Brand */
-.left-brand{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:6px;
-}
-.left-brand .logo-small{
-  height:28px;
-  width:auto;
-}
-.brand-gradient{
-  font-size:14px;
-  font-weight:700;
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* Center Logo */
-.center-logo{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-}
-.center-logo .logo-center{
-  height:38px;
-  width:auto;
-}
-  header{position:sticky;top:0;z-index:70;background:rgba(15,17,21,.65);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #1a1f27;}
-  .nav-row{display:flex;align-items:center;justify-content:space-between}
-  .brand{margin:0;font-size:20px;letter-spacing:.08em}
-  .actions{display:flex;gap:10px;align-items:center}
-  .menu-btn,.filter-btn{
-    height:36px;border:1px solid #2a3140;border-radius:10px;background:transparent;color:#cfe2ff;
-    display:flex;align-items:center;gap:8px;padding:0 12px;cursor:pointer
+  .header-layout{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
   }
-  .menu-btn{width:44px;justify-content:center}
+
+  /* Left Brand */
+  .left-brand{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+  .left-brand .logo-small{
+    height:40px;     /* كان 28px */
+    width:auto;
+  }
+  .brand-gradient{
+    font-size:16px;  /* كان 14px */
+    font-weight:700;
+    letter-spacing:.06em;
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+
+  /* Center Logo */
+  .center-logo{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+  }
+  .center-logo .logo-center{
+    height:56px;   /* كان 38px */
+    width:auto;
+  }
+
+  /* شريط الهيدر نفسه */
+  header{
+    position:sticky;
+    top:0;
+    z-index:70;
+    /* أغمق من الخلفية + ظل */
+    background:rgba(5,7,9,.92);
+    backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid #0e1116;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+  }
+
+  .nav-row{display:flex;align-items:center;justify-content:space-between}
+  .actions{display:flex;gap:12px;align-items:center}
+
+  /* أزرار الهيدر أكبر */
+  .menu-btn,.filter-btn{
+    height:44px;                      /* كان 36px */
+    border:1px solid #2a3140;
+    border-radius:12px;               /* كان 10px */
+    background:transparent;
+    color:#cfe2ff;
+    display:flex;align-items:center;gap:10px;
+    padding:0 16px;                   /* كان 12px */
+    cursor:pointer;
+    font-weight:600;
+  }
+  .menu-btn{width:48px;justify-content:center}
+
   .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
-    content:"";display:block;width:18px;height:2px;background:#cfe2ff;border-radius:1px;position:relative;transition:.25s}
-  .menu-btn .bars::before{position:absolute;top:-6px}
-  .menu-btn .bars::after{position:absolute;top:6px}
+    content:"";display:block;width:20px;height:2.5px;   /* أكبر شوية */
+    background:#cfe2ff;border-radius:2px;position:relative;transition:.25s
+  }
+  .menu-btn .bars::before{position:absolute;top:-7px}
+  .menu-btn .bars::after{position:absolute;top:7px}
   .menu-open .menu-btn .bars{transform:rotate(45deg)}
   .menu-open .menu-btn .bars::before{opacity:0}
-  .menu-open .menu-btn .bars::after{transform:rotate(-90deg) translate(-6px,0)}
+  .menu-open .menu-btn .bars::after{transform:rotate(-90deg) translate(-7px,0)}
 
+  /* Overlay + side menu (كما هي) */
   .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
   .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
     background:rgba(0,0,0,.75);border-left:1px solid #1a1f27;
@@ -127,8 +152,18 @@
   .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
-  .tile{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230;cursor:pointer}
-  .tile img{filter:grayscale(100%);transition:filter .35s ease}
+  .tile{
+    position:relative;overflow:hidden;border-radius:var(--radius);
+    background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230;cursor:pointer
+  }
+  /* الصور زي ما هي (بدون قص) */
+  .tile img{
+    filter:grayscale(100%);
+    transition:filter .35s ease;
+    width:100%;
+    height:auto;
+    object-fit:contain;
+  }
   .tile:hover img{filter:none}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
@@ -167,6 +202,15 @@
   .pv__prev{left:12px}
   .pv__next{right:12px}
   @media(max-width:700px){.pv__nav{display:none}}
+
+  /* Responsive tweaks للهيدر */
+  @media(max-width:700px){
+    .left-brand .logo-small{height:30px}
+    .brand-gradient{font-size:14px}
+    .center-logo .logo-center{height:44px}
+    .menu-btn,.filter-btn{height:40px;padding:0 14px}
+    .menu-btn{width:44px}
+  }
   </style>
 </head>
 <body>
@@ -188,9 +232,9 @@
       <button class="filter-btn" id="filterToggle" title="Filters/Search">Search & Filter</button>
       <button class="menu-btn" id="menuBtn" title="Menu"><span class="bars"></span></button>
     </div>
-    
   </div>
 </header>
+
 <div class="overlay" id="overlay"></div>
 <aside class="menu-panel" id="menuPanel">
   <div class="menu-header">
@@ -231,7 +275,6 @@
   <section id="work">
     <h2>Work</h2>
     <div class="grid" id="grid">
-      <!-- data-project = المسار بدون الامتداد، وبقية الصور تتبع نمط -01,-02,... -->
       <div class="tile" data-project="assets/work-01" data-title="Como Gardens Project" data-desc="Como Gardens Project — modern villas surrounded by greenery." data-tags="exterior">
         <img src="assets/work-01.jpg" alt="Como Gardens Project">
       </div>
@@ -333,10 +376,8 @@ function applyFilters(){
   const wantInt=chkInt.checked, wantExt=chkExt.checked;
   tiles.forEach(tile=>{
     const name=(tile.dataset.title||'').toLowerCase();
-    const tags=(tile.dataset.tags||'').toLowerCase(); // "interior" / "exterior"
-    // نص البحث
+    const tags=(tile.dataset.tags||'').toLowerCase();
     const matchText = q ? name.includes(q) : true;
-    // الفئات
     let matchCat = true;
     if (wantInt || wantExt){
       matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior'));
@@ -350,7 +391,6 @@ function resetFilters(){
 }
 applyBtn.addEventListener('click',applyFilters);
 resetBtn.addEventListener('click',resetFilters);
-// Enter في البحث = Apply
 qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
 /* ===== Project Viewer ===== */
@@ -375,7 +415,6 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   function closePV(){ viewer.classList.remove('show'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
   async function buildSequence(base, max=20){
-    // base.jpg, base-01.jpg, base-02.jpg ...
     const tryList=[`${base}.jpg`];
     for(let i=1;i<=max;i++) tryList.push(`${base}-${String(i).padStart(2,'0')}.jpg`);
     const checks = tryList.map(src=>new Promise(res=>{
@@ -387,7 +426,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
 
   document.querySelectorAll('.tile').forEach(tile=>{
     tile.addEventListener('click', async ()=>{
-      const base=tile.dataset.project;         // e.g. assets/work-01
+      const base=tile.dataset.project;
       viewer.dataset.title=tile.dataset.title;
       viewer.dataset.desc =tile.dataset.desc;
       list = await buildSequence(base);
@@ -396,16 +435,13 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     });
   });
 
-  // Close on backdrop
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
 
-  // Nav buttons
   const btnPrev=viewer.querySelector('.pv__prev'),
         btnNext=viewer.querySelector('.pv__next');
   btnPrev.addEventListener('click',prev);
   btnNext.addEventListener('click',next);
 
-  // Keyboard
   document.addEventListener('keydown',e=>{
     if(!viewer.classList.contains('show'))return;
     if(e.key==='Escape') closePV();
@@ -413,7 +449,6 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if(e.key==='ArrowLeft')  prev();
   });
 
-  // Wheel (like archvizartist)
   let wheelLock=false;
   viewer.addEventListener('wheel',e=>{
     if(!viewer.classList.contains('show'))return;
@@ -425,7 +460,6 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     setTimeout(()=>wheelLock=false,420);
   },{passive:false});
 
-  // Touch swipe
   let startX=0,startY=0,swiping=false;
   viewer.addEventListener('touchstart',e=>{
     if(!viewer.classList.contains('show'))return;
