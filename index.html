@@ -29,6 +29,43 @@
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
   /* Header */
+  /* Header Layout */
+.header-layout{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:relative;
+}
+
+/* Left Brand */
+.left-brand{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:6px;
+}
+.left-brand .logo-small{
+  height:28px;
+  width:auto;
+}
+.brand-gradient{
+  font-size:14px;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* Center Logo */
+.center-logo{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+}
+.center-logo .logo-center{
+  height:38px;
+  width:auto;
+}
   header{position:sticky;top:0;z-index:70;background:rgba(15,17,21,.65);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #1a1f27;}
   .nav-row{display:flex;align-items:center;justify-content:space-between}
   .brand{margin:0;font-size:20px;letter-spacing:.08em}
@@ -134,12 +171,24 @@
 </head>
 <body>
 <header>
-  <div class="wrap nav-row">
-    <h1 class="brand">ZSIZART</h1>
+  <div class="wrap nav-row header-layout">
+    <!-- Left -->
+    <div class="left-brand">
+      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo-small">
+      <span class="brand-gradient">ZSIZART</span>
+    </div>
+
+    <!-- Center -->
+    <div class="center-logo">
+      <img src="assets/logo.png" alt="ZSIZART Logo Large" class="logo-center">
+    </div>
+
+    <!-- Right -->
     <div class="actions">
       <button class="filter-btn" id="filterToggle" title="Filters/Search">Search & Filter</button>
       <button class="menu-btn" id="menuBtn" title="Menu"><span class="bars"></span></button>
     </div>
+    
   </div>
 </header>
 <div class="overlay" id="overlay"></div>
