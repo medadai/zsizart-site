@@ -33,7 +33,7 @@
   .reveal.del-4{transition-delay:.24s}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
 
-  /* === Left/Right variants (الجديدة) === */
+  /* === Left/Right reveal variants (fallback) === */
   .reveal-left{opacity:0;transform:translateX(-40px)}
   .reveal-left.show{opacity:1;transform:translateX(0)}
   .reveal-right{opacity:0;transform:translateX(40px)}
@@ -49,10 +49,8 @@
   header{position:sticky;top:0;z-index:70;background:rgba(5,7,9,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #0e1116;box-shadow:0 8px 30px rgba(0,0,0,.35);transition:transform .4s ease}
   header .wrap{padding:10px 20px}
   .header-layout{display:flex;align-items:center;justify-content:space-between;position:relative}
-  .left-brand{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
-  .left-brand .logo-small{height:24px;width:auto}
-  .brand-gradient{font-size:28px;line-height:1;font-weight:800;letter-spacing:.06em;background:linear-gradient(90deg,var(--accent1),var(--accent2),#6ee7ff,var(--accent1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:brandSlide 8s linear infinite}
-  @keyframes brandSlide{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+  /* hide left brand (logo + wordmark) so يبقى اللوجو في النص فقط */
+  .left-brand{display:none}
   .center-logo{position:absolute;left:50%;transform:translateX(-50%)}
   .center-logo .logo-center{height:34px;width:auto}
   .nav-row{display:flex;align-items:center;justify-content:space-between}
@@ -85,9 +83,13 @@
   .search-input{flex:1;min-width:220px;padding:10px 12px;border:1px solid #2a3140;border-radius:10px;background:#0c0e12;color:#e9edf0}
   .filter-actions{margin-left:auto;display:flex;gap:10px}
   .btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#e9edf0;font-weight:600;cursor:pointer}
-  .btn.primary{background:#1a68ff;border-color:#1a68ff}
-  .btn.ghost{background:transparent}
-  .hint{margin-top:8px;color:#9fb3c8;font-size:13px}
+  /* primary button color -> gradient to match brand */
+  .btn.primary{
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    border-color:transparent;
+    color:#fff;
+  }
+  .btn.primary:hover{filter:brightness(1.06)}
 
   /* Hero */
   .hero{padding:0 0 8px}
@@ -110,8 +112,9 @@
   form{display:grid;gap:10px}
   input,textarea,button{font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px}
   textarea{min-height:120px;resize:vertical}
-  button{background:#1a68ff;border-color:#1a68ff;cursor:pointer;font-weight:600}
-  button:hover{filter:brightness(1.08)}
+  /* contact submit button -> brand gradient */
+  button{background:linear-gradient(135deg,var(--accent1),var(--accent2));border-color:transparent;color:#fff;cursor:pointer;font-weight:600}
+  button:hover{filter:brightness(1.06)}
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
   /* ===== Project Viewer (fullscreen) ===== */
@@ -132,36 +135,34 @@
 
   /* Small-screen tweaks */
   @media(max-width:700px){
-    .left-brand .logo-small{height:22px}
-    .brand-gradient{font-size:24px}
     .center-logo .logo-center{height:28px}
     .menu-btn,.filter-btn{height:32px}
   }
-  
-  /* ===== Logo & wordmark animations ===== */
-  .logo-small{ transform-origin: 20% 50%; animation: markBreathe 6s ease-in-out infinite; }
-  @keyframes markBreathe{ 0%,100%{transform:translateY(0) rotate(0deg) scale(1)} 50%{transform:translateY(-0.5px) rotate(-0.6deg) scale(1.01)} }
-  .brand-sheen,.logo-sheen{ position:relative; display:inline-block; }
-  .brand-sheen::after,.logo-sheen::after{ content:""; position:absolute; inset:0; background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.22) 45%, transparent 60%); transform:translateX(-120%); pointer-events:none; mix-blend-mode:screen; }
-  .sweep{ animation:sweep 1.2s ease-out forwards; }
-  @keyframes sweep{ to{ transform: translateX(120%);} }
-  .left-brand:hover .logo-small{ animation:none; transform:translateX(-1px) rotate(-2deg) scale(1.02); transition:.25s }
-  .left-brand:hover .brand-gradient{ transform:translateX(1px); transition:.25s }
-  .wordmark{ position:relative; }
-  .wordmark .art{ background: inherit; background-size: inherit; background-position: inherit; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; position: relative; }
-  .wordmark .art::after{ content:""; position:absolute; inset:0 0 .1em 0; background:linear-gradient(90deg,#ffd16633,#ffffff55,#ffd16633); border-radius:.2em; filter:blur(4px); opacity:0; animation:artGlow 12s ease-in-out infinite; }
-  @keyframes artGlow{ 0%,85%{opacity:0} 90%{opacity:1} 100%{opacity:0} }
-  @media (prefers-reduced-motion:reduce){
-    .logo-small{ animation:none !important; transform:none !important }
-    .brand-sheen::after,.logo-sheen::after{ display:none }
-    .wordmark .art::after{ display:none }
+
+  /* ===== Scroll-scrub (interactive with scroll) ===== */
+  .scrub{
+    --p: 0;         /* progress 0..1 */
+    --dx: 0px;
+    --dy: 24px;
+    opacity: calc(.2 + .8*var(--p));
+    transform:
+      translate3d(calc((1 - var(--p)) * var(--dx)),
+                  calc((1 - var(--p)) * var(--dy)), 0)
+      scale(calc(.96 + .04*var(--p)));
+    transition:none!important;
+    will-change:transform,opacity;
   }
+  .scrub-left  { --dx:-120px; --dy:0px; }
+  .scrub-right { --dx: 120px; --dy:0px; }
+  .reveal.scrub{ transition:none!important; } /* منع تعارض */
+
   </style>
 </head>
 <body>
 <header>
   <div class="wrap nav-row header-layout">
     <div class="left-brand">
+      <!-- hidden by CSS -->
       <img src="assets/logo.png" alt="ZSIZART Logo" class="logo-small logo-sheen">
       <span class="brand-gradient brand-sheen wordmark">ZSIZ<span class="art">ART</span></span>
     </div>
@@ -236,9 +237,9 @@
   <section id="about">
     <h2>About</h2>
     <div class="about">
-      <!-- هنا التأثير الجديد -->
-      <img class="me reveal reveal-left del-1" src="assets/me.jpg" alt="Mahmoud Refaey" />
-      <div class="card reveal reveal-right del-2">
+      <!-- تأثير scrub: الصورة من الشمال والنص من اليمين -->
+      <img class="me scrub scrub-left" src="assets/me.jpg" alt="Mahmoud Refaey" />
+      <div class="card scrub scrub-right">
         <p>Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling. I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look-dev while keeping a high creative bar.</p>
         <p>My process blends cinematic composition, precise lighting, and material realism to deliver emotionally engaging visuals. I collaborate smoothly onsite and remotely with architects, designers, and developers, taking projects from early concept to polished marketing imagery with consistent quality and reliability.</p>
       </div>
@@ -416,9 +417,9 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     else if (accum <= -STEP) { prevImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 500); }
   }, { passive: false });
 
-  // Reveal-on-scroll targets
+  // Reveal-on-scroll targets (fade-up)
   (function(){
-    const autoTargets = ['.hero h2','.hero p','section h2','.grid .tile','.about .me','.about .card','#contact .card'];
+    const autoTargets = ['.hero h2','.hero p','section h2','.grid .tile','#contact .card'];
     autoTargets.forEach(sel=>{ document.querySelectorAll(sel).forEach(el=>{ if(!el.classList.contains('reveal')) el.classList.add('reveal'); }); });
     document.querySelectorAll('.grid').forEach(grid=>{ const its=[...grid.querySelectorAll('.tile.reveal')]; its.forEach((t,i)=> t.classList.add(`del-${(i%4)+1}`)); });
     const io = new IntersectionObserver((entries, obs)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('show'); obs.unobserve(entry.target);} }); },{root:null,rootMargin:'0px 0px -10% 0px',threshold:.15});
@@ -444,12 +445,39 @@ window.addEventListener('scroll', () => { if(window.scrollY > lastScrollY){ head
 </script>
 
 <script>
-// Light sweep trigger on load and every 10s
+/* ==== Scroll-scrub engine ==== */
+(function(){
+  const els = [...document.querySelectorAll('.scrub')];
+  if(!els.length) return;
+  let ticking = false;
+
+  function update(){
+    const vh = window.innerHeight;
+    const start = vh * 0.90;   // يبدأ بدري (أبطأ)
+    const end   = vh * 0.25;   // ينتهي متأخر (مسافة أطول)
+
+    els.forEach(el=>{
+      const r = el.getBoundingClientRect();
+      const center = r.top + r.height/2;
+      let p = (start - center) / (start - end);
+      p = Math.max(0, Math.min(1, p));
+      p = Math.pow(p, 0.85);   // easing خفيف
+      el.style.setProperty('--p', p.toFixed(3));
+    });
+
+    ticking = false;
+  }
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', update, { passive:true });
+  update();
+})();
+
+/* Light sweep trigger every 10s (center logo kept) */
 function runSheen(){
   document.querySelectorAll('.brand-sheen, .logo-sheen').forEach(el=>{
-    el.classList.remove('sweep');
-    void el.offsetWidth;
-    el.classList.add('sweep');
+    el.classList.remove('sweep'); void el.offsetWidth; el.classList.add('sweep');
   });
 }
 window.addEventListener('load', runSheen);
