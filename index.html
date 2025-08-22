@@ -115,11 +115,17 @@
 
   .pv__info{position:absolute;left:0;right:0;bottom:0;padding:22px 28px;font-size:15px;line-height:1.5;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.7);transform:translateY(100%);opacity:0;transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease)}
   .pv.show .pv__info{transform:translateY(0);opacity:1}
-  .pv__nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:72px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(15,18,25,.55);backdrop-filter:blur(2px);color:#e9edf0;font-size:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:filter .2s ease}
-  .pv__nav:hover{filter:brightness(1.15)}
-  .pv__prev{left:12px}
-  .pv__next{right:12px}
-  @media(max-width:700px){.pv__nav{display:none}}
+ .pv__nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:auto;height:auto;padding:8px 10px;     /* مساحة لمس من غير صندوق */
+  border:none;background:transparent;box-shadow:none;
+  color:#fff;font-size:56px;line-height:1;cursor:pointer;user-select:none;
+  text-shadow:0 4px 18px rgba(0,0,0,.55);
+}
+.pv__nav:hover{filter:none;opacity:.9}
+.pv__prev{left:12px}
+.pv__next{right:12px}
+@media(max-width:700px){.pv__nav{display:none}}
 
   /* Responsive tweaks للهيدر */
   @media(max-width:700px){
