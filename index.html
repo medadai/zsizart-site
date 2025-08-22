@@ -129,6 +129,20 @@
     .menu-btn,.filter-btn{height:40px;padding:0 14px}
     .menu-btn{width:44px}
   }
+    /* ==== Project Viewer Transition ==== */
+.pv__image img {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+}
+.pv__image img.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==== Header scroll hide/show ==== */
+header {
+  transition: transform 0.4s ease;
+}
   </style>
 </head>
 <body>
@@ -329,14 +343,16 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   }
 
   function setIdx(i){
-    if(!list.length) return;
-    idx=(i+list.length)%list.length;
-    show(list[idx]);
-    const t = viewer.dataset.title || '';
-    titleEl.textContent = t;
-    descEl.textContent  = viewer.dataset.desc || '';
-    (topIsA ? imgA : imgB).alt = `${t ? t+' — ' : ''}${idx+1}/${list.length}`;
-  }
+  idx=(i+list.length)%list.length;
+  imgEl.classList.remove("show");
+  setTimeout(()=>{
+    imgEl.src=list[idx];
+    imgEl.alt=(viewer.dataset.title||'Project image')+' — '+(idx+1);
+    imgEl.onload=()=> imgEl.classList.add("show");
+    titleEl.textContent=viewer.dataset.title||"";
+    descEl.textContent=viewer.dataset.desc||"";
+  },200);
+}
   const next=()=>setIdx(idx+1);
   const prev=()=>setIdx(idx-1);
 
@@ -426,6 +442,21 @@ viewer.addEventListener('wheel', (e) => {
     if(Math.abs(dy)>40){ dy<0?next():prev(); }
   },{passive:true});
 })();
+  /* ==== Hide Header on Scroll ==== */
+let lastScrollY = window.scrollY;
+const header = document.querySelector("header");
+
+window.addEventListener("scroll", () => {
+  if(window.scrollY > lastScrollY){
+    // Scroll down → hide
+    header.style.transform = "translateY(-100%)";
+  } else {
+    // Scroll up → show
+    header.style.transform = "translateY(0)";
+  }
+  lastScrollY = window.scrollY;
+});
+
 </script>
 
 <!-- EmailJS -->
