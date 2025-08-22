@@ -7,69 +7,46 @@
 
   <style>
   :root{
-  --bg:#0b0d0d;
-  --card:#141414;
-  --ink:#e9edf0;
-  --muted:#9fb3c8;
-  --accent1:#ff7a18;
-  --accent2:#a855f7;
-  --radius:18px;
-  --shadow:0 12px 40px rgba(0,0,0,.35);
-  --max:1160px;
+    --bg:#0b0d0d;
+    --card:#141414;
+    --ink:#e9edf0;
+    --muted:#9fb3c8;
+    --accent1:#ff7a18;
+    --accent2:#a855f7;
+    --radius:18px;
+    --shadow:0 12px 40px rgba(0,0,0,.35);
+    --max:1160px;
 
-  /* Project Viewer motion */
-  --pv-dur:.45s;
-  --pv-ease:cubic-bezier(.4,.14,.3,1);
+    /* Project Viewer motion */
+    --pv-dur:.45s;
+    --pv-ease:cubic-bezier(.4,.14,.3,1);
 
-  /* Scroll Reveal vars */
-  --rev-dur:.7s;
-  --rev-ease:cubic-bezier(.2,.65,.15,1);
-}
+    /* Scroll Reveal vars */
+    --rev-dur:.7s;
+    --rev-ease:cubic-bezier(.2,.65,.15,1);
+  }
 
-/* === Scroll Reveal === */
-.reveal{
-  opacity:0;
-  transform:translateY(24px) scale(.98);
-  will-change:opacity,transform;
-  transition:
-    opacity var(--rev-dur) var(--rev-ease),
-    transform var(--rev-dur) var(--rev-ease);
-}
-.reveal.show{
-  opacity:1;
-  transform:translateY(0) scale(1);
-}
-.reveal.del-1{transition-delay:.06s}
-.reveal.del-2{transition-delay:.12s}
-.reveal.del-3{transition-delay:.18s}
-.reveal.del-4{transition-delay:.24s}
+  /* === Scroll Reveal === */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px) scale(.98);
+    will-change:opacity,transform;
+    transition:
+      opacity var(--rev-dur) var(--rev-ease),
+      transform var(--rev-dur) var(--rev-ease);
+  }
+  .reveal.show{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+  .reveal.del-1{transition-delay:.06s}
+  .reveal.del-2{transition-delay:.12s}
+  .reveal.del-3{transition-delay:.18s}
+  .reveal.del-4{transition-delay:.24s}
 
-/* احترام تفضيل تقليل الحركة */
-@media (prefers-reduced-motion:reduce){
-  .reveal{opacity:1!important;transform:none!important;transition:none!important}
-}
-
-  opacity:0;
-  transform: translateY(24px) scale(.98);
-  will-change: opacity, transform;
-  transition:
-    opacity var(--rev-dur) var(--rev-ease),
-    transform var(--rev-dur) var(--rev-ease);
-}
-.reveal.show{
-  opacity:1;
-  transform: translateY(0) scale(1);
-}
-.reveal.del-1{ transition-delay: .06s }
-.reveal.del-2{ transition-delay: .12s }
-.reveal.del-3{ transition-delay: .18s }
-.reveal.del-4{ transition-delay: .24s }
-
-/* احترام تفضيل تقليل الحركة */
-@media (prefers-reduced-motion: reduce){
-  .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
-}
-
+  /* احترام تفضيل تقليل الحركة */
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1!important;transform:none!important;transition:none!important}
   }
 
   *{box-sizing:border-box}
@@ -270,8 +247,8 @@
   <section id="about">
     <h2>About</h2>
     <div class="about">
-      <img class="me" src="assets/me.jpg" alt="Mahmoud Refaey" />
-      <div class="card">
+      <img class="me reveal del-1" src="assets/me.jpg" alt="Mahmoud Refaey" />
+      <div class="card reveal del-2">
         <p>Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling.
           I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look-dev
           while keeping a high creative bar.</p>
@@ -308,7 +285,6 @@
 <!-- Project Viewer -->
 <div class="pv" id="pv" aria-hidden="true">
   <div class="pv__content">
-    <!-- صورتين فوق بعض لـ cross-fade -->
     <div class="pv__image">
       <img id="pvImageA" class="pv__img is-top" alt="">
       <img id="pvImageB" class="pv__img" alt="">
@@ -540,6 +516,41 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
       prevImg();
     }
   },{passive:true});
+
+  /* ===== Scroll Reveal (fade-up + stagger) ===== */
+  (function(){
+    const autoTargets = [
+      '.hero h2', '.hero p',
+      'section h2',
+      '.grid .tile',
+      '.about .me', '.about .card',
+      '#contact .card'
+    ];
+
+    autoTargets.forEach(sel=>{
+      document.querySelectorAll(sel).forEach(el=>{
+        if(!el.classList.contains('reveal')) el.classList.add('reveal');
+      });
+    });
+
+    // Stagger للبلاطات
+    document.querySelectorAll('.grid').forEach(grid=>{
+      const its = [...grid.querySelectorAll('.tile.reveal')];
+      its.forEach((t,i)=> t.classList.add(`del-${(i%4)+1}`));
+    });
+
+    const io = new IntersectionObserver((entries, obs)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          obs.unobserve(entry.target);
+        }
+      });
+    },{root:null,rootMargin:'0px 0px -10% 0px',threshold:.15});
+
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+  })();
+
 })();
 
 /* ==== Hide Header on Scroll ==== */
@@ -553,46 +564,6 @@ window.addEventListener("scroll", () => {
   }
   lastScrollY = window.scrollY;
 });
-</script>
-  /* ===== Scroll Reveal (fade-up + stagger) ===== */
-(function(){
-  // العناصر المستهدفة تلقائيًا
-  const autoTargets = [
-    '.hero h2', '.hero p',
-    'section h2',
-    '.grid .tile',
-    '.about .me', '.about .card',
-    '#contact .card'
-  ];
-
-  // أضف كلاس reveal لو مش مضاف
-  autoTargets.forEach(sel=>{
-    document.querySelectorAll(sel).forEach(el=>{
-      if(!el.classList.contains('reveal')) el.classList.add('reveal');
-    });
-  });
-
-  // Stagger للبلاطات داخل كل grid
-  document.querySelectorAll('.grid').forEach(grid=>{
-    const tiles = [...grid.querySelectorAll('.tile.reveal')];
-    tiles.forEach((t,i)=> t.classList.add(`del-${(i%4)+1}`));
-  });
-
-  const io = new IntersectionObserver((entries, obs)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('show');
-        obs.unobserve(entry.target); // once
-      }
-    });
-  },{
-    root: null,
-    rootMargin: '0px 0px -10% 0px',
-    threshold: 0.15
-  });
-
-  document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
-})();
 </script>
 
 <!-- EmailJS -->
