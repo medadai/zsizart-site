@@ -29,90 +29,25 @@
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
   /* ================= Header ================ */
-  /* Header Layout */
-  .header-layout{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:relative;
-  }
-
-  /* Left Brand */
-  .left-brand{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-  }
-  .left-brand .logo-small{
-    height:80px;     /* كان 28px */
-    width:auto;
-  }
-  .brand-gradient{
-    font-size:16px;  /* كان 14px */
-    font-weight:700;
-    letter-spacing:.06em;
-    background:linear-gradient(135deg,var(--accent1),var(--accent2));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
-
-  /* Center Logo */
-  .center-logo{
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-  }
-  .center-logo .logo-center{
-    height:56px;   /* كان 38px */
-    width:auto;
-  }
-
-  /* شريط الهيدر نفسه */
-  header{
-    position:sticky;
-    top:0;
-    z-index:70;
-    /* أغمق من الخلفية + ظل */
-    background:rgba(5,7,9,.92);
-    backdrop-filter:saturate(160%) blur(10px);
-    border-bottom:1px solid #0e1116;
-    box-shadow:0 8px 30px rgba(0,0,0,.35);
-  }
-
+  .header-layout{display:flex;align-items:center;justify-content:space-between;position:relative}
+  .left-brand{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .left-brand .logo-small{height:80px;width:auto}
+  .brand-gradient{font-size:16px;font-weight:700;letter-spacing:.06em;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .center-logo{position:absolute;left:50%;transform:translateX(-50%)}
+  .center-logo .logo-center{height:56px;width:auto}
+  header{position:sticky;top:0;z-index:70;background:rgba(5,7,9,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #0e1116;box-shadow:0 8px 30px rgba(0,0,0,.35)}
   .nav-row{display:flex;align-items:center;justify-content:space-between}
   .actions{display:flex;gap:12px;align-items:center}
-
-  /* أزرار الهيدر أكبر */
-  .menu-btn,.filter-btn{
-    height:44px;                      /* كان 36px */
-    border:1px solid #2a3140;
-    border-radius:12px;               /* كان 10px */
-    background:transparent;
-    color:#cfe2ff;
-    display:flex;align-items:center;gap:10px;
-    padding:0 16px;                   /* كان 12px */
-    cursor:pointer;
-    font-weight:600;
-  }
+  .menu-btn,.filter-btn{height:44px;border:1px solid #2a3140;border-radius:12px;background:transparent;color:#cfe2ff;display:flex;align-items:center;gap:10px;padding:0 16px;cursor:pointer;font-weight:600}
   .menu-btn{width:48px;justify-content:center}
-
-  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
-    content:"";display:block;width:20px;height:2.5px;   /* أكبر شوية */
-    background:#cfe2ff;border-radius:2px;position:relative;transition:.25s
-  }
+  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:20px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
   .menu-btn .bars::before{position:absolute;top:-7px}
   .menu-btn .bars::after{position:absolute;top:7px}
   .menu-open .menu-btn .bars{transform:rotate(45deg)}
   .menu-open .menu-btn .bars::before{opacity:0}
   .menu-open .menu-btn .bars::after{transform:rotate(-90deg) translate(-7px,0)}
-
-  /* Overlay + side menu (كما هي) */
   .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
-  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
-    background:rgba(0,0,0,.75);border-left:1px solid #1a1f27;
-    box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;
-    z-index:90;display:flex;flex-direction:column}
+  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);background:rgba(0,0,0,.75);border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column}
   .menu-open .overlay{opacity:1;pointer-events:auto}
   .menu-open .menu-panel{transform:translateX(0)}
   .menu-header{display:flex;justify-content:space-between;padding:18px;border-bottom:1px solid #1a1f27}
@@ -123,22 +58,14 @@
   .menu-links a:hover{color:var(--accent1)}
 
   /* Filter Panel (Search Bar) */
-  .filter-panel{
-    position:sticky; top:64px; z-index:60; margin:18px 0 0 0;
-    background:rgba(0,0,0,.55); border:1px solid #1a1f27; border-radius:14px; padding:14px;
-    display:none;
-  }
+  .filter-panel{position:sticky; top:64px; z-index:60; margin:18px 0 0 0;background:rgba(0,0,0,.55); border:1px solid #1a1f27; border-radius:14px; padding:14px;display:none}
   .filter-panel.show{display:block}
   .filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-  .chip{
-    display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #2a3140;border-radius:12px;background:#0c0e12;color:#e9edf0;cursor:pointer;user-select:none
-  }
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #2a3140;border-radius:12px;background:#0c0e12;color:#e9edf0;cursor:pointer;user-select:none}
   .chip input{accent-color:#1a68ff}
   .search-input{flex:1;min-width:220px;padding:10px 12px;border:1px solid #2a3140;border-radius:10px;background:#0c0e12;color:#e9edf0}
   .filter-actions{margin-left:auto;display:flex;gap:10px}
-  .btn{
-    padding:10px 14px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#e9edf0;font-weight:600;cursor:pointer
-  }
+  .btn{padding:10px 14px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#e9edf0;font-weight:600;cursor:pointer}
   .btn.primary{background:#1a68ff;border-color:#1a68ff}
   .btn.ghost{background:transparent}
   .hint{margin-top:8px;color:#9fb3c8;font-size:13px}
@@ -152,18 +79,8 @@
   .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
-  .tile{
-    position:relative;overflow:hidden;border-radius:var(--radius);
-    background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230;cursor:pointer
-  }
-  /* الصور زي ما هي (بدون قص) */
-  .tile img{
-    filter:grayscale(100%);
-    transition:filter .35s ease;
-    width:100%;
-    height:auto;
-    object-fit:contain;
-  }
+  .tile{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230;cursor:pointer}
+  .tile img{filter:grayscale(100%);transition:filter .35s ease;width:100%;height:auto;object-fit:contain}
   .tile:hover img{filter:none}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
@@ -171,69 +88,38 @@
   @media(max-width:860px){.about{grid-template-columns:1fr}}
   .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
   .me{aspect-ratio:1/1;border-radius:50%;border:6px solid #0b0d0d;outline:1px solid #1a1f27}
-
   form{display:grid;gap:10px}
   input,textarea,button{font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px}
   textarea{min-height:120px;resize:vertical}
   button{background:#1a68ff;border-color:#1a68ff;cursor:pointer;font-weight:600}
   button:hover{filter:brightness(1.08)}
-
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
-  /* Project Viewer (fullscreen) */
-.pv{
-  position:fixed;inset:0;z-index:200;background:#000;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease);
-}
-.pv.show{opacity:1;pointer-events:auto}
+  /* ===== Project Viewer (fullscreen) ===== */
+  .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
+  .pv.show{opacity:1;pointer-events:auto}
+  .pv__content{position:relative;width:100%;height:100%}
+  .pv__image{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 
-/* خلي الـimage layer واخد الشاشة كلها ومتمركز */
-.pv__content{
-  position:relative;width:100%;height:100%;
-}
-.pv__image{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-}
-/* هنا بقى السحر: تملأ الشاشة بأقصى مساحة بدون تشويه النسبة */
-.pv__image img{
-  width:100vw;           /* عرض الشاشة */
-  height:100vh;          /* ارتفاع الشاشة */
-  max-width:100%;
-  max-height:100%;
-  object-fit:contain;    /* يحافظ على النسبة ويمنع القص */
-  animation:pvIn var(--pv-dur) var(--pv-ease);
-}
+  /* صورتين متراكبين + cross-fade */
+  .pv__img{
+    position:absolute; inset:0;
+    width:100vw; height:100vh;
+    object-fit:contain;
+    opacity:0;
+    transition:opacity .5s ease;
+    will-change:opacity, transform;
+  }
+  .pv__img.is-top{opacity:1; animation:pvIn var(--pv-dur) var(--pv-ease)}
+  @keyframes pvIn{from{transform:translateY(-40px);opacity:.9}to{transform:translateY(0);opacity:1}}
 
-/* بانل الوصف يظهر من تحت */
-@keyframes pvIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1}}
-.pv__info{
-  position:absolute;
-  left:0; right:0; bottom:0;
-  padding:22px 28px;
-  font-size:15px; line-height:1.5;
-  color:#fff;                 /* الكتابة بيضا عشان تبان */
-  text-shadow:0 2px 6px rgba(0,0,0,.7); /* ظل خفيف للوضوح فوق الصور */
-  transform:translateY(100%); opacity:0;
-  transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
-}
-.pv.show .pv__info{transform:translateY(0);opacity:1}
-
-/* أسهم التنقل تبقى في نصف الشاشة يمين/شمال */
-.pv__nav{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:56px;height:72px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(15,18,25,.55);backdrop-filter:blur(2px);
-  color:#e9edf0;font-size:36px;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;user-select:none;box-shadow:0 10px 30px rgba(0,0,0,.35);
-  transition:filter .2s ease;
-}
-.pv__nav:hover{filter:brightness(1.15)}
-.pv__prev{left:12px}
-.pv__next{right:12px}
-@media(max-width:700px){.pv__nav{display:none}}
+  .pv__info{position:absolute;left:0;right:0;bottom:0;padding:22px 28px;font-size:15px;line-height:1.5;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.7);transform:translateY(100%);opacity:0;transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease)}
+  .pv.show .pv__info{transform:translateY(0);opacity:1}
+  .pv__nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:72px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(15,18,25,.55);backdrop-filter:blur(2px);color:#e9edf0;font-size:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:filter .2s ease}
+  .pv__nav:hover{filter:brightness(1.15)}
+  .pv__prev{left:12px}
+  .pv__next{right:12px}
+  @media(max-width:700px){.pv__nav{display:none}}
 
   /* Responsive tweaks للهيدر */
   @media(max-width:700px){
@@ -248,18 +134,13 @@
 <body>
 <header>
   <div class="wrap nav-row header-layout">
-    <!-- Left -->
     <div class="left-brand">
       <img src="assets/logo.png" alt="ZSIZART Logo" class="logo-small">
       <span class="brand-gradient">ZSIZART</span>
     </div>
-
-    <!-- Center -->
     <div class="center-logo">
       <img src="assets/logo.png" alt="ZSIZART Logo Large" class="logo-center">
     </div>
-
-    <!-- Right -->
     <div class="actions">
       <button class="filter-btn" id="filterToggle" title="Filters/Search">Search & Filter</button>
       <button class="menu-btn" id="menuBtn" title="Menu"><span class="bars"></span></button>
@@ -330,16 +211,12 @@
     <div class="about">
       <img class="me" src="assets/me.jpg" alt="Mahmoud Refaey" />
       <div class="card">
-        <p>
-          Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling.
+        <p>Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling.
           I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look-dev
-          while keeping a high creative bar.
-        </p>
-        <p>
-          My process blends cinematic composition, precise lighting, and material realism to deliver emotionally
+          while keeping a high creative bar.</p>
+        <p>My process blends cinematic composition, precise lighting, and material realism to deliver emotionally
           engaging visuals. I collaborate smoothly onsite and remotely with architects, designers, and developers, taking
-          projects from early concept to polished marketing imagery with consistent quality and reliability.
-        </p>
+          projects from early concept to polished marketing imagery with consistent quality and reliability.</p>
       </div>
     </div>
   </section>
@@ -370,7 +247,11 @@
 <!-- Project Viewer -->
 <div class="pv" id="pv" aria-hidden="true">
   <div class="pv__content">
-    <div class="pv__image"><img id="pvImage" alt=""></div>
+    <!-- صورتين فوق بعض لـ cross-fade -->
+    <div class="pv__image">
+      <img id="pvImageA" class="pv__img is-top" alt="">
+      <img id="pvImageB" class="pv__img" alt="">
+    </div>
     <button class="pv__nav pv__prev" aria-label="Previous">&#10094;</button>
     <button class="pv__nav pv__next" aria-label="Next">&#10095;</button>
     <aside class="pv__info">
@@ -423,108 +304,109 @@ function resetFilters(){
 applyBtn.addEventListener('click',applyFilters);
 resetBtn.addEventListener('click',resetFilters);
 qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
-  
-/* ===== Project Viewer ===== */
+
+/* ===== Project Viewer (تقليب بالسكرول + cross-fade) ===== */
 (function(){
-  const viewer=document.getElementById('pv'),
-        imgEl=document.getElementById('pvImage'),
-        titleEl=document.getElementById('pvTitle'),
-        descEl=document.getElementById('pvDesc');
-  let idx=0, list=[];
+  const viewer  = document.getElementById('pv'),
+        imgA    = document.getElementById('pvImageA'),
+        imgB    = document.getElementById('pvImageB'),
+        titleEl = document.getElementById('pvTitle'),
+        descEl  = document.getElementById('pvDesc');
+
+  let idx=0, list=[], topIsA=true;
+
+  function show(src){
+    const top   = topIsA ? imgA : imgB;
+    const under = topIsA ? imgB : imgA;
+
+    under.onload = () => {
+      top.classList.remove('is-top');
+      under.classList.add('is-top');
+      topIsA = !topIsA;
+      under.onload = null;
+    };
+    under.src = src;
+  }
 
   function setIdx(i){
+    if(!list.length) return;
     idx=(i+list.length)%list.length;
-    imgEl.src=list[idx];
-    imgEl.alt=(viewer.dataset.title||'Project image')+' — '+(idx+1);
-    titleEl.textContent=viewer.dataset.title||"";
-    descEl.textContent=viewer.dataset.desc||"";
+    show(list[idx]);
+    const t = viewer.dataset.title || '';
+    titleEl.textContent = t;
+    descEl.textContent  = viewer.dataset.desc || '';
+    (topIsA ? imgA : imgB).alt = `${t ? t+' — ' : ''}${idx+1}/${list.length}`;
   }
-  function next(){ setIdx(idx+1); }
-  function prev(){ setIdx(idx-1); }
+  const next=()=>setIdx(idx+1);
+  const prev=()=>setIdx(idx-1);
 
   function openPV(){ viewer.classList.add('show'); viewer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
   function closePV(){ viewer.classList.remove('show'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
-  // يحاول الأول يقرأ JSON (مثل assets/work-01.list.json)
-  // ولو مش موجود، يرجع للباترن التلقائي base.jpg, base-01.jpg, ...
   async function buildList(base, max=20){
-    // 1) جرّب JSON
     try{
       const res = await fetch(`${base}.list.json`, {cache:'no-store'});
       if(res.ok){
-        const arr = await res.json(); // مثال: ["work-01.jpg","work-01-sh.jpg","work-01-clay.jpg"]
-        // حدد مجلد القاعدة (assets/)
-        const folder = base.slice(0, base.lastIndexOf('/')+1); // "assets/"
-        const mapped = arr
-          .map(x => (x.includes('/') ? x : folder + x))
-          .filter(Boolean);
+        const arr = await res.json();
+        const folder = base.slice(0, base.lastIndexOf('/')+1);
+        const mapped = arr.map(x => x.includes('/') ? x : folder + x).filter(Boolean);
         if(mapped.length) return mapped;
       }
-    }catch(_e){/* ignore and fallback */ }
-
-    // 2) fallback للباترن
+    }catch(_){}
     const tryList=[`${base}.jpg`];
     for(let i=1;i<=max;i++) tryList.push(`${base}-${String(i).padStart(2,'0')}.jpg`);
     const checks = tryList.map(src=>new Promise(res=>{
       const im=new Image(); im.onload=()=>res(src); im.onerror=()=>res(null); im.src=src;
     }));
-    const found= (await Promise.all(checks)).filter(Boolean);
+    const found=(await Promise.all(checks)).filter(Boolean);
     return found.length?found:[tryList[0]];
   }
 
-  // افتح المشروع عند الضغط على التايل
   document.querySelectorAll('.tile').forEach(tile=>{
     tile.addEventListener('click', async ()=>{
-      const base=tile.dataset.project;         // مثال: "assets/work-01"
-      viewer.dataset.title=tile.dataset.title;
-      viewer.dataset.desc =tile.dataset.desc;
-      list = await buildList(base);            // ← هنا بنستخدم JSON لو موجود
-      idx=0; setIdx(idx);
+      const base=tile.dataset.project;
+      viewer.dataset.title=tile.dataset.title||'';
+      viewer.dataset.desc =tile.dataset.desc ||'';
+      list = await buildList(base);
+      idx=0;
+      (topIsA ? imgA : imgB).src = list[0];
+      (topIsA ? imgA : imgB).classList.add('is-top');
+      setIdx(0);
       openPV();
     });
   });
 
-  // إغلاق عند الضغط على الخلفية
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
+  viewer.querySelector('.pv__prev').addEventListener('click',prev);
+  viewer.querySelector('.pv__next').addEventListener('click',next);
 
-  // أزرار التنقل
-  const btnPrev=viewer.querySelector('.pv__prev'),
-        btnNext=viewer.querySelector('.pv__next');
-  btnPrev.addEventListener('click',prev);
-  btnNext.addEventListener('click',next);
-
-  // كيبورد
   document.addEventListener('keydown',e=>{
     if(!viewer.classList.contains('show'))return;
     if(e.key==='Escape') closePV();
-    if(e.key==='ArrowRight') next();
-    if(e.key==='ArrowLeft')  prev();
+    if(e.key==='ArrowRight'||e.key==='PageDown') next();
+    if(e.key==='ArrowLeft' ||e.key==='PageUp')   prev();
   });
 
-  // سكرول للتنقّل بين صور المشروع بسلاسة
-  let wheelLock=false;
+  // Scroll للتقليب بحساسية مضبوطة
+  let acc=0, threshold=120;
   viewer.addEventListener('wheel',e=>{
     if(!viewer.classList.contains('show'))return;
     e.preventDefault();
-    if(wheelLock)return;
-    wheelLock=true;
-    const dir=e.deltaY||e.deltaX;
-    if(dir>0)next(); else if(dir<0)prev();
-    setTimeout(()=>wheelLock=false,420);
+    acc += e.deltaY;
+    if(acc >  threshold){ next(); acc=0; }
+    if(acc < -threshold){ prev(); acc=0; }
   },{passive:false});
 
-  // سوايب للموبايل
-  let startX=0,startY=0,swiping=false;
+  // سوايب عمودي للموبايل
+  let startY=0, swiping=false;
   viewer.addEventListener('touchstart',e=>{
     if(!viewer.classList.contains('show'))return;
-    const t=e.changedTouches[0];
-    startX=t.clientX;startY=t.clientY;swiping=true;
+    startY=e.changedTouches[0].clientY; swiping=true;
   },{passive:true});
   viewer.addEventListener('touchend',e=>{
     if(!swiping)return;
-    const t=e.changedTouches[0],dx=t.clientX-startX,dy=t.clientY-startY;
-    swiping=false;
-    if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){dx<0?next():prev();}
+    const dy=e.changedTouches[0].clientY-startY; swiping=false;
+    if(Math.abs(dy)>40){ dy<0?next():prev(); }
   },{passive:true});
 })();
 </script>
