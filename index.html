@@ -266,6 +266,38 @@
     will-change:transform;
   }
 
+  /* ===== (NEW) Scroll-linked reveal + exit (modern CSS) ===== */
+  @supports (animation-timeline: view()){
+    .reveal{
+      animation: zs-reveal both var(--rev-dur,.7s) var(--rev-ease,cubic-bezier(.2,.65,.15,1));
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+      will-change: opacity, transform;
+      transition:none!important;
+    }
+    /* دخول ثم اختفاء أثناء الخروج لعناصر مختارة */
+    .reveal[data-exit],
+    section h2.reveal,
+    .about .card.reveal,
+    #contact .card.reveal{
+      animation:
+        zs-reveal  both var(--rev-dur,.7s) var(--rev-ease,cubic-bezier(.2,.65,.15,1)),
+        zs-hide-out both var(--rev-dur,.7s) var(--rev-ease,cubic-bezier(.2,.65,.15,1));
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%, exit 60% exit 98%;
+    }
+    @keyframes zs-reveal{
+      from{opacity:0; transform:translateY(24px) scale(.98)}
+      to  {opacity:1; transform:translateY(0)   scale(1)}
+    }
+    @keyframes zs-hide-out{
+      to{opacity:0; transform:translateY(-24px) scale(.98)}
+    }
+  }
+
+  /* ===== (NEW) Fallback helper classes ===== */
+  .reveal.hide-up{opacity:0; transform:translateY(-24px) scale(.98)}
+  .reveal.hide-down{opacity:0; transform:translateY( 24px) scale(.98)}
   </style>
 </head>
 <body>
@@ -741,6 +773,33 @@ setInterval(runSheen, 10000);
   form?.addEventListener('submit',function(e){ e.preventDefault(); emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this).then(()=>{statusEl.textContent='Message sent!';this.reset();}).catch(()=>{statusEl.textContent='Failed, try again.';}); });
 </script>
 
+<!-- (NEW) Reveal exit fallback for non–view-timeline browsers -->
+<script>
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+
+  const els = document.querySelectorAll('.reveal');
+  let lastY = window.scrollY;
+
+  const io = new IntersectionObserver((entries)=>{
+    const goingDown = window.scrollY >= lastY;
+    entries.forEach(entry=>{
+      const el = entry.target;
+
+      if (entry.isIntersecting){
+        el.classList.add('show');
+        el.classList.remove('hide-up','hide-down');
+      } else {
+        el.classList.remove('show');
+        el.classList.add(goingDown ? 'hide-up' : 'hide-down');
+      }
+    });
+    lastY = window.scrollY;
+  }, { threshold:[0,.1,.2,.4,.6,.8,1] });
+
+  els.forEach(el=> io.observe(el));
+})();
+</script>
+
 </body>
 </html>
-
