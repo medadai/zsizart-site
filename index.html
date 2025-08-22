@@ -183,24 +183,25 @@
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
   
-  .tile{
-    position:relative;
-    overflow:hidden;
-    border-radius:var(--radius);
-    background:var(--card);
-    box-shadow:var(--shadow);
-    border:1px solid #1a2230;
-    cursor:pointer;
-    will-change:transform,opacity;
-  }
-  .tile img{
-    filter:grayscale(100%);
-    transition:filter .35s ease;
-    width:100%;
-    height:auto;
-    object-fit:contain;
-    will-change:filter;
-  }
+.tile{
+  position:relative;
+  overflow:hidden;
+  background:transparent; /* شفاف أو خليه #000 لو عايز */
+  cursor:pointer;
+  border:none;           
+  border-radius:0;       /* يشيل الحواف الناعمة */
+  box-shadow:none;       /* يشيل الظل */
+}
+
+.tile img{
+  width:100%;
+  height:auto;
+  object-fit:cover;      /* يغطي المساحة بالكامل */
+  display:block;
+  filter:none;           /* بدون أبيض وأسود */
+  transition:none;       /* بدون أنيميشن */
+}
+    
   .tile:hover img{filter:none}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
