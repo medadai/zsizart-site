@@ -24,7 +24,7 @@
     --rev-ease:cubic-bezier(.2,.65,.15,1);
   }
 
-  /* ===== Scroll Reveal ===== */
+  /* ===== Scroll Reveal (base) ===== */
   .reveal{opacity:0;transform:translateY(24px) scale(.98);will-change:opacity,transform;transition:opacity var(--rev-dur) var(--rev-ease),transform var(--rev-dur) var(--rev-ease)}
   .reveal.show{opacity:1;transform:translateY(0) scale(1)}
   .reveal.del-1{transition-delay:.06s}
@@ -32,6 +32,12 @@
   .reveal.del-3{transition-delay:.18s}
   .reveal.del-4{transition-delay:.24s}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+
+  /* === Left/Right variants (الجديدة) === */
+  .reveal-left{opacity:0;transform:translateX(-40px)}
+  .reveal-left.show{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px)}
+  .reveal-right.show{opacity:1;transform:translateX(0)}
 
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;overflow-x:hidden}
@@ -41,15 +47,14 @@
 
   /* ================= Header (COMPRESSED) ================ */
   header{position:sticky;top:0;z-index:70;background:rgba(5,7,9,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #0e1116;box-shadow:0 8px 30px rgba(0,0,0,.35);transition:transform .4s ease}
-  header .wrap{padding:10px 20px} /* smaller header height */
+  header .wrap{padding:10px 20px}
   .header-layout{display:flex;align-items:center;justify-content:space-between;position:relative}
   .left-brand{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
-  .left-brand .logo-small{height:24px;width:auto} /* smaller LEFT logo */
-  /* ZSIZART text: slightly bigger than logo + animated gradient */
+  .left-brand .logo-small{height:24px;width:auto}
   .brand-gradient{font-size:28px;line-height:1;font-weight:800;letter-spacing:.06em;background:linear-gradient(90deg,var(--accent1),var(--accent2),#6ee7ff,var(--accent1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:brandSlide 8s linear infinite}
   @keyframes brandSlide{0%{background-position:0% 50%}100%{background-position:100% 50%}}
   .center-logo{position:absolute;left:50%;transform:translateX(-50%)}
-  .center-logo .logo-center{height:34px;width:auto} /* slim center mark */
+  .center-logo .logo-center{height:34px;width:auto}
   .nav-row{display:flex;align-items:center;justify-content:space-between}
   .actions{display:flex;gap:10px;align-items:center}
   .menu-btn,.filter-btn{height:34px;padding:0 12px;border:1px solid #2a3140;border-radius:10px;background:transparent;color:#cfe2ff;display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600}
@@ -133,42 +138,25 @@
     .menu-btn,.filter-btn{height:32px}
   }
   
-  /* ===== Logo & wordmark animations (added) ===== */
-  /* subtle idle breathe for the left mark */
+  /* ===== Logo & wordmark animations ===== */
   .logo-small{ transform-origin: 20% 50%; animation: markBreathe 6s ease-in-out infinite; }
   @keyframes markBreathe{ 0%,100%{transform:translateY(0) rotate(0deg) scale(1)} 50%{transform:translateY(-0.5px) rotate(-0.6deg) scale(1.01)} }
-
-  /* diagonal light sweep that we can trigger */
   .brand-sheen,.logo-sheen{ position:relative; display:inline-block; }
   .brand-sheen::after,.logo-sheen::after{ content:""; position:absolute; inset:0; background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.22) 45%, transparent 60%); transform:translateX(-120%); pointer-events:none; mix-blend-mode:screen; }
   .sweep{ animation:sweep 1.2s ease-out forwards; }
   @keyframes sweep{ to{ transform: translateX(120%);} }
-
-  /* optional micro hover nudge */
   .left-brand:hover .logo-small{ animation:none; transform:translateX(-1px) rotate(-2deg) scale(1.02); transition:.25s }
   .left-brand:hover .brand-gradient{ transform:translateX(1px); transition:.25s }
-
-  /* highlight only the ART letters occasionally + ensure gradient on ART */
   .wordmark{ position:relative; }
-  .wordmark .art{
-    background: inherit;
-    background-size: inherit;
-    background-position: inherit;
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent;
-    position: relative;
-  }
+  .wordmark .art{ background: inherit; background-size: inherit; background-position: inherit; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; position: relative; }
   .wordmark .art::after{ content:""; position:absolute; inset:0 0 .1em 0; background:linear-gradient(90deg,#ffd16633,#ffffff55,#ffd16633); border-radius:.2em; filter:blur(4px); opacity:0; animation:artGlow 12s ease-in-out infinite; }
   @keyframes artGlow{ 0%,85%{opacity:0} 90%{opacity:1} 100%{opacity:0} }
-
-  /* reduced motion */
   @media (prefers-reduced-motion:reduce){
     .logo-small{ animation:none !important; transform:none !important }
     .brand-sheen::after,.logo-sheen::after{ display:none }
     .wordmark .art::after{ display:none }
   }
-  
-</style>
+  </style>
 </head>
 <body>
 <header>
@@ -248,8 +236,9 @@
   <section id="about">
     <h2>About</h2>
     <div class="about">
-      <img class="me reveal del-1" src="assets/me.jpg" alt="Mahmoud Refaey" />
-      <div class="card reveal del-2">
+      <!-- هنا التأثير الجديد -->
+      <img class="me reveal reveal-left del-1" src="assets/me.jpg" alt="Mahmoud Refaey" />
+      <div class="card reveal reveal-right del-2">
         <p>Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling. I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look-dev while keeping a high creative bar.</p>
         <p>My process blends cinematic composition, precise lighting, and material realism to deliver emotionally engaging visuals. I collaborate smoothly onsite and remotely with architects, designers, and developers, taking projects from early concept to polished marketing imagery with consistent quality and reliability.</p>
       </div>
@@ -459,7 +448,7 @@ window.addEventListener('scroll', () => { if(window.scrollY > lastScrollY){ head
 function runSheen(){
   document.querySelectorAll('.brand-sheen, .logo-sheen').forEach(el=>{
     el.classList.remove('sweep');
-    void el.offsetWidth; // reflow to restart animation
+    void el.offsetWidth;
     el.classList.add('sweep');
   });
 }
