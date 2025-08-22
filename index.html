@@ -115,17 +115,19 @@
 
   .pv__info{position:absolute;left:0;right:0;bottom:0;padding:22px 28px;font-size:15px;line-height:1.5;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.7);transform:translateY(100%);opacity:0;transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease)}
   .pv.show .pv__info{transform:translateY(0);opacity:1}
- .pv__nav{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:auto;height:auto;padding:8px 10px;     /* مساحة لمس من غير صندوق */
-  border:none;background:transparent;box-shadow:none;
-  color:#fff;font-size:56px;line-height:1;cursor:pointer;user-select:none;
-  text-shadow:0 4px 18px rgba(0,0,0,.55);
-}
-.pv__nav:hover{filter:none;opacity:.9}
-.pv__prev{left:12px}
-.pv__next{right:12px}
-@media(max-width:700px){.pv__nav{display:none}}
+
+  /* الأسهم بدون صندوق */
+  .pv__nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:auto;height:auto;padding:8px 10px;
+    border:none;background:transparent;box-shadow:none;
+    color:#fff;font-size:56px;line-height:1;cursor:pointer;user-select:none;
+    text-shadow:0 4px 18px rgba(0,0,0,.55);
+  }
+  .pv__nav:hover{filter:none;opacity:.9}
+  .pv__prev{left:12px}
+  .pv__next{right:12px}
+  @media(max-width:700px){.pv__nav{display:none}}
 
   /* Responsive tweaks للهيدر */
   @media(max-width:700px){
@@ -323,8 +325,8 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         descEl  = document.getElementById('pvDesc');
 
   // كل المشاريع من التايلات (للتنقل بينها بزرار السهم)
-  const tiles = [...document.querySelectorAll('.tile')];
-  const projects = tiles.map(t => ({
+  const projectTiles = [...document.querySelectorAll('.tile')];
+  const projects = projectTiles.map(t => ({
     base : t.dataset.project,
     title: t.dataset.title || '',
     desc : t.dataset.desc  || ''
@@ -382,12 +384,20 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   async function openProject(pIdx){
     projectIdx = (pIdx + projects.length) % projects.length;
     const p = projects[projectIdx];
+
     viewer.dataset.title = p.title;
     viewer.dataset.desc  = p.desc;
+
     list = await buildList(p.base);
     idx = 0;
-    (topIsA ? imgA : imgB).src = list[0];
-    (topIsA ? imgA : imgB).classList.add('is-top');
+
+    // فضي أي حالة قديمة للـcross-fade
+    imgA.classList.remove('is-top');
+    imgB.classList.remove('is-top');
+
+    const currentTop = topIsA ? imgA : imgB;
+    currentTop.src = list[0];
+    currentTop.classList.add('is-top');
     setIdx(0);
   }
 
@@ -403,9 +413,8 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   }
 
   // click على أي تايل → افتح نفس المشروع
-  tiles.forEach((tile,i)=>{
+  projectTiles.forEach((tile,i)=>{
     tile.addEventListener('click', async ()=>{
-      // حدّد المشروع الحالي حسب التايل
       projectIdx = i;
       await openProject(projectIdx);
       openPV();
@@ -415,7 +424,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   // اضغط برة الصورة → اقفل
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
 
-  // أزرار السهم: تغيّر "المشروع" (مش الصورة)
+  // أزرار السهم: تغيّر “المشروع”
   const btnPrev=viewer.querySelector('.pv__prev'),
         btnNext=viewer.querySelector('.pv__next');
   btnPrev.addEventListener('click',()=>openProject(projectIdx-1));
@@ -429,56 +438,60 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if(e.key==='ArrowLeft' ||e.key==='PageUp')   prevImg();
   });
 
-// === Scroll/Swipe: تفاعل أبطأ وناعم داخل نفس المشروع ===
-let accum = 0;                 // نجمع دلتا الاسكرول هنا
-const STEP = 1200;             // الحساسية: كبر الرقم = أبطأ (جرّب 1600 لو عايز أبطأ)
-let imgLock = false;           // قفل بسيط يمنع تقليب صورتين بسرعة
+  // امنع سحب البادي على الموبايل وقت العرض (iOS fix)
+  viewer.addEventListener('touchmove', (e)=>{
+    if(viewer.classList.contains('show')) e.preventDefault();
+  }, {passive:false});
 
-viewer.addEventListener('wheel', (e) => {
-  if (!viewer.classList.contains('show')) return;
-  e.preventDefault();
+  // === Scroll/Swipe: تفاعل أبطأ وناعم داخل نفس المشروع ===
+  let accum = 0;                 // نجمع دلتا الاسكرول
+  const STEP = 1500;             // الأكبر = أبطأ
+  let imgLock = false;           // يمنع تقليب متتالي سريع
 
-  // نجمع دلتا الاسكرول (تراك باد/ماوس)
-  const dy = (Math.abs(e.deltaY) > Math.abs(e.deltaX)) ? e.deltaY : e.deltaX;
-  accum += dy;
+  viewer.addEventListener('wheel', (e) => {
+    if (!viewer.classList.contains('show')) return;
+    e.preventDefault();
 
-  if (imgLock) return;
+    const dy = (Math.abs(e.deltaY) > Math.abs(e.deltaX)) ? e.deltaY : e.deltaX;
+    accum += dy;
 
-  if (accum >= STEP) {
-    nextImg();          // ↓ للصورة التالية
-    accum = 0;
-    imgLock = true;
-    setTimeout(()=>imgLock=false, 500);
-  } else if (accum <= -STEP) {
-    prevImg();          // ↑ للصورة السابقة
-    accum = 0;
-    imgLock = true;
-    setTimeout(()=>imgLock=false, 500);
-  }
-}, { passive: false });
+    if (imgLock) return;
 
-// موبايل: سوآيب رأسي أبطأ
-let startY = 0, swiping = false;
-viewer.addEventListener('touchstart', e=>{
-  if(!viewer.classList.contains('show')) return;
-  startY = e.changedTouches[0].clientY; 
-  swiping = true;
-},{passive:true});
+    if (accum >= STEP) {
+      nextImg();
+      accum = 0;
+      imgLock = true;
+      setTimeout(()=>imgLock=false, 500);
+    } else if (accum <= -STEP) {
+      prevImg();
+      accum = 0;
+      imgLock = true;
+      setTimeout(()=>imgLock=false, 500);
+    }
+  }, { passive: false });
 
-viewer.addEventListener('touchend', e=>{
-  if(!swiping) return;
-  const dy = e.changedTouches[0].clientY - startY;
-  swiping = false;
+  // موبايل: سوآيب رأسي أبطأ
+  let startY = 0, swiping = false;
+  viewer.addEventListener('touchstart', e=>{
+    if(!viewer.classList.contains('show')) return;
+    startY = e.changedTouches[0].clientY;
+    swiping = true;
+  },{passive:true});
 
-  const SWIPE_STEP = 140;   // كبر الرقم = أبطأ
-  if (dy <= -SWIPE_STEP) {      // سحب لأعلى → الصورة التالية
-    nextImg();
-  } else if (dy >= SWIPE_STEP){ // سحب لأسفل → الصورة السابقة
-    prevImg();
-  }
-},{passive:true});
+  viewer.addEventListener('touchend', e=>{
+    if(!swiping) return;
+    const dy = e.changedTouches[0].clientY - startY;
+    swiping = false;
+
+    const SWIPE_STEP = 160;   // الأكبر = أبطأ
+    if (dy <= -SWIPE_STEP) {
+      nextImg();
+    } else if (dy >= SWIPE_STEP){
+      prevImg();
+    }
+  },{passive:true});
 })();
-  
+
 /* ==== Hide Header on Scroll ==== */
 let lastScrollY = window.scrollY;
 const header = document.querySelector("header");
