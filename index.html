@@ -34,7 +34,7 @@
   .left-brand .logo-small{height:80px;width:auto}
   .brand-gradient{font-size:16px;font-weight:700;letter-spacing:.06em;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
   .center-logo{position:absolute;left:50%;transform:translateX(-50%)}
-  .center-logo .logo-center{height:72px;width:auto}
+  .center-logo .logo-center{height:120px;width:auto}
   header{position:sticky;top:0;z-index:70;background:rgba(5,7,9,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #0e1116;box-shadow:0 8px 30px rgba(0,0,0,.35)}
   .nav-row{display:flex;align-items:center;justify-content:space-between}
   .actions{display:flex;gap:12px;align-items:center}
@@ -71,7 +71,7 @@
   .hint{margin-top:8px;color:#9fb3c8;font-size:13px}
 
   /* Hero */
-  .hero{padding:8px 0 8px}
+  .hero{padding:0 0 8px}
   .hero h2{font-size:42px;margin:0 0 12px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p{margin:0;color:var(--muted);font-size:18px}
 
@@ -129,20 +129,9 @@
     .menu-btn,.filter-btn{height:40px;padding:0 14px}
     .menu-btn{width:44px}
   }
-    /* ==== Project Viewer Transition ==== */
-.pv__image img {
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  opacity: 0;
-}
-.pv__image img.show {
-  opacity: 1;
-  transform: translateY(0);
-}
 
-/* ==== Header scroll hide/show ==== */
-header {
-  transition: transform 0.4s ease;
-}
+  /* ==== Header scroll hide/show ==== */
+  header { transition: transform 0.4s ease; }
   </style>
 </head>
 <body>
@@ -329,10 +318,10 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
 
   let idx=0, list=[], topIsA=true;
 
+  // تبديل ناعم بين الصورتين
   function show(src){
     const top   = topIsA ? imgA : imgB;
     const under = topIsA ? imgB : imgA;
-
     under.onload = () => {
       top.classList.remove('is-top');
       under.classList.add('is-top');
@@ -343,16 +332,13 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   }
 
   function setIdx(i){
-  idx=(i+list.length)%list.length;
-  imgEl.classList.remove("show");
-  setTimeout(()=>{
-    imgEl.src=list[idx];
-    imgEl.alt=(viewer.dataset.title||'Project image')+' — '+(idx+1);
-    imgEl.onload=()=> imgEl.classList.add("show");
-    titleEl.textContent=viewer.dataset.title||"";
-    descEl.textContent=viewer.dataset.desc||"";
-  },200);
-}
+    if(!list.length) return;
+    idx = (i + list.length) % list.length;
+    show(list[idx]);
+    titleEl.textContent = viewer.dataset.title || '';
+    descEl.textContent  = viewer.dataset.desc  || '';
+  }
+
   const next=()=>setIdx(idx+1);
   const prev=()=>setIdx(idx-1);
 
@@ -385,17 +371,19 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
       viewer.dataset.desc =tile.dataset.desc ||'';
       list = await buildList(base);
       idx=0;
+      // أول صورة تظهر فورًا
       (topIsA ? imgA : imgB).src = list[0];
       (topIsA ? imgA : imgB).classList.add('is-top');
-      setIdx(0);
       openPV();
     });
   });
 
+  // Click خارج المحتوى يغلق
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
   viewer.querySelector('.pv__prev').addEventListener('click',prev);
   viewer.querySelector('.pv__next').addEventListener('click',next);
 
+  // Keyboard
   document.addEventListener('keydown',e=>{
     if(!viewer.classList.contains('show'))return;
     if(e.key==='Escape') closePV();
@@ -403,34 +391,29 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if(e.key==='ArrowLeft' ||e.key==='PageUp')   prev();
   });
 
-// Scroll: خطوة واحدة لكل لفة (زي AVA) + تهدئة
-let wheelCooldown = false;
-let wheelBurstTimer = null;
-let wheelDir = 0;
+  // Scroll: نجمع النبضات + تهدئة
+  let wheelCooldown = false;
+  let wheelBurstTimer = null;
+  let wheelDir = 0;
 
-viewer.addEventListener('wheel', (e) => {
-  if (!viewer.classList.contains('show')) return;
-  e.preventDefault();
+  viewer.addEventListener('wheel', (e) => {
+    if (!viewer.classList.contains('show')) return;
+    e.preventDefault();
 
-  // نجمع كل نبضات التاتش باد/الماوس المتتالية في "نبضة" واحدة
-  wheelDir += Math.sign(e.deltaY || e.deltaX);
+    wheelDir += Math.sign(e.deltaY || e.deltaX);
 
-  // ندمج أي أحداث متقاربة خلال 90ms في نبضة واحدة
-  clearTimeout(wheelBurstTimer);
-  wheelBurstTimer = setTimeout(() => {
-    if (wheelCooldown) { wheelDir = 0; return; }
+    clearTimeout(wheelBurstTimer);
+    wheelBurstTimer = setTimeout(() => {
+      if (wheelCooldown) { wheelDir = 0; return; }
+      if (wheelDir > 0) next();
+      else if (wheelDir < 0) prev();
+      wheelDir = 0;
+      wheelCooldown = true;
+      setTimeout(() => (wheelCooldown = false), 650);
+    }, 90);
+  }, { passive: false });
 
-    if (wheelDir > 0) next();
-    else if (wheelDir < 0) prev();
-
-    wheelDir = 0;
-    // تهدئة 650ms قبل السماح بالتقليب التالي
-    wheelCooldown = true;
-    setTimeout(() => (wheelCooldown = false), 650);
-  }, 90);
-}, { passive: false });
-
-  // سوايب عمودي للموبايل
+  // سوايب للموبايل
   let startY=0, swiping=false;
   viewer.addEventListener('touchstart',e=>{
     if(!viewer.classList.contains('show'))return;
@@ -442,21 +425,18 @@ viewer.addEventListener('wheel', (e) => {
     if(Math.abs(dy)>40){ dy<0?next():prev(); }
   },{passive:true});
 })();
-  /* ==== Hide Header on Scroll ==== */
+  
+/* ==== Hide Header on Scroll ==== */
 let lastScrollY = window.scrollY;
 const header = document.querySelector("header");
-
 window.addEventListener("scroll", () => {
   if(window.scrollY > lastScrollY){
-    // Scroll down → hide
     header.style.transform = "translateY(-100%)";
   } else {
-    // Scroll up → show
     header.style.transform = "translateY(0)";
   }
   lastScrollY = window.scrollY;
 });
-
 </script>
 
 <!-- EmailJS -->
