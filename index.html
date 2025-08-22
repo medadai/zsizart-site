@@ -112,15 +112,19 @@
   .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
   .pv.show{opacity:1;pointer-events:auto}
   .pv__content{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-  .pv__image img{width:100vw;height:100vh;object-fit:cover;animation:pvIn var(--pv-dur) var(--pv-ease)} /* cover: تملأ الشاشة */
-  @keyframes pvIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1}}
-  .pv__image img{
-  max-width:100%;
-  max-height:100%;
-  object-fit:contain; /* يحافظ على النسبة الأصلية للصورة */
-  animation:pvIn var(--pv-dur) var(--pv-ease);
-}كد
+  /* الصورة تملأ الشاشة مع الحفاظ على النسبة (بدون إطار أبيض) */
+  .pv__image img{width:100vw;height:100vh;max-width:100%;max-height:100%;object-fit:contain;animation:pvIn var(--pv-dur) var(--pv-ease)}
+  @keyframes pvIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1)}
+  /* بانل الوصف من تحت */
+  .pv__info{
+    position:absolute;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,.65);padding:22px 28px;
+    font-size:15px;line-height:1.5;
+    transform:translateY(100%);opacity:0;
+    transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
+  }
   .pv.show .pv__info{transform:translateY(0);opacity:1}
+  /* أزرار التنقّل */
   .pv__nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:72px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(15,18,25,.55);backdrop-filter:blur(2px);color:#e9edf0;font-size:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:filter .2s ease}
   .pv__nav:hover{filter:brightness(1.15)}
   .pv__prev{left:12px}
@@ -178,7 +182,7 @@
   <section id="work">
     <h2>Work</h2>
     <div class="grid" id="grid">
-      <!-- Add data-tags (interior/exterior) + data-title for search -->
+      <!-- data-project = المسار بدون الامتداد، وبقية الصور تتبع نمط -01,-02,... -->
       <div class="tile" data-project="assets/work-01" data-title="Como Gardens Project" data-desc="Como Gardens Project — modern villas surrounded by greenery." data-tags="exterior">
         <img src="assets/work-01.jpg" alt="Como Gardens Project">
       </div>
@@ -188,7 +192,6 @@
       <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
         <img src="assets/work-03.jpg" alt="Retro Home Sweet">
       </div>
-      <!-- تقدر تزود مشاريع تانية بنفس البيانات -->
     </div>
   </section>
 
@@ -317,10 +320,9 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   function closePV(){ viewer.classList.remove('show'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
   async function buildSequence(base, max=20){
-    // يبني الليست حسب الباترن: base.jpg, base-01.jpg, base-02.jpg ...
+    // base.jpg, base-01.jpg, base-02.jpg ...
     const tryList=[`${base}.jpg`];
     for(let i=1;i<=max;i++) tryList.push(`${base}-${String(i).padStart(2,'0')}.jpg`);
-    // فلترة الموجود فعليًا
     const checks = tryList.map(src=>new Promise(res=>{
       const im=new Image(); im.onload=()=>res(src); im.onerror=()=>res(null); im.src=src;
     }));
@@ -328,28 +330,27 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     return found.length?found:[tryList[0]];
   }
 
-  // افتح المشروع عند الضغط على التايل
   document.querySelectorAll('.tile').forEach(tile=>{
     tile.addEventListener('click', async ()=>{
       const base=tile.dataset.project;         // e.g. assets/work-01
       viewer.dataset.title=tile.dataset.title;
       viewer.dataset.desc =tile.dataset.desc;
-      list = await buildSequence(base);         // فقط الصور الموجودة
+      list = await buildSequence(base);
       idx=0; setIdx(idx);
       openPV();
     });
   });
 
-  // إغلاق عند الضغط على الخلفية
+  // Close on backdrop
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
 
-  // أزرار التنقل
+  // Nav buttons
   const btnPrev=viewer.querySelector('.pv__prev'),
         btnNext=viewer.querySelector('.pv__next');
   btnPrev.addEventListener('click',prev);
   btnNext.addEventListener('click',next);
 
-  // كيبورد
+  // Keyboard
   document.addEventListener('keydown',e=>{
     if(!viewer.classList.contains('show'))return;
     if(e.key==='Escape') closePV();
@@ -357,7 +358,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if(e.key==='ArrowLeft')  prev();
   });
 
-  // عجلة الماوس (wheel) مثل archvizartist
+  // Wheel (like archvizartist)
   let wheelLock=false;
   viewer.addEventListener('wheel',e=>{
     if(!viewer.classList.contains('show'))return;
@@ -369,7 +370,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     setTimeout(()=>wheelLock=false,420);
   },{passive:false});
 
-  // سوايب للموبايل
+  // Touch swipe
   let startX=0,startY=0,swiping=false;
   viewer.addEventListener('touchstart',e=>{
     if(!viewer.classList.contains('show'))return;
@@ -383,9 +384,9 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){dx<0?next():prev();}
   },{passive:true});
 })();
-
-/* ===== EmailJS ===== */
 </script>
+
+<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
   const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
