@@ -181,27 +181,55 @@
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
   /* Project Viewer (fullscreen) */
-  .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
-  .pv.show{opacity:1;pointer-events:auto}
-  .pv__content{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-  /* الصورة تملأ الشاشة مع الحفاظ على النسبة (بدون إطار أبيض) */
-  .pv__image img{width:100vw;height:100vh;max-width:100%;max-height:100%;object-fit:contain;animation:pvIn var(--pv-dur) var(--pv-ease)}
-  @keyframes pvIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1)}
-  /* بانل الوصف من تحت */
-  .pv__info{
-    position:absolute;left:0;right:0;bottom:0;
-    background:rgba(0,0,0,.65);padding:22px 28px;
-    font-size:15px;line-height:1.5;
-    transform:translateY(100%);opacity:0;
-    transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
-  }
-  .pv.show .pv__info{transform:translateY(0);opacity:1}
-  /* أزرار التنقّل */
-  .pv__nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:72px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(15,18,25,.55);backdrop-filter:blur(2px);color:#e9edf0;font-size:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:filter .2s ease}
-  .pv__nav:hover{filter:brightness(1.15)}
-  .pv__prev{left:12px}
-  .pv__next{right:12px}
-  @media(max-width:700px){.pv__nav{display:none}}
+.pv{
+  position:fixed;inset:0;z-index:200;background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease);
+}
+.pv.show{opacity:1;pointer-events:auto}
+
+/* خلي الـimage layer واخد الشاشة كلها ومتمركز */
+.pv__content{
+  position:relative;width:100%;height:100%;
+}
+.pv__image{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+/* هنا بقى السحر: تملأ الشاشة بأقصى مساحة بدون تشويه النسبة */
+.pv__image img{
+  width:100vw;           /* عرض الشاشة */
+  height:100vh;          /* ارتفاع الشاشة */
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;    /* يحافظ على النسبة ويمنع القص */
+  animation:pvIn var(--pv-dur) var(--pv-ease);
+}
+
+/* بانل الوصف يظهر من تحت */
+@keyframes pvIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.pv__info{
+  position:absolute;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.65);padding:22px 28px;font-size:15px;line-height:1.5;
+  transform:translateY(100%);opacity:0;
+  transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
+}
+.pv.show .pv__info{transform:translateY(0);opacity:1}
+
+/* أسهم التنقل تبقى في نصف الشاشة يمين/شمال */
+.pv__nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:72px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(15,18,25,.55);backdrop-filter:blur(2px);
+  color:#e9edf0;font-size:36px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;user-select:none;box-shadow:0 10px 30px rgba(0,0,0,.35);
+  transition:filter .2s ease;
+}
+.pv__nav:hover{filter:brightness(1.15)}
+.pv__prev{left:12px}
+.pv__next{right:12px}
+@media(max-width:700px){.pv__nav{display:none}}
 
   /* Responsive tweaks للهيدر */
   @media(max-width:700px){
@@ -238,7 +266,6 @@
 <div class="overlay" id="overlay"></div>
 <aside class="menu-panel" id="menuPanel">
   <div class="menu-header">
-    <p class="menu-title">Menu</p>
     <button class="menu-close" id="menuClose">Close</button>
   </div>
   <nav class="menu-links">
