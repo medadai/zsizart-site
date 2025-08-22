@@ -16,56 +16,123 @@
     --radius:18px;
     --shadow:0 12px 40px rgba(0,0,0,.35);
     --max:1160px;
+
+    /* Motion variables */
+    --pv-dur:.45s;
+    --pv-ease:cubic-bezier(.4,.14,.3,1);
+    --rev-dur:.7s;
+    --rev-ease:cubic-bezier(.2,.65,.15,1);
   }
+
+  /* ===== Scroll Reveal ===== */
+  .reveal{opacity:0;transform:translateY(24px) scale(.98);will-change:opacity,transform;transition:opacity var(--rev-dur) var(--rev-ease),transform var(--rev-dur) var(--rev-ease)}
+  .reveal.show{opacity:1;transform:translateY(0) scale(1)}
+  .reveal.del-1{transition-delay:.06s}
+  .reveal.del-2{transition-delay:.12s}
+  .reveal.del-3{transition-delay:.18s}
+  .reveal.del-4{transition-delay:.24s}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
 
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;overflow-x:hidden}
   img{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:var(--max);margin:auto;padding:20px}
+  .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-  /* ================= Header ================ */
-  header{position:sticky;top:0;z-index:70;background:rgba(5,7,9,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #0e1116;box-shadow:0 8px 30px rgba(0,0,0,.35);transition:transform .4s ease;padding:8px 0}
+  /* ================= Header (COMPRESSED) ================ */
+  header{position:sticky;top:0;z-index:70;background:rgba(5,7,9,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #0e1116;box-shadow:0 8px 30px rgba(0,0,0,.35);transition:transform .4s ease}
+  header .wrap{padding:10px 20px} /* smaller header height */
   .header-layout{display:flex;align-items:center;justify-content:space-between;position:relative}
-  .left-brand{display:flex;align-items:center;gap:8px}
-  .left-brand .logo-small{height:28px;width:auto}
-  .brand-gradient{font-size:22px;font-weight:700;letter-spacing:.06em;background:linear-gradient(270deg,var(--accent1),var(--accent2),var(--accent1));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientMove 6s ease infinite}
-  @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .left-brand{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+  .left-brand .logo-small{height:24px;width:auto} /* smaller LEFT logo */
+  /* ZSIZART text: slightly bigger than logo + animated gradient */
+  .brand-gradient{font-size:28px;line-height:1;font-weight:800;letter-spacing:.06em;background:linear-gradient(90deg,var(--accent1),var(--accent2),#6ee7ff,var(--accent1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:brandSlide 8s linear infinite}
+  @keyframes brandSlide{0%{background-position:0% 50%}100%{background-position:100% 50%}}
   .center-logo{position:absolute;left:50%;transform:translateX(-50%)}
-  .center-logo .logo-center{height:40px;width:auto}
-  .actions{display:flex;gap:12px;align-items:center}
-  .menu-btn,.filter-btn{height:36px;border:1px solid #2a3140;border-radius:10px;background:transparent;color:#cfe2ff;display:flex;align-items:center;gap:10px;padding:0 12px;cursor:pointer;font-weight:600}
-  .menu-btn{width:40px;justify-content:center}
-  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
+  .center-logo .logo-center{height:34px;width:auto} /* slim center mark */
+  .nav-row{display:flex;align-items:center;justify-content:space-between}
+  .actions{display:flex;gap:10px;align-items:center}
+  .menu-btn,.filter-btn{height:34px;padding:0 12px;border:1px solid #2a3140;border-radius:10px;background:transparent;color:#cfe2ff;display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600}
+  .menu-btn{width:44px;justify-content:center}
+  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
   .menu-btn .bars::before{position:absolute;top:-6px}
   .menu-btn .bars::after{position:absolute;top:6px}
   .menu-open .menu-btn .bars{transform:rotate(45deg)}
   .menu-open .menu-btn .bars::before{opacity:0}
   .menu-open .menu-btn .bars::after{transform:rotate(-90deg) translate(-6px,0)}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);background:rgba(0,0,0,.75);border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column}
+  .menu-open .overlay{opacity:1;pointer-events:auto}
+  .menu-open .menu-panel{transform:translateX(0)}
+  .menu-header{display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #1a1f27}
+  .menu-title{margin:0;font-weight:700;font-size:16px;color:#cfe2ff}
+  .menu-close{border:1px solid #2a3140;border-radius:10px;background:transparent;color:var(--ink);padding:8px 12px;cursor:pointer}
+  .menu-links{display:flex;flex-direction:column;gap:16px;padding:24px}
+  .menu-links a{font-size:18px;font-weight:600;color:#fff;padding:6px 0;transition:color .25s ease}
+  .menu-links a:hover{color:var(--accent1)}
 
-  /* keep rest of CSS untouched */
-    
-  /* ===== Header size + brand tweaks (requested) ===== */
-  header .wrap{padding:12px 20px;} /* smaller header height */
-  .left-brand{gap:6px}
-  .left-brand .logo-small{height:26px;width:auto} /* smaller left logo */
-  .center-logo .logo-center{height:36px;width:auto} /* slimmer center logo */
-  .menu-btn,.filter-btn{height:36px;padding:0 12px;border-radius:10px} /* smaller buttons */
+  /* Filter Panel (Search Bar) */
+  .filter-panel{position:sticky; top:64px; z-index:60; margin:18px 0 0 0;background:rgba(0,0,0,.55); border:1px solid #1a1f27; border-radius:14px; padding:14px;display:none}
+  .filter-panel.show{display:block}
+  .filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #2a3140;border-radius:12px;background:#0c0e12;color:#e9edf0;cursor:pointer;user-select:none}
+  .chip input{accent-color:#1a68ff}
+  .search-input{flex:1;min-width:220px;padding:10px 12px;border:1px solid #2a3140;border-radius:10px;background:#0c0e12;color:#e9edf0}
+  .filter-actions{margin-left:auto;display:flex;gap:10px}
+  .btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#e9edf0;font-weight:600;cursor:pointer}
+  .btn.primary{background:#1a68ff;border-color:#1a68ff}
+  .btn.ghost{background:transparent}
+  .hint{margin-top:8px;color:#9fb3c8;font-size:13px}
 
-  /* ZSIZART text bigger than the logo + animated gradient */
-  .brand-gradient{
-    font-size:22px; /* slightly bigger than 26px logo height */
-    line-height:1;
-    font-weight:800;
-    letter-spacing:.06em;
-    background:linear-gradient(90deg,var(--accent1),var(--accent2),#6ee7ff,var(--accent1));
-    background-size:300% 100%;
-    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
-    animation:brandSlide 6s linear infinite;
+  /* Hero */
+  .hero{padding:0 0 8px}
+  .hero h2{font-size:42px;margin:0 0 12px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin:0;color:var(--muted);font-size:18px}
+
+  /* Grid */
+  .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
+  @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .tile{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);border:1px solid #1a2230;cursor:pointer}
+  .tile img{filter:grayscale(100%);transition:filter .35s ease;width:100%;height:auto;object-fit:contain}
+  .tile:hover img{filter:none}
+
+  section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
+  .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
+  @media(max-width:860px){.about{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
+  .me{aspect-ratio:1/1;border-radius:50%;border:6px solid #0b0d0d;outline:1px solid #1a1f27}
+  form{display:grid;gap:10px}
+  input,textarea,button{font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px}
+  textarea{min-height:120px;resize:vertical}
+  button{background:#1a68ff;border-color:#1a68ff;cursor:pointer;font-weight:600}
+  button:hover{filter:brightness(1.08)}
+  footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
+
+  /* ===== Project Viewer (fullscreen) ===== */
+  .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
+  .pv.show{opacity:1;pointer-events:auto}
+  .pv__content{position:relative;width:100%;height:100%}
+  .pv__image{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .pv__img{position:absolute;inset:0;width:100vw;height:100vh;object-fit:contain;opacity:0;transition:opacity .5s ease;will-change:opacity,transform}
+  .pv__img.is-top{opacity:1;animation:pvIn var(--pv-dur) var(--pv-ease)}
+  @keyframes pvIn{from{transform:translateY(-40px);opacity:.9}to{transform:translateY(0);opacity:1}}
+  .pv__info{position:absolute;left:0;right:0;bottom:0;padding:22px 28px;font-size:15px;line-height:1.5;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.7);transform:translateY(100%);opacity:0;transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease)}
+  .pv.show .pv__info{transform:translateY(0);opacity:1}
+  .pv__nav{position:absolute;top:50%;transform:translateY(-50%);width:auto;height:auto;padding:8px 10px;border:none;background:transparent;box-shadow:none;color:#fff;font-size:56px;line-height:1;cursor:pointer;user-select:none;text-shadow:0 4px 18px rgba(0,0,0,.55)}
+  .pv__nav:hover{opacity:.9}
+  .pv__prev{left:12px}
+  .pv__next{right:12px}
+  @media(max-width:700px){.pv__nav{display:none}}
+
+  /* Small-screen tweaks */
+  @media(max-width:700px){
+    .left-brand .logo-small{height:22px}
+    .brand-gradient{font-size:24px}
+    .center-logo .logo-center{height:28px}
+    .menu-btn,.filter-btn{height:32px}
   }
-  @keyframes brandSlide{0%{background-position:0% 50%}100%{background-position:100% 50%}}
-
-</style>
+  </style>
 </head>
 <body>
 <header>
@@ -74,16 +141,281 @@
       <img src="assets/logo.png" alt="ZSIZART Logo" class="logo-small">
       <span class="brand-gradient">ZSIZART</span>
     </div>
-    <div class="center-logo" aria-hidden="true">
-      <img src="assets/logo.png" alt="" class="logo-center">
+    <div class="center-logo">
+      <img src="assets/logo.png" alt="ZSIZART Logo Large" class="logo-center">
     </div>
     <div class="actions">
-      <button class="filter-btn" id="filterToggle" title="Filters & Search" aria-expanded="false">Search & Filter</button>
-      <button class="menu-btn" id="menuBtn" title="Menu" aria-label="Open menu"><span class="bars"></span></button>
+      <button class="filter-btn" id="filterToggle" title="Filters/Search">Search & Filter</button>
+      <button class="menu-btn" id="menuBtn" title="Menu"><span class="bars"></span></button>
     </div>
   </div>
 </header>
 
-<!-- rest of the HTML unchanged -->
+<div class="overlay" id="overlay"></div>
+<aside class="menu-panel" id="menuPanel">
+  <div class="menu-header">
+    <button class="menu-close" id="menuClose">Close</button>
+  </div>
+  <nav class="menu-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#courses">Courses</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</aside>
+
+<main class="wrap">
+  <section class="hero">
+    <h2>We bring imagination to life</h2>
+    <p>High-end 3D visualization & architectural CGI</p>
+  </section>
+
+  <!-- Filter Panel -->
+  <section id="filters" class="filter-panel">
+    <form id="filterForm" onsubmit="return false;">
+      <div class="filter-row">
+        <input class="search-input" type="search" id="q" placeholder="Search projects by name…" />
+        <label class="chip"><input type="checkbox" id="tagInterior" /> INTERIOR</label>
+        <label class="chip"><input type="checkbox" id="tagExterior" /> EXTERIOR</label>
+        <div class="filter-actions">
+          <button type="button" class="btn ghost" id="resetBtn">Reset</button>
+          <button type="button" class="btn primary" id="applyBtn">Apply</button>
+        </div>
+      </div>
+      <div class="hint">Tip: you can filter by text (project name) and/or category.</div>
+    </form>
+  </section>
+
+  <!-- Work -->
+  <section id="work">
+    <h2>Work</h2>
+    <div class="grid" id="grid">
+      <div class="tile" data-project="assets/work-01" data-title="Como Gardens Project" data-desc="Como Gardens Project — modern villas surrounded by greenery." data-tags="exterior">
+        <img src="assets/work-01.jpg" alt="Como Gardens Project">
+      </div>
+      <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
+        <img src="assets/work-02.jpg" alt="Hillside Serenity">
+      </div>
+      <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <img src="assets/work-03.jpg" alt="Retro Home Sweet">
+      </div>
+      <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <img src="assets/work-04.jpg" alt="Serene Lines">
+      </div>
+      <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <img src="assets/work-05.jpg" alt="Modern Haven">
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About</h2>
+    <div class="about">
+      <img class="me reveal del-1" src="assets/me.jpg" alt="Mahmoud Refaey" />
+      <div class="card reveal del-2">
+        <p>Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling. I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look‑dev while keeping a high creative bar.</p>
+        <p>My process blends cinematic composition, precise lighting, and material realism to deliver emotionally engaging visuals. I collaborate smoothly onsite and remotely with architects, designers, and developers, taking projects from early concept to polished marketing imagery with consistent quality and reliability.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section id="courses">
+    <h2>Courses</h2>
+    <div class="card">Coming soon…</div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="card">
+      <form id="contact-form">
+        <input type="text" name="from_name" placeholder="Your Name" required>
+        <input type="email" name="reply_to" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message…" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <p id="status" style="margin-top:8px;color:#9ec2ff"></p>
+    </div>
+  </section>
+</main>
+
+<footer>© 2025 ZSIZART. All rights reserved.</footer>
+
+<!-- Project Viewer -->
+<div class="pv" id="pv" aria-hidden="true">
+  <div class="pv__content">
+    <div class="pv__image">
+      <img id="pvImageA" class="pv__img is-top" alt="">
+      <img id="pvImageB" class="pv__img" alt="">
+    </div>
+    <button class="pv__nav pv__prev" aria-label="Previous">&#10094;</button>
+    <button class="pv__nav pv__next" aria-label="Next">&#10095;</button>
+    <aside class="pv__info">
+      <h3 id="pvTitle"></h3>
+      <p id="pvDesc"></p>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* ===== Menu ===== */
+const body=document.body,menuBtn=document.getElementById('menuBtn'),overlay=document.getElementById('overlay'),menuPanel=document.getElementById('menuPanel'),menuClose=document.getElementById('menuClose');
+function openMenu(){body.classList.add('menu-open');}
+function closeMenu(){body.classList.remove('menu-open');}
+menuBtn.onclick=openMenu;overlay.onclick=closeMenu;menuClose.onclick=closeMenu;
+
+/* ===== Filter Panel toggle ===== */
+const filterToggle=document.getElementById('filterToggle');
+const filterPanel=document.getElementById('filters');
+filterToggle.addEventListener('click',()=>{ filterPanel.classList.toggle('show'); });
+
+/* ===== Filtering logic ===== */
+const applyBtn=document.getElementById('applyBtn');
+const resetBtn=document.getElementById('resetBtn');
+const qInput=document.getElementById('q');
+const chkInt=document.getElementById('tagInterior');
+const chkExt=document.getElementById('tagExterior');
+const tiles=[...document.querySelectorAll('#grid .tile')];
+
+function applyFilters(){
+  const q=(qInput.value||'').trim().toLowerCase();
+  const wantInt=chkInt.checked, wantExt=chkExt.checked;
+  tiles.forEach(tile=>{
+    const name=(tile.dataset.title||'').toLowerCase();
+    const tags=(tile.dataset.tags||'').toLowerCase();
+    const matchText = q ? name.includes(q) : true;
+    let matchCat = true;
+    if (wantInt || wantExt){
+      matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior'));
+    }
+    tile.style.display = (matchText && matchCat) ? '' : 'none';
+  });
+}
+function resetFilters(){
+  qInput.value=''; chkInt.checked=false; chkExt.checked=false;
+  tiles.forEach(t=>t.style.display='');
+}
+applyBtn.addEventListener('click',applyFilters);
+resetBtn.addEventListener('click',resetFilters);
+qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
+
+/* ===== Project Viewer ===== */
+(function(){
+  const viewer  = document.getElementById('pv'),
+        imgA    = document.getElementById('pvImageA'),
+        imgB    = document.getElementById('pvImageB'),
+        titleEl = document.getElementById('pvTitle'),
+        descEl  = document.getElementById('pvDesc');
+
+  // Build project list from tiles (so arrow buttons cycle projects)
+  const projectTiles = [...document.querySelectorAll('.tile')];
+  const projects = projectTiles.map(t => ({ base:t.dataset.project, title:t.dataset.title||'', desc:t.dataset.desc||'' }));
+
+  let projectIdx = 0;   // current project
+  let list = [];        // images of current project
+  let idx = 0;          // index of current image
+  let topIsA = true;    // which image element is on top for cross‑fade
+
+  function show(src){
+    const top   = topIsA ? imgA : imgB;
+    const under = topIsA ? imgB : imgA;
+    under.onload = () => { top.classList.remove('is-top'); under.classList.add('is-top'); topIsA = !topIsA; under.onload = null; };
+    under.src = src;
+  }
+
+  function setIdx(i){
+    if (!list.length) return;
+    idx = (i + list.length) % list.length;
+    show(list[idx]);
+    titleEl.textContent = viewer.dataset.title || "";
+    descEl.textContent  = viewer.dataset.desc  || "";
+  }
+  const nextImg = () => setIdx(idx+1);
+  const prevImg = () => setIdx(idx-1);
+
+  // Try to load a json list; fall back to numbered images base-01..-20
+  async function buildList(base, max=20){
+    try{
+      const res = await fetch(`${base}.list.json`, {cache:'no-store'});
+      if(res.ok){
+        const arr = await res.json();
+        const folder = base.slice(0, base.lastIndexOf('/')+1);
+        const mapped = arr.map(x => x.includes('/') ? x : folder + x).filter(Boolean);
+        if(mapped.length) return mapped;
+      }
+    }catch(_){/* ignore */}
+    const tryList=[`${base}.jpg`];
+    for(let i=1;i<=max;i++) tryList.push(`${base}-${String(i).padStart(2,'0')}.jpg`);
+    const checks = tryList.map(src=>new Promise(res=>{ const im=new Image(); im.onload=()=>res(src); im.onerror=()=>res(null); im.src=src; }));
+    const found=(await Promise.all(checks)).filter(Boolean);
+    return found.length?found:[tryList[0]];
+  }
+
+  async function openProject(pIdx){
+    projectIdx = (pIdx + projects.length) % projects.length;
+    const p = projects[projectIdx];
+    viewer.dataset.title = p.title;
+    viewer.dataset.desc  = p.desc;
+    list = await buildList(p.base);
+    idx = 0;
+    imgA.classList.remove('is-top');
+    imgB.classList.remove('is-top');
+    const currentTop = topIsA ? imgA : imgB;
+    currentTop.src = list[0];
+    currentTop.classList.add('is-top');
+    setIdx(0);
+  }
+
+  function openPV(){ viewer.classList.add('show'); viewer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function closePV(){ viewer.classList.remove('show'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+
+  projectTiles.forEach((tile,i)=>{ tile.addEventListener('click', async ()=>{ projectIdx = i; await openProject(projectIdx); openPV(); }); });
+  viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
+  const btnPrev=viewer.querySelector('.pv__prev'), btnNext=viewer.querySelector('.pv__next');
+  btnPrev.addEventListener('click',()=>openProject(projectIdx-1));
+  btnNext.addEventListener('click',()=>openProject(projectIdx+1));
+
+  document.addEventListener('keydown',e=>{ if(!viewer.classList.contains('show'))return; if(e.key==='Escape') closePV(); if(e.key==='ArrowRight'||e.key==='PageDown') nextImg(); if(e.key==='ArrowLeft'||e.key==='PageUp') prevImg(); });
+
+  // Prevent body scroll on iOS while viewer is open
+  viewer.addEventListener('touchmove', (e)=>{ if(viewer.classList.contains('show')) e.preventDefault(); }, {passive:false});
+
+  // Smooth wheel/trackpad image switching
+  let accum = 0; const STEP = 1500; let imgLock = false;
+  viewer.addEventListener('wheel', (e) => {
+    if (!viewer.classList.contains('show')) return; e.preventDefault();
+    const dy = (Math.abs(e.deltaY) > Math.abs(e.deltaX)) ? e.deltaY : e.deltaX; accum += dy; if (imgLock) return;
+    if (accum >= STEP) { nextImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 500); }
+    else if (accum <= -STEP) { prevImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 500); }
+  }, { passive: false });
+
+  // Reveal-on-scroll targets
+  (function(){
+    const autoTargets = ['.hero h2','.hero p','section h2','.grid .tile','.about .me','.about .card','#contact .card'];
+    autoTargets.forEach(sel=>{ document.querySelectorAll(sel).forEach(el=>{ if(!el.classList.contains('reveal')) el.classList.add('reveal'); }); });
+    document.querySelectorAll('.grid').forEach(grid=>{ const its=[...grid.querySelectorAll('.tile.reveal')]; its.forEach((t,i)=> t.classList.add(`del-${(i%4)+1}`)); });
+    const io = new IntersectionObserver((entries, obs)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('show'); obs.unobserve(entry.target);} }); },{root:null,rootMargin:'0px 0px -10% 0px',threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+  })();
+})();
+
+/* ==== Hide Header on Scroll ==== */
+let lastScrollY = window.scrollY; const headerEl = document.querySelector('header');
+window.addEventListener('scroll', () => { if(window.scrollY > lastScrollY){ headerEl.style.transform = 'translateY(-100%)'; } else { headerEl.style.transform = 'translateY(0)'; } lastScrollY = window.scrollY; });
+</script>
+
+<!-- EmailJS (optional contact form) -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
+  const EMAILJS_SERVICE_ID="service_m1dfwio";
+  const EMAILJS_TEMPLATE_ID="template_kuqk13r";
+  try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
+  const form = document.getElementById('contact-form');
+  const statusEl = document.getElementById('status');
+  form?.addEventListener('submit',function(e){ e.preventDefault(); emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this).then(()=>{statusEl.textContent='Message sent!';this.reset();}).catch(()=>{statusEl.textContent='Failed, try again.';}); });
+</script>
 </body>
 </html>
