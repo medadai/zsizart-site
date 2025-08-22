@@ -183,25 +183,24 @@
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
   
-.tile{
-  position:relative;
-  overflow:hidden;
-  background:transparent; /* شفاف أو خليه #000 لو عايز */
-  cursor:pointer;
-  border:none;           
-  border-radius:0;       /* يشيل الحواف الناعمة */
-  box-shadow:none;       /* يشيل الظل */
-}
-
-.tile img{
-  width:100%;
-  height:auto;
-  object-fit:cover;      /* يغطي المساحة بالكامل */
-  display:block;
-  filter:none;           /* بدون أبيض وأسود */
-  transition:none;       /* بدون أنيميشن */
-}
-    
+  .tile{
+    position:relative;
+    overflow:hidden;
+    border-radius:var(--radius);
+    background:var(--card);
+    box-shadow:var(--shadow);
+    border:1px solid #1a2230;
+    cursor:pointer;
+    will-change:transform,opacity;
+  }
+  .tile img{
+    filter:grayscale(100%);
+    transition:filter .35s ease;
+    width:100%;
+    height:auto;
+    object-fit:contain;
+    will-change:filter;
+  }
   .tile:hover img{filter:none}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
@@ -226,21 +225,11 @@
   @keyframes pvIn{from{transform:translateY(-40px);opacity:.9}to{transform:translateY(0);opacity:1}}
   .pv__info{position:absolute;left:0;right:0;bottom:0;padding:22px 28px;font-size:15px;line-height:1.5;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.7);transform:translateY(100%);opacity:0;transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease)}
   .pv.show .pv__info{transform:translateY(0);opacity:1}
-
-  /* Hide nav arrows entirely */
-  .pv__nav{display:none!important}
-
-  /* Close button (X) */
-  .pv__close{
-    position:absolute; top:14px; left:14px;
-    width:40px; height:40px; border-radius:10px;
-    background:rgba(0,0,0,.45); border:1px solid #1a1f27;
-    color:#fff; font-size:26px; line-height:1; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 20px rgba(0,0,0,.35);
-    z-index:5;
-  }
-  .pv__close:hover{background:rgba(0,0,0,.6)}
+  .pv__nav{position:absolute;top:50%;transform:translateY(-50%);width:auto;height:auto;padding:8px 10px;border:none;background:transparent;box-shadow:none;color:#fff;font-size:56px;line-height:1;cursor:pointer;user-select:none;text-shadow:0 4px 18px rgba(0,0,0,.55)}
+  .pv__nav:hover{opacity:.9}
+  .pv__prev{left:12px}
+  .pv__next{right:12px}
+  @media(max-width:700px){.pv__nav{display:none}}
 
   /* Small-screen tweaks */
   @media(max-width:700px){
@@ -286,6 +275,7 @@
       will-change: opacity, transform;
       transition:none!important;
     }
+    /* دخول ثم اختفاء أثناء الخروج لعناصر مختارة */
     .reveal[data-exit],
     section h2.reveal,
     .about .card.reveal,
@@ -308,23 +298,13 @@
   /* ===== (NEW) Fallback helper classes ===== */
   .reveal.hide-up{opacity:0; transform:translateY(-24px) scale(.98)}
   .reveal.hide-down{opacity:0; transform:translateY( 24px) scale(.98)}
-
-  /* ===== (NEW) Mobile Header Fix ===== */
-  @media (max-width: 768px){
-    .center-logo{ display:none; }
-    .left-brand{ display:flex; gap:8px; align-items:center; }
-    .actions{ margin-left:auto; }
-    .logo-small{ height:28px; width:auto; }
-  }
-
-  /* ===== (NEW) Touch behaviour in PV ===== */
-  .pv__content{ touch-action: none; } /* نتحكم في السوايب عمودي */
   </style>
 </head>
 <body>
 <header>
   <div class="wrap nav-row header-layout">
     <div class="left-brand">
+      <!-- hidden by CSS -->
       <img src="assets/logo.png" alt="ZSIZART Logo" class="logo-small logo-sheen">
       <span class="brand-gradient brand-sheen wordmark">ZSIZ<span class="art">ART</span></span>
     </div>
@@ -421,7 +401,7 @@
         <input type="text" name="from_name" placeholder="Your Name" required>
         <input type="email" name="reply_to" placeholder="Your Email" required>
         <textarea name="message" placeholder="Your Message…" required></textarea>
-        <<button type="submit">Send Message</button>
+        <button type="submit">Send Message</button>
       </form>
       <p id="status" style="margin-top:8px;color:#9ec2ff"></p>
     </div>
@@ -433,16 +413,12 @@
 <!-- Project Viewer -->
 <div class="pv" id="pv" aria-hidden="true">
   <div class="pv__content">
-    <!-- Close button -->
-    <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
-
     <div class="pv__image">
       <img id="pvImageA" class="pv__img is-top" alt="">
       <img id="pvImageB" class="pv__img" alt="">
     </div>
-
-    <!-- nav arrows removed intentionally -->
-
+    <button class="pv__nav pv__prev" aria-label="Previous">&#10094;</button>
+    <button class="pv__nav pv__next" aria-label="Next">&#10095;</button>
     <aside class="pv__info">
       <h3 id="pvTitle"></h3>
       <p id="pvDesc"></p>
@@ -455,7 +431,9 @@
 let lenis;
 
 function initLenis() {
+  // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
   if (!prefersReducedMotion) {
     lenis = new Lenis({
       duration: 1.2,
@@ -469,14 +447,20 @@ function initLenis() {
       infinite: false,
     });
 
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
     requestAnimationFrame(raf);
 
+    // Update scroll position for parallax
     lenis.on('scroll', ({ scroll }) => {
       document.documentElement.style.setProperty('--scroll-y', scroll);
     });
   }
 }
+
+// Initialize on load
 window.addEventListener('load', initLenis);
 
 /* ===== Menu ===== */
@@ -526,17 +510,16 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         imgA    = document.getElementById('pvImageA'),
         imgB    = document.getElementById('pvImageB'),
         titleEl = document.getElementById('pvTitle'),
-        descEl  = document.getElementById('pvDesc'),
-        btnClose= document.getElementById('pvClose');
+        descEl  = document.getElementById('pvDesc');
 
-  // Build project list from tiles (so we stay within the clicked project)
+  // Build project list from tiles (so arrow buttons cycle projects)
   const projectTiles = [...document.querySelectorAll('.tile')];
   const projects = projectTiles.map(t => ({ base:t.dataset.project, title:t.dataset.title||'', desc:t.dataset.desc||'' }));
 
-  let projectIdx = 0;
-  let list = [];    // images for current project
-  let idx = 0;      // current image index
-  let topIsA = true;
+  let projectIdx = 0;   // current project
+  let list = [];        // images of current project
+  let idx = 0;          // index of current image
+  let topIsA = true;    // which image element is on top for cross-fade
 
   function show(src){
     const top   = topIsA ? imgA : imgB;
@@ -565,7 +548,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         const mapped = arr.map(x => x.includes('/') ? x : folder + x).filter(Boolean);
         if(mapped.length) return mapped;
       }
-    }catch(_){}
+    }catch(_){/* ignore */}
     const tryList=[`${base}.jpg`];
     for(let i=1;i<=max;i++) tryList.push(`${base}-${String(i).padStart(2,'0')}.jpg`);
     const checks = tryList.map(src=>new Promise(res=>{ const im=new Image(); im.onload=()=>res(src); im.onerror=()=>res(null); im.src=src; }));
@@ -601,81 +584,25 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if (lenis) lenis.start();
   }
 
-  // open clicked project only; no cross-project nav in viewer
-  projectTiles.forEach((tile,i)=>{ 
-    tile.addEventListener('click', async ()=>{ projectIdx = i; await openProject(projectIdx); openPV(); }); 
-  });
-
-  // close on overlay click or X
+  projectTiles.forEach((tile,i)=>{ tile.addEventListener('click', async ()=>{ projectIdx = i; await openProject(projectIdx); openPV(); }); });
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
-  btnClose.addEventListener('click', closePV);
+  const btnPrev=viewer.querySelector('.pv__prev'), btnNext=viewer.querySelector('.pv__next');
+  btnPrev.addEventListener('click',()=>openProject(projectIdx-1));
+  btnNext.addEventListener('click',()=>openProject(projectIdx+1));
 
-  // Keyboard: Escape closes, Down/PageDown next, Up/PageUp prev
-  document.addEventListener('keydown',e=>{
-    if(!viewer.classList.contains('show'))return;
-    if(e.key==='Escape') closePV();
-    if(e.key==='ArrowDown' || e.key==='PageDown') nextImg();
-    if(e.key==='ArrowUp'   || e.key==='PageUp')   prevImg();
-  });
+  document.addEventListener('keydown',e=>{ if(!viewer.classList.contains('show'))return; if(e.key==='Escape') closePV(); if(e.key==='ArrowRight'||e.key==='PageDown') nextImg(); if(e.key==='ArrowLeft'||e.key==='PageUp') prevImg(); });
 
   // Prevent body scroll on iOS while viewer is open
   viewer.addEventListener('touchmove', (e)=>{ if(viewer.classList.contains('show')) e.preventDefault(); }, {passive:false});
 
-  // Wheel/trackpad: vertical scroll changes images
-  let accum = 0; const STEP = 1200; let imgLock = false;
+  // Smooth wheel/trackpad image switching
+  let accum = 0; const STEP = 1500; let imgLock = false;
   viewer.addEventListener('wheel', (e) => {
-    if (!viewer.classList.contains('show')) return; 
-    e.preventDefault();
-    const dy = e.deltaY; 
-    accum += dy; 
-    if (imgLock) return;
-    if (accum >= STEP) { nextImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 400); }
-    else if (accum <= -STEP) { prevImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 400); }
+    if (!viewer.classList.contains('show')) return; e.preventDefault();
+    const dy = (Math.abs(e.deltaY) > Math.abs(e.deltaX)) ? e.deltaY : e.deltaX; accum += dy; if (imgLock) return;
+    if (accum >= STEP) { nextImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 500); }
+    else if (accum <= -STEP) { prevImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 500); }
   }, { passive: false });
-
-  /* ===== Touch swipe (vertical) to change image ===== */
-  let tStartX = 0, tStartY = 0, tActive = false, swipeLocked = false;
-  const SWIPE_MIN = 40;           // px
-  const SWIPE_MAX_ANGLE = 0.577;  // ~33deg => |dx/dy| <= هذا
-
-  viewer.addEventListener('touchstart', (e)=>{
-    if (!viewer.classList.contains('show')) return;
-    const t = e.changedTouches[0];
-    tStartX = t.clientX;
-    tStartY = t.clientY;
-    tActive = true;
-    swipeLocked = false;
-  }, {passive:true});
-
-  viewer.addEventListener('touchmove', (e)=>{
-    if (!tActive) return;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - tStartX;
-    const dy = t.clientY - tStartY;
-    // لو السحب رأسي بوضوح امنع سلوك المتصفح
-    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) {
-      e.preventDefault();
-    }
-  }, {passive:false});
-
-  viewer.addEventListener('touchend', (e)=>{
-    if (!tActive || swipeLocked) return;
-    tActive = false;
-
-    const t = e.changedTouches[0];
-    const dx = t.clientX - tStartX;
-    const dy = t.clientY - tStartY;
-
-    const absDx = Math.abs(dx), absDy = Math.abs(dy);
-    const verticalEnough = absDy >= SWIPE_MIN && (absDx / (absDy || 1)) <= SWIPE_MAX_ANGLE;
-
-    if (verticalEnough){
-      swipeLocked = true;
-      if (dy < 0) { nextImg(); }   // سحب لأعلى => التالي
-      else        { prevImg(); }   // سحب لأسفل => السابق
-      setTimeout(()=>{ swipeLocked = false; }, 300);
-    }
-  }, {passive:true});
 })();
 
 /* ===== Enhanced Scroll-Linked Animations ===== */
@@ -683,6 +610,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
+  // Enhanced reveal-on-scroll with progress-based animations
   const autoTargets = ['.hero h2','.hero p','section h2','.grid .tile','#contact .card'];
   autoTargets.forEach(sel=>{
     document.querySelectorAll(sel).forEach(el=>{
@@ -690,17 +618,22 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     });
   });
 
+  // Add staggered delays to grid tiles
   document.querySelectorAll('.grid').forEach(grid=>{
     const its=[...grid.querySelectorAll('.tile.reveal')];
     its.forEach((t,i)=> t.classList.add(`del-${(i%4)+1}`));
   });
 
+  // Enhanced IntersectionObserver with progress tracking
   const io = new IntersectionObserver((entries, obs)=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
+        // Calculate progress based on intersection ratio
         const progress = Math.min(1, entry.intersectionRatio * 1.5);
         entry.target.style.setProperty('--progress', progress);
         entry.target.classList.add('show');
+        
+        // Only unobserve when fully visible
         if (entry.intersectionRatio > 0.8) {
           obs.unobserve(entry.target);
         }
@@ -709,33 +642,52 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   },{
     root:null,
     rootMargin:'0px 0px -10% 0px',
-    threshold:[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+    threshold:[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
   });
+
   document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
+  // Enhanced scroll-scrub engine
   const scrubEls = [...document.querySelectorAll('.scrub')];
   if(scrubEls.length) {
     let ticking = false;
+
     function updateScrub(){
       const vh = window.innerHeight;
       const start = vh * 0.90;
       const end   = vh * 0.25;
+
       scrubEls.forEach(el=>{
         const r = el.getBoundingClientRect();
         const center = r.top + r.height/2;
         let p = (start - center) / (start - end);
         p = Math.max(0, Math.min(1, p));
-        p = Math.pow(p, 0.85);
+        p = Math.pow(p, 0.85); // easing
         el.style.setProperty('--p', p.toFixed(3));
       });
+
       ticking = false;
     }
-    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(updateScrub); } }
-    if (lenis) { lenis.on('scroll', onScroll); } else { window.addEventListener('scroll', onScroll, { passive:true }); }
+
+    function onScroll(){
+      if(!ticking){
+        ticking = true;
+        requestAnimationFrame(updateScrub);
+      }
+    }
+
+    // Use Lenis scroll event if available, otherwise fallback to window scroll
+    if (lenis) {
+      lenis.on('scroll', onScroll);
+    } else {
+      window.addEventListener('scroll', onScroll, { passive:true });
+    }
+    
     window.addEventListener('resize', updateScrub, { passive:true });
     updateScrub();
   }
 
+  // Parallax for hero elements
   const parallaxEls = document.querySelectorAll('.hero-parallax');
   if (parallaxEls.length) {
     function updateParallax() {
@@ -745,6 +697,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         el.style.transform = `translate3d(0, ${scrollY * -speed}px, 0)`;
       });
     }
+
     if (lenis) {
       lenis.on('scroll', ({ scroll }) => {
         parallaxEls.forEach(el => {
@@ -757,7 +710,10 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
       window.addEventListener('scroll', () => {
         if (!parallaxTicking) {
           parallaxTicking = true;
-          requestAnimationFrame(() => { updateParallax(); parallaxTicking = false; });
+          requestAnimationFrame(() => {
+            updateParallax();
+            parallaxTicking = false;
+          });
         }
       }, { passive: true });
     }
@@ -770,25 +726,32 @@ const headerEl = document.querySelector('header');
 
 function updateHeader() {
   const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+  
   if (currentScrollY > lastScrollY && currentScrollY > 100) {
     headerEl.style.transform = 'translateY(-100%)';
   } else {
     headerEl.style.transform = 'translateY(0)';
   }
+  
   lastScrollY = currentScrollY;
 }
-if (lenis) { lenis.on('scroll', updateHeader); } 
-else {
+
+if (lenis) {
+  lenis.on('scroll', updateHeader);
+} else {
   let headerTicking = false;
   window.addEventListener('scroll', () => {
     if (!headerTicking) {
       headerTicking = true;
-      requestAnimationFrame(() => { updateHeader(); headerTicking = false; });
+      requestAnimationFrame(() => {
+        updateHeader();
+        headerTicking = false;
+      });
     }
   }, { passive: true });
 }
 
-/* Light sweep trigger every 10s */
+/* Light sweep trigger every 10s (center logo kept) */
 function runSheen(){
   document.querySelectorAll('.brand-sheen, .logo-sheen').forEach(el=>{
     el.classList.remove('sweep'); void el.offsetWidth; el.classList.add('sweep');
@@ -807,24 +770,22 @@ setInterval(runSheen, 10000);
   try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
   const form = document.getElementById('contact-form');
   const statusEl = document.getElementById('status');
-  form?.addEventListener('submit',function(e){ 
-    e.preventDefault(); 
-    emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
-      .then(()=>{statusEl.textContent='Message sent!';this.reset();})
-      .catch(()=>{statusEl.textContent='Failed, try again.';}); 
-  });
+  form?.addEventListener('submit',function(e){ e.preventDefault(); emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this).then(()=>{statusEl.textContent='Message sent!';this.reset();}).catch(()=>{statusEl.textContent='Failed, try again.';}); });
 </script>
 
 <!-- (NEW) Reveal exit fallback for non–view-timeline browsers -->
 <script>
 (function(){
   if (!('IntersectionObserver' in window)) return;
+
   const els = document.querySelectorAll('.reveal');
   let lastY = window.scrollY;
+
   const io = new IntersectionObserver((entries)=>{
     const goingDown = window.scrollY >= lastY;
     entries.forEach(entry=>{
       const el = entry.target;
+
       if (entry.isIntersecting){
         el.classList.add('show');
         el.classList.remove('hide-up','hide-down');
@@ -835,6 +796,7 @@ setInterval(runSheen, 10000);
     });
     lastY = window.scrollY;
   }, { threshold:[0,.1,.2,.4,.6,.8,1] });
+
   els.forEach(el=> io.observe(el));
 })();
 </script>
