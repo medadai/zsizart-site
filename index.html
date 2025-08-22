@@ -132,14 +132,43 @@
     .center-logo .logo-center{height:28px}
     .menu-btn,.filter-btn{height:32px}
   }
-  </style>
+  
+  
+  /* ===== Logo & wordmark animations (added) ===== */
+  /* subtle idle breathe for the left mark */
+  .logo-small{ transform-origin: 20% 50%; animation: markBreathe 6s ease-in-out infinite; }
+  @keyframes markBreathe{ 0%,100%{transform:translateY(0) rotate(0deg) scale(1)} 50%{transform:translateY(-0.5px) rotate(-0.6deg) scale(1.01)} }
+
+  /* diagonal light sweep that we can trigger */
+  .brand-sheen,.logo-sheen{ position:relative; display:inline-block; }
+  .brand-sheen::after,.logo-sheen::after{ content:""; position:absolute; inset:0; background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.22) 45%, transparent 60%); transform:translateX(-120%); pointer-events:none; mix-blend-mode:screen; }
+  .sweep{ animation:sweep 1.2s ease-out forwards; }
+  @keyframes sweep{ to{ transform: translateX(120%);} }
+
+  /* optional micro hover nudge */
+  .left-brand:hover .logo-small{ animation:none; transform:translateX(-1px) rotate(-2deg) scale(1.02); transition:.25s }
+  .left-brand:hover .brand-gradient{ transform:translateX(1px); transition:.25s }
+
+  /* highlight only the ART letters occasionally */
+  .wordmark .art{ position:relative; }
+  .wordmark .art::after{ content:""; position:absolute; inset:0 0 .1em 0; background:linear-gradient(90deg,#ffd16633,#ffffff55,#ffd16633); border-radius:.2em; filter:blur(4px); opacity:0; animation:artGlow 12s ease-in-out infinite; }
+  @keyframes artGlow{ 0%,85%{opacity:0} 90%{opacity:1} 100%{opacity:0} }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion:reduce){
+    .logo-small{ animation:none !important; transform:none !important }
+    .brand-sheen::after,.logo-sheen::after{ display:none }
+    .wordmark .art::after{ display:none }
+  }
+  
+</style>
 </head>
 <body>
 <header>
   <div class="wrap nav-row header-layout">
     <div class="left-brand">
-      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo-small">
-      <span class="brand-gradient">ZSIZART</span>
+      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo-small logo-sheen">
+      <span class="brand-gradient brand-sheen wordmark">ZSIZ<span class="art">ART</span></span>
     </div>
     <div class="center-logo">
       <img src="assets/logo.png" alt="ZSIZART Logo Large" class="logo-center">
@@ -416,6 +445,19 @@ window.addEventListener('scroll', () => { if(window.scrollY > lastScrollY){ head
   const form = document.getElementById('contact-form');
   const statusEl = document.getElementById('status');
   form?.addEventListener('submit',function(e){ e.preventDefault(); emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this).then(()=>{statusEl.textContent='Message sent!';this.reset();}).catch(()=>{statusEl.textContent='Failed, try again.';}); });
+</script>
+
+<script>
+// Light sweep trigger on load and every 10s
+function runSheen(){
+  document.querySelectorAll('.brand-sheen, .logo-sheen').forEach(el=>{
+    el.classList.remove('sweep');
+    void el.offsetWidth; // reflow to restart animation
+    el.classList.add('sweep');
+  });
+}
+window.addEventListener('load', runSheen);
+setInterval(runSheen, 10000);
 </script>
 </body>
 </html>
