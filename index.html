@@ -388,14 +388,15 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   });
 
   // Scroll للتقليب بحساسية مضبوطة
-  let acc=0, threshold=120;
-  viewer.addEventListener('wheel',e=>{
-    if(!viewer.classList.contains('show'))return;
-    e.preventDefault();
-    acc += e.deltaY;
-    if(acc >  threshold){ next(); acc=0; }
-    if(acc < -threshold){ prev(); acc=0; }
-  },{passive:false});
+let acc=0, threshold=300, lock=false;
+viewer.addEventListener('wheel',e=>{
+  if(!viewer.classList.contains('show'))return;
+  e.preventDefault();
+  if(lock) return; // ممنوع يقلب لو في فترة تهدئة
+  acc += e.deltaY;
+  if(acc >  threshold){ next(); acc=0; lock=true; setTimeout(()=>lock=false,600); }
+  if(acc < -threshold){ prev(); acc=0; lock=true; setTimeout(()=>lock=false,600); }
+},{passive:false});
 
   // سوايب عمودي للموبايل
   let startY=0, swiping=false;
