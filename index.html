@@ -207,6 +207,12 @@
 
   /* Touch behavior in PV */
   .pv__content{touch-action:none}
+
+  /* ========= ABOUT Tweaks (override) ========= */
+  /* صغّر عمود الصورة وشيل البوكس حوالين النص */
+  .about{ grid-template-columns: 220px 1fr; gap:24px; }
+  .me{ max-width:220px; border-width:4px; }
+  .about .card{ background:transparent; border:0; padding:0; border-radius:0; box-shadow:none; }
   </style>
 </head>
 <body>
@@ -406,7 +412,6 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     imgClay.loading = 'lazy';
     imgClay.decoding = 'async';
 
-    // try to load the first available clay file
     (function tryNext(i=0){
       if(i>=cand.length) return; // no clay -> skip
       imgClay.onload = ()=>{ tile.appendChild(imgClay); bind(); };
@@ -415,40 +420,15 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     })();
 
     function bind(){
-      // pointer circle
-      tile.addEventListener('pointerenter', ()=>{
-        tile.style.setProperty('--r', RADIUS+'px');
-      });
-      tile.addEventListener('pointerleave', ()=>{
-        tile.style.setProperty('--r', '0px');
-        tile.style.setProperty('--mx', '-1000px');
-        tile.style.setProperty('--my', '-1000px');
-      });
-      tile.addEventListener('pointermove', (e)=>{
-        const rect = tile.getBoundingClientRect();
-        tile.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
-        tile.style.setProperty('--my', (e.clientY - rect.top) + 'px');
-      }, {passive:true});
+      tile.addEventListener('pointerenter', ()=>{ tile.style.setProperty('--r', RADIUS+'px'); });
+      tile.addEventListener('pointerleave', ()=>{ tile.style.setProperty('--r','0px'); tile.style.setProperty('--mx','-1000px'); tile.style.setProperty('--my','-1000px'); });
+      tile.addEventListener('pointermove', (e)=>{ const rect=tile.getBoundingClientRect(); tile.style.setProperty('--mx',(e.clientX-rect.left)+'px'); tile.style.setProperty('--my',(e.clientY-rect.top)+'px'); }, {passive:true});
 
-      // Touch: اضغط مطوّل لعرض الدائرة ومتابعة الإصبع
+      // Touch
       let touchActive=false;
-      tile.addEventListener('touchstart', (e)=>{
-        const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect();
-        tile.style.setProperty('--r', RADIUS+'px');
-        tile.style.setProperty('--mx', (t.clientX-rect.left)+'px');
-        tile.style.setProperty('--my', (t.clientY-rect.top)+'px');
-        touchActive=true;
-      }, {passive:true});
-      tile.addEventListener('touchmove', (e)=>{
-        if(!touchActive) return;
-        const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect();
-        tile.style.setProperty('--mx', (t.clientX-rect.left)+'px');
-        tile.style.setProperty('--my', (t.clientY-rect.top)+'px');
-      }, {passive:true});
-      tile.addEventListener('touchend', ()=>{
-        touchActive=false;
-        tile.style.setProperty('--r','0px');
-      }, {passive:true});
+      tile.addEventListener('touchstart', (e)=>{ const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect(); tile.style.setProperty('--r', RADIUS+'px'); tile.style.setProperty('--mx',(t.clientX-rect.left)+'px'); tile.style.setProperty('--my',(t.clientY-rect.top)+'px'); touchActive=true; }, {passive:true});
+      tile.addEventListener('touchmove', (e)=>{ if(!touchActive) return; const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect(); tile.style.setProperty('--mx',(t.clientX-rect.left)+'px'); tile.style.setProperty('--my',(t.clientY-rect.top)+'px'); }, {passive:true});
+      tile.addEventListener('touchend', ()=>{ touchActive=false; tile.style.setProperty('--r','0px'); }, {passive:true});
     }
   });
 })();
@@ -484,7 +464,6 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   const prevImg = () => setIdx(idx-1);
 
   async function buildList(base, max=20){
-    // Prefer .list.json
     try{
       const res = await fetch(`${base}.list.json`, {cache:'no-store'});
       if(res.ok){
@@ -494,7 +473,6 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         if(mapped.length) return mapped;
       }
     }catch(_){}
-    // Otherwise probe common patterns (exclude -clay)
     const exts=['.jpg','.png','.webp'];
     const tryList=[];
     exts.forEach(ext=>tryList.push(`${base}${ext}`));
