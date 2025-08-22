@@ -387,16 +387,32 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if(e.key==='ArrowLeft' ||e.key==='PageUp')   prev();
   });
 
-  // Scroll للتقليب بحساسية مضبوطة
-let acc=0, threshold=300, lock=false;
-viewer.addEventListener('wheel',e=>{
-  if(!viewer.classList.contains('show'))return;
+// Scroll: خطوة واحدة لكل لفة (زي AVA) + تهدئة
+let wheelCooldown = false;
+let wheelBurstTimer = null;
+let wheelDir = 0;
+
+viewer.addEventListener('wheel', (e) => {
+  if (!viewer.classList.contains('show')) return;
   e.preventDefault();
-  if(lock) return; // ممنوع يقلب لو في فترة تهدئة
-  acc += e.deltaY;
-  if(acc >  threshold){ next(); acc=0; lock=true; setTimeout(()=>lock=false,600); }
-  if(acc < -threshold){ prev(); acc=0; lock=true; setTimeout(()=>lock=false,600); }
-},{passive:false});
+
+  // نجمع كل نبضات التاتش باد/الماوس المتتالية في "نبضة" واحدة
+  wheelDir += Math.sign(e.deltaY || e.deltaX);
+
+  // ندمج أي أحداث متقاربة خلال 90ms في نبضة واحدة
+  clearTimeout(wheelBurstTimer);
+  wheelBurstTimer = setTimeout(() => {
+    if (wheelCooldown) { wheelDir = 0; return; }
+
+    if (wheelDir > 0) next();
+    else if (wheelDir < 0) prev();
+
+    wheelDir = 0;
+    // تهدئة 650ms قبل السماح بالتقليب التالي
+    wheelCooldown = true;
+    setTimeout(() => (wheelCooldown = false), 650);
+  }, 90);
+}, { passive: false });
 
   // سوايب عمودي للموبايل
   let startY=0, swiping=false;
