@@ -429,34 +429,54 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if(e.key==='ArrowLeft' ||e.key==='PageUp')   prevImg();
   });
 
-  // Scroll داخل العارض: يغيّر الصور بسلاسة داخل نفس المشروع
-  let wheelCooldown = false, wheelBurstTimer = null, wheelDir = 0;
-  viewer.addEventListener('wheel', (e) => {
-    if (!viewer.classList.contains('show')) return;
-    e.preventDefault();
-    wheelDir += Math.sign(e.deltaY || e.deltaX);
-    clearTimeout(wheelBurstTimer);
-    wheelBurstTimer = setTimeout(() => {
-      if (wheelCooldown) { wheelDir = 0; return; }
-      if (wheelDir > 0) nextImg();
-      else if (wheelDir < 0) prevImg();
-      wheelDir = 0;
-      wheelCooldown = true;
-      setTimeout(() => (wheelCooldown = false), 650);
-    }, 90);
-  }, { passive: false });
+// === Scroll/Swipe: تفاعل أبطأ وناعم داخل نفس المشروع ===
+let accum = 0;                 // نجمع دلتا الاسكرول هنا
+const STEP = 1200;             // الحساسية: كبر الرقم = أبطأ (جرّب 1600 لو عايز أبطأ)
+let imgLock = false;           // قفل بسيط يمنع تقليب صورتين بسرعة
 
-  // Swipe عمودي للموبايل: يغيّر الصور داخل المشروع
-  let startY=0, swiping=false;
-  viewer.addEventListener('touchstart',e=>{
-    if(!viewer.classList.contains('show'))return;
-    startY=e.changedTouches[0].clientY; swiping=true;
-  },{passive:true});
-  viewer.addEventListener('touchend',e=>{
-    if(!swiping)return;
-    const dy=e.changedTouches[0].clientY-startY; swiping=false;
-    if(Math.abs(dy)>40){ dy<0?nextImg():prevImg(); }
-  },{passive:true});
+viewer.addEventListener('wheel', (e) => {
+  if (!viewer.classList.contains('show')) return;
+  e.preventDefault();
+
+  // نجمع دلتا الاسكرول (تراك باد/ماوس)
+  const dy = (Math.abs(e.deltaY) > Math.abs(e.deltaX)) ? e.deltaY : e.deltaX;
+  accum += dy;
+
+  if (imgLock) return;
+
+  if (accum >= STEP) {
+    nextImg();          // ↓ للصورة التالية
+    accum = 0;
+    imgLock = true;
+    setTimeout(()=>imgLock=false, 500);
+  } else if (accum <= -STEP) {
+    prevImg();          // ↑ للصورة السابقة
+    accum = 0;
+    imgLock = true;
+    setTimeout(()=>imgLock=false, 500);
+  }
+}, { passive: false });
+
+// موبايل: سوآيب رأسي أبطأ
+let startY = 0, swiping = false;
+viewer.addEventListener('touchstart', e=>{
+  if(!viewer.classList.contains('show')) return;
+  startY = e.changedTouches[0].clientY; 
+  swiping = true;
+},{passive:true});
+
+viewer.addEventListener('touchend', e=>{
+  if(!swiping) return;
+  const dy = e.changedTouches[0].clientY - startY;
+  swiping = false;
+
+  const SWIPE_STEP = 140;   // كبر الرقم = أبطأ
+  if (dy <= -SWIPE_STEP) {      // سحب لأعلى → الصورة التالية
+    nextImg();
+  } else if (dy >= SWIPE_STEP){ // سحب لأسفل → الصورة السابقة
+    prevImg();
+  }
+},{passive:true});
 })();
   
 /* ==== Hide Header on Scroll ==== */
