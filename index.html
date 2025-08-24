@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART</title>
 
+  <!-- SEO / Social -->
+  <meta name="description" content="ZSIZART is a boutique visualization studio delivering cinematic architectural imagery, animation, and product CGI.">
+  <meta property="og:title" content="ZSIZART — Visualization Studio">
+  <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/og-cover.jpg">
+  <meta name="theme-color" content="#0b0d0d">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"ZSIZART",
+    "url":"https://zsizart.com/",
+    "logo":"https://zsizart.com/assets/logo.png",
+    "sameAs":[
+      "https://www.instagram.com/",
+      "https://www.behance.net/",
+      "https://vimeo.com/",
+      "https://www.linkedin.com/"
+    ]
+  }
+  </script>
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -116,6 +139,7 @@
   .hero{padding:0 0 8px;position:relative;overflow:hidden}
   .hero h2{font-size:42px;margin:0 0 12px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;will-change:transform}
   .hero p{margin:0;color:var(--muted);font-size:18px;will-change:transform}
+  .hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 
   /* ===== Grid (no rounded/shadow) ===== */
   .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
@@ -127,16 +151,23 @@
     --mx:-1000px; --my:-1000px; --r:0px; /* clay circle defaults */
   }
 
-  /* >>> Restored B/W effect only for gallery thumbnails (img-main) <<< */
+  /* Gallery label */
+  .label{
+    position:absolute;left:10px;top:10px;
+    background:#0e1116cc;border:1px solid #1a1f27;
+    padding:4px 8px;border-radius:10px;font-size:12px
+  }
+
+  /* B/W → color hover */
   .grid .tile .img-main{
     width:100%;
     height:auto;
     object-fit:cover;
     display:block;
     filter:grayscale(100%) saturate(0.6) contrast(1.05);
-    transition:filter .35s ease;
+    transition:filter .35s ease, transform .35s ease;
   }
-  .grid .tile:hover .img-main{ filter:none }
+  .grid .tile:hover .img-main{ filter:none; transform:scale(1.02) }
   @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
 
   /* Clay overlay (masked by circle) */
@@ -154,7 +185,7 @@
   .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
   .me{aspect-ratio:1/1;border-radius:50%;border:6px solid #0b0d0d;outline:1px solid #1a1f27}
   form{display:grid;gap:10px}
-  input,textarea,button{font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px}
+  input,textarea,button,select{font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px}
   textarea{min-height:120px;resize:vertical}
   button{background:linear-gradient(135deg,var(--accent1),var(--accent2));border-color:transparent;color:#fff;cursor:pointer;font-weight:600}
   button:hover{filter:brightness(1.06)}
@@ -219,7 +250,6 @@
   .pv__content{touch-action:none}
 
   /* ========= ABOUT Tweaks (override) ========= */
-  /* صغّر عمود الصورة وشيل البوكس حوالين النص */
   .about{ grid-template-columns: 220px 1fr; gap:24px; }
   .me{ max-width:220px; border-width:4px; }
   .about .card{ background:transparent; border:0; padding:0; border-radius:0; box-shadow:none; }
@@ -258,7 +288,11 @@
 <main class="wrap">
   <section class="hero">
     <h2 class="parallax hero-parallax">We bring imagination to life</h2>
-    <p class="parallax hero-parallax">High-end 3D visualization & architectural CGI</p>
+    <p class="parallax hero-parallax">Cinematic architectural CGI for architecture & design brands</p>
+    <div class="actions">
+      <a class="btn primary" href="#services">Our Services</a>
+      <a class="btn" href="#quote">Get a Quote</a>
+    </div>
   </section>
 
   <!-- Filter Panel -->
@@ -277,25 +311,52 @@
     </form>
   </section>
 
+  <!-- Services (NEW) -->
+  <section id="services">
+    <h2>Services</h2>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:18px">
+      <article class="card"><h3>Interior CGI</h3><p style="color:#9fb3c8">Photoreal interiors focused on mood, materials, and storytelling.</p></article>
+      <article class="card"><h3>Exterior CGI</h3><p style="color:#9fb3c8">Compelling exteriors with dramatic atmosphere and context.</p></article>
+      <article class="card"><h3>Animation</h3><p style="color:#9fb3c8">Cinematic walkthroughs and product films that move audiences.</p></article>
+      <article class="card"><h3>Product CGI</h3><p style="color:#9fb3c8">High-end product shots for furniture and design marketing.</p></article>
+    </div>
+  </section>
+
   <!-- Work -->
   <section id="work">
     <h2>Work</h2>
     <div class="grid" id="grid">
       <div class="tile" data-project="assets/work-01" data-title="Como Gardens Project" data-desc="Como Gardens Project — modern villas surrounded by greenery." data-tags="exterior">
+        <span class="label">EXTERIOR</span>
         <img class="img-main" src="assets/work-01.jpg" alt="Como Gardens Project" loading="lazy" decoding="async">
       </div>
       <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
+        <span class="label">EXTERIOR</span>
         <img class="img-main" src="assets/work-02.jpg" alt="Hillside Serenity" loading="lazy" decoding="async">
       </div>
       <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <span class="label">INTERIOR</span>
         <img class="img-main" src="assets/work-03.jpg" alt="Retro Home Sweet" loading="lazy" decoding="async">
       </div>
       <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <span class="label">INTERIOR</span>
         <img class="img-main" src="assets/work-04.jpg" alt="Serene Lines" loading="lazy" decoding="async">
       </div>
       <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <span class="label">INTERIOR</span>
         <img class="img-main" src="assets/work-05.jpg" alt="Modern Haven" loading="lazy" decoding="async">
       </div>
+    </div>
+  </section>
+
+  <!-- Why teams work with us (NEW) -->
+  <section id="why">
+    <h2>Why teams work with us</h2>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:18px">
+      <article class="card"><h3>⚡ Fast & reliable</h3><p style="color:#9fb3c8">Clear scopes, quick iterations, on-time delivery.</p></article>
+      <article class="card"><h3>🎯 Cinematic quality</h3><p style="color:#9fb3c8">Images that sell mood, not just geometry.</p></article>
+      <article class="card"><h3>🤝 Easy collaboration</h3><p style="color:#9fb3c8">We plug into your workflow (3ds Max, Corona, PSD).</p></article>
+      <article class="card"><h3>🔐 Confidential by default</h3><p style="color:#9fb3c8">NDA-friendly process; assets stay secure.</p></article>
     </div>
   </section>
 
@@ -305,13 +366,13 @@
     <div class="about">
       <img class="me scrub scrub-left" src="assets/me.jpg" alt="Mahmoud Refaey" loading="lazy" decoding="async" />
       <div class="card scrub scrub-right">
-        <p>Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling. I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look-dev while keeping a high creative bar.</p>
-        <p>My process blends cinematic composition, precise lighting, and material realism to deliver emotionally engaging visuals. I collaborate smoothly onsite and remotely with architects, designers, and developers, taking projects from early concept to polished marketing imagery with consistent quality and reliability.</p>
+        <p><strong>ZSIZART</strong> is a boutique visualization studio founded by Mahmoud Refaey. We craft cinematic images and films for architecture and design — blending composition, lighting, and material realism to deliver work that feels alive.</p>
+        <p>We collaborate with architects, developers, and brands worldwide, from early concept to polished marketing imagery — on time, every time.</p>
       </div>
     </div>
   </section>
 
-  <!-- Courses -->
+  <!-- Courses (kept as-is, unchanged) -->
   <section id="courses">
     <h2>Courses</h2>
     <div class="card">Coming soon…</div>
@@ -328,6 +389,28 @@
         <button type="submit">Send Message</button>
       </form>
       <p id="status" style="margin-top:8px;color:#9ec2ff"></p>
+    </div>
+  </section>
+
+  <!-- Get a Quote (NEW) -->
+  <section id="quote" style="margin-top:26px">
+    <h2>Get a Quote</h2>
+    <div class="card">
+      <form id="quote-form">
+        <input type="text" name="q_name" placeholder="Full Name" required>
+        <input type="email" name="q_email" placeholder="Business Email" required>
+        <select name="q_service" required>
+          <option value="" disabled selected>Service type…</option>
+          <option>Interior CGI</option>
+          <option>Exterior CGI</option>
+          <option>Animation</option>
+          <option>Product CGI</option>
+        </select>
+        <input type="text" name="q_budget" placeholder="Budget range (USD)">
+        <textarea name="q_brief" placeholder="Brief / links / deadlines" required></textarea>
+        <button type="submit">Request Quote</button>
+      </form>
+      <p id="qstatus" style="margin-top:8px;color:#9ec2ff"></p>
     </div>
   </section>
 </main>
@@ -665,6 +748,20 @@ setInterval(runSheen, 10000);
     emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
       .then(()=>{statusEl.textContent='Message sent!';this.reset();})
       .catch(()=>{statusEl.textContent='Failed, try again.';});
+  });
+
+  // Quote form handler (NEW)
+  const qForm=document.getElementById('quote-form');
+  const qStatus=document.getElementById('qstatus');
+  qForm?.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!window.emailjs){ qStatus.textContent='Please retry in a second…'; return; }
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name: this.q_name.value,
+      reply_to: this.q_email.value,
+      message: `Service: ${this.q_service.value}\nBudget: ${this.q_budget.value}\nBrief: ${this.q_brief.value}`
+    }).then(()=>{ qStatus.textContent='Quote requested. We will reply shortly.'; this.reset(); })
+      .catch(()=>{ qStatus.textContent='Failed, try again.'; });
   });
 </script>
 
