@@ -126,8 +126,18 @@
     position:relative;overflow:hidden;background:transparent;cursor:pointer;border:none;border-radius:0;box-shadow:none;
     --mx:-1000px; --my:-1000px; --r:0px; /* clay circle defaults */
   }
-  .tile img{width:100%;height:auto;object-fit:cover;display:block;filter:none;transition:none}
-  .tile:hover img{filter:none}
+
+  /* >>> Restored B/W effect only for gallery thumbnails (img-main) <<< */
+  .grid .tile .img-main{
+    width:100%;
+    height:auto;
+    object-fit:cover;
+    display:block;
+    filter:grayscale(100%) saturate(0.6) contrast(1.05);
+    transition:filter .35s ease;
+  }
+  .grid .tile:hover .img-main{ filter:none }
+  @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
 
   /* Clay overlay (masked by circle) */
   .tile .img-clay{
@@ -472,7 +482,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         const mapped = arr.map(x => x.includes('/') ? x : folder + x).filter(Boolean);
         if(mapped.length) return mapped;
       }
-    }catch(_){}
+    }catch(_){ }
     const exts=['.jpg','.png','.webp'];
     const tryList=[];
     exts.forEach(ext=>tryList.push(`${base}${ext}`));
