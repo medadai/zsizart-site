@@ -202,6 +202,27 @@
   }
   .tile:hover img{filter:none}
 
+  /* ===== (NEW) CLAY reveal circle ===== */
+  .tile .clay-reveal{
+    position:absolute;
+    inset:0;
+    background-position:center center;
+    background-size:cover;
+    background-repeat:no-repeat;
+    pointer-events:none;          /* عشان الكلك/الهفر يفضل على التايل نفسها */
+    opacity:0;                    /* افتراضيًا مخفية */
+    transition:opacity .2s ease, --r .15s ease;
+    /* ماسك بدائرة: هنحرك المركز بالمتحولات --mx/--my ونغيّر نصف القطر --r */
+    --mx: 50%;
+    --my: 50%;
+    --r: 0px;                     /* radius */
+    -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), #000 0 calc(var(--r) - 1px), transparent var(--r));
+            mask-image: radial-gradient(circle at var(--mx) var(--my), #000 0 calc(var(--r) - 1px), transparent var(--r));
+  }
+  .tile.is-hovering .clay-reveal{
+    opacity:1;
+  }
+
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
   @media(max-width:860px){.about{grid-template-columns:1fr}}
@@ -298,7 +319,7 @@
   }
 
   /* ===== (NEW) Touch behaviour in PV ===== */
-  .pv__content{ touch-action: none; } /* نتحكم في السوايب عمودي */
+  .pv__content{ touch-action: none; }
   </style>
 </head>
 <body>
@@ -615,8 +636,8 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
 
   /* ===== Touch swipe (vertical) to change image ===== */
   let tStartX = 0, tStartY = 0, tActive = false, swipeLocked = false;
-  const SWIPE_MIN = 40;           // px
-  const SWIPE_MAX_ANGLE = 0.577;  // ~33deg
+  const SWIPE_MIN = 40;           
+  const SWIPE_MAX_ANGLE = 0.577;  
 
   viewer.addEventListener('touchstart', (e)=>{
     if (!viewer.classList.contains('show')) return;
@@ -654,6 +675,86 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
       setTimeout(()=>{ swipeLocked = false; }, 300);
     }
   }, {passive:true});
+})();
+
+/* ===== (NEW) CLAY reveal hover on tiles ===== */
+(function(){
+  const tiles = document.querySelectorAll('.tile');
+  tiles.forEach(tile=>{
+    const base = tile.dataset.project || '';
+    if(!base) return;
+
+    // لو عندك مسار مخصص للـ clay: data-clay="..."
+    const customClay = tile.dataset.clay;
+    const guesses = customClay ? [customClay] : [
+      `${base}-clay.jpg`,
+      `${base}-clay.png`,
+      `${base.replace(/(\\.jpg|\\.png)$/,'')}-clay.jpg`,
+      `${base.replace(/(\\.jpg|\\.png)$/,'')}-clay.png`
+    ];
+
+    // جرّب تحمل أول مسار صالح
+    (async ()=>{
+      let claySrc = null;
+      for (const src of guesses){
+        if(!src) continue;
+        const ok = await new Promise(res=>{
+          const im = new Image();
+          im.onload = ()=>res(true);
+          im.onerror = ()=>res(false);
+          im.src = src;
+        });
+        if (ok){ claySrc = src; break; }
+      }
+      if(!claySrc) return;
+
+      // أنشئ طبقة الـ clay
+      const overlay = document.createElement('div');
+      overlay.className = 'clay-reveal';
+      overlay.style.backgroundImage = `url("${claySrc}")`;
+      tile.appendChild(overlay);
+
+      // تراكب الدائرة مع الماوس
+      const R_ENTER = 0;       // أول ما تدخل الماوس
+      const R_ACTIVE = 120;    // نصف قطر الدائرة أثناء التحريك
+      const R_LEAVE = 0;       // لما تخرج
+
+      function setCircle(e){
+        const rect = tile.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top)  / rect.height) * 100;
+        overlay.style.setProperty('--mx', x.toFixed(2) + '%');
+        overlay.style.setProperty('--my', y.toFixed(2) + '%');
+        overlay.style.setProperty('--r', R_ACTIVE + 'px');
+      }
+
+      tile.addEventListener('mouseenter', (e)=>{
+        tile.classList.add('is-hovering');
+        overlay.style.setProperty('--r', R_ENTER + 'px');
+        setCircle(e);
+      });
+      tile.addEventListener('mousemove', setCircle);
+      tile.addEventListener('mouseleave', ()=>{
+        overlay.style.setProperty('--r', R_LEAVE + 'px');
+        tile.classList.remove('is-hovering');
+      });
+
+      // لمس الموبايل: Tap لإظهار/إخفاء الدائرة بسرعة صغيرة وسط الصورة
+      let tapped = false;
+      tile.addEventListener('touchstart', ()=>{
+        tapped = !tapped;
+        if (tapped){
+          tile.classList.add('is-hovering');
+          overlay.style.setProperty('--mx','50%');
+          overlay.style.setProperty('--my','50%');
+          overlay.style.setProperty('--r','100px');
+        }else{
+          overlay.style.setProperty('--r','0px');
+          tile.classList.remove('is-hovering');
+        }
+      }, {passive:true});
+    })();
+  });
 })();
 
 /* ===== Enhanced Scroll-Linked Animations ===== */
