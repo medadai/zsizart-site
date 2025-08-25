@@ -46,18 +46,30 @@
     --radius:18px;
     --shadow:0 12px 40px rgba(0,0,0,.35);
     --max:1160px;
-    --pv-dur:.45s; --pv-ease:cubic-bezier(.4,.14,.3,1);
-    --rev-dur:.7s; --rev-ease:cubic-bezier(.2,.65,.15,1);
+
+    /* Motion */
+    --pv-dur:.45s;
+    --pv-ease:cubic-bezier(.4,.14,.3,1);
+    --rev-dur:.7s;
+    --rev-ease:cubic-bezier(.2,.65,.15,1);
   }
 
   *{box-sizing:border-box}
+
+  /* أخفاء الـ caret عالموقع كله، وإظهاره فقط داخل حقول الإدخال */
+  * { caret-color: transparent; }
+  input, textarea, select { caret-color: auto; }
+
   html{scroll-behavior:smooth}
   html.lenis,html.lenis body{height:auto}
   .lenis.lenis-smooth{scroll-behavior:unset}
 
   body{
-    margin:0;background:var(--bg);color:var(--ink);
-    font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;overflow-x:hidden;
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
+    overflow-x:hidden;
   }
   img{display:block;max-width:100%;loading:lazy;decoding:async}
   a{color:inherit;text-decoration:none}
@@ -65,13 +77,16 @@
 
   /* ===== Header (brand left / menu right) ===== */
   header{
-    position:sticky;top:0;z-index:70;background:rgba(5,7,9,.92);
-    backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #0e1116;
-    box-shadow:0 8px 30px rgba(0,0,0,.35);transition:transform .4s ease;
+    position:sticky;top:0;z-index:70;
+    background:rgba(5,7,9,.92);
+    backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid #0e1116;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+    transition:transform .4s ease;
   }
   header .wrap{padding:10px 20px}
   .header-layout{display:flex;align-items:center;justify-content:space-between}
-  .brand{display:flex;align-items:center;gap:10px}
+  .brand{display:flex;align-items:center;gap:10px;user-select:none}
   .brand .logo{height:30px;width:auto}
   .brand .wordmark{font-weight:800;letter-spacing:.08em}
 
@@ -103,7 +118,6 @@
   .hero h2{font-size:42px;margin:0 0 12px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;will-change:transform}
   .hero p{margin:0;color:var(--muted);font-size:18px;will-change:transform}
   .hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-  .hero-parallax{will-change:transform}
   .btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#e9edf0;font-weight:600;cursor:pointer}
   .btn.primary{background:linear-gradient(135deg,var(--accent1),var(--accent2));border-color:transparent;color:#fff}
   .btn.primary:hover{filter:brightness(1.06)}
@@ -121,18 +135,30 @@
   .section-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
   .inline-btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#cfe2ff;font-weight:700;cursor:pointer}
 
-  /* ===== Grid ===== */
+  /* ===== Grid (no rounded/shadow) ===== */
   .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
 
   .tile{
     position:relative;overflow:hidden;background:transparent;cursor:pointer;border:none;border-radius:0;box-shadow:none;
-    --mx:-1000px; --my:-1000px; --r:0px;
+    --mx:-1000px; --my:-1000px; --r:0px; /* clay circle defaults */
   }
-  .label{position:absolute;left:10px;top:10px;background:#0e1116cc;border:1px solid #1a1f27;padding:4px 8px;border-radius:10px;font-size:12px}
-  .grid .tile .img-main{width:100%;height:auto;object-fit:cover;display:block;filter:grayscale(100%) saturate(0.6) contrast(1.05);transition:filter .35s ease, transform .35s ease}
-  .grid .tile:hover .img-main{filter:none;transform:scale(1.02)}
+
+  /* Label */
+  .label{
+    position:absolute;left:10px;top:10px;
+    background:#0e1116cc;border:1px solid #1a1f27;
+    padding:4px 8px;border-radius:10px;font-size:12px
+  }
+
+  /* B/W → color hover */
+  .grid .tile .img-main{
+    width:100%; height:auto; object-fit:cover; display:block;
+    filter:grayscale(100%) saturate(0.6) contrast(1.05);
+    transition:filter .35s ease, transform .35s ease;
+  }
+  .grid .tile:hover .img-main{ filter:none; transform:scale(1.02) }
   @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
 
   /* Clay overlay (masked by circle) */
@@ -169,14 +195,19 @@
   .pv.show .pv__info{transform:translateY(0);opacity:1}
   .pv__nav{display:none!important}
   .pv__close{
-    position:absolute; top:14px; left:14px;width:40px; height:40px; border-radius:10px;
-    background:rgba(0,0,0,.45); border:1px solid #1a1f27;color:#fff; font-size:26px; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:5;
+    position:absolute; top:14px; left:14px;
+    width:40px; height:40px; border-radius:10px;
+    background:rgba(0,0,0,.45); border:1px solid #1a1f27;
+    color:#fff; font-size:26px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:5;
   }
   .pv__close:hover{background:rgba(0,0,0,.6)}
 
   /* Small-screen header fix */
-  @media (max-width: 768px){ .brand .wordmark{ font-size:14px } }
+  @media (max-width: 768px){
+    .brand .wordmark{ font-size:14px }
+  }
 
   /* ===== Scroll-scrub helpers (About) ===== */
   .scrub{--p:0;--dx:0px;--dy:24px;opacity:calc(.2 + .8*var(--p));transform:translate3d(calc((1 - var(--p)) * var(--dx)),calc((1 - var(--p)) * var(--dy)),0) scale(calc(.96 + .04*var(--p)));transition:none!important;will-change:transform,opacity}
@@ -185,10 +216,14 @@
 
   /* ===== Back-to-Top (animated to logo) ===== */
   .top-btn{
-    position:fixed; right:22px; bottom:22px; z-index:120; display:flex; align-items:center; gap:8px;
-    padding:10px 14px; border-radius:14px; background:rgba(14,17,22,.92);
-    border:1px solid #1a1f27; box-shadow:0 8px 30px rgba(0,0,0,.35);
-    color:#cfe2ff; font-weight:700; cursor:pointer; opacity:0; transform:translateY(10px) scale(.98);
+    position:fixed; right:22px; bottom:22px; z-index:120;
+    display:flex; align-items:center; gap:8px;
+    padding:10px 14px; border-radius:14px;
+    background:rgba(14,17,22,.92);
+    border:1px solid #1a1f27;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+    color:#cfe2ff; font-weight:700; cursor:pointer;
+    opacity:0; transform:translateY(10px) scale(.98);
     transition:opacity .25s ease, transform .25s ease, background .25s ease, box-shadow .25s ease;
     pointer-events:none;
   }
@@ -444,32 +479,29 @@ applyBtn?.addEventListener('click',applyFilters);
 resetBtn?.addEventListener('click',resetFilters);
 qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-/* ===== Clay hover circle (now supports -clay and -day) ===== */
+/* ===== Clay hover circle ===== */
 (function(){
   const supportsMask = CSS && (CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') || CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))'));
   if(!supportsMask) return;
   const exts = ['.jpg','.png','.webp'];
   const RADIUS = 140;
+  const tiles = [...document.querySelectorAll('#grid .tile')];
   tiles.forEach(tile=>{
     const base = tile.dataset.project || '';
     if(!base) return;
+    const cand = exts.map(ext=>`${base}-clay${ext}`);
     const imgClay = new Image(); imgClay.className = 'img-clay'; imgClay.loading = 'lazy'; imgClay.decoding = 'async';
-
-    // Try -clay and -day for all extensions
-    const candidates=[];
-    ['-clay','-day'].forEach(suf=> exts.forEach(ext=> candidates.push(`${base}${suf}${ext}`)));
-
     (function tryNext(i=0){
-      if(i>=candidates.length) return;
+      if(i>=cand.length) return;
       imgClay.onload = ()=>{ tile.appendChild(imgClay); bind(); };
       imgClay.onerror = ()=> tryNext(i+1);
-      imgClay.src = candidates[i];
+      imgClay.src = cand[i];
     })();
-
     function bind(){
       tile.addEventListener('pointerenter', ()=>{ tile.style.setProperty('--r', RADIUS+'px'); });
       tile.addEventListener('pointerleave', ()=>{ tile.style.setProperty('--r','0px'); tile.style.setProperty('--mx','-1000px'); tile.style.setProperty('--my','-1000px'); });
       tile.addEventListener('pointermove', (e)=>{ const rect=tile.getBoundingClientRect(); tile.style.setProperty('--mx',(e.clientX-rect.left)+'px'); tile.style.setProperty('--my',(e.clientY-rect.top)+'px'); }, {passive:true});
+      // Touch
       let touchActive=false;
       tile.addEventListener('touchstart', (e)=>{ const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect(); tile.style.setProperty('--r', RADIUS+'px'); tile.style.setProperty('--mx',(t.clientX-rect.left)+'px'); tile.style.setProperty('--my',(t.clientY-rect.top)+'px'); touchActive=true; }, {passive:true});
       tile.addEventListener('touchmove', (e)=>{ if(!touchActive) return; const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect(); tile.style.setProperty('--mx',(t.clientX-rect.left)+'px'); tile.style.setProperty('--my',(t.clientY-rect.top)+'px'); }, {passive:true});
@@ -543,12 +575,16 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   }
 
   function openPV(){ 
-    viewer.classList.add('show'); viewer.setAttribute('aria-hidden','false'); 
-    document.body.style.overflow='hidden'; if (lenis) lenis.stop();
+    viewer.classList.add('show'); 
+    viewer.setAttribute('aria-hidden','false'); 
+    document.body.style.overflow='hidden';
+    if (lenis) lenis.stop();
   }
   function closePV(){ 
-    viewer.classList.remove('show'); viewer.setAttribute('aria-hidden','true'); 
-    document.body.style.overflow=''; if (lenis) lenis.start();
+    viewer.classList.remove('show'); 
+    viewer.setAttribute('aria-hidden','true'); 
+    document.body.style.overflow='';
+    if (lenis) lenis.start();
   }
 
   projectTiles.forEach((tile,i)=>{ tile.addEventListener('click', async ()=>{ projectIdx = i; await openProject(projectIdx); openPV(); }); });
@@ -600,7 +636,7 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   }, {passive:true});
 })();
 
-/* ===== Reveal + Scrub (About) ===== */
+/* ===== Reveal on scroll (auto add .reveal) + scrub (About) ===== */
 (function(){
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
@@ -640,25 +676,6 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   }
 })();
 
-/* ===== Hero Parallax (reacts to Lenis or window scroll) ===== */
-(function(){
-  const els = document.querySelectorAll('.hero-parallax');
-  if(!els.length) return;
-  const apply = (y)=>{
-    els.forEach(el=>{
-      const speed = parseFloat(el.dataset.speed || 0.3);
-      el.style.transform = `translate3d(0, ${-y * speed}px, 0)`;
-    });
-  };
-  if (typeof lenis !== 'undefined' && lenis){
-    lenis.on('scroll', ({scroll})=> apply(scroll));
-  }else{
-    let ticking=false;
-    window.addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(()=>{ apply(window.pageYOffset||document.documentElement.scrollTop); ticking=false; }); } }, {passive:true});
-    apply(0);
-  }
-})();
-
 /* ===== Hide header on scroll ===== */
 let lastScrollY = 0;
 const headerEl = document.querySelector('header');
@@ -673,8 +690,8 @@ else {
   window.addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(()=>{ updateHeader(); ticking=false; }); } }, {passive:true});
 }
 
-/* ===== Brand sheen placeholder ===== */
-function runSheen(){}
+/* ===== Brand sheen every 10s (optional) ===== */
+function runSheen(){/* placeholder */ }
 window.addEventListener('load', runSheen);
 setInterval(runSheen, 10000);
 </script>
@@ -725,7 +742,11 @@ setInterval(runSheen, 10000);
   btn.addEventListener('click', (e)=>{
     e.preventDefault();
     btn.classList.add('morph');
-    try{ window.scrollTo({ top:0, behavior:'smooth' }); }catch(_){ window.scrollTo(0,0); }
+    try{
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }catch(_){
+      window.scrollTo(0,0);
+    }
     let reverted = false;
     const revert = ()=>{ if(reverted) return; reverted = true; btn.classList.remove('morph'); };
     setTimeout(revert, 1100);
