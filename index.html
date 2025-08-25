@@ -170,9 +170,10 @@
   .grid .tile:hover .img-main{ filter:none; transform:scale(1.02) }
   @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
 
-  /* Clay overlay (masked by circle) */
+  /* Clay overlay (masked by circle) — تم تعديلها */
   .tile .img-clay{
     position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .15s ease;
+    width:100%; height:100%; object-fit:cover; /* مهم لتطابق الأبعاد */
     -webkit-mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
             mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
     will-change:transform,opacity;
@@ -486,9 +487,10 @@ applyBtn.addEventListener('click',applyFilters);
 resetBtn.addEventListener('click',resetFilters);
 qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-/* ===== Clay hover circle ===== */
+/* ===== Clay hover circle — تم استبدال البلوك بالكامل مع Fallback ===== */
 (function(){
-  const supportsMask = CSS && (CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') || CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))'));
+  const supportsMask = CSS && (CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))')
+                    || CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))'));
   if(!supportsMask) return; // degrade gracefully
 
   const exts = ['.jpg','.png','.webp'];
@@ -498,7 +500,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     const base = tile.dataset.project || '';
     if(!base) return;
 
-    // candidate clay sources
+    const imgMain = tile.querySelector('.img-main');
     const cand = exts.map(ext=>`${base}-clay${ext}`);
     const imgClay = new Image();
     imgClay.className = 'img-clay';
@@ -506,7 +508,15 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     imgClay.decoding = 'async';
 
     (function tryNext(i=0){
-      if(i>=cand.length) return; // no clay -> skip
+      if(i>=cand.length){
+        // === Fallback: استخدم نسخة رمادية من الصورة الرئيسية ===
+        const clone = imgMain.cloneNode(true);
+        clone.className = 'img-clay';
+        clone.style.filter = 'grayscale(100%) saturate(0) brightness(1.05) contrast(1.05)';
+        tile.appendChild(clone);
+        bind();
+        return;
+      }
       imgClay.onload = ()=>{ tile.appendChild(imgClay); bind(); };
       imgClay.onerror = ()=> tryNext(i+1);
       imgClay.src = cand[i];
@@ -519,8 +529,16 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
 
       // Touch
       let touchActive=false;
-      tile.addEventListener('touchstart', (e)=>{ const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect(); tile.style.setProperty('--r', RADIUS+'px'); tile.style.setProperty('--mx',(t.clientX-rect.left)+'px'); tile.style.setProperty('--my',(t.clientY-rect.top)+'px'); touchActive=true; }, {passive:true});
-      tile.addEventListener('touchmove', (e)=>{ if(!touchActive) return; const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect(); tile.style.setProperty('--mx',(t.clientX-rect.left)+'px'); tile.style.setProperty('--my',(t.clientY-rect.top)+'px'); }, {passive:true});
+      tile.addEventListener('touchstart', (e)=>{ const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect();
+        tile.style.setProperty('--r', RADIUS+'px');
+        tile.style.setProperty('--mx',(t.clientX-rect.left)+'px');
+        tile.style.setProperty('--my',(t.clientY-rect.top)+'px');
+        touchActive=true;
+      }, {passive:true});
+      tile.addEventListener('touchmove', (e)=>{ if(!touchActive) return; const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect();
+        tile.style.setProperty('--mx',(t.clientX-rect.left)+'px');
+        tile.style.setProperty('--my',(t.clientY-rect.top)+'px');
+      }, {passive:true});
       tile.addEventListener('touchend', ()=>{ touchActive=false; tile.style.setProperty('--r','0px'); }, {passive:true});
     }
   });
@@ -787,4 +805,4 @@ setInterval(runSheen, 10000);
 })();
 </script>
 </body>
-</html>      
+</html>
