@@ -492,7 +492,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   if(!supportsMask) return; // degrade gracefully
 
   const exts = ['.jpg','.png','.webp'];
-  const RADIUS = 50; // حجم الدائرة
+  const RADIUS = 100; // حجم الدائرة
 
   tiles.forEach(tile=>{
     const base = tile.dataset.project || '';
