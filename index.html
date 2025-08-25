@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART — Portfolio</title>
-
+  
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-
+  
   <!-- Lenis Smooth Scrolling -->
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
-
+  
   <style>
   :root{
     --bg:#0b0d0d;
@@ -45,18 +45,32 @@
   .reveal.del-4{transition-delay:.24s}
 
   /* Enhanced directional reveals */
-  .reveal-left{opacity:0;transform:translateX(-40px);will-change:opacity,transform}
+  .reveal-left{
+    opacity:0;
+    transform:translateX(-40px);
+    will-change:opacity,transform;
+  }
   .reveal-left.show{opacity:1;transform:translateX(0)}
-  .reveal-right{opacity:0;transform:translateX(40px);will-change:opacity,transform}
+  .reveal-right{
+    opacity:0;
+    transform:translateX(40px);
+    will-change:opacity,transform;
+  }
   .reveal-right.show{opacity:1;transform:translateX(0)}
 
   /* Parallax elements */
-  .parallax{will-change:transform;transform:translate3d(0,0,0)}
+  .parallax{
+    will-change:transform;
+    transform:translate3d(0,0,0);
+  }
 
-  /* Reduced motion */
+  /* Reduced motion support */
   @media (prefers-reduced-motion:reduce){
     .reveal,.reveal-left,.reveal-right,.parallax,.scrub{
-      opacity:1!important;transform:none!important;transition:none!important;will-change:auto!important
+      opacity:1!important;
+      transform:none!important;
+      transition:none!important;
+      will-change:auto!important;
     }
     .lenis.lenis-smooth{scroll-behavior:auto!important}
   }
@@ -65,21 +79,35 @@
   html{scroll-behavior:smooth}
   html.lenis,html.lenis body{height:auto}
   .lenis.lenis-smooth{scroll-behavior:unset}
-
+  
   body{
-    margin:0;background:var(--bg);color:var(--ink);
-    font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;overflow-x:hidden
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
+    overflow-x:hidden;
   }
-
-  img{display:block;max-width:100%;loading:lazy;decoding:async}
+  
+  img{
+    display:block;
+    max-width:100%;
+    loading:lazy;
+    decoding:async;
+  }
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
   /* ================= Header (COMPRESSED) ================ */
   header{
-    position:sticky;top:0;z-index:70;background:rgba(5,7,9,.92);
-    backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #0e1116;
-    box-shadow:0 8px 30px rgba(0,0,0,.35);transition:transform .4s ease;will-change:transform
+    position:sticky;
+    top:0;
+    z-index:70;
+    background:rgba(5,7,9,.92);
+    backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid #0e1116;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+    transition:transform .4s ease;
+    will-change:transform;
   }
   header .wrap{padding:10px 20px}
   .header-layout{display:flex;align-items:center;justify-content:space-between;position:relative}
@@ -88,14 +116,9 @@
   .center-logo .logo-center{height:34px;width:auto}
   .nav-row{display:flex;align-items:center;justify-content:space-between}
   .actions{display:flex;gap:10px;align-items:center}
-  .menu-btn,.filter-btn{
-    height:34px;padding:0 12px;border:1px solid #2a3140;border-radius:10px;background:transparent;
-    color:#cfe2ff;display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600
-  }
+  .menu-btn,.filter-btn{height:34px;padding:0 12px;border:1px solid #2a3140;border-radius:10px;background:transparent;color:#cfe2ff;display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600}
   .menu-btn{width:44px;justify-content:center}
-  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
-    content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s
-  }
+  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
   .menu-btn .bars::before{position:absolute;top:-6px}
   .menu-btn .bars::after{position:absolute;top:6px}
   .menu-open .menu-btn .bars{transform:rotate(45deg)}
@@ -112,7 +135,7 @@
   .menu-links a{font-size:18px;font-weight:600;color:#fff;padding:6px 0;transition:color .25s ease}
   .menu-links a:hover{color:var(--accent1)}
 
-  /* Filter Panel */
+  /* Filter Panel (Search Bar) */
   .filter-panel{position:sticky; top:64px; z-index:60; margin:18px 0 0 0;background:rgba(0,0,0,.55); border:1px solid #1a1f27; border-radius:14px; padding:14px;display:none}
   .filter-panel.show{display:block}
   .filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
@@ -121,39 +144,63 @@
   .search-input{flex:1;min-width:220px;padding:10px 12px;border:1px solid #2a3140;border-radius:10px;background:#0c0e12;color:#e9edf0}
   .filter-actions{margin-left:auto;display:flex;gap:10px}
   .btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#e9edf0;font-weight:600;cursor:pointer}
-  .btn.primary{background:linear-gradient(135deg,var(--accent1),var(--accent2));border-color:transparent;color:#fff}
+  .btn.primary{
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    border-color:transparent;
+    color:#fff;
+  }
   .btn.primary:hover{filter:brightness(1.06)}
 
-  /* Hero */
-  .hero{padding:0 0 8px;position:relative;overflow:hidden}
-  .hero h2{
-    font-size:42px;margin:0 0 12px;font-weight:700;
-    background:linear-gradient(135deg,var(--accent1),var(--accent2));
-    -webkit-background-clip:text;background-clip:text;color:transparent;will-change:transform
+  /* Hero with Parallax */
+  .hero{
+    padding:0 0 8px;
+    position:relative;
+    overflow:hidden;
   }
-  .hero p{margin:0;color:var(--muted);font-size:18px;will-change:transform}
+  .hero h2{
+    font-size:42px;
+    margin:0 0 12px;
+    font-weight:700;
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    will-change:transform;
+  }
+  .hero p{
+    margin:0;
+    color:var(--muted);
+    font-size:18px;
+    will-change:transform;
+  }
 
-  /* Grid */
-  .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
+  /* Grid (no rounded corners / no shadow on tiles) */
+  .grid{
+    display:grid;
+    gap:28px;
+    grid-template-columns:repeat(3,1fr);
+  }
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
-
-  /* Flat tiles (no rounded/shadow) */
-  .tile{position:relative;overflow:hidden;background:transparent;cursor:pointer;border:none;border-radius:0;box-shadow:none}
-  .tile img{width:100%;height:auto;object-fit:cover;display:block;filter:none;transition:none}
-  .tile:hover img{filter:none}
-
-  /* Spotlight (reveal clay on hover) */
-  .tile.spotlight{position:relative}
-  .tile.spotlight img.clay{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;
-    -webkit-mask-image: radial-gradient(circle 120px at center, #000 80%, transparent 100%);
-    -webkit-mask-repeat:no-repeat;-webkit-mask-position:center;-webkit-mask-size:0px 0px;
-    mask-image: radial-gradient(circle 120px at center, #000 80%, transparent 100%);
-    mask-repeat:no-repeat;mask-position:center;mask-size:0px 0px;
-    transition:mask-size .18s ease, -webkit-mask-size .18s ease
+  
+  .tile{
+    position:relative;
+    overflow:hidden;
+    background:transparent;
+    cursor:pointer;
+    border:none;
+    border-radius:0;
+    box-shadow:none;
   }
-  .tile.spotlight:hover img.clay{ -webkit-mask-size:180px 180px; mask-size:180px 180px; }
+  .tile img{
+    width:100%;
+    height:auto;
+    object-fit:cover;
+    display:block;
+    filter:none;
+    transition:none;
+  }
+  .tile:hover img{filter:none}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
@@ -183,9 +230,13 @@
 
   /* Close button (X) */
   .pv__close{
-    position:absolute; top:14px; left:14px; width:40px; height:40px; border-radius:10px;
-    background:rgba(0,0,0,.45); border:1px solid #1a1f27; color:#fff; font-size:26px; line-height:1;
-    cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:5
+    position:absolute; top:14px; left:14px;
+    width:40px; height:40px; border-radius:10px;
+    background:rgba(0,0,0,.45); border:1px solid #1a1f27;
+    color:#fff; font-size:26px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,.35);
+    z-index:5;
   }
   .pv__close:hover{background:rgba(0,0,0,.6)}
 
@@ -200,44 +251,54 @@
     --p: 0; --dx: 0px; --dy: 24px;
     opacity: calc(.2 + .8*var(--p));
     transform:translate3d(calc((1 - var(--p)) * var(--dx)), calc((1 - var(--p)) * var(--dy)), 0) scale(calc(.96 + .04*var(--p)));
-    transition:none!important; will-change:transform,opacity
+    transition:none!important; will-change:transform,opacity;
   }
-  .scrub-left{ --dx:-120px; --dy:0px } .scrub-right{ --dx:120px; --dy:0px } .reveal.scrub{transition:none!important}
+  .scrub-left  { --dx:-120px; --dy:0px; }
+  .scrub-right { --dx: 120px; --dy:0px; }
 
-  .scroll-progress{ --progress: 0; will-change:transform,opacity }
+  .scroll-progress{ --progress: 0; will-change:transform,opacity; }
+  .hero-parallax{ transform:translate3d(0, calc(var(--scroll-y, 0) * -0.3), 0); will-change:transform; }
 
-  .hero-parallax{ transform:translate3d(0, calc(var(--scroll-y, 0) * -0.3), 0); will-change:transform }
-
-  /* ===== Scroll-linked reveal + exit (modern CSS) ===== */
+  /* ===== (NEW) Scroll-linked reveal + exit (modern CSS) ===== */
   @supports (animation-timeline: view()){
     .reveal{
       animation: zs-reveal both var(--rev-dur,.7s) var(--rev-ease,cubic-bezier(.2,.65,.15,1));
-      animation-timeline: view(); animation-range: entry 0% cover 30%;
-      will-change: opacity, transform; transition:none!important;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+      will-change: opacity, transform;
+      transition:none!important;
     }
-    .reveal[data-exit], section h2.reveal, .about .card.reveal, #contact .card.reveal{
-      animation: zs-reveal both var(--rev-dur,.7s) var(--rev-ease,cubic-bezier(.2,.65,.15,1)),
-                 zs-hide-out both var(--rev-dur,.7s) var(--rev-ease,cubic-bezier(.2,.65,.15,1));
-      animation-timeline: view(); animation-range: entry 0% cover 35%, exit 60% exit 98%;
+    .reveal[data-exit],
+    section h2.reveal,
+    .about .card.reveal,
+    #contact .card.reveal{
+      animation:
+        zs-reveal  both var(--rev-dur,.7s) var(--rev-ease,cubic-bezier(.2,.65,.15,1)),
+        zs-hide-out both var(--rev-dur,.7s) var(--rev-ease,cubic-bezier(.2,.65,.15,1));
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%, exit 60% exit 98%;
     }
-    @keyframes zs-reveal{ from{opacity:0; transform:translateY(24px) scale(.98)} to{opacity:1; transform:translateY(0) scale(1)} }
+    @keyframes zs-reveal{
+      from{opacity:0; transform:translateY(24px) scale(.98)}
+      to  {opacity:1; transform:translateY(0)   scale(1)}
+    }
     @keyframes zs-hide-out{ to{opacity:0; transform:translateY(-24px) scale(.98)} }
   }
 
-  /* Fallback helpers */
+  /* ===== (NEW) Fallback helper classes ===== */
   .reveal.hide-up{opacity:0; transform:translateY(-24px) scale(.98)}
-  .reveal.hide-down{opacity:0; transform:translateY(24px) scale(.98)}
+  .reveal.hide-down{opacity:0; transform:translateY( 24px) scale(.98)}
 
-  /* Mobile Header Fix */
+  /* ===== (NEW) Mobile Header Fix ===== */
   @media (max-width: 768px){
-    .center-logo{ display:none }
-    .left-brand{ display:flex; gap:8px; align-items:center }
-    .actions{ margin-left:auto }
-    .logo-small{ height:28px; width:auto }
+    .center-logo{ display:none; }
+    .left-brand{ display:flex; gap:8px; align-items:center; }
+    .actions{ margin-left:auto; }
+    .logo-small{ height:28px; width:auto; }
   }
 
-  /* Touch behaviour in PV */
-  .pv__content{ touch-action: none }
+  /* ===== (NEW) Touch behaviour in PV ===== */
+  .pv__content{ touch-action: none; } /* نتحكم في السوايب عمودي */
   </style>
 </head>
 <body>
@@ -296,49 +357,20 @@
   <section id="work">
     <h2>Work</h2>
     <div class="grid" id="grid">
-      <div class="tile spotlight"
-           data-project="assets/work-01"
-           data-clay="assets/work-01-clay.jpg"
-           data-title="Como Gardens Project"
-           data-desc="Como Gardens Project — modern villas surrounded by greenery."
-           data-tags="exterior">
-        <img src="assets/work-01.jpg" alt="Como Gardens Project">
+      <div class="tile" data-project="assets/work-01" data-title="Como Gardens Project" data-desc="Como Gardens Project — modern villas surrounded by greenery." data-tags="exterior">
+        <img src="assets/work-01.jpg" alt="Como Gardens Project" loading="lazy" decoding="async">
       </div>
-
-      <div class="tile spotlight"
-           data-project="assets/work-02"
-           data-clay="assets/work-02-clay.jpg"
-           data-title="Hillside Serenity"
-           data-desc="A modern retreat in nature blending architecture and landscape."
-           data-tags="exterior">
-        <img src="assets/work-02.jpg" alt="Hillside Serenity">
+      <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
+        <img src="assets/work-02.jpg" alt="Hillside Serenity" loading="lazy" decoding="async">
       </div>
-
-      <div class="tile spotlight"
-           data-project="assets/work-03"
-           data-clay="assets/work-03-clay.jpg"
-           data-title="Retro Home Sweet"
-           data-desc="Interior CGI capturing warmth of retro modern living."
-           data-tags="interior">
-        <img src="assets/work-03.jpg" alt="Retro Home Sweet">
+      <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <img src="assets/work-03.jpg" alt="Retro Home Sweet" loading="lazy" decoding="async">
       </div>
-
-      <div class="tile spotlight"
-           data-project="assets/work-04"
-           data-clay="assets/work-04-clay.jpg"
-           data-title="Serene Lines"
-           data-desc="Interior CGI capturing warmth of retro modern living."
-           data-tags="interior">
-        <img src="assets/work-04.jpg" alt="Serene Lines">
+      <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <img src="assets/work-04.jpg" alt="Serene Lines" loading="lazy" decoding="async">
       </div>
-
-      <div class="tile spotlight"
-           data-project="assets/work-05"
-           data-clay="assets/work-05-clay.jpg"
-           data-title="Modern Haven"
-           data-desc="Interior CGI capturing warmth of retro modern living."
-           data-tags="interior">
-        <img src="assets/work-05.jpg" alt="Modern Haven">
+      <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <img src="assets/work-05.jpg" alt="Modern Haven" loading="lazy" decoding="async">
       </div>
     </div>
   </section>
@@ -347,7 +379,7 @@
   <section id="about">
     <h2>About</h2>
     <div class="about">
-      <img class="me scrub scrub-left" src="assets/me.jpg" alt="Mahmoud Refaey" />
+      <img class="me scrub scrub-left" src="assets/me.jpg" alt="Mahmoud Refaey" loading="lazy" decoding="async" />
       <div class="card scrub scrub-right">
         <p>Mahmoud Refaey — 3D Artist & ArchViz specialist focused on photorealistic interior/exterior storytelling. I work primarily with 3ds Max and Corona Renderer, and I leverage AI tools (e.g., ComfyUI) to speed up look-dev while keeping a high creative bar.</p>
         <p>My process blends cinematic composition, precise lighting, and material realism to deliver emotionally engaging visuals. I collaborate smoothly onsite and remotely with architects, designers, and developers, taking projects from early concept to polished marketing imagery with consistent quality and reliability.</p>
@@ -401,6 +433,7 @@
 <script>
 /* ===== Initialize Lenis Smooth Scrolling ===== */
 let lenis;
+
 function initLenis() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReducedMotion) {
@@ -415,8 +448,10 @@ function initLenis() {
       touchMultiplier: 2,
       infinite: false,
     });
+
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
+
     lenis.on('scroll', ({ scroll }) => {
       document.documentElement.style.setProperty('--scroll-y', scroll);
     });
@@ -465,49 +500,6 @@ applyBtn.addEventListener('click',applyFilters);
 resetBtn.addEventListener('click',resetFilters);
 qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-/* ===== Spotlight clay overlay (adds img.clay and tracks mouse) ===== */
-(function(){
-  const spotlightTiles = document.querySelectorAll('.tile.spotlight[data-clay]');
-  spotlightTiles.forEach(tile=>{
-    const claySrc = tile.getAttribute('data-clay');
-    if (!tile.querySelector('img.clay')) {
-      const clay = document.createElement('img');
-      clay.src = claySrc;
-      clay.alt = (tile.getAttribute('data-title') || 'clay');
-      clay.className = 'clay';
-      tile.appendChild(clay);
-    }
-    const clayImg = tile.querySelector('img.clay');
-
-    tile.addEventListener('mousemove', (e)=>{
-      const r = tile.getBoundingClientRect();
-      const x = e.clientX - r.left;
-      const y = e.clientY - r.top;
-      clayImg.style.webkitMaskPosition = `${x}px ${y}px`;
-      clayImg.style.maskPosition = `${x}px ${y}px`;
-    });
-
-    tile.addEventListener('mouseleave', ()=>{
-      clayImg.style.webkitMaskSize = '0px 0px';
-      clayImg.style.maskSize = '0px 0px';
-    });
-
-    // Mobile fallback: tap to toggle clay briefly
-    let touchTimer;
-    tile.addEventListener('touchstart', ()=>{
-      clayImg.style.webkitMaskSize = '200vmax 200vmax';
-      clayImg.style.maskSize = '200vmax 200vmax';
-      clearTimeout(touchTimer);
-    }, {passive:true});
-    tile.addEventListener('touchend', ()=>{
-      touchTimer = setTimeout(()=>{
-        clayImg.style.webkitMaskSize = '0px 0px';
-        clayImg.style.maskSize = '0px 0px';
-      }, 250);
-    }, {passive:true});
-  });
-})();
-
 /* ===== Project Viewer ===== */
 (function(){
   const viewer  = document.getElementById('pv'),
@@ -517,14 +509,17 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         descEl  = document.getElementById('pvDesc'),
         btnClose= document.getElementById('pvClose');
 
-  // Limit navigation to clicked project's images only
+  // Build project list from tiles (so we stay within the clicked project)
   const projectTiles = [...document.querySelectorAll('.tile')];
   const projects = projectTiles.map(t => ({ base:t.dataset.project, title:t.dataset.title||'', desc:t.dataset.desc||'' }));
 
-  let projectIdx = 0, list = [], idx = 0, topIsA = true;
+  let projectIdx = 0;
+  let list = [];    // images for current project
+  let idx = 0;      // current image index
+  let topIsA = true;
 
   function show(src){
-    const top = topIsA ? imgA : imgB;
+    const top   = topIsA ? imgA : imgB;
     const under = topIsA ? imgB : imgA;
     under.onload = () => { top.classList.remove('is-top'); under.classList.add('is-top'); topIsA = !topIsA; under.onload = null; };
     under.src = src;
@@ -540,6 +535,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   const nextImg = () => setIdx(idx+1);
   const prevImg = () => setIdx(idx-1);
 
+  // Try to load a json list; fall back to numbered images base-01..-20
   async function buildList(base, max=20){
     try{
       const res = await fetch(`${base}.list.json`, {cache:'no-store'});
@@ -585,14 +581,16 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     if (lenis) lenis.start();
   }
 
+  // open clicked project only; no cross-project nav in viewer
   projectTiles.forEach((tile,i)=>{ 
     tile.addEventListener('click', async ()=>{ projectIdx = i; await openProject(projectIdx); openPV(); }); 
   });
 
+  // close on overlay click or X
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
   btnClose.addEventListener('click', closePV);
 
-  // Keyboard (when viewer open): Up/Down & PageUp/PageDown
+  // Keyboard: Escape closes, Down/PageDown next, Up/PageUp prev
   document.addEventListener('keydown',e=>{
     if(!viewer.classList.contains('show'))return;
     if(e.key==='Escape') closePV();
@@ -603,7 +601,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   // Prevent body scroll on iOS while viewer is open
   viewer.addEventListener('touchmove', (e)=>{ if(viewer.classList.contains('show')) e.preventDefault(); }, {passive:false});
 
-  // Wheel/trackpad: vertical to change images
+  // Wheel/trackpad: vertical scroll changes images
   let accum = 0; const STEP = 1200; let imgLock = false;
   viewer.addEventListener('wheel', (e) => {
     if (!viewer.classList.contains('show')) return; 
@@ -615,7 +613,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     else if (accum <= -STEP) { prevImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 400); }
   }, { passive: false });
 
-  /* Touch swipe (vertical) */
+  /* ===== Touch swipe (vertical) to change image ===== */
   let tStartX = 0, tStartY = 0, tActive = false, swipeLocked = false;
   const SWIPE_MIN = 40;           // px
   const SWIPE_MAX_ANGLE = 0.577;  // ~33deg
@@ -623,8 +621,10 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
   viewer.addEventListener('touchstart', (e)=>{
     if (!viewer.classList.contains('show')) return;
     const t = e.changedTouches[0];
-    tStartX = t.clientX; tStartY = t.clientY;
-    tActive = true; swipeLocked = false;
+    tStartX = t.clientX;
+    tStartY = t.clientY;
+    tActive = true;
+    swipeLocked = false;
   }, {passive:true});
 
   viewer.addEventListener('touchmove', (e)=>{
@@ -632,20 +632,25 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     const t = e.changedTouches[0];
     const dx = t.clientX - tStartX;
     const dy = t.clientY - tStartY;
-    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) e.preventDefault();
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) {
+      e.preventDefault();
+    }
   }, {passive:false});
 
   viewer.addEventListener('touchend', (e)=>{
     if (!tActive || swipeLocked) return;
     tActive = false;
+
     const t = e.changedTouches[0];
     const dx = t.clientX - tStartX;
     const dy = t.clientY - tStartY;
+
     const absDx = Math.abs(dx), absDy = Math.abs(dy);
     const verticalEnough = absDy >= SWIPE_MIN && (absDx / (absDy || 1)) <= SWIPE_MAX_ANGLE;
+
     if (verticalEnough){
       swipeLocked = true;
-      if (dy < 0) nextImg(); else prevImg();
+      if (dy < 0) { nextImg(); } else { prevImg(); }
       setTimeout(()=>{ swipeLocked = false; }, 300);
     }
   }, {passive:true});
@@ -674,11 +679,14 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
         const progress = Math.min(1, entry.intersectionRatio * 1.5);
         entry.target.style.setProperty('--progress', progress);
         entry.target.classList.add('show');
-        if (entry.intersectionRatio > 0.8) obs.unobserve(entry.target);
+        if (entry.intersectionRatio > 0.8) {
+          obs.unobserve(entry.target);
+        }
       }
     });
   },{
-    root:null, rootMargin:'0px 0px -10% 0px',
+    root:null,
+    rootMargin:'0px 0px -10% 0px',
     threshold:[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
   });
   document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
@@ -688,7 +696,8 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
     let ticking = false;
     function updateScrub(){
       const vh = window.innerHeight;
-      const start = vh * 0.90, end = vh * 0.25;
+      const start = vh * 0.90;
+      const end   = vh * 0.25;
       scrubEls.forEach(el=>{
         const r = el.getBoundingClientRect();
         const center = r.top + r.height/2;
@@ -700,7 +709,7 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
       ticking = false;
     }
     function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(updateScrub); } }
-    if (lenis) lenis.on('scroll', onScroll); else window.addEventListener('scroll', onScroll, { passive:true });
+    if (lenis) { lenis.on('scroll', onScroll); } else { window.addEventListener('scroll', onScroll, { passive:true }); }
     window.addEventListener('resize', updateScrub, { passive:true });
     updateScrub();
   }
@@ -736,10 +745,14 @@ qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); 
 /* ==== Enhanced Header Hide/Show on Scroll ==== */
 let lastScrollY = 0;
 const headerEl = document.querySelector('header');
+
 function updateHeader() {
   const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-  if (currentScrollY > lastScrollY && currentScrollY > 100) headerEl.style.transform = 'translateY(-100%)';
-  else headerEl.style.transform = 'translateY(0)';
+  if (currentScrollY > lastScrollY && currentScrollY > 100) {
+    headerEl.style.transform = 'translateY(-100%)';
+  } else {
+    headerEl.style.transform = 'translateY(0)';
+  }
   lastScrollY = currentScrollY;
 }
 if (lenis) { lenis.on('scroll', updateHeader); } 
@@ -772,15 +785,15 @@ setInterval(runSheen, 10000);
   try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
   const form = document.getElementById('contact-form');
   const statusEl = document.getElementById('status');
-  form?.addEventListener('submit',function(e){
-    e.preventDefault();
+  form?.addEventListener('submit',function(e){ 
+    e.preventDefault(); 
     emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
       .then(()=>{statusEl.textContent='Message sent!';this.reset();})
-      .catch(()=>{statusEl.textContent='Failed, try again.';});
+      .catch(()=>{statusEl.textContent='Failed, try again.';}); 
   });
 </script>
 
-<!-- Reveal exit fallback -->
+<!-- (NEW) Reveal exit fallback for non–view-timeline browsers -->
 <script>
 (function(){
   if (!('IntersectionObserver' in window)) return;
@@ -791,9 +804,11 @@ setInterval(runSheen, 10000);
     entries.forEach(entry=>{
       const el = entry.target;
       if (entry.isIntersecting){
-        el.classList.add('show'); el.classList.remove('hide-up','hide-down');
+        el.classList.add('show');
+        el.classList.remove('hide-up','hide-down');
       } else {
-        el.classList.remove('show'); el.classList.add(goingDown ? 'hide-up' : 'hide-down');
+        el.classList.remove('show');
+        el.classList.add(goingDown ? 'hide-up' : 'hide-down');
       }
     });
     lastY = window.scrollY;
