@@ -56,9 +56,9 @@
 
   *{box-sizing:border-box}
 
-  /* أخفاء الـ caret عالموقع كله، وإظهاره فقط داخل حقول الإدخال */
-  * { caret-color: transparent; }
-  input, textarea, select { caret-color: auto; }
+  /* إخفاء الـ caret عالموقع كله، وظهوره في حقول الإدخال فقط */
+  *{ caret-color:transparent }
+  input,textarea,select{ caret-color:auto }
 
   html{scroll-behavior:smooth}
   html.lenis,html.lenis body{height:auto}
@@ -70,6 +70,7 @@
     color:var(--ink);
     font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
     overflow-x:hidden;
+    -webkit-tap-highlight-color: transparent;
   }
   img{display:block;max-width:100%;loading:lazy;decoding:async}
   a{color:inherit;text-decoration:none}
@@ -86,7 +87,7 @@
   }
   header .wrap{padding:10px 20px}
   .header-layout{display:flex;align-items:center;justify-content:space-between}
-  .brand{display:flex;align-items:center;gap:10px;user-select:none}
+  .brand{display:flex;align-items:center;gap:10px;user-select:none;cursor:default}
   .brand .logo{height:30px;width:auto}
   .brand .wordmark{font-weight:800;letter-spacing:.08em}
 
