@@ -7,117 +7,145 @@
 <meta name="description"
       content="A learning journey where the Qur’an becomes your companion through life.">
 
-<!-- Google Font – Inter -->
+<!-- Hand‑written Google fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap"
       rel="stylesheet">
 
 <style>
 /* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
 :root{
-  /* Colors taken from walktheroom.com – blue tones replaced by #70794F */
-  --bg-main:#0B0C13;               /* darkest background – full page */
-  --bg-soft:#161821;               /* a shade a bit lighter – used for sections / cards */
-  --card-bg:#161821;               /* card / zone background (same as bg‑soft) */
+  /* Your five colours */
+  --clr-bg-main:#e6D5C3;      /* paper background                */
+  --clr-bg-soft:#BAAFA3;      /* secondary surface               */
+  --clr-card:#e1DAD7;         /* cards / zones                   */
+  --clr-text-main:#817065;   /* main headings & body text      */
+  --clr-accent:#70794F;      /* scribble colour (buttons, borders) */
 
-  --text-primary:#FFFFFF;         /* main text on dark background */
-  --text-muted:#8C8C8C;            /* secondary / muted text */
-
-  --accent-primary:#F2C94C;        /* gold – primary CTA button, hover background */
-  --accent-secondary:#70794F;    /* *** BLUE REPLACED BY #70794F ***   */
-
-  --border-light:#E0E0E0;        /* light grey – borders, dividers */
-
-  --radius:16px;
-  --shadow:0 8px 24px rgba(15,23,42,.06);
+  /* Misc. UI */
+  --radius:8px;
+  --shadow:4px 4px 0 var(--clr-accent);   /* cheap “hand‑drawn” shadow */
   --max-width:1200px;
 }
 
-/* Global reset & basics */
+/* ────────────────────── GLOBAL RESET & BASIC TYPOGRAPHY ────────────────────── */
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Inter,system-ui,sans-serif;
-  background:var(--bg-main);
-  color:var(--text-primary);
+  font-family:'Indie Flower',cursive;
+  background:var(--clr-bg-main);
+  color:var(--clr-text-main);
   line-height:1.6;
 }
+
+/* Paper‑texture (tiny SVG pattern) */
+body{
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill='%23e6d5c3'/%3E%3Cpath d='M0 0l20 20M20 0L0 20' stroke='%23cbb9a9' stroke-width='0.5'/%3E%3C/svg%3E");
+}
+
+/* Links */
 a{color:inherit;text-decoration:none}
-img{max-width:100%;height:auto;display:block}
+
+/* Wrapper used for max‑width */
 .wrap{max-width:var(--max-width);margin:auto;padding:28px}
+
+/* ────────────────────── SCRIBBLE HELPERS ────────────────────── */
+.scribble{
+  position:relative;
+  border:2px solid var(--clr-accent);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  background:#fff;
+}
+
+/* The “wiggly” extra layer – gives a hand‑drawn look */
+.scribble::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border:2px solid var(--clr-accent);
+  transform:rotate(-1deg);
+  pointer-events:none;
+}
+
+/* Hover scaling – keep the scribble effect */
+.scribble:hover{
+  transform:scale(1.1);
+}
 
 /* ────────────────────── HEADER ────────────────────── */
 header{
   position:sticky;top:0;z-index:100;
-  background:#ffffffcc;               /* semi‑transparent white */
+  background:#ffffffcc;               /* translucent white */
   backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--border-light);
+  border-bottom:2px solid var(--clr-accent);
 }
 .header{
   display:flex;justify-content:space-between;align-items:center;
 }
 .logo{
-  font-weight:500;
-  letter-spacing:.05em;
-  color:var(--text-muted);
+  font-family:'Permanent Marker',cursive;
+  font-size:1.6rem;
+  color:var(--clr-text-main);
 }
 nav{
-  display:flex;gap:22px;font-size:14px;
+  display:flex;gap:22px;font-size:1rem;
 }
 
-/* Navigation links – behave like buttons on hover */
+/* Navigation links – look like small scribble buttons */
 nav a{
   display:inline-block;
-  padding:8px 12px;
-  border-radius:var(--radius);
-  color:var(--text-muted);
+  padding:6px 10px;
+  font-family:'Permanent Marker',cursive;
+  color:var(--clr-text-main);
   transition:background .2s,color .2s,transform .2s;
-  cursor:pointer;
 }
 nav a:hover{
-  background:var(--accent-primary);   /* gold on hover */
+  background:var(--clr-accent);
   color:#fff;
   transform:scale(1.1);
 }
 
-/* “Join the Journey” button on the right side */
+/* Join button – same scribble style as nav links */
 .join{
-  padding:10px 16px;
-  border-radius:var(--radius);
-  background:var(--accent-primary);
+  padding:8px 14px;
+  font-family:'Permanent Marker',cursive;
+  background:var(--clr-accent);
   color:#fff;
-  font-size:14px;
+  border-radius:var(--radius);
   cursor:pointer;
-  transition:background .2s,transform .2s;
+  transition:transform .2s;
 }
-.join:hover{
-  transform:scale(1.1);
-}
+.join:hover{transform:scale(1.1);}
 
 /* ────────────────────── COMMON BUTTONS (inside page) ────────────────────── */
 .btn{
   display:inline-block;
   padding:12px 24px;
+  font-family:'Permanent Marker',cursive;
+  font-size:1rem;
+  border:2px solid var(--clr-accent);
   border-radius:var(--radius);
-  font-weight:500;
-  cursor:pointer;
   color:#fff;
+  background:var(--clr-accent);
+  cursor:pointer;
   transition:background .2s,transform .2s;
 }
-.btn-primary   {background:var(--accent-primary);}   /* gold */
-.btn-secondary {background:var(--accent-secondary);} /* #70794F (replaces former blue) */
-
-/* Same scale effect for both button types */
-.btn:hover{
+.btn-primary{background:var(--clr-accent);}
+.btn-secondary{background:#fff;color:var(--clr-accent);}
+.btn-primary:hover,
+.btn-secondary:hover{
+  background:#fff;
+  color:var(--clr-accent);
   transform:scale(1.05);
 }
 
 /* ────────────────────── HERO ────────────────────── */
 .hero{
   padding:120px 0 80px;
-  /* keep a subtle dark gradient – no blue tones */
-  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
+  background:linear-gradient(135deg,var(--clr-bg-main),var(--clr-bg-soft));
 }
 .hero .grid{
   display:grid;
@@ -126,14 +154,15 @@ nav a:hover{
   align-items:center;
 }
 .hero h1{
-  font-size:44px;
+  font-family:'Permanent Marker',cursive;
+  font-size:2.8rem;
   line-height:1.2;
   margin:0 0 18px;
-  color:var(--text-primary);
+  color:var(--clr-text-main);
 }
 .hero p{
-  font-size:18px;
-  color:var(--text-muted);
+  font-size:1.1rem;
+  color:var(--clr-text-main);
   max-width:560px;
 }
 .hero .buttons{
@@ -145,16 +174,16 @@ nav a:hover{
 /* ────────────────────── SECTIONS ────────────────────── */
 section{margin-top:100px}
 section h2{
-  font-size:30px;
-  font-weight:500;
+  font-family:'Permanent Marker',cursive;
+  font-size:2.2rem;
   margin-bottom:26px;
-  color:var(--text-primary);
+  color:var(--clr-text-main);
 }
 
 /* ────────────────────── THE IDEA ────────────────────── */
 .idea{
-  background:var(--card-bg);
-  border:1px solid var(--border-light);
+  background:#fff;
+  border:2px solid var(--clr-accent);
   border-radius:var(--radius);
   padding:36px;
   text-align:center;
@@ -162,8 +191,8 @@ section h2{
 }
 .idea p{
   margin:8px 0;
-  font-size:22px;
-  color:var(--text-primary);
+  font-size:1.2rem;
+  color:var(--clr-text-main);
 }
 
 /* ────────────────────── WHO IS THIS FOR? ────────────────────── */
@@ -173,26 +202,25 @@ section h2{
   gap:24px;
 }
 .card-small{
-  background:var(--card-bg);
-  border:1px solid var(--border-light);
+  background:#fff;
+  border:2px solid var(--clr-accent);
   border-radius:var(--radius);
   padding:24px;
   text-align:center;
   box-shadow:var(--shadow);
-  font-size:16px;
-  color:var(--text-primary);
+  font-size:1rem;
+  color:var(--clr-text-main);
 }
 .note{
   margin-top:24px;
-  color:var(--text-muted);
+  color:var(--clr-text-main);
   font-style:italic;
-  line-height:1.5;
 }
 
 /* ────────────────────── THE MAP (ZONE) ────────────────────── */
 .zone{
-  background:var(--card-bg);
-  border:1px solid var(--border-light);
+  background:#fff;
+  border:2px solid var(--clr-accent);
   border-radius:var(--radius);
   padding:28px;
   max-width:340px;
@@ -201,13 +229,12 @@ section h2{
 .zone .visual{
   width:100%;
   height:180px;
-  /* dark gradient – no blue */
-  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
+  background:linear-gradient(135deg,var(--clr-bg-main),var(--clr-bg-soft));
   border-radius:var(--radius);
   margin-bottom:16px;
 }
-.zone h4{margin:0 0 8px;font-weight:500;color:var(--text-primary);}
-.zone p{color:var(--text-muted);margin:0 0 14px;}
+.zone h4{margin:0 0 8px;font-weight:500;color:var(--clr-text-main);}
+.zone p{color:var(--clr-text-main);margin:0 0 14px;}
 
 /* ────────────────────── RESPONSIVE ────────────────────── */
 @media(max-width:900px){
@@ -216,13 +243,13 @@ section h2{
   nav{display:none}               /* keep original mobile behaviour */
 }
 @media(max-width:600px){
-  .hero h1{font-size:32px}
-  .hero p{font-size:16px}
+  .hero h1{font-size:2rem}
+  .hero p{font-size:1rem}
 }
 
-/* Optional focus outline for keyboard navigation */
+/* Focus outline – still visible */
 a:focus, .btn:focus, .join:focus{
-  outline:2px solid var(--accent-primary);
+  outline:2px solid var(--clr-accent);
   outline-offset:2px;
 }
 </style>
@@ -259,7 +286,7 @@ a:focus, .btn:focus, .join:focus{
           <a href="film.html"    class="btn btn-secondary">Watch the Awakening</a>
         </div>
       </div>
-      <!-- Placeholder visual – replace with your own image if desired -->
+      <!-- Placeholder visual – you can swap with your own illustration -->
       <div class="hero-visual" aria-hidden="true">
         <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
              alt="Calm visual background">
@@ -268,7 +295,7 @@ a:focus, .btn:focus, .join:focus{
   </section>
 
   <!-- ==================== THE IDEA ==================== -->
-  <section class="idea">
+  <section class="idea scribble">
     <h2>The Idea</h2>
     <p>School of Awakening is a learning journey,</p>
     <p>where the Qur’an becomes a companion —</p>
@@ -285,11 +312,11 @@ a:focus, .btn:focus, .join:focus{
   <section class="audience">
     <h2>Who is this for?</h2>
     <div class="cards">
-      <div class="card-small">For the seeker</div>
-      <div class="card-small">For the lost</div>
-      <div class="card-small">For the curious</div>
-      <div class="card-small">For the believer</div>
-      <div class="card-small">For the silent question inside you</div>
+      <div class="card-small scribble">For the seeker</div>
+      <div class="card-small scribble">For the lost</div>
+      <div class="card-small scribble">For the curious</div>
+      <div class="card-small scribble">For the believer</div>
+      <div class="card-small scribble">For the silent question inside you</div>
     </div>
 
     <p class="note">
@@ -302,9 +329,9 @@ a:focus, .btn:focus, .join:focus{
   <section class="map-home">
     <h2>The Map</h2>
 
-    <div class="zone">
+    <div class="zone scribble">
       <div class="visual" aria-hidden="true">
-        <!-- Placeholder for the path / nodes / zones graphic -->
+        <!-- Placeholder graphic for the path / nodes / zones -->
         <img src="https://dummyimage.com/340x180/e0f2ff/3b82f6&text=Path+Graphic"
              alt="Path graphic">
       </div>
@@ -318,7 +345,7 @@ a:focus, .btn:focus, .join:focus{
 </main>
 
 <!-- ==================== FOOTER ==================== -->
-<footer>
+<footer class="scribble" style="padding:28px;text-align:center;border-top:none;">
   © 2025 School of Awakening — A Path of Awareness
 </footer>
 
