@@ -14,31 +14,30 @@
         rel="stylesheet">
 
   <style>
-    /* ────────────────────── COLOUR & UI VARIABLES ────────────────────── */
+    /* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
     :root{
-      --bg-main:#f6faff;               /* page background – very light */
-      --bg-soft:#e8f0ff;               /* kept for potential future use */
-      --card:#ffffff;                  /* cards, zones */
-      --text-main:#0f172a;             /* main headings / body text */
-      --text-muted:#64748b;            /* secondary text, nav links */
+      /* 5️⃣ colours from your palette */
+      --clr-bg-main:#e6D5C3;      /* page background – light beige               */
+      --clr-bg-soft:#BAAFA3;      /* subtle surface (optional)                  */
+      --clr-card:#e1DAD7;         /* cards, zone boxes                         */
+      --clr-text-main:#817065;    /* main headings & body text                 */
+      --clr-text-muted:#70794F;  /* muted text, nav links, accent colour      */
 
-      /* button colours – grey fill, white text */
-      --button-bg:#6b7280;             /* normal */
-      --button-bg-hover:#4b5563;       /* hover (10 % darker) */
-
-      --accent:#3b82f6;                /* used for minor borders, optional */
-      --line:#e5e7eb;                  /* thin borders */
+      /* Accent – used for buttons and hover */
+      --clr-accent:#70794F;       /* same as muted – your accent colour         */
+      /* You can keep the same colour on hover and just scale it */
       --radius:16px;
       --shadow:0 8px 24px rgba(15,23,42,.06);
       --max-width:1200px;
+      --line:#c4b9b0;            /* light line derived from palette */
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family:Inter,system-ui,sans-serif;
-      background:var(--bg-main);
-      color:var(--text-main);
+      background:var(--clr-bg-main);
+      color:var(--clr-text-main);
       line-height:1.6;
     }
     a{color:inherit;text-decoration:none}
@@ -55,63 +54,63 @@
     .header{
       display:flex;justify-content:space-between;align-items:center;
     }
-    .logo{font-weight:500;letter-spacing:.05em}
+    .logo{font-weight:500;letter-spacing:.05em;color:var(--clr-text-main);}
     nav{
       display:flex;gap:22px;font-size:14px;
     }
 
-    /* navigation links – button‑like on hover */
+    /* ---- NAV LINKS – button‑like on hover ---- */
     nav a{
       display:inline-block;
       padding:8px 12px;
       border-radius:var(--radius);
-      color:var(--text-muted);
+      color:var(--clr-text-muted);
       transition:background .2s,color .2s,transform .2s;
       cursor:pointer;
     }
     nav a:hover{
-      background:var(--button-bg);
+      background:var(--clr-accent);
       color:#fff;
       transform:scale(1.1);
     }
 
-    /* right‑most “Join the Journey” button */
+    /* ---- RIGHT‑MOST “Join the Journey” button ---- */
     .join{
       padding:10px 16px;
       border-radius:var(--radius);
-      background:var(--button-bg);
+      background:var(--clr-accent);
       color:#fff;
       font-size:14px;
       cursor:pointer;
       transition:background .2s,transform .2s;
     }
     .join:hover{
-      background:var(--button-bg-hover);
+      /* keep colour, just scale */
       transform:scale(1.1);
     }
 
-    /* ────────────────────── COMMON BUTTONS (inside page) ────────────────────── */
+    /* ────────────────────── COMMON BUTTONS (inside the page) ────────────────────── */
     .btn{
       display:inline-block;
       padding:12px 24px;
       border-radius:var(--radius);
       font-weight:500;
       cursor:pointer;
-      background:var(--button-bg);
+      background:var(--clr-accent);
       color:#fff;
       transition:background .2s,transform .2s;
     }
     .btn:hover{
-      background:var(--button-bg-hover);
+      /* same colour, only scale up */
       transform:scale(1.05);
     }
-    /* keep class names for potential future styling */
+    /* keep class names for possible future overrides */
     .btn-primary,.btn-secondary{background:inherit;color:inherit;}
 
     /* ────────────────────── HERO ────────────────────── */
     .hero{
       padding:120px 0 80px;
-      background:linear-gradient(135deg,#e0f2ff,#f6faff);
+      background:linear-gradient(135deg,#e0f2ff,#f6faff); /* kept subtle gradient */
     }
     .hero .grid{
       display:grid;
@@ -123,11 +122,11 @@
       font-size:44px;
       line-height:1.2;
       margin:0 0 18px;
-      color:var(--text-main);
+      color:var(--clr-text-main);
     }
     .hero p{
       font-size:18px;
-      color:var(--text-muted);
+      color:var(--clr-text-muted);
       max-width:560px;
     }
     .hero .buttons{
@@ -142,12 +141,12 @@
       font-size:30px;
       font-weight:500;
       margin-bottom:26px;
-      color:var(--text-main);
+      color:var(--clr-text-main);
     }
 
     /* ────────────────────── THE IDEA ────────────────────── */
     .idea{
-      background:var(--card);
+      background:var(--clr-card);
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:36px;
@@ -157,7 +156,7 @@
     .idea p{
       margin:8px 0;
       font-size:22px;
-      color:var(--text-main);
+      color:var(--clr-text-main);
     }
 
     /* ────────────────────── WHO IS THIS FOR? ────────────────────── */
@@ -167,25 +166,25 @@
       gap:24px;
     }
     .card-small{
-      background:var(--card);
+      background:var(--clr-card);
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:24px;
       text-align:center;
       box-shadow:var(--shadow);
       font-size:16px;
-      color:var(--text-main);
+      color:var(--clr-text-main);
     }
     .note{
       margin-top:24px;
-      color:var(--text-muted);
+      color:var(--clr-text-muted);
       font-style:italic;
       line-height:1.5;
     }
 
     /* ────────────────────── THE MAP (ZONE) ────────────────────── */
     .zone{
-      background:var(--card);
+      background:var(--clr-card);
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:28px;
@@ -199,25 +198,23 @@
       border-radius:var(--radius);
       margin-bottom:16px;
     }
-    .zone h4{margin:0 0 8px;font-weight:500;color:var(--text-main);}
-    .zone p{color:var(--text-muted);margin:0 0 14px;}
+    .zone h4{margin:0 0 8px;font-weight:500;color:var(--clr-text-main);}
+    .zone p{color:var(--clr-text-muted);margin:0 0 14px;}
 
     /* ────────────────────── RESPONSIVE ────────────────────── */
     @media(max-width:900px){
       .hero .grid{grid-template-columns:1fr;text-align:center}
       .hero .buttons{justify-content:center}
-      nav{display:none}               /* navigation hidden on small screens (as in original) */
+      nav{display:none}               /* keep original mobile behaviour */
     }
     @media(max-width:600px){
       .hero h1{font-size:32px}
       .hero p{font-size:16px}
     }
 
-    /* Optional – visible focus outline for keyboard users */
-    a:focus,
-    button:focus,
-    .btn:focus{
-      outline:2px solid var(--accent);
+    /* Optional focus outline for keyboard users */
+    a:focus, .btn:focus, .join:focus{
+      outline:2px solid var(--clr-accent);
       outline-offset:2px;
     }
   </style>
@@ -254,7 +251,7 @@
             <a href="film.html"    class="btn btn-secondary">Watch the Awakening</a>
           </div>
         </div>
-        <!-- Placeholder visual – replace with your own image if desired -->
+        <!-- Placeholder visual – replace with your own image if you wish -->
         <div class="hero-visual" aria-hidden="true">
           <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
                alt="Calm visual background">
@@ -299,7 +296,7 @@
 
       <div class="zone">
         <div class="visual" aria-hidden="true">
-          <!-- Placeholder graphic for the “path / nodes / zones” -->
+          <!-- Placeholder for the path / nodes / zones graphic -->
           <img src="https://dummyimage.com/340x180/e0f2ff/3b82f6&text=Path+Graphic"
                alt="Path graphic">
         </div>
