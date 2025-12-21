@@ -1,318 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>School of Awakening – Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-        content="A learning journey where the Qur’an becomes your companion through life.">
+<meta charset="UTF-8">
+<title>School of Awakening – Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+      content="A learning journey where the Qur’an becomes your companion through life.">
 
-  <!-- Google Font – Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+<!-- Google Font – Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet">
 
-  <style>
-    /* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
-    :root{
-      /* 5️⃣ colours from your palette */
-      --clr-bg-main:#e6D5C3;      /* page background – light beige               */
-      --clr-bg-soft:#BAAFA3;      /* subtle surface (optional)                  */
-      --clr-card:#e1DAD7;         /* cards, zone boxes                         */
-      --clr-text-main:#817065;    /* main headings & body text                 */
-      --clr-text-muted:#70794F;  /* muted text, nav links, accent colour      */
+<style>
+/* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
+:root{
+  /* ---- Colors from walktheroom.com ---- */
+  --bg-main:#0B0C13;            /* darkest background – full page */
+  --bg-soft:#161821;            /* a shade a bit lighter – used for sections / cards */
+  --card-bg:#161821;            /* card / zone background (same as bg‑soft) */
+  --text-primary:#FFFFFF;       /* main text on dark background */
+  --text-muted:#8C8C8C;         /* secondary / muted text */
+  --accent-primary:#F2C94C;     /* gold – primary CTA button, hover bg */
+  --accent-secondary:#56CCF2;   /* cyan – secondary button / hover */
+  --border-light:#E0E0E0;       /* light grey – borders, dividers */
 
-      /* Accent – used for buttons and hover */
-      --clr-accent:#70794F;       /* same as muted – your accent colour         */
-      /* You can keep the same colour on hover and just scale it */
-      --radius:16px;
-      --shadow:0 8px 24px rgba(15,23,42,.06);
-      --max-width:1200px;
-      --line:#c4b9b0;            /* light line derived from palette */
-    }
+  --radius:16px;
+  --shadow:0 8px 24px rgba(15,23,42,.06);
+  --max-width:1200px;
+}
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,sans-serif;
-      background:var(--clr-bg-main);
-      color:var(--clr-text-main);
-      line-height:1.6;
-    }
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;height:auto;display:block}
-    .wrap{max-width:var(--max-width);margin:auto;padding:28px}
+/* Global reset & basics */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  background:var(--bg-main);
+  color:var(--text-primary);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:var(--max-width);margin:auto;padding:28px}
 
-    /* ────────────────────── HEADER ────────────────────── */
-    header{
-      position:sticky;top:0;z-index:100;
-      background:#ffffffcc;
-      backdrop-filter:blur(8px);
-      border-bottom:1px solid var(--line);
-    }
-    .header{
-      display:flex;justify-content:space-between;align-items:center;
-    }
-    .logo{font-weight:500;letter-spacing:.05em;color:var(--clr-text-main);}
-    nav{
-      display:flex;gap:22px;font-size:14px;
-    }
+/* ────────────────────── HEADER ────────────────────── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:#ffffffcc;               /* semi‑transparent white */
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border-light);
+}
+.header{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.logo{
+  font-weight:500;
+  letter-spacing:.05em;
+  color:var(--text-muted);            /* dark enough to be seen on white header */
+}
+nav{
+  display:flex;gap:22px;font-size:14px;
+}
 
-    /* ---- NAV LINKS – button‑like on hover ---- */
-    nav a{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:var(--radius);
-      color:var(--clr-text-muted);
-      transition:background .2s,color .2s,transform .2s;
-      cursor:pointer;
-    }
-    nav a:hover{
-      background:var(--clr-accent);
-      color:#fff;
-      transform:scale(1.1);
-    }
+/* Navigation links – behave like buttons on hover */
+nav a{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:var(--radius);
+  color:var(--text-muted);
+  transition:background .2s,color .2s,transform .2s;
+  cursor:pointer;
+}
+nav a:hover{
+  background:var(--accent-primary);
+  color:#fff;
+  transform:scale(1.1);
+}
 
-    /* ---- RIGHT‑MOST “Join the Journey” button ---- */
-    .join{
-      padding:10px 16px;
-      border-radius:var(--radius);
-      background:var(--clr-accent);
-      color:#fff;
-      font-size:14px;
-      cursor:pointer;
-      transition:background .2s,transform .2s;
-    }
-    .join:hover{
-      /* keep colour, just scale */
-      transform:scale(1.1);
-    }
+/* “Join the Journey” button on the right side */
+.join{
+  padding:10px 16px;
+  border-radius:var(--radius);
+  background:var(--accent-primary);
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+  transition:background .2s,transform .2s;
+}
+.join:hover{
+  /* keep colour, just grow */
+  transform:scale(1.1);
+}
 
-    /* ────────────────────── COMMON BUTTONS (inside the page) ────────────────────── */
-    .btn{
-      display:inline-block;
-      padding:12px 24px;
-      border-radius:var(--radius);
-      font-weight:500;
-      cursor:pointer;
-      background:var(--clr-accent);
-      color:#fff;
-      transition:background .2s,transform .2s;
-    }
-    .btn:hover{
-      /* same colour, only scale up */
-      transform:scale(1.05);
-    }
-    /* keep class names for possible future overrides */
-    .btn-primary,.btn-secondary{background:inherit;color:inherit;}
+/* ────────────────────── COMMON BUTTONS (inside page) ────────────────────── */
+.btn{
+  display:inline-block;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:500;
+  cursor:pointer;
+  color:#fff;
+  transition:background .2s,transform .2s;
+}
+.btn-primary   {background:var(--accent-primary);}
+.btn-secondary {background:var(--accent-secondary);}
 
-    /* ────────────────────── HERO ────────────────────── */
-    .hero{
-      padding:120px 0 80px;
-      background:linear-gradient(135deg,#e0f2ff,#f6faff); /* kept subtle gradient */
-    }
-    .hero .grid{
-      display:grid;
-      grid-template-columns:1.2fr 1fr;
-      gap:48px;
-      align-items:center;
-    }
-    .hero h1{
-      font-size:44px;
-      line-height:1.2;
-      margin:0 0 18px;
-      color:var(--clr-text-main);
-    }
-    .hero p{
-      font-size:18px;
-      color:var(--clr-text-muted);
-      max-width:560px;
-    }
-    .hero .buttons{
-      margin-top:30px;
-      display:flex;
-      gap:16px;
-    }
+/* same scale effect for both button types */
+.btn:hover{
+  transform:scale(1.05);
+}
 
-    /* ────────────────────── SECTIONS ────────────────────── */
-    section{margin-top:100px}
-    section h2{
-      font-size:30px;
-      font-weight:500;
-      margin-bottom:26px;
-      color:var(--clr-text-main);
-    }
+/* ────────────────────── HERO ────────────────────── */
+.hero{
+  padding:120px 0 80px;
+  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
+}
+.hero .grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:48px;
+  align-items:center;
+}
+.hero h1{
+  font-size:44px;
+  line-height:1.2;
+  margin:0 0 18px;
+  color:var(--text-primary);
+}
+.hero p{
+  font-size:18px;
+  color:var(--text-muted);
+  max-width:560px;
+}
+.hero .buttons{
+  margin-top:30px;
+  display:flex;
+  gap:16px;
+}
 
-    /* ────────────────────── THE IDEA ────────────────────── */
-    .idea{
-      background:var(--clr-card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:36px;
-      text-align:center;
-      box-shadow:var(--shadow);
-    }
-    .idea p{
-      margin:8px 0;
-      font-size:22px;
-      color:var(--clr-text-main);
-    }
+/* ────────────────────── SECTIONS ────────────────────── */
+section{margin-top:100px}
+section h2{
+  font-size:30px;
+  font-weight:500;
+  margin-bottom:26px;
+  color:var(--text-primary);
+}
 
-    /* ────────────────────── WHO IS THIS FOR? ────────────────────── */
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:24px;
-    }
-    .card-small{
-      background:var(--clr-card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:24px;
-      text-align:center;
-      box-shadow:var(--shadow);
-      font-size:16px;
-      color:var(--clr-text-main);
-    }
-    .note{
-      margin-top:24px;
-      color:var(--clr-text-muted);
-      font-style:italic;
-      line-height:1.5;
-    }
+/* ────────────────────── THE IDEA ────────────────────── */
+.idea{
+  background:var(--card-bg);
+  border:1px solid var(--border-light);
+  border-radius:var(--radius);
+  padding:36px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+.idea p{
+  margin:8px 0;
+  font-size:22px;
+  color:var(--text-primary);
+}
 
-    /* ────────────────────── THE MAP (ZONE) ────────────────────── */
-    .zone{
-      background:var(--clr-card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:28px;
-      max-width:340px;
-      box-shadow:var(--shadow);
-    }
-    .zone .visual{
-      width:100%;
-      height:180px;
-      background:linear-gradient(135deg,#e0e7ff,#f8fafc);
-      border-radius:var(--radius);
-      margin-bottom:16px;
-    }
-    .zone h4{margin:0 0 8px;font-weight:500;color:var(--clr-text-main);}
-    .zone p{color:var(--clr-text-muted);margin:0 0 14px;}
+/* ────────────────────── WHO IS THIS FOR? ────────────────────── */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:24px;
+}
+.card-small{
+  background:var(--card-bg);
+  border:1px solid var(--border-light);
+  border-radius:var(--radius);
+  padding:24px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  font-size:16px;
+  color:var(--text-primary);
+}
+.note{
+  margin-top:24px;
+  color:var(--text-muted);
+  font-style:italic;
+  line-height:1.5;
+}
 
-    /* ────────────────────── RESPONSIVE ────────────────────── */
-    @media(max-width:900px){
-      .hero .grid{grid-template-columns:1fr;text-align:center}
-      .hero .buttons{justify-content:center}
-      nav{display:none}               /* keep original mobile behaviour */
-    }
-    @media(max-width:600px){
-      .hero h1{font-size:32px}
-      .hero p{font-size:16px}
-    }
+/* ────────────────────── THE MAP (ZONE) ────────────────────── */
+.zone{
+  background:var(--card-bg);
+  border:1px solid var(--border-light);
+  border-radius:var(--radius);
+  padding:28px;
+  max-width:340px;
+  box-shadow:var(--shadow);
+}
+.zone .visual{
+  width:100%;
+  height:180px;
+  background:linear-gradient(135deg,#0B0C13,#161821);
+  border-radius:var(--radius);
+  margin-bottom:16px;
+}
+.zone h4{margin:0 0 8px;font-weight:500;color:var(--text-primary);}
+.zone p{color:var(--text-muted);margin:0 0 14px;}
 
-    /* Optional focus outline for keyboard users */
-    a:focus, .btn:focus, .join:focus{
-      outline:2px solid var(--clr-accent);
-      outline-offset:2px;
-    }
-  </style>
+/* ────────────────────── RESPONSIVE ────────────────────── */
+@media(max-width:900px){
+  .hero .grid{grid-template-columns:1fr;text-align:center}
+  .hero .buttons{justify-content:center}
+  nav{display:none}               /* keep original mobile behaviour */
+}
+@media(max-width:600px){
+  .hero h1{font-size:32px}
+  .hero p{font-size:16px}
+}
+
+/* Optional focus outline for keyboard navigation */
+a:focus, .btn:focus, .join:focus{
+  outline:2px solid var(--accent-primary);
+  outline-offset:2px;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- ==================== HEADER ==================== -->
-  <header role="banner">
-    <div class="wrap header">
-      <div class="logo">School of Awakening</div>
-      <nav role="navigation" aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a href="journey.html">The Journey</a>
-        <a href="map.html">The Map</a>
-        <a href="why.html">Why Qur’an?</a>
-        <a href="film.html">Film</a>
-        <a href="join.html">Join</a>
-      </nav>
-      <a class="join" href="join.html">Join the Journey</a>
+<!-- ==================== HEADER ==================== -->
+<header role="banner">
+  <div class="wrap header">
+    <div class="logo">School of Awakening</div>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="journey.html">The Journey</a>
+      <a href="map.html">The Map</a>
+      <a href="why.html">Why Qur’an?</a>
+      <a href="film.html">Film</a>
+      <a href="join.html">Join</a>
+    </nav>
+    <a class="join" href="join.html">Join the Journey</a>
+  </div>
+</header>
+
+<main class="wrap" role="main">
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="grid">
+      <div>
+        <h1>Life is a journey.<br>Every traveller needs provision.</h1>
+        <p>The Qur’an was never meant to be distant.<br>It was meant to walk with you.</p>
+        <div class="buttons">
+          <a href="journey.html" class="btn btn-primary">Begin the Journey</a>
+          <a href="film.html"    class="btn btn-secondary">Watch the Awakening</a>
+        </div>
+      </div>
+      <!-- Placeholder visual – replace with your own image if you wish -->
+      <div class="hero-visual" aria-hidden="true">
+        <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
+             alt="Calm visual background">
+      </div>
     </div>
-  </header>
+  </section>
 
-  <main class="wrap" role="main">
+  <!-- ==================== THE IDEA ==================== -->
+  <section class="idea">
+    <h2>The Idea</h2>
+    <p>School of Awakening is a learning journey,</p>
+    <p>where the Qur’an becomes a companion —</p>
+    <p>not a subject.</p>
 
-    <!-- ==================== HERO ==================== -->
-    <section class="hero">
-      <div class="grid">
-        <div>
-          <h1>Life is a journey.<br>Every traveller needs provision.</h1>
-          <p>The Qur’an was never meant to be distant.<br>It was meant to walk with you.</p>
-          <div class="buttons">
-            <a href="journey.html" class="btn btn-primary">Begin the Journey</a>
-            <a href="film.html"    class="btn btn-secondary">Watch the Awakening</a>
-          </div>
-        </div>
-        <!-- Placeholder visual – replace with your own image if you wish -->
-        <div class="hero-visual" aria-hidden="true">
-          <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
-               alt="Calm visual background">
-        </div>
-      </div>
-    </section>
+    <div class="cards" style="margin-top:32px">
+      <p>Awareness</p>
+      <p>Meaning</p>
+      <p>Hereafter</p>
+    </div>
+  </section>
 
-    <!-- ==================== THE IDEA ==================== -->
-    <section class="idea">
-      <h2>The Idea</h2>
-      <p>School of Awakening is a learning journey,</p>
-      <p>where the Qur’an becomes a companion —</p>
-      <p>not a subject.</p>
+  <!-- ==================== WHO IS THIS FOR? ==================== -->
+  <section class="audience">
+    <h2>Who is this for?</h2>
+    <div class="cards">
+      <div class="card-small">For the seeker</div>
+      <div class="card-small">For the lost</div>
+      <div class="card-small">For the curious</div>
+      <div class="card-small">For the believer</div>
+      <div class="card-small">For the silent question inside you</div>
+    </div>
 
-      <div class="cards" style="margin-top:32px">
-        <p>Awareness</p>
-        <p>Meaning</p>
-        <p>Hereafter</p>
-      </div>
-    </section>
+    <p class="note">
+      You don’t need answers.<br>
+      You only need honesty.
+    </p>
+  </section>
 
-    <!-- ==================== WHO IS THIS FOR? ==================== -->
-    <section class="audience">
-      <h2>Who is this for?</h2>
-      <div class="cards">
-        <div class="card-small">For the seeker</div>
-        <div class="card-small">For the lost</div>
-        <div class="card-small">For the curious</div>
-        <div class="card-small">For the believer</div>
-        <div class="card-small">For the silent question inside you</div>
+  <!-- ==================== THE MAP ==================== -->
+  <section class="map-home">
+    <h2>The Map</h2>
+
+    <div class="zone">
+      <div class="visual" aria-hidden="true">
+        <!-- Placeholder for the path / nodes / zones graphic -->
+        <img src="https://dummyimage.com/340x180/e0f2ff/3b82f6&text=Path+Graphic"
+             alt="Path graphic">
       </div>
 
-      <p class="note">
-        You don’t need answers.<br>
-        You only need honesty.
-      </p>
-    </section>
+      <h4>Zone 01 – Surah Al‑Mulk</h4>
+      <p>Your first provision.</p>
+      <a href="map.html" class="btn btn-primary">Enter Zone</a>
+    </div>
+  </section>
 
-    <!-- ==================== THE MAP ==================== -->
-    <section class="map-home">
-      <h2>The Map</h2>
+</main>
 
-      <div class="zone">
-        <div class="visual" aria-hidden="true">
-          <!-- Placeholder for the path / nodes / zones graphic -->
-          <img src="https://dummyimage.com/340x180/e0f2ff/3b82f6&text=Path+Graphic"
-               alt="Path graphic">
-        </div>
-
-        <h4>Zone 01 – Surah Al‑Mulk</h4>
-        <p>Your first provision.</p>
-        <a href="map.html" class="btn btn-primary">Enter Zone</a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ==================== FOOTER ==================== -->
-  <footer>
-    © 2025 School of Awakening — A Path of Awareness
-  </footer>
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  © 2025 School of Awakening — A Path of Awareness
+</footer>
 
 </body>
 </html>
