@@ -16,16 +16,16 @@
 <style>
 /* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
 :root{
-  /* Palette (your five colours) */
+  /* Your colour palette */
   --clr-bg-main:#e6D5C3;      /* paper background               */
   --clr-bg-soft:#BAAFA3;      /* secondary surface               */
   --clr-card:#e1DAD7;         /* cards / zones                  */
-  --clr-text-main:#817065;   /* main headings & body text      */
+  --clr-text-main:#817065;    /* main headings & body text      */
   --clr-accent:#70794F;       /* solid green – used for borders  */
   --clr-accent-trans:rgba(112,121,79,0.6);   /* semi‑transparent green */
 
   /* UI */
-  --radius:12px;               /* filleted corners               */
+  --radius:12px;               /* filleted (rounded) corners     */
   --shadow:4px 4px 0 var(--clr-accent);
   --max-width:1200px;
 }
@@ -36,7 +36,13 @@ body{
   margin:0;
   font-family:'Indie Flower',cursive;
   background-color:var(--clr-bg-main);
-  /* ---- SMALLER, CLOSER DOTS (30×30) ---- */
+  color:var(--clr-text-main);
+  line-height:1.6;
+}
+
+/* ---- DOT‑BACKGROUND (smaller, tighter dots) ---- */
+.dot-bg{
+  /* 30 × 30 px pattern, 1‑px circles */
   background-image:
     url("data:image/svg+xml;charset=UTF-8,\
 %3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E\
@@ -47,9 +53,9 @@ body{
 %3C/svg%3E");
   background-repeat:repeat;
   background-size:30px 30px;
-  color:var(--clr-text-main);
-  line-height:1.6;
 }
+
+/* Anchor & image defaults */
 a{color:inherit;text-decoration:none}
 img{max-width:100%;height:auto;display:block}
 .wrap{max-width:var(--max-width);margin:auto;padding:28px}
@@ -73,13 +79,15 @@ img{max-width:100%;height:auto;display:block}
 
 /* ────────────────────── HEADER ────────────────────── */
 header{
-  position:sticky;top:0;z-index:100;
-  background:transparent;               /* no fill at first */
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:transparent;               /* transparent until hover */
   border-bottom:2px solid var(--clr-accent);
   transition:background .3s,box-shadow .3s;
 }
 header:hover{
-  background:rgba(255,255,255,.9);     /* soft white on hover */
+  background:rgba(255,255,255,.9);       /* soft white on hover */
   box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 .header{
@@ -94,7 +102,7 @@ nav{
   display:flex;gap:22px;
 }
 
-/* Navigation links – now act like the “Join” button (transparent‑green + scale) */
+/* **Navigation links** – same animation as the “Join” button */
 nav a{
   font-family:'Permanent Marker',cursive;
   padding:6px 10px;
@@ -107,7 +115,7 @@ nav a:hover{
   transform:scale(1.1);
 }
 
-/* “Join the Journey” – same hover animation as nav links */
+/* “Join the Journey” button – same hover treatment */
 .join{
   background:var(--clr-accent-trans);
   color:#fff;
@@ -116,9 +124,7 @@ nav a:hover{
   cursor:pointer;
   transition:background .2s,transform .2s;
 }
-.join:hover{
-  transform:scale(1.1);
-}
+.join:hover{transform:scale(1.1);}
 
 /* ────────────────────── BUTTONS (inside page) ────────────────────── */
 .btn{
@@ -187,7 +193,7 @@ section h2{
   text-align:center;
 }
 
-/* ────────────────────── CARDS ────────────────────── */
+/* ────────────────────── CARD GRID ────────────────────── */
 .cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -213,14 +219,14 @@ section h2{
 /* ────────────────────── RESPONSIVE ────────────────────── */
 @media(max-width:900px){
   .hero .grid{grid-template-columns:1fr;text-align:center}
-  nav{display:none}
+  nav{display:none}               /* keep original mobile behaviour */
 }
 @media(max-width:600px){
   .hero h1{font-size:2rem}
   .hero p{font-size:1rem}
 }
 
-/* ────────────────────── SPOTLIGHT OVERLAY ────────────────────── */
+/* ────────────────────── SPOTLIGHT OVERLAY (fade except around cursor) ────────────────────── */
 .spotlight{
   position:fixed;
   inset:0;
@@ -228,7 +234,7 @@ section h2{
   opacity:0;
   transition:opacity .3s ease;
   z-index:9999;
-  /* transparent centre → light‑fade outside */
+  /* Transparent centre → light‑fade outside */
   background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
                               transparent,
                               rgba(255,255,255,0.6));
@@ -243,7 +249,7 @@ a:focus, .btn:focus, .join:focus{
 </style>
 </head>
 
-<body>
+<body class="dot-bg"><!-- **ONLY the body has the dot background** -->
 
 <header>
   <div class="wrap header">
@@ -320,7 +326,7 @@ a:focus, .btn:focus, .join:focus{
   © 2025 School of Awakening — A Path of Awareness
 </footer>
 
-<!-- Spotlight overlay (fades everything except around the cursor) -->
+<!-- Spotlight overlay (fades everything except a circular area around the cursor) -->
 <div class="spotlight"></div>
 
 <script>
@@ -330,13 +336,13 @@ a:focus, .btn:focus, .join:focus{
 document.addEventListener('DOMContentLoaded', () => {
   const spotlight = document.querySelector('.spotlight');
 
-  // Update CSS custom properties with the mouse position
+  // Update CSS custom properties with the mouse position.
   document.addEventListener('mousemove', e => {
     spotlight.style.setProperty('--x', `${e.clientX}px`);
     spotlight.style.setProperty('--y', `${e.clientY}px`);
   });
 
-  // Hide the overlay when the cursor leaves the window
+  // Hide the overlay when the cursor leaves the window.
   document.addEventListener('mouseleave', () => spotlight.style.opacity = '0');
   document.addEventListener('mouseenter', () => spotlight.style.opacity = '1');
 });
