@@ -1,186 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar"><!-- لغة الصفحة العربية (يمكن تغييرها إلى "en" إذا رغبت) -->
 <head>
-    <meta charset="UTF-8">
-    <title>School of Awakening – Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>School of Awakening – Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-    /* ────────────────────── CHROMA DESIGN SYSTEM ────────────────────── */
-    :root {
-        --clr-bg: #F2F0EB;        /* Off-white paper */
-        --clr-text: #1A1A1A;      /* Deep ink black */
-        --clr-accent: #1A1A1A;    /* Consistent black for borders */
-        --clr-muted: #8C8C8C;     /* Grey for technical details */
-        --max-width: 1400px;
-    }
+<!-- -------------------------  GOOGLE FONTS  ------------------------- -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
-    * { box-sizing: border-box; }
-    
-    body {
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        background-color: var(--clr-bg);
-        color: var(--clr-text);
-        line-height: 1.4;
-        -webkit-font-smoothing: antialiased;
-    }
+<style>
+/* ────────────────────── CHROMA DESIGN SYSTEM ────────────────────── */
+/* تعريف المتغيرات (variables) لتسهيل تغيّر الألوان، الحد الأقصى للعرض، … */
+:root {
+    --clr-bg: #F2F0EB;        /* لون الخلفية العامة (صفحة بيضاء فاتحة) */
+    --clr-text: #1A1A1A;      /* لون النص الأساسي – أسود قوي */
+    --clr-accent: #1A1A1A;    /* لون الحدود والعناصر البارزة (يمكن أن يكون لونًا مختلفًا) */
+    --clr-muted: #8C8C8C;     /* لون الفقرات الفرعية أو النصوص الثانوية */
+    --max-width: 1400px;      /* أقصى عرض للصفحة (يمكن تغييره) */
+}
 
-    /* ────────────────────── TECHNICAL OVERLAYS ────────────────────── */
-    /* Adds the registration marks (+) in the corners */
-    body::before, body::after, .wrap::before, .wrap::after {
-        content: "+";
-        position: fixed;
-        font-family: monospace;
-        font-size: 24px;
-        color: var(--clr-muted);
-        z-index: 1000;
-        pointer-events: none;
-        font-weight: 100;
-    }
-    body::before { top: 10px; left: 15px; }
-    body::after { top: 10px; right: 15px; }
+/* ────────────────────── RESET & BASE ────────────────────── */
+/* قاعدة عامة تحافظ على حجم الصندوق لتكون كل العناصر محسوبة بطريقة موحدة */
+* { box-sizing: border-box; }
 
-    /* ────────────────────── LAYOUT ────────────────────── */
-    .wrap {
-        max-width: var(--max-width);
-        margin: auto;
-        padding: 60px 40px;
-        position: relative;
-    }
+/* تنسيق جسم الصفحة */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;   /* الخط الأساسي */
+    background-color: var(--clr-bg);    /* خلفية الصفحة */
+    color: var(--clr-text);            /* لون النص */
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+}
 
-    /* ────────────────────── NAVIGATION ────────────────────── */
-    header {
-        border-bottom: 1px solid rgba(0,0,0,0.1);
-        padding: 20px 0;
-    }
-    .header-inner {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: var(--max-width);
-        margin: auto;
-        padding: 0 40px;
-        text-transform: uppercase;
-        font-size: 12px;
-        letter-spacing: 0.1em;
-        font-weight: 700;
-    }
-    .logo {
-        font-size: 1.2rem;
-        font-weight: 900;
-        letter-spacing: -0.02em;
-    }
-    nav { display: flex; gap: 30px; }
-    nav a:hover { opacity: 0.5; }
+/* ------------------- TECHNICAL OVERLAYS (العلامات الزاوية) ------------------- */
+/* العلامات (+) في الزوايا تُضيف لمسة فنية (تشبه علامات التسجيل). إذا لا تريدها
+   احذف قواعد ::before / ::after أو عطلها بdisplay:none. */
+body::before,
+body::after,
+.wrap::before,
+.wrap::after {
+    content: "+";
+    position: fixed;
+    font-family: monospace;
+    font-size: 24px;
+    color: var(--clr-muted);
+    z-index: 1000;
+    pointer-events: none;
+    font-weight: 100;
+}
+body::before { top: 10px; left: 15px; }   /* علامة في أعلى اليسار */
+body::after  { top: 10px; right: 15px; }  /* علامة في أعلى اليمين */
 
-    /* ────────────────────── TYPOGRAPHY ────────────────────── */
-    h1 {
-        font-size: clamp(4rem, 12vw, 10rem); /* Massive Chroma-style text */
-        font-weight: 900;
-        line-height: 0.9;
-        letter-spacing: -0.04em;
-        margin: 0 0 40px 0;
-        text-transform: none;
-    }
+/* ------------------- LAYOUT (التهيئة العامة) ------------------- */
+.wrap {
+    max-width: var(--max-width);   /* الحد الأقصى للعرض */
+    margin: auto;                  /* توسيط المحتوى */
+    padding: 60px 40px;           /* مساحة داخلية حول المحتوى */
+    position: relative;           /* لتكون العناصر المطلقة داخلها */
+}
 
-    h2 {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        margin-bottom: 40px;
-        color: var(--clr-muted);
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
-    }
+/* ------------------- NAVIGATION (القائمة العلوية) ------------------- */
+header {
+    border-bottom: 1px solid rgba(0,0,0,0.1);   /* خط رفيع أسفل الهيدر */
+    padding: 20px 0;
+}
+.header-inner {
+    display: flex;
+    justify-content: space-between;   /* المسافات بين العناصر */
+    align-items: center;
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 0 40px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+.logo {
+    font-size: 1.2rem;
+    font-weight: 900;                /* لوجو سميك */
+    letter-spacing: -0.02em;
+}
+nav { display: flex; gap: 30px; }   /* المسافات بين روابط القائمة */
+nav a:hover { opacity: 0.5; }      /* تأثير خفيف عند التحويم */
 
-    /* ────────────────────── HERO SECTION ────────────────────── */
-    .hero-grid {
-        display: grid;
-        grid-template-columns: 1.5fr 1fr;
-        gap: 60px;
-        align-items: end;
-        padding-top: 40px;
-    }
+/* ------------------- TYPOGRAPHY (العناوين) ------------------- */
+h1 {
+    /* حجم الخط كبير جداً ليتماشى مع أسلوب Chroma */
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin: 0 0 40px 0;
+    text-transform: none;
+}
+h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 40px;
+    color: var(--clr-muted);
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
 
-    .hero-subtext {
-        font-size: 1.5rem;
-        max-width: 500px;
-        margin-bottom: 40px;
-    }
+/* ------------------- HERO SECTION (القسم الرئيس) ------------------- */
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;   /* عمود أكبر للنص وعمود أصغر للصورة */
+    gap: 60px;
+    align-items: end;                  /* محاذاة العناصر إلى أسفل الخلية */
+    padding-top: 40px;
+}
+.hero-subtext {
+    font-size: 1.5rem;
+    max-width: 500px;
+    margin-bottom: 40px;
+}
 
-    /* ────────────────────── CHROMA BUTTONS ────────────────────── */
-    .btn-group { display: flex; gap: 10px; }
-    .btn-pill {
-        background: #000;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        display: inline-block;
-    }
-    .btn-outline {
-        background: transparent;
-        color: #000;
-        border: 1px solid #ccc;
-    }
+/* ------------------- CHROMA BUTTONS (الأزرار) ------------------- */
+.btn-group { display: flex; gap: 10px; }   /* مجموعة الأزرار بجوار بعضها */
+.btn-pill {
+    background: #000;       /* خلفية زرقاء داكنة (يمكن تغييرها) */
+    color: #fff;            /* لون النص أبيض */
+    padding: 10px 20px;
+    border-radius: 50px;    /* شكل بيضاوي */
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.btn-outline {
+    background: transparent;
+    color: #000;
+    border: 1px solid #ccc;
+}
 
-    /* ────────────────────── CARDS & SECTIONS ────────────────────── */
-    .section-margin { margin-top: 120px; }
+/* ------------------- CARDS & SECTIONS (البطاقات) ------------------- */
+.section-margin { margin-top: 120px; }   /* مسافة الفاصل بين الأقسام */
 
-    .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1px; /* Creates the thin line grid look */
-        background-color: rgba(0,0,0,0.1);
-        border: 1px solid rgba(0,0,0,0.1);
-    }
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1px;                         /* يخلق خطوط رفيعة تفصل بين البطاقات */
+    background-color: rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.card {
+    background: var(--clr-bg);
+    padding: 40px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card:hover { background: #fff; }   /* تأثير عند المرور فوق البطاقة */
 
-    .card {
-        background: var(--clr-bg);
-        padding: 40px;
-        min-height: 200px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
+/* ------------------- ILLUSTRATION MOCKUP (العنصر التقني) ------------------- */
+.illustration-container {
+    border: 1px solid #000;
+    padding: 20px;
+    position: relative;
+}
+.illustration-container img {
+    filter: grayscale(1) contrast(1.2);    /* تحويل الصورة لتبدو أكثر رسمية */
+    mix-blend-mode: multiply;
+}
 
-    .card:hover { background: #fff; }
-
-    /* ────────────────────── ILLUSTRATION MOCKUP ────────────────────── */
-    .illustration-container {
-        border: 1px solid #000;
-        padding: 20px;
-        position: relative;
-    }
-    .illustration-container img {
-        filter: grayscale(1) contrast(1.2);
-        mix-blend-mode: multiply;
-    }
-
-    @media (max-width: 900px) {
-        .hero-grid { grid-template-columns: 1fr; }
-        h1 { font-size: 4rem; }
-    }
-    </style>
+/* ------------------- RESPONSIVE (تصميم مستجيب) ------------------- */
+@media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }  /* يصبح عمودًا واحدًا على الشاشات الصغيرة */
+    h1 { font-size: 4rem; }                    /* تقليل حجم العنوان للهواتف */
+}
+</style>
 </head>
 
 <body>
 
+<!-- ==================== HEADER (الهيدر) ==================== -->
 <header>
     <div class="header-inner">
+        <!-- الشعار (يمكنك تعديل النص أو استبداله بصورة) -->
         <div class="logo">Awakening®</div>
+
+        <!-- القائمة العلوية (أضف/احذف/غيّر الروابط حسب الحاجة) -->
         <nav>
             <a href="#">The Journey</a>
             <a href="#">The Map</a>
             <a href="#">Film</a>
         </nav>
+
+        <!-- مجموعة أزرار (يمكنك تعديل النص أو إضافة أزرار جديدة) -->
         <div class="btn-group">
             <span class="btn-pill">Online Study</span>
             <span class="btn-pill btn-outline">24/7 Platform</span>
@@ -188,25 +201,37 @@
     </div>
 </header>
 
+<!-- ==================== MAIN CONTENT (المحتوى الأساسي) ==================== -->
 <main class="wrap">
 
+    <!-- ------------------- HERO SECTION ------------------- -->
     <section class="hero-grid">
         <div>
+            <!-- عنوان الصفحة (يمكنك تغييره بسهولة) -->
             <h1>Awakening</h1>
+
+            <!-- النص التوضيحي تحت العنوان -->
             <p class="hero-subtext">The Qur’an was never meant to be distant. It was meant to walk with you.</p>
+
+            <!-- أزرار الدعوة إلى الإجراء (CTA) -->
             <div class="btn-group">
                 <a href="#" class="btn-pill">Begin Journey</a>
                 <a href="#" class="btn-pill btn-outline">Watch Film</a>
             </div>
         </div>
+
+        <!-- صورة توضيحية (يمكن استبدالها بأية صورة/رسمة تريدها) -->
         <div class="illustration-container">
-            <img src="https://openclipart.org/image/800px/273392" alt="Technical Line Drawing">
+            <img src="https://openclipart.org/image/800px/273392"
+                 alt="Technical Line Drawing">
         </div>
     </section>
 
+    <!-- ------------------- SECTION 01 – THE CONCEPT ------------------- -->
     <section class="section-margin">
         <h2>01 / The Concept</h2>
         <div class="card-grid">
+            <!-- كل بطاقة تمثل فكرة/قيمة مختلفة -->
             <div class="card">
                 <span class="logo">Awareness</span>
                 <p>Developing a conscious heart in a world of distraction.</p>
@@ -222,11 +247,16 @@
         </div>
     </section>
 
+    <!-- ------------------- SECTION 02 – THE MAP ------------------- -->
     <section class="section-margin">
         <h2>02 / The Map</h2>
         <div class="hero-grid">
-            <div class="illustration-container" style="background: #e0e0e0; height: 300px;">
-                </div>
+            <!-- مساحة مخصصة لخريطة / مخطط (يمكنك إضافة صورة خريطة أو رسومات تفاعلية) -->
+            <div class="illustration-container" style="background:#e0e0e0; height:300px;">
+                <!-- محتوى خريطة (مستقبلًا يمكن استبداله بـ Globe.js أو SVG) -->
+            </div>
+
+            <!-- نص يشرح المنطقة أو الدرس (يمكنك تغييره وإضافة زر دخول) -->
             <div>
                 <h3>Zone 01 – Al‑Mulk</h3>
                 <p>Your first provision. A study of sovereignty and beauty.</p>
@@ -237,7 +267,10 @@
 
 </main>
 
-<footer class="wrap" style="text-align: center; color: var(--clr-muted); font-size: 10px; letter-spacing: 0.1em; border-top: 1px solid #ddd; margin-top: 100px;">
+<!-- ==================== FOOTER (التذييل) ==================== -->
+<footer class="wrap"
+        style="text-align:center; color:var(--clr-muted); font-size:10px; letter-spacing:0.1em;
+               border-top:1px solid #ddd; margin-top:100px;">
     © 2025 SCHOOL OF AWAKENING — ALL RIGHTS RESERVED — BUILT FOR THE SEEKER
 </footer>
 
