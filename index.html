@@ -16,12 +16,17 @@
   <style>
     /* ────────────────────── VARIABLES ────────────────────── */
     :root{
-      --bg-main:#f6faff;      /* very light background */
-      --bg-soft:#e8f0ff;      /* secondary‑button background */
+      --bg-main:#f6faff;           /* very light background */
+      --bg-soft:#e8f0ff;           /* secondary‑button background (no longer used) */
       --card:#ffffff;
       --text-main:#0f172a;
       --text-muted:#64748b;
-      --accent:#3b82f6;       /* primary colour */
+
+      /* Button colours – now grey */
+      --button-bg:#6b7280;         /* grey fill */
+      --button-bg-hover:#4b5563;   /* darker grey on hover */
+
+      --accent:#3b82f6;            /* kept for other UI elements (e.g., borders) */
       --line:#e5e7eb;
       --radius:16px;
       --shadow:0 8px 24px rgba(15,23,42,.06);
@@ -57,7 +62,7 @@
 
     /* ---- NAV LINKS TURN INTO BUTTONS ON HOVER ---- */
     nav a{
-      display:inline-block;        /* enable padding */
+      display:inline-block;
       padding:8px 12px;
       border-radius:var(--radius);
       color:var(--text-muted);
@@ -65,48 +70,43 @@
       cursor:pointer;
     }
     nav a:hover{
-      background:var(--accent);
+      background:var(--button-bg);
       color:#fff;
-      transform:scale(1.1);       /* 10 % larger */
-    }
-
-    /* ---- JOIN BUTTON (right‑most) ---- */
-    .join{
-      padding:10px 16px;
-      border-radius:var(--radius);
-      background:var(--text-main);
-      color:#fff;
-      font-size:14px;
-      cursor:pointer;
-      transition:transform .2s;
-    }
-    .join:hover{
       transform:scale(1.1);
     }
 
-    /* ────────────────────── COMMON BUTTONS (used in page) ────────────────────── */
+    /* ---- JOIN BUTTON (right‑most) – also grey ---- */
+    .join{
+      padding:10px 16px;
+      border-radius:var(--radius);
+      background:var(--button-bg);
+      color:#fff;
+      font-size:14px;
+      cursor:pointer;
+      transition:background .2s,transform .2s;
+    }
+    .join:hover{
+      background:var(--button-bg-hover);
+      transform:scale(1.1);
+    }
+
+    /* ────────────────────── COMMON BUTTONS (used inside the page) ────────────────────── */
     .btn{
       display:inline-block;
       padding:12px 24px;
       border-radius:var(--radius);
       font-weight:500;
       cursor:pointer;
-      transition:background .2s,color .2s,transform .2s;
+      background:var(--button-bg);
+      color:#fff;
+      transition:background .2s,transform .2s;
     }
-    .btn-primary{background:var(--accent);color:#fff}
-    .btn-primary:hover{
-      background:#2563eb;
+    .btn:hover{
+      background:var(--button-bg-hover);
       transform:scale(1.05);
     }
-    .btn-secondary{
-      background:var(--bg-soft);
-      color:var(--text-main);
-      border:1px solid var(--line);
-    }
-    .btn-secondary:hover{
-      background:#dce7ff;
-      transform:scale(1.05);
-    }
+    /* Preserve the class names used in the HTML */
+    .btn-primary,.btn-secondary{background:inherit;color:inherit;}
 
     /* ────────────────────── HERO ────────────────────── */
     .hero{
