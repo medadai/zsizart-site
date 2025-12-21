@@ -1,335 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>School of Awakening – Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description"
-      content="A learning journey where the Qur’an becomes your companion through life.">
+    <meta charset="UTF-8">
+    <title>School of Awakening – Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
-<!-- Hand‑written Google fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap"
-      rel="stylesheet">
+    <style>
+    /* ────────────────────── CHROMA DESIGN SYSTEM ────────────────────── */
+    :root {
+        --clr-bg: #F2F0EB;        /* Off-white paper */
+        --clr-text: #1A1A1A;      /* Deep ink black */
+        --clr-accent: #1A1A1A;    /* Consistent black for borders */
+        --clr-muted: #8C8C8C;     /* Grey for technical details */
+        --max-width: 1400px;
+    }
 
-<style>
-/* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
-:root{
-  --clr-bg-main:#e6D5C3;      /* solid paper background               */
-  --clr-bg-soft:#BAAFA3;      /* secondary surface                    */
-  --clr-card:#e1DAD7;         /* cards / zones                        */
-  --clr-text-main:#817065;   /* main headings & body text            */
-  --clr-accent:#70794F;       /* solid green – borders & strokes       */
-  --clr-accent-trans:rgba(112,121,79,0.6);   /* semi‑transparent green */
+    * { box-sizing: border-box; }
+    
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--clr-bg);
+        color: var(--clr-text);
+        line-height: 1.4;
+        -webkit-font-smoothing: antialiased;
+    }
 
-  --radius:12px;               /* filleted (rounded) corners           */
-  --shadow:4px 4px 0 var(--clr-accent);
-  --max-width:1200px;
-}
+    /* ────────────────────── TECHNICAL OVERLAYS ────────────────────── */
+    /* Adds the registration marks (+) in the corners */
+    body::before, body::after, .wrap::before, .wrap::after {
+        content: "+";
+        position: fixed;
+        font-family: monospace;
+        font-size: 24px;
+        color: var(--clr-muted);
+        z-index: 1000;
+        pointer-events: none;
+        font-weight: 100;
+    }
+    body::before { top: 10px; left: 15px; }
+    body::after { top: 10px; right: 15px; }
 
-/* ────────────────────── GLOBAL RESET & BASIC TYPOGRAPHY ────────────────────── */
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:'Indie Flower',cursive;
-  background-color:var(--clr-bg-main);
-  color:var(--clr-text-main);
-  line-height:1.6;
-}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;height:auto;display:block}
-.wrap{max-width:var(--max-width);margin:auto;padding:28px}
+    /* ────────────────────── LAYOUT ────────────────────── */
+    .wrap {
+        max-width: var(--max-width);
+        margin: auto;
+        padding: 60px 40px;
+        position: relative;
+    }
 
-/* ────────────────────── DOT BACKGROUND (aligned grid) ────────────────────── */
-.dot-bg{
-  position:fixed; inset:0;
-  pointer-events:none;
-  z-index:-2;                     /* stays behind everything */
-  /* a tiny dot (1 px radius) at the top‑left of each 20 × 20 px cell → perfect grid */
-  background-image:
-    radial-gradient(circle 1px at 3px 3px, var(--clr-accent) 100%, transparent 0%);
-  background-size:20px 20px;       /* grid spacing – change if you want larger gaps */
-}
+    /* ────────────────────── NAVIGATION ────────────────────── */
+    header {
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        padding: 20px 0;
+    }
+    .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: var(--max-width);
+        margin: auto;
+        padding: 0 40px;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+    }
+    .logo {
+        font-size: 1.2rem;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+    }
+    nav { display: flex; gap: 30px; }
+    nav a:hover { opacity: 0.5; }
 
-/* The spot‑light overlay – only dims the dot layer, not the solid paper bg */
-.dot-bg::after{
-  content:"";
-  position:absolute; inset:0;
-  pointer-events:none;
-  background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
-                              transparent,
-                              rgba(255,255,255,0.6));
-  opacity:0;
-  transition:opacity .3s ease;
-}
-body:hover .dot-bg::after{opacity:1;}
+    /* ────────────────────── TYPOGRAPHY ────────────────────── */
+    h1 {
+        font-size: clamp(4rem, 12vw, 10rem); /* Massive Chroma-style text */
+        font-weight: 900;
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        margin: 0 0 40px 0;
+        text-transform: none;
+    }
 
-/* ────────────────────── SCRIBBLE STYLE ────────────────────── */
-.scribble{
-  position:relative;
-  background:#fff;
-  border:2px solid var(--clr-accent);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-}
-.scribble::before{
-  content:"";
-  position:absolute;
-  inset:-4px;
-  border:2px solid var(--clr-accent);
-  transform:rotate(-1deg);
-  pointer-events:none;
-}
+    h2 {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        margin-bottom: 40px;
+        color: var(--clr-muted);
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+    }
 
-/* ────────────────────── HEADER ────────────────────── */
-header{
-  position:sticky;top:0;z-index:100;
-  background:transparent;               /* transparent until hover */
-  border-bottom:2px solid var(--clr-accent);
-  transition:background .3s,box-shadow .3s;
-}
-header:hover{
-  background:rgba(255,255,255,.9);        /* soft white on hover */
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
-}
-.header{
-  display:flex;justify-content:space-between;align-items:center;
-}
-.logo{
-  font-family:'Permanent Marker',cursive;
-  font-size:1.6rem;
-  color:var(--clr-text-main);
-}
-nav{
-  display:flex;gap:22px;
-}
+    /* ────────────────────── HERO SECTION ────────────────────── */
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 60px;
+        align-items: end;
+        padding-top: 40px;
+    }
 
-/* Navigation links – behave exactly like the “Join” button (transparent‑green + scale) */
-nav a{
-  font-family:'Permanent Marker',cursive;
-  padding:6px 10px;
-  color:var(--clr-text-main);
-  transition:background .2s,color .2s,transform .2s;
-}
-nav a:hover{
-  background:var(--clr-accent-trans);
-  color:#fff;
-  transform:scale(1.1);
-}
+    .hero-subtext {
+        font-size: 1.5rem;
+        max-width: 500px;
+        margin-bottom: 40px;
+    }
 
-/* “Join the Journey” button – same hover treatment */
-.join{
-  background:var(--clr-accent-trans);
-  color:#fff;
-  padding:8px 14px;
-  border-radius:var(--radius);
-  cursor:pointer;
-  transition:background .2s,transform .2s;
-}
-.join:hover{transform:scale(1.1);}
+    /* ────────────────────── CHROMA BUTTONS ────────────────────── */
+    .btn-group { display: flex; gap: 10px; }
+    .btn-pill {
+        background: #000;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        display: inline-block;
+    }
+    .btn-outline {
+        background: transparent;
+        color: #000;
+        border: 1px solid #ccc;
+    }
 
-/* ────────────────────── BUTTONS (inside page) ────────────────────── */
-.btn{
-  display:inline-block;
-  padding:12px 24px;
-  border:2px solid var(--clr-accent);
-  border-radius:var(--radius);
-  font-family:'Permanent Marker',cursive;
-  cursor:pointer;
-  transition:background .2s,color .2s,transform .2s;
-}
-.btn-primary{
-  background:var(--clr-accent-trans);
-  color:#fff;
-}
-.btn-secondary{
-  background:#fff;
-  color:var(--clr-accent);
-}
-.btn-primary:hover,
-.btn-secondary:hover{
-  background:#fff;
-  color:var(--clr-accent);
-  transform:scale(1.05);
-}
+    /* ────────────────────── CARDS & SECTIONS ────────────────────── */
+    .section-margin { margin-top: 120px; }
 
-/* ────────────────────── HERO ────────────────────── */
-.hero{
-  padding:120px 0 80px;
-  background:linear-gradient(135deg,var(--clr-bg-main),var(--clr-bg-soft));
-}
-.hero .grid{
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:48px;
-  align-items:center;
-}
-.hero h1{
-  font-family:'Permanent Marker',cursive;
-  font-size:2.8rem;
-  line-height:1.2;
-  margin:0 0 18px;
-  color:var(--clr-text-main);
-}
-.hero p{
-  font-size:1.1rem;
-  color:var(--clr-text-main);
-}
-.buttons{
-  margin-top:30px;
-  display:flex;
-  gap:16px;
-}
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1px; /* Creates the thin line grid look */
+        background-color: rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.1);
+    }
 
-/* ────────────────────── SECTIONS ────────────────────── */
-section{margin-top:100px}
-section h2{
-  font-family:'Permanent Marker',cursive;
-  font-size:2.2rem;
-  color:var(--clr-text-main);
-}
+    .card {
+        background: var(--clr-bg);
+        padding: 40px;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
-/* ────────────────────── IDEA ────────────────────── */
-.idea{
-  padding:36px;
-  text-align:center;
-}
+    .card:hover { background: #fff; }
 
-/* ────────────────────── CARD GRID ────────────────────── */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:24px;
-}
-.card-small{
-  padding:24px;
-  text-align:center;
-}
+    /* ────────────────────── ILLUSTRATION MOCKUP ────────────────────── */
+    .illustration-container {
+        border: 1px solid #000;
+        padding: 20px;
+        position: relative;
+    }
+    .illustration-container img {
+        filter: grayscale(1) contrast(1.2);
+        mix-blend-mode: multiply;
+    }
 
-/* ────────────────────── MAP ZONE ────────────────────── */
-.zone{
-  padding:28px;
-  max-width:340px;
-}
-.zone .visual{
-  height:180px;
-  background:linear-gradient(135deg,var(--clr-bg-main),var(--clr-bg-soft));
-  border-radius:var(--radius);
-  margin-bottom:16px;
-}
-
-/* ────────────────────── RESPONSIVE ────────────────────── */
-@media(max-width:900px){
-  .hero .grid{grid-template-columns:1fr;text-align:center}
-  nav{display:none}
-}
-@media(max-width:600px){
-  .hero h1{font-size:2rem}
-  .hero p{font-size:1rem}
-}
-
-/* Focus outline – visible for keyboard navigation */
-a:focus, .btn:focus, .join:focus{
-  outline:2px solid var(--clr-accent);
-  outline-offset:2px;
-}
-</style>
+    @media (max-width: 900px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        h1 { font-size: 4rem; }
+    }
+    </style>
 </head>
 
 <body>
-<!-- **ONLY** the dot‑pattern lives on this layer – it is the only thing that gets the spot‑light fade -->
-<div class="dot-bg"></div>
 
 <header>
-  <div class="wrap header">
-    <div class="logo">School of Awakening</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="journey.html">The Journey</a>
-      <a href="map.html">The Map</a>
-      <a href="why.html">Why Qur’an?</a>
-      <a href="film.html">Film</a>
-      <a href="join.html">Join</a>
-    </nav>
-    <a class="join" href="join.html">Join the Journey</a>
-  </div>
+    <div class="header-inner">
+        <div class="logo">Awakening®</div>
+        <nav>
+            <a href="#">The Journey</a>
+            <a href="#">The Map</a>
+            <a href="#">Film</a>
+        </nav>
+        <div class="btn-group">
+            <span class="btn-pill">Online Study</span>
+            <span class="btn-pill btn-outline">24/7 Platform</span>
+        </div>
+    </div>
 </header>
 
 <main class="wrap">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="grid">
-      <div>
-        <h1>Life is a journey.<br>Every traveller needs provision.</h1>
-        <p>The Qur’an was never meant to be distant.<br>It was meant to walk with you.</p>
-        <div class="buttons">
-          <a class="btn btn-primary" href="journey.html">Begin the Journey</a>
-          <a class="btn btn-secondary" href="film.html">Watch the Awakening</a>
+    <section class="hero-grid">
+        <div>
+            <h1>Awakening</h1>
+            <p class="hero-subtext">The Qur’an was never meant to be distant. It was meant to walk with you.</p>
+            <div class="btn-group">
+                <a href="#" class="btn-pill">Begin Journey</a>
+                <a href="#" class="btn-pill btn-outline">Watch Film</a>
+            </div>
         </div>
-      </div>
-      <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
-           alt="Calm visual">
-    </div>
-  </section>
+        <div class="illustration-container">
+            <img src="https://openclipart.org/image/800px/273392" alt="Technical Line Drawing">
+        </div>
+    </section>
 
-  <!-- IDEA -->
-  <section class="idea scribble">
-    <h2>The Idea</h2>
-    <p>School of Awakening is a learning journey,</p>
-    <p>where the Qur’an becomes a companion —</p>
-    <p>not a subject.</p>
+    <section class="section-margin">
+        <h2>01 / The Concept</h2>
+        <div class="card-grid">
+            <div class="card">
+                <span class="logo">Awareness</span>
+                <p>Developing a conscious heart in a world of distraction.</p>
+            </div>
+            <div class="card">
+                <span class="logo">Meaning</span>
+                <p>Finding the deep purpose behind every verse and action.</p>
+            </div>
+            <div class="card">
+                <span class="logo">Hereafter</span>
+                <p>Preparing the provision for the ultimate journey.</p>
+            </div>
+        </div>
+    </section>
 
-    <div class="cards" style="margin-top:32px">
-      <p>Awareness</p>
-      <p>Meaning</p>
-      <p>Hereafter</p>
-    </div>
-  </section>
-
-  <!-- AUDIENCE -->
-  <section>
-    <h2>Who is this for?</h2>
-    <div class="cards">
-      <div class="card-small scribble">For the seeker</div>
-      <div class="card-small scribble">For the lost</div>
-      <div class="card-small scribble">For the curious</div>
-      <div class="card-small scribble">For the believer</div>
-      <div class="card-small scribble">For the silent question inside you</div>
-    </div>
-  </section>
-
-  <!-- MAP -->
-  <section>
-    <h2>The Map</h2>
-    <div class="zone scribble">
-      <div class="visual"></div>
-      <h4>Zone 01 – Surah Al‑Mulk</h4>
-      <p>Your first provision.</p>
-      <a class="btn btn-primary" href="map.html">Enter Zone</a>
-    </div>
-  </section>
+    <section class="section-margin">
+        <h2>02 / The Map</h2>
+        <div class="hero-grid">
+            <div class="illustration-container" style="background: #e0e0e0; height: 300px;">
+                </div>
+            <div>
+                <h3>Zone 01 – Al‑Mulk</h3>
+                <p>Your first provision. A study of sovereignty and beauty.</p>
+                <a href="#" class="btn-pill">Enter Zone</a>
+            </div>
+        </div>
+    </section>
 
 </main>
 
-<footer class="scribble" style="padding:28px;text-align:center">
-  © 2025 School of Awakening — A Path of Awareness
+<footer class="wrap" style="text-align: center; color: var(--clr-muted); font-size: 10px; letter-spacing: 0.1em; border-top: 1px solid #ddd; margin-top: 100px;">
+    © 2025 SCHOOL OF AWAKENING — ALL RIGHTS RESERVED — BUILT FOR THE SEEKER
 </footer>
-
-<script>
-/* ------------------------------------------------------------------------
-   Spot‑light – moves a transparent circle over the dot‑layer only.
-   ------------------------------------------------------------------------ */
-document.addEventListener('DOMContentLoaded', () => {
-  const dotLayer = document.querySelector('.dot-bg');
-
-  document.addEventListener('mousemove', e => {
-    dotLayer.style.setProperty('--x', `${e.clientX}px`);
-    dotLayer.style.setProperty('--y', `${e.clientY}px`);
-  });
-});
-</script>
 
 </body>
 </html>
