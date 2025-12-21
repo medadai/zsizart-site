@@ -16,15 +16,16 @@
 <style>
 /* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
 :root{
-  /* Your five colours */
-  --clr-bg-main:#e6D5C3;      /* paper background               */
-  --clr-bg-soft:#BAAFA3;      /* secondary surface               */
-  --clr-card:#e1DAD7;         /* cards / zones                  */
-  --clr-text-main:#817065;    /* main headings & body text      */
-  --clr-accent:#70794F;      /* scribble colour – also dot colour */
+  /* Your palette */
+  --clr-bg-main:#e6D5C3;   /* paper background               */
+  --clr-bg-soft:#BAAFA3;   /* secondary surface               */
+  --clr-card:#e1DAD7;      /* cards / zones                  */
+  --clr-text-main:#817065;/* main headings & body text      */
+  --clr-accent:#70794F;    /* solid green – used for borders */
+  --clr-accent-trans:rgba(112,121,79,0.6); /* **transparent green** */
 
-  /* Misc. UI */
-  --radius:8px;
+  /* UI */
+  --radius:12px;           /* **more rounded corners** */
   --shadow:4px 4px 0 var(--clr-accent);   /* cheap “hand‑drawn” shadow */
   --max-width:1200px;
 }
@@ -94,7 +95,7 @@ nav{
   display:flex;gap:22px;font-size:1rem;
 }
 
-/* Navigation links – now behave exactly like the “Join” button */
+/* Navigation links – use the **transparent** green on hover */
 nav a{
   display:inline-block;
   padding:6px 10px;
@@ -103,22 +104,24 @@ nav a{
   transition:background .2s,color .2s,transform .2s;
 }
 nav a:hover{
-  background:var(--clr-accent);
+  background:var(--clr-accent-trans);   /* semi‑transparent green */
   color:#fff;
-  transform:scale(1.1);               /* same 1.1 scale as Join button */
+  transform:scale(1.1);
 }
 
-/* Join button (right side) – unchanged, stays solid accent */
+/* “Join the Journey” button – same transparent green */
 .join{
   padding:8px 14px;
   font-family:'Permanent Marker',cursive;
-  background:var(--clr-accent);
+  background:var(--clr-accent-trans);
   color:#fff;
   border-radius:var(--radius);
   cursor:pointer;
-  transition:transform .2s;
+  transition:transform .2s,background .2s;
 }
-.join:hover{transform:scale(1.1);}
+.join:hover{
+  transform:scale(1.1);
+}
 
 /* ────────────────────── COMMON BUTTONS (inside page) ────────────────────── */
 .btn{
@@ -129,11 +132,12 @@ nav a:hover{
   border:2px solid var(--clr-accent);
   border-radius:var(--radius);
   color:#fff;
-  background:var(--clr-accent);
   cursor:pointer;
   transition:background .2s,transform .2s;
 }
-.btn-primary{background:var(--clr-accent);}
+.btn-primary{
+  background:var(--clr-accent-trans);   /* semi‑transparent green */
+}
 .btn-secondary{
   background:#fff;
   color:var(--clr-accent);
