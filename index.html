@@ -12,10 +12,10 @@
     <style>
     /* ────────────────────── CHROMA DESIGN SYSTEM ────────────────────── */
     :root {
-        --clr-bg: #F2F0EB;
-        --clr-text: #1A1A1A;
-        --clr-accent: #1A1A1A;
-        --clr-muted: #8C8C8C;
+        --clr-bg: #F2F0EB;        /* Off-white paper */
+        --clr-text: #1A1A1A;      /* Deep ink black */
+        --clr-accent: #1A1A1A;    /* Consistent black for borders */
+        --clr-muted: #8C8C8C;     /* Grey for technical details */
         --max-width: 1400px;
     }
 
@@ -28,11 +28,11 @@
         color: var(--clr-text);
         line-height: 1.4;
         -webkit-font-smoothing: antialiased;
-        overflow-x: hidden;
     }
 
-    /* Technical marks (+) */
-    body::before, body::after {
+    /* ────────────────────── TECHNICAL OVERLAYS ────────────────────── */
+    /* Adds the registration marks (+) in the corners */
+    body::before, body::after, .wrap::before, .wrap::after {
         content: "+";
         position: fixed;
         font-family: monospace;
@@ -40,10 +40,12 @@
         color: var(--clr-muted);
         z-index: 1000;
         pointer-events: none;
+        font-weight: 100;
     }
     body::before { top: 10px; left: 15px; }
     body::after { top: 10px; right: 15px; }
 
+    /* ────────────────────── LAYOUT ────────────────────── */
     .wrap {
         max-width: var(--max-width);
         margin: auto;
@@ -51,6 +53,7 @@
         position: relative;
     }
 
+    /* ────────────────────── NAVIGATION ────────────────────── */
     header {
         border-bottom: 1px solid rgba(0,0,0,0.1);
         padding: 20px 0;
@@ -67,16 +70,22 @@
         letter-spacing: 0.1em;
         font-weight: 700;
     }
-    .logo { font-size: 1.2rem; font-weight: 900; letter-spacing: -0.02em; }
+    .logo {
+        font-size: 1.2rem;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+    }
     nav { display: flex; gap: 30px; }
-    nav a { text-decoration: none; color: inherit; }
+    nav a:hover { opacity: 0.5; }
 
+    /* ────────────────────── TYPOGRAPHY ────────────────────── */
     h1 {
-        font-size: clamp(4rem, 12vw, 10rem);
+        font-size: clamp(4rem, 12vw, 10rem); /* Massive Chroma-style text */
         font-weight: 900;
         line-height: 0.9;
         letter-spacing: -0.04em;
         margin: 0 0 40px 0;
+        text-transform: none;
     }
 
     h2 {
@@ -89,57 +98,75 @@
         padding-bottom: 10px;
     }
 
+    /* ────────────────────── HERO SECTION ────────────────────── */
     .hero-grid {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
         gap: 60px;
-        align-items: center;
+        align-items: end;
+        padding-top: 40px;
     }
 
+    .hero-subtext {
+        font-size: 1.5rem;
+        max-width: 500px;
+        margin-bottom: 40px;
+    }
+
+    /* ────────────────────── CHROMA BUTTONS ────────────────────── */
+    .btn-group { display: flex; gap: 10px; }
     .btn-pill {
         background: #000;
         color: #fff;
-        padding: 12px 24px;
+        padding: 10px 20px;
         border-radius: 50px;
         font-size: 12px;
         font-weight: 700;
         text-transform: uppercase;
-        text-decoration: none;
         display: inline-block;
-        transition: transform 0.2s ease;
     }
-    .btn-pill:hover { transform: scale(1.05); }
+    .btn-outline {
+        background: transparent;
+        color: #000;
+        border: 1px solid #ccc;
+    }
 
-    /* ────────────────────── 3D GLOBE CONTAINER ────────────────────── */
-    #globe-container {
-        width: 100%;
-        height: 500px;
-        background: #000; /* Dark contrast for the globe */
-        border-radius: 4px;
+    /* ────────────────────── CARDS & SECTIONS ────────────────────── */
+    .section-margin { margin-top: 120px; }
+
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1px; /* Creates the thin line grid look */
+        background-color: rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .card {
+        background: var(--clr-bg);
+        padding: 40px;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card:hover { background: #fff; }
+
+    /* ────────────────────── ILLUSTRATION MOCKUP ────────────────────── */
+    .illustration-container {
+        border: 1px solid #000;
+        padding: 20px;
         position: relative;
-        cursor: grab;
-        overflow: hidden;
     }
-    #globe-container:active { cursor: grabbing; }
-    
-    .label-overlay {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        color: #fff;
-        font-family: monospace;
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        pointer-events: none;
+    .illustration-container img {
+        filter: grayscale(1) contrast(1.2);
+        mix-blend-mode: multiply;
     }
-
-    .section-margin { margin-top: 100px; }
 
     @media (max-width: 900px) {
         .hero-grid { grid-template-columns: 1fr; }
         h1 { font-size: 4rem; }
-        #globe-container { height: 350px; }
     }
     </style>
 </head>
@@ -150,32 +177,60 @@
     <div class="header-inner">
         <div class="logo">Awakening®</div>
         <nav>
-            <a href="#">Journey</a>
+            <a href="#">The Journey</a>
             <a href="#">The Map</a>
             <a href="#">Film</a>
         </nav>
         <div class="btn-group">
-            <a href="#" class="btn-pill">Enter Platform</a>
+            <span class="btn-pill">Online Study</span>
+            <span class="btn-pill btn-outline">24/7 Platform</span>
         </div>
     </div>
 </header>
 
 <main class="wrap">
 
-    <section>
-        <h1>The Map</h1>
-        <div class="hero-grid">
-            <div id="globe-container">
-                <div class="label-overlay">System: Interactive_Earth_v1.0<br>Status: Navigating...</div>
+    <section class="hero-grid">
+        <div>
+            <h1>Awakening</h1>
+            <p class="hero-subtext">The Qur’an was never meant to be distant. It was meant to walk with you.</p>
+            <div class="btn-group">
+                <a href="#" class="btn-pill">Begin Journey</a>
+                <a href="#" class="btn-pill btn-outline">Watch Film</a>
             </div>
+        </div>
+        <div class="illustration-container">
+            <img src="https://openclipart.org/image/800px/273392" alt="Technical Line Drawing">
+        </div>
+    </section>
 
+    <section class="section-margin">
+        <h2>01 / The Concept</h2>
+        <div class="card-grid">
+            <div class="card">
+                <span class="logo">Awareness</span>
+                <p>Developing a conscious heart in a world of distraction.</p>
+            </div>
+            <div class="card">
+                <span class="logo">Meaning</span>
+                <p>Finding the deep purpose behind every verse and action.</p>
+            </div>
+            <div class="card">
+                <span class="logo">Hereafter</span>
+                <p>Preparing the provision for the ultimate journey.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-margin">
+        <h2>02 / The Map</h2>
+        <div class="hero-grid">
+            <div class="illustration-container" style="background: #e0e0e0; height: 300px;">
+                </div>
             <div>
-                <h2>02 / Navigation</h2>
-                <h3 style="font-size: 2.5rem; margin: 0 0 20px 0;">Global Awareness</h3>
-                <p style="font-size: 1.2rem; color: #555; margin-bottom: 30px;">
-                    Explore the learning zones across the globe. Rotate and zoom to discover the specific provision assigned to each region.
-                </p>
-                <a href="#" class="btn-pill">Sync with Journey</a>
+                <h3>Zone 01 – Al‑Mulk</h3>
+                <p>Your first provision. A study of sovereignty and beauty.</p>
+                <a href="#" class="btn-pill">Enter Zone</a>
             </div>
         </div>
     </section>
@@ -183,110 +238,8 @@
 </main>
 
 <footer class="wrap" style="text-align: center; color: var(--clr-muted); font-size: 10px; letter-spacing: 0.1em; border-top: 1px solid #ddd; margin-top: 100px;">
-    © 2025 SCHOOL OF AWAKENING — INSTRUMENT OF DISCOVERY
+    © 2025 SCHOOL OF AWAKENING — ALL RIGHTS RESERVED — BUILT FOR THE SEEKER
 </footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
-
-<script>
-    // 1. Setup Scene
-    const container = document.getElementById('globe-container');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
-
-    // 2. Create the Globe
-    const geometry = new THREE.SphereGeometry(5, 64, 64);
-    
-    // Technical wireframe-style texture
-    const material = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.2
-    });
-
-    // Solid Inner Core
-    const coreGeom = new THREE.SphereGeometry(4.9, 64, 64);
-    const coreMat = new THREE.MeshPhongMaterial({
-        color: 0x111111,
-        emissive: 0x111111,
-        shininess: 50
-    });
-    
-    const globe = new THREE.Mesh(geometry, material);
-    const core = new THREE.Mesh(coreGeom, coreMat);
-    scene.add(globe);
-    scene.add(core);
-
-    // 3. Add Hotspots (Glowing Points)
-    function createHotspot(lat, lon, color) {
-        const phi = (90 - lat) * (Math.PI / 180);
-        const theta = (lon + 180) * (Math.PI / 180);
-        
-        const spotGeom = new THREE.SphereGeometry(0.15, 16, 16);
-        const spotMat = new THREE.MeshBasicMaterial({ color: color });
-        const spot = new THREE.Mesh(spotGeom, spotMat);
-        
-        spot.position.set(
-            -5 * Math.sin(phi) * Math.cos(theta),
-            5 * Math.cos(phi),
-            5 * Math.sin(phi) * Math.sin(theta)
-        );
-        
-        // Add a glow ring
-        const ringGeom = new THREE.RingGeometry(0.2, 0.3, 32);
-        const ringMat = new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
-        const ring = new THREE.Mesh(ringGeom, ringMat);
-        ring.position.copy(spot.position);
-        ring.lookAt(0,0,0);
-        
-        scene.add(spot);
-        scene.add(ring);
-    }
-
-    // Place a few hotspots (Learning Zones)
-    createHotspot(24.4, 39.6, 0xffffff); // Medina
-    createHotspot(51.5, -0.1, 0x888888); // London
-    createHotspot(40.7, -74.0, 0x888888); // NYC
-
-    // 4. Lighting
-    const light = new THREE.PointLight(0xffffff, 100);
-    light.position.set(10, 10, 10);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0x404040, 2));
-
-    camera.position.z = 12;
-
-    // 5. Interaction (OrbitControls)
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
-    controls.enableZoom = true;
-
-    // 6. Animation Loop
-    function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-    }
-
-    // Handle Resize
-    window.addEventListener('resize', () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    });
-
-    animate();
-</script>
 
 </body>
 </html>
