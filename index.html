@@ -14,14 +14,14 @@
         rel="stylesheet">
 
   <style>
-    /* ────────────────────── VARIABLES ────────────────────── */
+    /* ──────────────── VARIABLES ───────────────── */
     :root{
-      --bg-main:#f6faff;      /* خلفية هادئة للصفحة          */
-      --bg-soft:#e8f0ff;      /* لون الزر الثانوي            */
+      --bg-main:#f6faff;      /* very light background */
+      --bg-soft:#e8f0ff;      /* secondary‑button background */
       --card:#ffffff;
       --text-main:#0f172a;
       --text-muted:#64748b;
-      --accent:#3b82f6;       /* اللون الأساسي للزر           */
+      --accent:#3b82f6;      /* primary colour */
       --line:#e5e7eb;
       --radius:16px;
       --shadow:0 8px 24px rgba(15,23,42,.06);
@@ -40,7 +40,7 @@
     img{max-width:100%;height:auto;display:block}
     .wrap{max-width:var(--max-width);margin:auto;padding:28px}
 
-    /* ────────────────────── HEADER ────────────────────── */
+    /* ──────────────── HEADER ───────────────── */
     header{
       position:sticky;top:0;z-index:100;
       background:#ffffffcc;
@@ -60,11 +60,10 @@
       padding:10px 16px;
       border-radius:var(--radius);
       background:var(--text-main);
-      color:#fff;
-      font-size:14px;
+      color:#fff;font-size:14px;
     }
 
-    /* ────────────────────── BUTTONS ────────────────────── */
+    /* ──────────────── BUTTONS ───────────────── */
     .btn{
       display:inline-block;
       padding:12px 24px;
@@ -82,7 +81,7 @@
     }
     .btn-secondary:hover{background:#dce7ff}
 
-    /* ────────────────────── HERO ────────────────────── */
+    /* ──────────────── HERO ───────────────── */
     .hero{
       padding:120px 0 80px;
       background:linear-gradient(135deg,#e0f2ff,#f6faff);
@@ -109,7 +108,7 @@
       gap:16px;
     }
 
-    /* ────────────────────── SECTIONS ────────────────────── */
+    /* ──────────────── SECTIONS ───────────────── */
     section{margin-top:100px}
     section h2{
       font-size:30px;
@@ -117,7 +116,7 @@
       margin-bottom:26px;
     }
 
-    /* ────────────────────── IDEA (الفكرة) ────────────────────── */
+    /* ──────────────── THE IDEA ───────────────── */
     .idea{
       background:var(--card);
       border:1px solid var(--line);
@@ -132,7 +131,7 @@
       color:var(--text-main);
     }
 
-    /* ────────────────────── AUDIENCE (من) ────────────────────── */
+    /* ──────────────── WHO IS THIS FOR? ───────────────── */
     .cards{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -155,7 +154,7 @@
       line-height:1.5;
     }
 
-    /* ────────────────────── MAP ZONE ────────────────────── */
+    /* ──────────────── THE MAP ───────────────── */
     .zone{
       background:var(--card);
       border:1px solid var(--line);
@@ -174,7 +173,7 @@
     .zone h4{margin:0 0 8px;font-weight:500}
     .zone p{color:var(--text-muted);margin:0 0 14px}
 
-    /* ────────────────────── RESPONSIVE ────────────────────── */
+    /* ──────────────── RESPONSIVE ───────────────── */
     @media(max-width:900px){
       .hero .grid{grid-template-columns:1fr;text-align:center}
       .hero .buttons{justify-content:center}
@@ -206,7 +205,7 @@
 
   <main class="wrap">
 
-    <!-- ==================== SECTION 1 – HERO ==================== -->
+    <!-- ==================== HERO ==================== -->
     <section class="hero">
       <div class="grid">
         <div>
@@ -217,8 +216,7 @@
             <a href="film.html"    class="btn btn-secondary">Watch the Awakening</a>
           </div>
         </div>
-
-        <!-- صورة خلفية هادئة (استبدل الرابط بصورة حقيقية إذا رغبت) -->
+        <!-- Placeholder visual – replace with your own image if you wish -->
         <div class="hero-visual" aria-hidden="true">
           <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
                alt="Calm visual background">
@@ -226,9 +224,9 @@
       </div>
     </section>
 
-    <!-- ==================== SECTION 2 – الفكرة ==================== -->
-    <section class="idea" lang="ar" dir="rtl">
-      <h2 class="sr-only">الفكرة</h2>
+    <!-- ==================== THE IDEA ==================== -->
+    <section class="idea">
+      <h2>The Idea</h2>
       <p>School of Awakening is a learning journey,</p>
       <p>where the Qur’an becomes a companion —</p>
       <p>not a subject.</p>
@@ -240,9 +238,9 @@
       </div>
     </section>
 
-    <!-- ==================== SECTION 3 – لمن؟ ==================== -->
-    <section class="audience" lang="ar" dir="rtl">
-      <h2 class="sr-only">من لهذا المكان؟</h2>
+    <!-- ==================== WHO IS THIS FOR? ==================== -->
+    <section class="audience">
+      <h2>Who is this for?</h2>
       <div class="cards">
         <div class="card-small">For the seeker</div>
         <div class="card-small">For the lost</div>
@@ -257,13 +255,13 @@
       </p>
     </section>
 
-    <!-- ==================== SECTION 4 – الخريطة ==================== -->
+    <!-- ==================== THE MAP ==================== -->
     <section class="map-home">
       <h2>The Map</h2>
 
       <div class="zone">
         <div class="visual" aria-hidden="true">
-          <!-- شكل بصري للمسار – يمكنك استبداله برسم أو صورة توضيحية -->
+          <!-- Placeholder for the path / nodes / zones graphic -->
           <img src="https://dummyimage.com/340x180/e0f2ff/3b82f6&text=Path+Graphic"
                alt="Path graphic">
         </div>
