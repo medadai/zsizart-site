@@ -1,303 +1,220 @@
 <!DOCTYPE html>
-<html lang="ar"><!-- اللغة العربية، يمكنك تغييرها إلى en إذا رغبت -->
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>School of Awakening – Home</title>
+<title>School of Awakening – Interactive</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
-      rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<!-- Three.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
 
 <style>
-/* ────────────────────── CHROMA DESIGN SYSTEM ────────────────────── */
 :root {
-    --clr-bg: #F2F0EB;       /* خلفية الصفحة (ورق أبيض فاتح) */
-    --clr-text: #1A1A1A;     /* لون النص الأساسي – أسود غامق */
-    --clr-accent: #1A1A1A;   /* لون البارز (الحدود، الأزرار …) */
-    --clr-muted: #8C8C8C;    /* لون النص الثانوي */
+    --clr-bg: #0f111a;
+    --clr-text: #f0f0f0;
+    --clr-accent: #ff4f70;
+    --clr-muted: #888;
     --max-width: 1400px;
+    --card-radius: 15px;
+    --transition: 0.3s;
 }
 
 /* Reset & base */
-* { box-sizing:border-box; }
-body {
-    margin:0;
-    font-family:'Inter',sans-serif;
-    background-color:var(--clr-bg);
-    color:var(--clr-text);
-    line-height:1.4;
-    -webkit-font-smoothing:antialiased;
-}
+*{ box-sizing:border-box; margin:0; padding:0; }
+body{ font-family:'Inter',sans-serif; background:var(--clr-bg); color:var(--clr-text); line-height:1.4; }
+a{ text-decoration:none; color:inherit; }
 
-/* ── Technical overlays (علامات + في الزوايا) ── */
-body::before,body::after,.wrap::before,.wrap::after{
-    content:"+"; position:fixed; font-family:monospace; font-size:24px;
-    color:var(--clr-muted); z-index:1000; pointer-events:none; font-weight:100;
-}
-body::before{top:10px; left:15px;}
-body::after{top:10px; right:15px;}
-
-/* ── Layout ── */
-.wrap{
-    max-width:var(--max-width);
-    margin:auto;
-    padding:60px 40px;
-    position:relative;
-}
-
-/* ── Header (القائمة العلوية) ── */
+/* Header */
 header{
-    border-bottom:1px solid rgba(0,0,0,.1);
-    padding:20px 0;
-}
-.header-inner{
     display:flex; justify-content:space-between; align-items:center;
-    max-width:var(--max-width); margin:auto; padding:0 40px;
-    text-transform:uppercase; font-size:12px; letter-spacing:.1em; font-weight:700;
+    padding:20px 40px; position:sticky; top:0; background:rgba(15,17,26,0.95); z-index:100;
+    border-bottom:1px solid #222;
 }
-.logo{font-size:1.2rem; font-weight:900; letter-spacing:-.02em;}
-nav{display:flex; gap:30px;}
-nav a:hover{opacity:.5;}
-.btn-group{display:flex; gap:10px;}
-.btn-pill{
-    background:#000; color:#fff; padding:10px 20px; border-radius:50px;
-    font-size:12px; font-weight:700; text-transform:uppercase; display:inline-block;
+.logo{ font-size:1.5rem; font-weight:900; color:var(--clr-accent);}
+nav a{ margin-left:25px; font-weight:700; transition:var(--transition);}
+nav a:hover{ color:var(--clr-accent);}
+.btn-group .btn-pill{
+    padding:10px 20px; border-radius:50px; font-weight:700; text-transform:uppercase; cursor:pointer; transition:var(--transition);
 }
-.btn-outline{
-    background:transparent; color:#000; border:1px solid #ccc;
-}
+.btn-pill{ background:var(--clr-accent); color:#fff; margin-left:10px; }
+.btn-outline{ background:transparent; border:1px solid var(--clr-accent); color:var(--clr-accent);}
+.btn-pill:hover, .btn-outline:hover{ transform:scale(1.05); }
 
-/* ── Typography ── */
-h1{
-    font-size:clamp(4rem,12vw,10rem);
-    font-weight:900; line-height:.9; letter-spacing:-.04em;
-    margin:0 0 40px; text-transform:none;
-}
-h2{
-    font-size:.8rem; text-transform:uppercase; letter-spacing:.2em;
-    margin-bottom:40px; color:var(--clr-muted);
-    border-bottom:1px solid #ddd; padding-bottom:10px;
-}
+/* Main wrapper */
+.wrap{ max-width:var(--max-width); margin:auto; padding:60px 20px; }
 
-/* ── Hero section ── */
-.hero-grid{
-    display:grid; grid-template-columns:1.5fr 1fr; gap:60px;
-    align-items:end; padding-top:40px;
-}
-.hero-subtext{font-size:1.5rem; max-width:500px; margin-bottom:40px;}
+/* Hero Section */
+.hero-section{ display:flex; flex-wrap:wrap; gap:40px; align-items:center; justify-content:center; margin-bottom:80px; }
+.hero-text{ max-width:600px; }
+.hero-text h1{ font-size:clamp(3rem,10vw,6rem); font-weight:900; margin-bottom:20px; color:var(--clr-accent);}
+.hero-text p{ font-size:1.5rem; margin-bottom:30px; color:#ccc;}
+.hero-text .btn-group{ display:flex; flex-wrap:wrap; gap:15px; }
 
-/* ── Buttons (CTA) ── */
-.btn-group{display:flex; gap:10px;}
-.btn-pill{background:#000;color:#fff;padding:10px 20px;border-radius:50px;
-         font-size:12px;font-weight:700;text-transform:uppercase;}
-.btn-outline{background:transparent;color:#000;border:1px solid #ccc;}
+/* 3D Globe */
+#globe-container{ width:400px; height:400px; border-radius:50%; box-shadow:0 0 40px rgba(255,79,112,0.3); }
 
-/* ── Cards & sections ── */
-.section-margin{margin-top:120px;}
+/* Zones Grid */
 .card-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:1px; background-color:rgba(0,0,0,.1); border:1px solid rgba(0,0,0,.1);
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;
 }
 .card{
-    background:var(--clr-bg);
-    padding:40px; min-height:200px;
-    display:flex; flex-direction:column; justify-content:space-between;
+    background:#1c1f2a; padding:25px; border-radius:var(--card-radius); cursor:pointer; transition:var(--transition);
+    position:relative; overflow:hidden;
 }
-.card:hover{background:#fff;}
+.card:hover{ transform:translateY(-8px); box-shadow:0 10px 25px rgba(255,79,112,0.3);}
+.card h3{ margin-bottom:10px; color:var(--clr-accent);}
+.card p{ color:#ccc; font-size:0.9rem;}
+.card .btn-outline{ margin-top:15px; display:inline-block; }
 
-/* Nested grid for sub‑zones (inside Authority) */
-.nested-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:8px;
-    margin-top:20px;
+/* Sub-Zones modal */
+.modal{
+    position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; justify-content:center; align-items:center; opacity:0; pointer-events:none; transition:var(--transition);
 }
-.nested-card{
-    background:var(--clr-bg);
-    padding:20px;
-    border:1px solid var(--clr-muted);
-    border-radius:var(--radius);
-}
-.nested-card:hover{background:#fff;}
+.modal.active{ opacity:1; pointer-events:auto;}
+.modal-content{ background:#222; padding:30px; border-radius:20px; max-width:600px; width:90%; text-align:center; }
+.modal-content h4{ margin-bottom:15px; color:var(--clr-accent);}
+.modal-content p{ margin-bottom:20px; color:#ccc; }
+.close-btn{ background:var(--clr-accent); border:none; padding:10px 20px; border-radius:50px; color:#fff; cursor:pointer; }
 
-/* Illustration mock‑up */
-.illustration-container{
-    border:1px solid #000; padding:20px; position:relative;
-}
-.illustration-container img{
-    filter:grayscale(1) contrast(1.2);
-    mix-blend-mode:multiply;
-}
+/* Footer */
+footer{ text-align:center; padding:30px 20px; font-size:12px; color:var(--clr-muted); margin-top:60px; border-top:1px solid #333; }
 
 /* Responsive */
-@media(max-width:900px){
-    .hero-grid{grid-template-columns:1fr;}
-    h1{font-size:4rem;}
-}
+@media(max-width:900px){ .hero-section{ flex-direction:column; } #globe-container{ width:300px; height:300px; } }
 </style>
 </head>
-
 <body>
 
 <header>
-    <div class="header-inner">
-        <div class="logo">Awakening®</div>
-        <nav>
-            <a href="#">The Journey</a>
-            <a href="#">The Map</a>
-            <a href="#">Film</a>
-        </nav>
-        <div class="btn-group">
-            <span class="btn-pill">Online Study</span>
-            <span class="btn-pill btn-outline">24/7 Platform</span>
-        </div>
+    <div class="logo">Awakening®</div>
+    <nav>
+        <a href="#">Journey</a>
+        <a href="#">Map</a>
+        <a href="#">Film</a>
+    </nav>
+    <div class="btn-group">
+        <span class="btn-pill">Online Study</span>
+        <span class="btn-pill btn-outline">24/7 Platform</span>
     </div>
 </header>
 
 <main class="wrap">
 
-    <!-- ==================== HERO ==================== -->
-    <section class="hero-grid">
-        <div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-text">
             <h1>Awakening</h1>
-            <p class="hero-subtext">The Qur’an was never meant to be distant. It was meant to walk with you.</p>
+            <p>The Qur’an was never meant to be distant. It was meant to walk with you.</p>
             <div class="btn-group">
                 <a href="#" class="btn-pill">Begin Journey</a>
-                <a href="#" class="btn-pill btn-outline">Watch Film</a>
+                <a href="#" class="btn-outline btn-pill">Watch Film</a>
             </div>
         </div>
-        <div class="illustration-container">
-            <img src="https://openclipart.org/image/800px/273392" alt="Technical Line Drawing">
-        </div>
+        <div id="globe-container"></div>
     </section>
 
-    <!-- ==================== CONCEPT ==================== -->
-    <section class="section-margin">
-        <h2>01 / The Concept</h2>
-        <div class="card-grid">
-            <div class="card">
-                <span class="logo">Awareness</span>
-                <p>Developing a conscious heart in a world of distraction.</p>
-            </div>
-            <div class="card">
-                <span class="logo">Meaning</span>
-                <p>Finding the deep purpose behind every verse and action.</p>
-            </div>
-            <div class="card">
-                <span class="logo">Hereafter</span>
-                <p>Preparing the provision for the ultimate journey.</p>
-            </div>
+    <!-- Zones Section -->
+    <section class="card-grid">
+        <div class="card" data-modal="mazeModal">
+            <h3>Maze Zone</h3>
+            <p>Navigate the complex pathways of the soul.</p>
+            <a href="#" class="btn-outline">Explore</a>
         </div>
-    </section>
-
-    <!-- ==================== THE JOURNEY (المناطق) ==================== -->
-    <section class="section-margin">
-        <h2>02 / The Journey</h2>
-        <div class="card-grid">
-
-            <!-- 1️⃣ Maze Zone -->
-            <div class="card">
-                <span class="logo">Maze Zone</span>
-                <p>Navigate the complex pathways of the soul.</p>
-                <a href="#" class="btn-pill btn-outline">Explore</a>
-            </div>
-
-            <!-- 2️⃣ CBT Zone -->
-            <div class="card">
-                <span class="logo">CBT Zone (Cognitive Behavioral Therapy)</span>
-                <p>Tools to re‑program thoughts and behaviours.</p>
-                <a href="#" class="btn-pill btn-outline">Enter</a>
-            </div>
-
-            <!-- 3️⃣ ALAHAD Zone -->
-            <div class="card">
-                <span class="logo">Al‑Had Zone</span>
-                <p>Study of prophetic traditions and their meanings.</p>
-                <a href="#" class="btn-pill btn-outline">Dive In</a>
-            </div>
-
-            <!-- 4️⃣ Authority Zone – contains sub‑zones -->
-            <div class="card">
-                <span class="logo">Authority Zone</span>
-                <p>Sources of divine authority and guidance.</p>
-
-                <!-- Nested grid for sub‑zones -->
-                <div class="nested-grid">
-                    <div class="nested-card">
-                        <span class="logo">The Prophet Zone</span>
-                        <p>Life, sayings, and example of the Prophet ﷺ.</p>
-                    </div>
-                    <div class="nested-card">
-                        <span class="logo">The Holy Quran Zone</span>
-                        <p>Miracle of the Qur’an, its structure and themes.</p>
-                    </div>
-                    <div class="nested-card">
-                        <span class="logo">Faith Zone</span>
-                        <p>Foundations of belief and spiritual certainty.</p>
-                    </div>
-                    <div class="nested-card">
-                        <span class="logo">Caliph of Allah Zone</span>
-                        <p>Leadership and stewardship after the Prophet.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5️⃣ Choice Zone -->
-            <div class="card">
-                <span class="logo">Choice Zone</span>
-                <p>Free will, decisions, and their consequences.</p>
-                <a href="#" class="btn-pill btn-outline">Choose</a>
-            </div>
-
-            <!-- 6️⃣ Death Zone -->
-            <div class="card">
-                <span class="logo">Death Zone</span>
-                <p>Understanding the transition from this life.</p>
-                <a href="#" class="btn-pill btn-outline">Learn</a>
-            </div>
-
-            <!-- 7️⃣ Barzakh Zone -->
-            <div class="card">
-                <span class="logo">Barzakh Zone</span>
-                <p>The waiting realm between death and resurrection.</p>
-                <a href="#" class="btn-pill btn-outline">Explore</a>
-            </div>
-
-            <!-- 8️⃣ Judgement Zone -->
-            <div class="card">
-                <span class="logo">Judgement Zone</span>
-                <p>Accountability, the Day of Reckoning.</p>
-                <a href="#" class="btn-pill btn-outline">Enter</a>
-            </div>
-
+        <div class="card" data-modal="cbtModal">
+            <h3>CBT Zone</h3>
+            <p>Tools to re‑program thoughts and behaviours.</p>
+            <a href="#" class="btn-outline">Enter</a>
         </div>
-    </section>
-
-    <!-- ==================== THE MAP ==================== -->
-    <section class="section-margin">
-        <h2>03 / The Map</h2>
-        <div class="hero-grid">
-            <div class="illustration-container" style="background:#e0e0e0; height:300px;">
-                <!-- ضع هنا خريطة أو رسمة توضيحية -->
-            </div>
-            <div>
-                <h3>Zone 01 – Al‑Mulk</h3>
-                <p>Your first provision. A study of sovereignty and beauty.</p>
-                <a href="#" class="btn-pill">Enter Zone</a>
-            </div>
+        <div class="card" data-modal="authorityModal">
+            <h3>Authority Zone</h3>
+            <p>Sources of divine authority and guidance.</p>
+            <a href="#" class="btn-outline">Dive In</a>
         </div>
+        <!-- Add more zones similarly -->
     </section>
 
 </main>
 
-<footer class="wrap"
-        style="text-align:center; color:var(--clr-muted); font-size:10px; letter-spacing:0.1em;
-               border-top:1px solid #ddd; margin-top:100px;">
-    © 2025 SCHOOL OF AWAKENING — ALL RIGHTS RESERVED — BUILT FOR THE SEEKER
+<!-- Modals -->
+<div id="mazeModal" class="modal">
+    <div class="modal-content">
+        <h4>Maze Zone</h4>
+        <p>Interactive lessons for navigating your inner world.</p>
+        <button class="close-btn">Close</button>
+    </div>
+</div>
+
+<div id="cbtModal" class="modal">
+    <div class="modal-content">
+        <h4>CBT Zone</h4>
+        <p>Exercises and tools for your mind and behavior.</p>
+        <button class="close-btn">Close</button>
+    </div>
+</div>
+
+<div id="authorityModal" class="modal">
+    <div class="modal-content">
+        <h4>Authority Zone</h4>
+        <p>Sub-Zones: Prophet, Quran, Faith, Caliph of Allah.</p>
+        <button class="close-btn">Close</button>
+    </div>
+</div>
+
+<footer>
+    © 2025 SCHOOL OF AWAKENING — ALL RIGHTS RESERVED
 </footer>
+
+<script>
+// Globe setup using Three.js
+const container = document.getElementById('globe-container');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, container.clientWidth/container.clientHeight, 0.1, 1000);
+camera.position.z = 3;
+
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setSize(container.clientWidth, container.clientHeight);
+container.appendChild(renderer.domElement);
+
+// Globe
+const geometry = new THREE.SphereGeometry(1, 64, 64);
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Globe_icon.svg/800px-Globe_icon.svg.png');
+const material = new THREE.MeshBasicMaterial({ map: texture });
+const globe = new THREE.Mesh(geometry, material);
+scene.add(globe);
+
+// Controls
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableZoom = true;
+
+// Animate globe
+function animate(){
+    requestAnimationFrame(animate);
+    globe.rotation.y += 0.0015; // slow rotation
+    controls.update();
+    renderer.render(scene, camera);
+}
+animate();
+
+// Modals
+document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+        const modalId = card.dataset.modal;
+        document.getElementById(modalId).classList.add('active');
+    });
+});
+document.querySelectorAll('.close-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        btn.closest('.modal').classList.remove('active');
+    });
+});
+</script>
 
 </body>
 </html>
