@@ -1,199 +1,155 @@
 <!DOCTYPE html>
-<html lang="ar"><!-- لغة الصفحة العربية (يمكن تغييرها إلى "en" إذا رغبت) -->
+<html lang="ar"><!-- اللغة العربية، يمكنك تغييرها إلى en إذا رغبت -->
 <head>
 <meta charset="UTF-8">
 <title>School of Awakening – Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- -------------------------  GOOGLE FONTS  ------------------------- -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet">
 
 <style>
 /* ────────────────────── CHROMA DESIGN SYSTEM ────────────────────── */
-/* تعريف المتغيرات (variables) لتسهيل تغيّر الألوان، الحد الأقصى للعرض، … */
 :root {
-    --clr-bg: #F2F0EB;        /* لون الخلفية العامة (صفحة بيضاء فاتحة) */
-    --clr-text: #1A1A1A;      /* لون النص الأساسي – أسود قوي */
-    --clr-accent: #1A1A1A;    /* لون الحدود والعناصر البارزة (يمكن أن يكون لونًا مختلفًا) */
-    --clr-muted: #8C8C8C;     /* لون الفقرات الفرعية أو النصوص الثانوية */
-    --max-width: 1400px;      /* أقصى عرض للصفحة (يمكن تغييره) */
+    --clr-bg: #F2F0EB;       /* خلفية الصفحة (ورق أبيض فاتح) */
+    --clr-text: #1A1A1A;     /* لون النص الأساسي – أسود غامق */
+    --clr-accent: #1A1A1A;   /* لون البارز (الحدود، الأزرار …) */
+    --clr-muted: #8C8C8C;    /* لون النص الثانوي */
+    --max-width: 1400px;
 }
 
-/* ────────────────────── RESET & BASE ────────────────────── */
-/* قاعدة عامة تحافظ على حجم الصندوق لتكون كل العناصر محسوبة بطريقة موحدة */
-* { box-sizing: border-box; }
-
-/* تنسيق جسم الصفحة */
+/* Reset & base */
+* { box-sizing:border-box; }
 body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;   /* الخط الأساسي */
-    background-color: var(--clr-bg);    /* خلفية الصفحة */
-    color: var(--clr-text);            /* لون النص */
-    line-height: 1.4;
-    -webkit-font-smoothing: antialiased;
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background-color:var(--clr-bg);
+    color:var(--clr-text);
+    line-height:1.4;
+    -webkit-font-smoothing:antialiased;
 }
 
-/* ------------------- TECHNICAL OVERLAYS (العلامات الزاوية) ------------------- */
-/* العلامات (+) في الزوايا تُضيف لمسة فنية (تشبه علامات التسجيل). إذا لا تريدها
-   احذف قواعد ::before / ::after أو عطلها بdisplay:none. */
-body::before,
-body::after,
-.wrap::before,
-.wrap::after {
-    content: "+";
-    position: fixed;
-    font-family: monospace;
-    font-size: 24px;
-    color: var(--clr-muted);
-    z-index: 1000;
-    pointer-events: none;
-    font-weight: 100;
+/* ── Technical overlays (علامات + في الزوايا) ── */
+body::before,body::after,.wrap::before,.wrap::after{
+    content:"+"; position:fixed; font-family:monospace; font-size:24px;
+    color:var(--clr-muted); z-index:1000; pointer-events:none; font-weight:100;
 }
-body::before { top: 10px; left: 15px; }   /* علامة في أعلى اليسار */
-body::after  { top: 10px; right: 15px; }  /* علامة في أعلى اليمين */
+body::before{top:10px; left:15px;}
+body::after{top:10px; right:15px;}
 
-/* ------------------- LAYOUT (التهيئة العامة) ------------------- */
-.wrap {
-    max-width: var(--max-width);   /* الحد الأقصى للعرض */
-    margin: auto;                  /* توسيط المحتوى */
-    padding: 60px 40px;           /* مساحة داخلية حول المحتوى */
-    position: relative;            /* لتكون العناصر المطلقة داخلها */
+/* ── Layout ── */
+.wrap{
+    max-width:var(--max-width);
+    margin:auto;
+    padding:60px 40px;
+    position:relative;
 }
 
-/* ------------------- NAVIGATION (القائمة العلوية) ------------------- */
-header {
-    border-bottom: 1px solid rgba(0,0,0,0.1);   /* خط رفيع أسفل الهيدر */
-    padding: 20px 0;
+/* ── Header (القائمة العلوية) ── */
+header{
+    border-bottom:1px solid rgba(0,0,0,.1);
+    padding:20px 0;
 }
-.header-inner {
-    display: flex;
-    justify-content: space-between;   /* المسافات بين العناصر */
-    align-items: center;
-    max-width: var(--max-width);
-    margin: auto;
-    padding: 0 40px;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    font-weight: 700;
+.header-inner{
+    display:flex; justify-content:space-between; align-items:center;
+    max-width:var(--max-width); margin:auto; padding:0 40px;
+    text-transform:uppercase; font-size:12px; letter-spacing:.1em; font-weight:700;
 }
-.logo {
-    font-size: 1.2rem;
-    font-weight: 900;                /* لوجو سميك */
-    letter-spacing: -0.02em;
+.logo{font-size:1.2rem; font-weight:900; letter-spacing:-.02em;}
+nav{display:flex; gap:30px;}
+nav a:hover{opacity:.5;}
+.btn-group{display:flex; gap:10px;}
+.btn-pill{
+    background:#000; color:#fff; padding:10px 20px; border-radius:50px;
+    font-size:12px; font-weight:700; text-transform:uppercase; display:inline-block;
 }
-nav { display: flex; gap: 30px; }   /* المسافات بين روابط القائمة */
-nav a:hover { opacity: 0.5; }      /* تأثير خفيف عند التحويم */
-
-/* ------------------- TYPOGRAPHY (العناوين) ------------------- */
-h1 {
-    /* حجم الخط كبير جداً ليتماشى مع أسلوب Chroma */
-    font-size: clamp(4rem, 12vw, 10rem);
-    font-weight: 900;
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    margin: 0 0 40px 0;
-    text-transform: none;
-}
-h2 {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    margin-bottom: 40px;
-    color: var(--clr-muted);
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+.btn-outline{
+    background:transparent; color:#000; border:1px solid #ccc;
 }
 
-/* ------------------- HERO SECTION (القسم الرئيس) ------------------- */
-.hero-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;   /* عمود أكبر للنص وعمود أصغر للصورة */
-    gap: 60px;
-    align-items: end;                  /* محاذاة العناصر إلى أسفل الخلية */
-    padding-top: 40px;
+/* ── Typography ── */
+h1{
+    font-size:clamp(4rem,12vw,10rem);
+    font-weight:900; line-height:.9; letter-spacing:-.04em;
+    margin:0 0 40px; text-transform:none;
 }
-.hero-subtext {
-    font-size: 1.5rem;
-    max-width: 500px;
-    margin-bottom: 40px;
+h2{
+    font-size:.8rem; text-transform:uppercase; letter-spacing:.2em;
+    margin-bottom:40px; color:var(--clr-muted);
+    border-bottom:1px solid #ddd; padding-bottom:10px;
 }
 
-/* ------------------- CHROMA BUTTONS (الأزرار) ------------------- */
-.btn-group { display: flex; gap: 10px; }   /* مجموعة الأزرار بجوار بعضها */
-.btn-pill {
-    background: #000;       /* خلفية زرقاء داكنة (يمكن تغييرها) */
-    color: #fff;            /* لون النص أبيض */
-    padding: 10px 20px;
-    border-radius: 50px;    /* شكل بيضاوي */
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    display: inline-block;
+/* ── Hero section ── */
+.hero-grid{
+    display:grid; grid-template-columns:1.5fr 1fr; gap:60px;
+    align-items:end; padding-top:40px;
 }
-.btn-outline {
-    background: transparent;
-    color: #000;
-    border: 1px solid #ccc;
+.hero-subtext{font-size:1.5rem; max-width:500px; margin-bottom:40px;}
+
+/* ── Buttons (CTA) ── */
+.btn-group{display:flex; gap:10px;}
+.btn-pill{background:#000;color:#fff;padding:10px 20px;border-radius:50px;
+         font-size:12px;font-weight:700;text-transform:uppercase;}
+.btn-outline{background:transparent;color:#000;border:1px solid #ccc;}
+
+/* ── Cards & sections ── */
+.section-margin{margin-top:120px;}
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:1px; background-color:rgba(0,0,0,.1); border:1px solid rgba(0,0,0,.1);
+}
+.card{
+    background:var(--clr-bg);
+    padding:40px; min-height:200px;
+    display:flex; flex-direction:column; justify-content:space-between;
+}
+.card:hover{background:#fff;}
+
+/* Nested grid for sub‑zones (inside Authority) */
+.nested-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:8px;
+    margin-top:20px;
+}
+.nested-card{
+    background:var(--clr-bg);
+    padding:20px;
+    border:1px solid var(--clr-muted);
+    border-radius:var(--radius);
+}
+.nested-card:hover{background:#fff;}
+
+/* Illustration mock‑up */
+.illustration-container{
+    border:1px solid #000; padding:20px; position:relative;
+}
+.illustration-container img{
+    filter:grayscale(1) contrast(1.2);
+    mix-blend-mode:multiply;
 }
 
-/* ------------------- CARDS & SECTIONS (البطاقات) ------------------- */
-.section-margin { margin-top: 120px; }   /* مسافة الفاصل بين الأقسام */
-
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1px;                         /* يخلق خطوط رفيعة تفصل بين البطاقات */
-    background-color: rgba(0,0,0,0.1);
-    border: 1px solid rgba(0,0,0,0.1);
-}
-.card {
-    background: var(--clr-bg);
-    padding: 40px;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.card:hover { background: #fff; }   /* تأثير عند المرور فوق البطاقة */
-
-/* ------------------- ILLUSTRATION MOCKUP (العنصر التقني) ------------------- */
-.illustration-container {
-    border: 1px solid #000;
-    padding: 20px;
-    position: relative;
-}
-.illustration-container img {
-    filter: grayscale(1) contrast(1.2);    /* تحويل الصورة لتبدو أكثر رسمية */
-    mix-blend-mode: multiply;
-}
-
-/* ------------------- RESPONSIVE (تصميم مستجيب) ------------------- */
-@media (max-width: 900px) {
-    .hero-grid { grid-template-columns: 1fr; }  /* يصبح عمودًا واحدًا على الشاشات الصغيرة */
-    h1 { font-size: 4rem; }                    /* تقليل حجم العنوان للهواتف */
+/* Responsive */
+@media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    h1{font-size:4rem;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- ==================== HEADER (الهيدر) ==================== -->
 <header>
     <div class="header-inner">
-        <!-- الشعار (يمكنك تعديل النص أو استبداله بصورة) -->
         <div class="logo">Awakening®</div>
-
-        <!-- القائمة العلوية (أضف/احذف/غيّر الروابط حسب الحاجة) -->
         <nav>
             <a href="#">The Journey</a>
             <a href="#">The Map</a>
             <a href="#">Film</a>
         </nav>
-
-        <!-- مجموعة أزرار (يمكنك تعديل النص أو إضافة أزرار جديدة) -->
         <div class="btn-group">
             <span class="btn-pill">Online Study</span>
             <span class="btn-pill btn-outline">24/7 Platform</span>
@@ -201,37 +157,27 @@ h2 {
     </div>
 </header>
 
-<!-- ==================== MAIN CONTENT (المحتوى الأساسي) ==================== -->
 <main class="wrap">
 
-    <!-- ------------------- HERO SECTION ------------------- -->
+    <!-- ==================== HERO ==================== -->
     <section class="hero-grid">
         <div>
-            <!-- عنوان الصفحة (يمكنك تغييره بسهولة) -->
             <h1>Awakening</h1>
-
-            <!-- النص التوضيحي تحت العنوان -->
             <p class="hero-subtext">The Qur’an was never meant to be distant. It was meant to walk with you.</p>
-
-            <!-- أزرار الدعوة إلى الإجراء (CTA) -->
             <div class="btn-group">
                 <a href="#" class="btn-pill">Begin Journey</a>
                 <a href="#" class="btn-pill btn-outline">Watch Film</a>
             </div>
         </div>
-
-        <!-- صورة توضيحية (يمكن استبدالها بأية صورة/رسمة تريدها) -->
         <div class="illustration-container">
-            <img src="https://openclipart.org/image/800px/273392"
-                 alt="Technical Line Drawing">
+            <img src="https://openclipart.org/image/800px/273392" alt="Technical Line Drawing">
         </div>
     </section>
 
-    <!-- ------------------- SECTION 01 – THE CONCEPT ------------------- -->
+    <!-- ==================== CONCEPT ==================== -->
     <section class="section-margin">
         <h2>01 / The Concept</h2>
         <div class="card-grid">
-            <!-- كل بطاقة تمثل فكرة/قيمة مختلفة -->
             <div class="card">
                 <span class="logo">Awareness</span>
                 <p>Developing a conscious heart in a world of distraction.</p>
@@ -247,16 +193,96 @@ h2 {
         </div>
     </section>
 
-    <!-- ------------------- SECTION 02 – THE MAP ------------------- -->
+    <!-- ==================== THE JOURNEY (المناطق) ==================== -->
     <section class="section-margin">
-        <h2>02 / The Map</h2>
-        <div class="hero-grid">
-            <!-- مساحة مخصصة لخريطة / مخطط (يمكنك إضافة صورة خريطة أو رسومات تفاعلية) -->
-            <div class="illustration-container" style="background:#e0e0e0; height:300px;">
-                <!-- محتوى خريطة (مستقبلًا يمكن استبداله بـ Globe.js أو SVG) -->
+        <h2>02 / The Journey</h2>
+        <div class="card-grid">
+
+            <!-- 1️⃣ Maze Zone -->
+            <div class="card">
+                <span class="logo">Maze Zone</span>
+                <p>Navigate the complex pathways of the soul.</p>
+                <a href="#" class="btn-pill btn-outline">Explore</a>
             </div>
 
-            <!-- نص يشرح المنطقة أو الدرس (يمكنك تغييره وإضافة زر دخول) -->
+            <!-- 2️⃣ CBT Zone -->
+            <div class="card">
+                <span class="logo">CBT Zone (Cognitive Behavioral Therapy)</span>
+                <p>Tools to re‑program thoughts and behaviours.</p>
+                <a href="#" class="btn-pill btn-outline">Enter</a>
+            </div>
+
+            <!-- 3️⃣ ALAHAD Zone -->
+            <div class="card">
+                <span class="logo">Al‑Had Zone</span>
+                <p>Study of prophetic traditions and their meanings.</p>
+                <a href="#" class="btn-pill btn-outline">Dive In</a>
+            </div>
+
+            <!-- 4️⃣ Authority Zone – contains sub‑zones -->
+            <div class="card">
+                <span class="logo">Authority Zone</span>
+                <p>Sources of divine authority and guidance.</p>
+
+                <!-- Nested grid for sub‑zones -->
+                <div class="nested-grid">
+                    <div class="nested-card">
+                        <span class="logo">The Prophet Zone</span>
+                        <p>Life, sayings, and example of the Prophet ﷺ.</p>
+                    </div>
+                    <div class="nested-card">
+                        <span class="logo">The Holy Quran Zone</span>
+                        <p>Miracle of the Qur’an, its structure and themes.</p>
+                    </div>
+                    <div class="nested-card">
+                        <span class="logo">Faith Zone</span>
+                        <p>Foundations of belief and spiritual certainty.</p>
+                    </div>
+                    <div class="nested-card">
+                        <span class="logo">Caliph of Allah Zone</span>
+                        <p>Leadership and stewardship after the Prophet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5️⃣ Choice Zone -->
+            <div class="card">
+                <span class="logo">Choice Zone</span>
+                <p>Free will, decisions, and their consequences.</p>
+                <a href="#" class="btn-pill btn-outline">Choose</a>
+            </div>
+
+            <!-- 6️⃣ Death Zone -->
+            <div class="card">
+                <span class="logo">Death Zone</span>
+                <p>Understanding the transition from this life.</p>
+                <a href="#" class="btn-pill btn-outline">Learn</a>
+            </div>
+
+            <!-- 7️⃣ Barzakh Zone -->
+            <div class="card">
+                <span class="logo">Barzakh Zone</span>
+                <p>The waiting realm between death and resurrection.</p>
+                <a href="#" class="btn-pill btn-outline">Explore</a>
+            </div>
+
+            <!-- 8️⃣ Judgement Zone -->
+            <div class="card">
+                <span class="logo">Judgement Zone</span>
+                <p>Accountability, the Day of Reckoning.</p>
+                <a href="#" class="btn-pill btn-outline">Enter</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== THE MAP ==================== -->
+    <section class="section-margin">
+        <h2>03 / The Map</h2>
+        <div class="hero-grid">
+            <div class="illustration-container" style="background:#e0e0e0; height:300px;">
+                <!-- ضع هنا خريطة أو رسمة توضيحية -->
+            </div>
             <div>
                 <h3>Zone 01 – Al‑Mulk</h3>
                 <p>Your first provision. A study of sovereignty and beauty.</p>
@@ -267,7 +293,6 @@ h2 {
 
 </main>
 
-<!-- ==================== FOOTER (التذييل) ==================== -->
 <footer class="wrap"
         style="text-align:center; color:var(--clr-muted); font-size:10px; letter-spacing:0.1em;
                border-top:1px solid #ddd; margin-top:100px;">
