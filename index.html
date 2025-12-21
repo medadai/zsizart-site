@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>School of Awakening</title>
 
-<meta name="description" content="School of Awakening — Learn the Quran. Awaken Your Life.">
+<meta name="description" content="A learning journey where the Qur’an becomes your companion through life.">
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Arabic:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -25,7 +25,7 @@
   --line:#e5e7eb;
 
   --radius:18px;
-  --shadow:0 14px 40px rgba(15,23,42,.08);
+  --shadow:0 16px 44px rgba(15,23,42,.08);
   --max:1200px;
 }
 
@@ -35,11 +35,10 @@ body{
   background:var(--bg-main);
   color:var(--text-main);
   font-family:Inter,system-ui;
-  line-height:1.6;
+  line-height:1.65;
 }
 
 a{text-decoration:none;color:inherit}
-img{max-width:100%;display:block}
 .wrap{max-width:var(--max);margin:auto;padding:28px}
 
 /* ================= Header ================= */
@@ -53,71 +52,53 @@ header{
 }
 .header{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
 .logo{
-  font-weight:600;
-  letter-spacing:.04em;
+  font-weight:500;
+  letter-spacing:.05em;
 }
 nav{
   display:flex;
   gap:22px;
   font-size:14px;
 }
-nav a{
-  color:var(--text-muted);
-}
+nav a{color:var(--text-muted)}
 nav a:hover{color:var(--text-main)}
-.cta{
+.join{
   padding:10px 16px;
-  border-radius:12px;
-  background:var(--accent);
+  border-radius:14px;
+  background:var(--text-main);
   color:white;
-  font-weight:500;
+  font-size:14px;
 }
 
 /* ================= Hero ================= */
 .hero{
-  padding:90px 0 60px;
+  padding:110px 0 80px;
 }
 .hero-grid{
   display:grid;
   grid-template-columns:1.1fr 1fr;
-  gap:50px;
+  gap:60px;
   align-items:center;
 }
 .hero h1{
-  font-size:48px;
-  line-height:1.15;
+  font-size:46px;
+  line-height:1.2;
   margin:0 0 18px;
+  font-weight:500;
 }
 .hero p{
   font-size:18px;
   color:var(--text-muted);
   max-width:520px;
 }
-.hero-actions{
-  margin-top:28px;
-  display:flex;
-  gap:14px;
-}
-.btn{
-  padding:12px 18px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:white;
-  font-weight:500;
-}
-.btn.primary{
-  background:var(--text-main);
-  color:white;
-  border:none;
-}
 .hero-visual{
   background:linear-gradient(135deg,#e0e7ff,#f8fafc);
   border-radius:var(--radius);
-  padding:60px;
+  padding:80px 40px;
   text-align:center;
 }
 .hero-visual span{
@@ -126,110 +107,116 @@ nav a:hover{color:var(--text-main)}
 }
 
 /* ================= Sections ================= */
-section{margin-top:80px}
+section{margin-top:100px}
 section h2{
-  font-size:32px;
+  font-size:30px;
+  font-weight:500;
   margin-bottom:26px;
 }
 
-/* ================= Programs ================= */
-.cards{
+/* ================= Journey ================= */
+.journey{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:26px;
+}
+.step{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:28px;
+}
+.step span{
+  font-size:13px;
+  color:var(--text-muted);
+}
+.step h3{
+  margin:10px 0;
+  font-weight:500;
+}
+.step p{
+  margin:0;
+  color:var(--text-muted);
+}
+
+/* ================= Map ================= */
+.map{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:20px;
 }
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
+.map-card{
+  background:white;
   border-radius:var(--radius);
+  border:1px solid var(--line);
   padding:24px;
-  transition:.3s;
 }
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:var(--shadow);
-}
-.card h3{
+.map-card h4{
   margin:0 0 8px;
-  font-size:18px;
+  font-weight:500;
 }
-.card p{
+.map-card p{
   margin:0;
-  color:var(--text-muted);
   font-size:14px;
+  color:var(--text-muted);
 }
 
-/* ================= Video ================= */
-.video{
+/* ================= Film ================= */
+.film{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:40px;
+  gap:50px;
   align-items:center;
 }
-.video-frame{
+.film-frame{
   background:white;
-  border-radius:var(--radius);
   border:1px solid var(--line);
-  padding:16px;
-}
-.video-text p{
-  color:var(--text-muted);
-}
-
-/* ================= Values ================= */
-.values{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-}
-.value{
-  background:white;
   border-radius:var(--radius);
-  border:1px solid var(--line);
-  padding:22px;
-  font-size:15px;
+  padding:18px;
 }
 
 /* ================= CTA ================= */
-.final-cta{
-  margin-top:100px;
-  padding:70px 40px;
+.cta{
+  margin-top:120px;
+  padding:80px 40px;
   background:var(--text-main);
   color:white;
   border-radius:var(--radius);
   text-align:center;
 }
-.final-cta h2{margin-bottom:14px}
-.final-cta p{color:#cbd5f5}
-.final-cta a{
+.cta p{
+  color:#cbd5f5;
+  max-width:520px;
+  margin:14px auto 0;
+}
+.cta a{
   display:inline-block;
-  margin-top:22px;
-  padding:14px 22px;
-  border-radius:14px;
+  margin-top:26px;
+  padding:14px 24px;
   background:white;
   color:var(--text-main);
+  border-radius:16px;
   font-weight:500;
 }
 
 /* ================= Footer ================= */
 footer{
-  margin-top:90px;
+  margin-top:100px;
   padding:28px;
   text-align:center;
+  font-size:14px;
   color:var(--text-muted);
   border-top:1px solid var(--line);
-  font-size:14px;
 }
 
 /* ================= Responsive ================= */
 @media(max-width:900px){
   .hero-grid,
-  .video{grid-template-columns:1fr}
-  .cards,
-  .values{grid-template-columns:repeat(2,1fr)}
+  .film{grid-template-columns:1fr}
+  .journey{grid-template-columns:1fr}
+  .map{grid-template-columns:repeat(2,1fr)}
   nav{display:none}
   .hero{text-align:center}
-  .hero-actions{justify-content:center}
 }
 </style>
 </head>
@@ -241,11 +228,13 @@ footer{
     <div class="logo">School of Awakening</div>
     <nav>
       <a href="#">Home</a>
-      <a href="#">Programs</a>
-      <a href="#">Philosophy</a>
-      <a href="#">About</a>
+      <a href="#">The Journey</a>
+      <a href="#">The Map</a>
+      <a href="#">Why Qur’an?</a>
+      <a href="#">Community</a>
+      <a href="#">Film</a>
     </nav>
-    <a class="cta" href="#">Begin Your Journey</a>
+    <a class="join" href="#">Join the Journey</a>
   </div>
 </header>
 
@@ -255,70 +244,81 @@ footer{
 <section class="hero">
   <div class="hero-grid">
     <div>
-      <h1>Awaken Through the Quran</h1>
+      <h1>A learning journey where the Qur’an becomes your companion through life.</h1>
       <p>
-        A modern learning space for understanding the Quran,
-        life purpose, and conscious living — for a new generation.
+        Not a traditional school.
+        Not a list of lessons.
+        A path of awareness, clarity, and certainty.
       </p>
-      <div class="hero-actions">
-        <a class="btn primary" href="#">Start Learning</a>
-        <a class="btn" href="#">Explore Programs</a>
-      </div>
     </div>
     <div class="hero-visual">
-      <h3>Awareness • Clarity • Purpose</h3>
+      <h3>Calm • Depth • Certainty</h3>
       <span>School of Awakening</span>
     </div>
   </div>
 </section>
 
-<!-- Programs -->
+<!-- The Journey -->
 <section>
-  <h2>Programs</h2>
-  <div class="cards">
-    <div class="card"><h3>Quran Foundations</h3><p>Understand the Quran with clarity and depth.</p></div>
-    <div class="card"><h3>Tajweed & Recitation</h3><p>Read with confidence and awareness.</p></div>
-    <div class="card"><h3>Life & Purpose</h3><p>Connect faith with real-life meaning.</p></div>
-    <div class="card"><h3>Youth Awakening</h3><p>Identity, values, and conscious living.</p></div>
+  <h2>The Journey</h2>
+  <div class="journey">
+    <div class="step">
+      <span>01</span>
+      <h3>Awareness</h3>
+      <p>Seeing life through a clearer lens.</p>
+    </div>
+    <div class="step">
+      <span>02</span>
+      <h3>Understanding</h3>
+      <p>Connecting the Qur’an to lived experience.</p>
+    </div>
+    <div class="step">
+      <span>03</span>
+      <h3>Living</h3>
+      <p>Letting the Qur’an shape daily choices.</p>
+    </div>
   </div>
 </section>
 
-<!-- Video -->
-<section class="video">
-  <div class="video-frame">
-    <img src="https://dummyimage.com/600x360/e5e7eb/94a3b8&text=Video+Placeholder">
+<!-- The Map -->
+<section>
+  <h2>The Map</h2>
+  <div class="map">
+    <div class="map-card"><h4>Foundations</h4><p>Meeting the Qur’an with presence.</p></div>
+    <div class="map-card"><h4>Recitation</h4><p>Sound, rhythm, and meaning.</p></div>
+    <div class="map-card"><h4>Life & Purpose</h4><p>Direction in a noisy world.</p></div>
+    <div class="map-card"><h4>Youth Path</h4><p>Identity, faith, and awareness.</p></div>
   </div>
-  <div class="video-text">
-    <h2>Our Philosophy</h2>
-    <p>
-      School of Awakening is built on clarity, not complexity.
-      We believe the Quran is a compass for life — not just a subject to memorize.
+</section>
+
+<!-- Film -->
+<section class="film">
+  <div class="film-frame">
+    <img src="https://dummyimage.com/600x360/e5e7eb/94a3b8&text=Awakening+Film">
+  </div>
+  <div>
+    <h2>Awakening Film</h2>
+    <p class="text-muted">
+      A short visual expression of the School of Awakening —
+      its values, rhythm, and purpose.
     </p>
   </div>
 </section>
 
-<!-- Values -->
-<section>
-  <h2>Why School of Awakening</h2>
-  <div class="values">
-    <div class="value">Clarity over confusion</div>
-    <div class="value">Quran as a compass</div>
-    <div class="value">Faith with awareness</div>
-    <div class="value">Designed for modern minds</div>
-  </div>
-</section>
-
 <!-- CTA -->
-<section class="final-cta">
-  <h2>Begin Your Awakening</h2>
-  <p>Take the first step toward understanding, purpose, and conscious living.</p>
-  <a href="#">Start Your Journey</a>
+<section class="cta">
+  <h2>Join the Journey</h2>
+  <p>
+    This is not an enrollment.
+    It is a beginning.
+  </p>
+  <a href="#">Begin</a>
 </section>
 
 </main>
 
 <footer>
-© 2025 School of Awakening — A Modern Quranic Learning Space
+© 2025 School of Awakening — A Path of Awareness
 </footer>
 
 </body>
