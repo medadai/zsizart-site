@@ -17,15 +17,15 @@
 /* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
 :root{
   /* Your colour palette */
-  --clr-bg-main:#e6D5C3;      /* paper background               */
-  --clr-bg-soft:#BAAFA3;      /* secondary surface               */
-  --clr-card:#e1DAD7;         /* cards / zones                  */
-  --clr-text-main:#817065;    /* main headings & body text      */
-  --clr-accent:#70794F;       /* solid green – used for borders  */
+  --clr-bg-main:#e6D5C3;      /* solid paper background               */
+  --clr-bg-soft:#BAAFA3;      /* secondary surface                    */
+  --clr-card:#e1DAD7;         /* cards / zones                        */
+  --clr-text-main:#817065;    /* main headings & body text            */
+  --clr-accent:#70794F;       /* solid green – borders & strokes       */
   --clr-accent-trans:rgba(112,121,79,0.6);   /* semi‑transparent green */
 
   /* UI */
-  --radius:12px;               /* filleted (rounded) corners     */
+  --radius:12px;               /* filleted (rounded) corners           */
   --shadow:4px 4px 0 var(--clr-accent);
   --max-width:1200px;
 }
@@ -35,14 +35,20 @@
 body{
   margin:0;
   font-family:'Indie Flower',cursive;
-  background-color:var(--clr-bg-main);
+  background-color:var(--clr-bg-main);     /* solid paper colour */
   color:var(--clr-text-main);
   line-height:1.6;
 }
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:var(--max-width);margin:auto;padding:28px}
 
-/* ---- DOT‑BACKGROUND (smaller, tighter dots) ---- */
+/* ────────────────────── DOT BACKGROUND LAYER ────────────────────── */
 .dot-bg{
-  /* 30 × 30 px pattern, 1‑px circles */
+  position:fixed; inset:0;               /* fills the whole viewport */
+  pointer-events:none;
+  z-index:-2;                             /* stays behind content */
+  /* smaller, tighter dots (30×30 tile) */
   background-image:
     url("data:image/svg+xml;charset=UTF-8,\
 %3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E\
@@ -55,10 +61,19 @@ body{
   background-size:30px 30px;
 }
 
-/* Anchor & image defaults */
-a{color:inherit;text-decoration:none}
-img{max-width:100%;height:auto;display:block}
-.wrap{max-width:var(--max-width);margin:auto;padding:28px}
+/* The “spot‑light” overlay – only affects the dot layer */
+.dot-bg::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  /* transparent centre → soft white fade outside */
+  background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
+                              transparent,
+                              rgba(255,255,255,0.6));
+  opacity:0;                     /* hidden until mouse‑over */
+  transition:opacity .3s ease;
+}
+body:hover .dot-bg::after{opacity:1;}
 
 /* ────────────────────── SCRIBBLE STYLE ────────────────────── */
 .scribble{
@@ -79,9 +94,7 @@ img{max-width:100%;height:auto;display:block}
 
 /* ────────────────────── HEADER ────────────────────── */
 header{
-  position:sticky;
-  top:0;
-  z-index:100;
+  position:sticky;top:0;z-index:100;
   background:transparent;               /* transparent until hover */
   border-bottom:2px solid var(--clr-accent);
   transition:background .3s,box-shadow .3s;
@@ -102,7 +115,7 @@ nav{
   display:flex;gap:22px;
 }
 
-/* **Navigation links** – same animation as the “Join” button */
+/* Navigation links – now act like the “Join” button (transparent‑green + scale) */
 nav a{
   font-family:'Permanent Marker',cursive;
   padding:6px 10px;
@@ -115,7 +128,7 @@ nav a:hover{
   transform:scale(1.1);
 }
 
-/* “Join the Journey” button – same hover treatment */
+/* “Join the Journey” button – same hover animation */
 .join{
   background:var(--clr-accent-trans);
   color:#fff;
@@ -219,29 +232,14 @@ section h2{
 /* ────────────────────── RESPONSIVE ────────────────────── */
 @media(max-width:900px){
   .hero .grid{grid-template-columns:1fr;text-align:center}
-  nav{display:none}               /* keep original mobile behaviour */
+  nav{display:none}
 }
 @media(max-width:600px){
   .hero h1{font-size:2rem}
   .hero p{font-size:1rem}
 }
 
-/* ────────────────────── SPOTLIGHT OVERLAY (fade except around cursor) ────────────────────── */
-.spotlight{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity .3s ease;
-  z-index:9999;
-  /* Transparent centre → light‑fade outside */
-  background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
-                              transparent,
-                              rgba(255,255,255,0.6));
-}
-body:hover .spotlight{opacity:1;}
-
-/* Focus outline – visible for keyboard navigation */
+/* Focus outline – visible for keyboard users */
 a:focus, .btn:focus, .join:focus{
   outline:2px solid var(--clr-accent);
   outline-offset:2px;
@@ -249,7 +247,9 @@ a:focus, .btn:focus, .join:focus{
 </style>
 </head>
 
-<body class="dot-bg"><!-- **ONLY the body has the dot background** -->
+<body>
+<!-- Dot‑pattern layer (the only thing that gets the spot‑light fade) -->
+<div class="dot-bg"></div>
 
 <header>
   <div class="wrap header">
@@ -279,7 +279,8 @@ a:focus, .btn:focus, .join:focus{
           <a class="btn btn-secondary" href="film.html">Watch the Awakening</a>
         </div>
       </div>
-      <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual" alt="Calm visual">
+      <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
+           alt="Calm visual">
     </div>
   </section>
 
@@ -326,25 +327,17 @@ a:focus, .btn:focus, .join:focus{
   © 2025 School of Awakening — A Path of Awareness
 </footer>
 
-<!-- Spotlight overlay (fades everything except a circular area around the cursor) -->
-<div class="spotlight"></div>
-
 <script>
 /* ------------------------------------------------------------------------
-   Spotlight – moves a transparent circle with the mouse, fading the rest.
+   Spot‑light – moves a transparent circle (mouse position) over the dot layer.
    ------------------------------------------------------------------------ */
 document.addEventListener('DOMContentLoaded', () => {
-  const spotlight = document.querySelector('.spotlight');
+  const dotLayer = document.querySelector('.dot-bg');
 
-  // Update CSS custom properties with the mouse position.
   document.addEventListener('mousemove', e => {
-    spotlight.style.setProperty('--x', `${e.clientX}px`);
-    spotlight.style.setProperty('--y', `${e.clientY}px`);
+    dotLayer.style.setProperty('--x', `${e.clientX}px`);
+    dotLayer.style.setProperty('--y', `${e.clientY}px`);
   });
-
-  // Hide the overlay when the cursor leaves the window.
-  document.addEventListener('mouseleave', () => spotlight.style.opacity = '0');
-  document.addEventListener('mouseenter', () => spotlight.style.opacity = '1');
 });
 </script>
 
