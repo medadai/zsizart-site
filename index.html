@@ -1,296 +1,344 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar"><!-- اللغة العربية (يمكن تغييره إلى "en" إذا رغبت) -->
 <head>
-  <meta charset="UTF-8">
-  <title>School of Awakening – Life is a Journey</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- SEO / Social meta -->
-  <meta name="description" content="A learning journey where the Quran becomes a companion, not just a subject.">
-  <meta property="og:title" content="School of Awakening – Life is a Journey">
-  <meta property="og:description" content="A learning journey where the Quran becomes a companion, not just a subject.">
-  <meta property="og:image" content="https://example.com/og-image.jpg">
-  <meta property="og:url" content="https://example.com/">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Styles -->
-  <style>
-    :root {
-      /* Typography */
-      --ff-heading: "EB Garamond", serif;
-      --ff-body: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --fw-regular: 400;
-      --fw-bold: 600;
-      /* Colours (light) */
-      --clr-bg: #f9f9f9;
-      --clr-text: #222222;
-      --clr-primary: #006633;
-      --clr-primary-hover: #00a86b;
-      --clr-accent: #00c864;
-      /* Dark mode overrides */
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --clr-bg: #111111;
-        --clr-text: #eeeeee;
-        --clr-primary: #00c864;
-        --clr-primary-hover: #33ff99;
-        --clr-accent: #66ffbb;
-      }
-    }
+<meta charset="UTF-8">
+<title>School of Awakening – Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+      content="A learning journey where the Qur’an becomes your companion through life.">
 
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; font-size: 100%; }
-    body {
-      background: var(--clr-bg);
-      color: var(--clr-text);
-      font-family: var(--ff-body);
-      line-height: 1.6;
-      font-size: clamp(1rem, 1.5vw, 1.125rem);
-    }
-    a {
-      color: var(--clr-primary);
-      text-decoration: underline;
-    }
-    a:hover, a:focus { text-decoration: none; }
+<!-- Hand‑written Google fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap"
+      rel="stylesheet">
 
-    /* Skip link – improves keyboard navigation */
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: #fff;
-      color: #000;
-      padding: .5rem 1rem;
-      z-index: 1000;
-    }
-    .skip-link:focus {
-      top: 0;
-    }
+<style>
+/* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
+:root{
+  --clr-bg-main:#e6D5C3;      /* خلفية الورق الصلبة */
+  --clr-bg-soft:#BAAFA3;      /* سطح ثانوي */
+  --clr-card:#e1DAD7;         /* بطاقات / مناطق */
+  --clr-text-main:#817065;   /* النص الرئيسي */
+  --clr-accent:#70794F;       /* لون الحدّ والتفاصيل */
+  --clr-accent-trans:rgba(112,121,79,0.6);   /* أخضر شبه شفاف */
+  --radius:12px;               /* زوايا مستديرة */
+  --shadow:4px 4px 0 var(--clr-accent);
+  --max-width:1400px;         /* أقصى عرض للصفحة (فقط للغرض الداخلي) */
+}
 
-    /* Header & Nav */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: clamp(.5rem,2vw,1rem) clamp(1rem,4vw,2rem);
-      border-bottom: 2px solid #e8e8e8;
-      position: relative;
-    }
-    .logo {
-      font-family: var(--ff-heading);
-      font-weight: var(--fw-bold);
-      font-size: clamp(1.2rem,4vw,1.8rem);
-    }
-    .menu-toggle {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      display: none;
-    }
-    .menu-toggle:focus-visible { outline: 2px solid var(--clr-primary); }
+/* ────────────────────── GLOBAL RESET & BASIC TYPOGRAPHY ────────────────────── */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Indie Flower',cursive;
+  background-color:var(--clr-bg-main);
+  color:var(--clr-text-main);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: clamp(1rem,2vw,2rem);
-    }
-    nav ul {
-      display: flex;
-      gap: clamp(1rem,2vw,2rem);
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    nav a {
-      font-weight: var(--fw-bold);
-      font-size: clamp(.9rem,1.5vw,1rem);
-      text-decoration: none;
-    }
-    .join-btn {
-      background: var(--clr-primary);
-      color: #fff;
-      border: none;
-      border-radius: .3rem;
-      padding: clamp(.4rem,.8vw,.6rem) clamp(1rem,2vw,1.5rem);
-      font-size: clamp(.9rem,1.5vw,1rem);
-      cursor: pointer;
-    }
-    .join-btn:hover,
-    .join-btn:focus {
-      background: var(--clr-primary-hover);
-    }
+/* ---------- .wrap ----------
+   • أزلت الحشو الجانبي (padding) والهوامش (margin) لتصبح الصفحة ممتدة إلى الطرفين.
+   • تركت فقط الحشو العمودي (padding‑top / padding‑bottom) ليحافظ على المسافة
+     بين المحتوى وحدود المتصفح.
+*/
+.wrap{
+  width:100%;                /* يملأ كامل العرض */
+  max-width:none;            /* ألغينا الحد الأقصى للعرض – أصبح المحتوى كامل */
+  margin:0;                  /* لا هوامش جانبية */
+  padding:40px 0;           /* حشو عمودي فقط (يمكن تعديل القيم) */
+}
 
-    /* Decorative dot background that follows the mouse */
-    .dot-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      background-image: radial-gradient(
-        circle at var(--x,50%) var(--y,50%),
-        #00663333 0%,
-        #00663300 40%
-      );
-    }
+/* ------------------- DOT BACKGROUND (aligned grid) ------------------- */
+.dot-bg{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:-2;                     /* خلف كل شيء */
+  background-image:
+    radial-gradient(circle 1px at 3px 3px, var(--clr-accent) 100%, transparent 0%);
+  background-size:20px 20px;
+}
+.dot-bg::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
+                              transparent, rgba(255,255,255,.6));
+  opacity:0; transition:opacity .3s ease;
+}
+body:hover .dot-bg::after{opacity:1;}
 
-    main.wrap {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: clamp(1rem,4vw,3rem);
-    }
-    .content {
-      max-width: 75ch;
-      margin: 0 auto;
-    }
+/* ────────────────────── SCRIBBLE STYLE ────────────────────── */
+.scribble{
+  position:relative;
+  background:#fff;
+  border:2px solid var(--clr-accent);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.scribble::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border:2px solid var(--clr-accent);
+  transform:rotate(-1deg);
+  pointer-events:none;
+}
 
-    h1, h2, h3, h4 {
-      font-family: var(--ff-heading);
-      line-height: 1.2;
-      margin-top: clamp(1.5rem,4vw,3rem);
-    }
-    h1 { font-size: clamp(2rem,5vw,3rem); }
-    h2 { font-size: clamp(1.5rem,4vw,2.5rem); }
-    h3 { font-size: clamp(1.2rem,3vw,2rem); }
+/* ────────────────────── HEADER ────────────────────── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:transparent;
+  border-bottom:2px solid var(--clr-accent);
+  transition:background .3s,box-shadow .3s;
+}
+header:hover{
+  background:rgba(255,255,255,.9);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+.header{
+  display:flex;justify-content:space-between;align-items:center;
+  /* أزلنا الحشو الأفقي داخل الـ header لتقليل الفراغ الجانبي */
+  padding:0 20px;                 /* يمكنك تعديل هذا الحشو إذا رغبت بحد أدنى */
+}
+.logo{
+  font-family:'Permanent Marker',cursive;
+  font-size:1.6rem;
+  color:var(--clr-text-main);
+}
+nav{
+  display:flex;gap:22px;
+}
+nav a{
+  font-family:'Permanent Marker',cursive;
+  padding:6px 10px;
+  color:var(--clr-text-main);
+  transition:background .2s,color .2s,transform .2s;
+}
+nav a:hover{
+  background:var(--clr-accent-trans);
+  color:#fff;
+  transform:scale(1.1);
+}
+.join{
+  background:var(--clr-accent-trans);
+  color:#fff;
+  padding:8px 14px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:background .2s,transform .2s;
+}
+.join:hover{transform:scale(1.1);}
 
-    p { margin-top: clamp(.8rem,2vw,1.5rem); }
+/* ────────────────────── BUTTONS (داخل الصفحة) ────────────────────── */
+.btn{
+  display:inline-block;
+  padding:12px 24px;
+  border:2px solid var(--clr-accent);
+  border-radius:var(--radius);
+  font-family:'Permanent Marker',cursive;
+  cursor:pointer;
+  transition:background .2s,color .2s,transform .2s;
+}
+.btn-primary{
+  background:var(--clr-accent-trans);
+  color:#fff;
+}
+.btn-secondary{
+  background:#fff;
+  color:var(--clr-accent);
+}
+.btn-primary:hover,
+.btn-secondary:hover{
+  background:#fff;
+  color:var(--clr-accent);
+  transform:scale(1.05);
+}
 
-    .scribble {
-      background: #fff;
-      border-left: 4px solid var(--clr-primary);
-      padding: 1rem 1.5rem;
-      margin: 2rem 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,.1);
-    }
-    .scribble img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 1rem 0;
-    }
+/* ────────────────────── HERO ────────────────────── */
+.hero{
+  padding:120px 0 80px;
+  background:linear-gradient(135deg,var(--clr-bg-main),var(--clr-bg-soft));
+}
+.hero .grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;   /* 60 % نص – 40 % صورة على الشاشات الكبيرة */
+  gap:48px;
+  align-items:center;
+}
+.hero h1{
+  font-family:'Permanent Marker',cursive;
+  font-size:clamp(2.5rem,8vw,4rem);
+  line-height:1.2;
+  margin:0 0 18px;
+  color:var(--clr-text-main);
+}
+.hero p{
+  font-size:clamp(1rem,3.5vw,1.2rem);
+  color:var(--clr-text-main);
+}
+.buttons{
+  margin-top:30px;
+  display:flex;
+  gap:16px;
+}
 
-    footer {
-      text-align: center;
-      padding: 1rem;
-      border-top: 2px solid #e8e8e8;
-      font-size: .9rem;
-    }
+/* ────────────────────── SECTIONS ────────────────────── */
+section{margin-top:100px}
+section h2{
+  font-family:'Permanent Marker',cursive;
+  font-size:clamp(1.4rem,4vw,2.2rem);
+  color:var(--clr-text-main);
+}
 
-    /* Mobile‑first responsive behaviour */
-    @media (max-width: 768px) {
-      .menu-toggle { display: block; }
-      nav {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background: var(--clr-bg);
-        flex-direction: column;
-        width: 100%;
-        max-width: 250px;
-        border-left: 2px solid #e8e8e8;
-        transform: translateX(100%);
-        transition: transform .3s ease;
-        padding: 1rem;
-        box-shadow: -2px 0 6px rgba(0,0,0,.1);
-      }
-      nav.open { transform: translateX(0); }
-      nav ul { flex-direction: column; gap: .5rem; }
-    }
-  </style>
+/* ────────────────────── IDEA ────────────────────── */
+.idea{
+  padding:36px;
+  text-align:center;
+}
+
+/* ────────────────────── CARD GRID ────────────────────── */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+}
+.card-small{
+  padding:24px;
+  text-align:center;
+}
+
+/* ────────────────────── MAP ZONE ────────────────────── */
+.zone{
+  padding:28px;
+  max-width:340px;
+}
+.zone .visual{
+  height:180px;
+  background:linear-gradient(135deg,var(--clr-bg-main),var(--clr-bg-soft));
+  border-radius:var(--radius);
+  margin-bottom:16px;
+}
+
+/* ────────────────────── RESPONSIVE BREAKPOINTS ────────────────────── */
+@media (max-width:600px){
+  .hero .grid{grid-template-columns:1fr;text-align:center}
+  .hero h1{font-size:clamp(2rem,9vw,3rem)}
+  .hero p{font-size:clamp(0.9rem,4vw,1rem)}
+  .buttons{justify-content:center}
+  .wrap{padding:20px 0}               /* تقليل الحشو العمودي على الشاشات الصغيرة */
+}
+@media (max-width:900px){
+  .hero .grid{grid-template-columns:1fr}
+  nav{display:none}                  /* إخفاء القائمة على الشاشات الضيقة */
+}
+@media (min-width:1400px){
+  .wrap{padding:80px 0}             /* حشو عمودي أكثر على الشاشات الواسعة */
+}
+
+/* Focus outline – visible for keyboard navigation */
+a:focus, .btn:focus, .join:focus{
+  outline:2px solid var(--clr-accent);
+  outline-offset:2px;
+}
+</style>
 </head>
 
 <body>
-  <a href="#main" class="skip-link">Skip to main content</a>
+<!-- طبقة النقاط (dot‑bg) هي الطبقة الوحيدة التي تحتوي على نمط النقاط وتظهر فيها الـ spot‑light -->
+<div class="dot-bg"></div>
 
-  <div class="dot-bg" aria-hidden="true"></div>
-
-  <header>
-    <a href="/" class="logo">School of Awakening</a>
-
-    <button class="menu-toggle" aria-controls="primary-navigation"
-            aria-expanded="false" aria-label="Toggle menu">
-      ☰
-    </button>
-
-    <nav id="primary-navigation">
-      <ul>
-        <li><a href="#vision">Vision</a></li>
-        <li><a href="#values">Values</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="join-btn">Join Us</button>
+<header>
+  <div class="header">
+    <div class="logo">School of Awakening</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="journey.html">The Journey</a>
+      <a href="map.html">The Map</a>
+      <a href="why.html">Why Qur’an?</a>
+      <a href="film.html">Film</a>
+      <a href="join.html">Join</a>
     </nav>
-  </header>
+    <a class="join" href="join.html">Join the Journey</a>
+  </div>
+</header>
 
-  <main id="main" class="wrap">
-    <section class="content">
-      <h1>Life is a Journey</h1>
+<main class="wrap">
 
-      <section id="vision" class="scribble">
-        <h2>Vision</h2>
-        <p>
-          A learning journey where the Quran becomes a companion, not just a subject.
-        </p>
-        <p>
-          In the spirit of <em>Ta’awun</em> (mutual aid), our aim is to nurture a community that supports each other's spiritual and educational growth.
-        </p>
-        <img src="https://example.com/vision.jpg"
-             alt="Illustration of a journey path leading towards a bright horizon">
-      </section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="grid">
+      <div>
+        <h1>Life is a journey.<br>Every traveller needs provision.</h1>
+        <p class="hero-subtext">The Qur’an was never meant to be distant.<br>It was meant to walk with you.</p>
+        <div class="buttons">
+          <a class="btn btn-primary" href="journey.html">Begin the Journey</a>
+          <a class="btn btn-secondary" href="film.html">Watch the Awakening</a>
+        </div>
+      </div>
+      <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
+           alt="Calm visual">
+    </div>
+  </section>
 
-      <section id="values" class="scribble">
-        <h2>Values</h2>
-        <p>
-          <strong>Companionship</strong> – We view the Quran as a lifelong companion, guiding us through every stage of life.
-        </p>
-        <p>
-          <strong>Community</strong> – Learning is a collective endeavour; we encourage collaboration, discussion, and mutual support.
-        </p>
-        <p>
-          <strong>Integrity</strong> – Our curriculum is rooted in authentic sources and strives for academic excellence.
-        </p>
-        <img src="https://example.com/values.jpg"
-             alt="Hands forming a supportive circle around an open Quran">
-      </section>
+  <!-- IDEA -->
+  <section class="idea scribble">
+    <h2>The Idea</h2>
+    <p>School of Awakening is a learning journey,</p>
+    <p>where the Qur’an becomes a companion —</p>
+    <p>not a subject.</p>
 
-      <section id="about" class="scribble">
-        <h2>About This Site</h2>
-        <p>
-          This platform is designed for anyone seeking a deeper connection with the Quran while pursuing personal and professional development.
-        </p>
-        <p>
-          Explore our resources, join our community, and embark on a journey that blends faith with modern learning.
-        </p>
-      </section>
-    </section>
-  </main>
+    <div class="cards" style="margin-top:32px">
+      <p>Awareness</p>
+      <p>Meaning</p>
+      <p>Hereafter</p>
+    </div>
+  </section>
 
-  <footer>
-    © <span id="year"></span> School of Awakening – All rights reserved.
-  </footer>
+  <!-- AUDIENCE -->
+  <section>
+    <h2>Who is this for?</h2>
+    <div class="cards">
+      <div class="card-small scribble">For the seeker</div>
+      <div class="card-small scribble">For the lost</div>
+      <div class="card-small scribble">For the curious</div>
+      <div class="card-small scribble">For the believer</div>
+      <div class="card-small scribble">For the silent question inside you</div>
+    </div>
+  </section>
 
-  <!-- Scripts -->
-  <script>
-    // Mouse‑follow dot background
-    document.addEventListener('mousemove', function (e) {
-      const root = document.documentElement;
-      root.style.setProperty('--x', e.clientX + 'px');
-      root.style.setProperty('--y', e.clientY + 'px');
-    });
+  <!-- MAP -->
+  <section>
+    <h2>The Map</h2>
+    <div class="zone scribble">
+      <div class="visual"></div>
+      <h4>Zone 01 – Surah Al‑Mulk</h4>
+      <p>Your first provision.</p>
+      <a class="btn btn-primary" href="map.html">Enter Zone</a>
+    </div>
+  </section>
 
-    // Mobile nav toggle
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('nav');
+</main>
 
-    toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', !expanded);
-      nav.classList.toggle('open');
-    });
+<footer class="scribble" style="padding:28px;text-align:center">
+  © 2025 School of Awakening — A Path of Awareness
+</footer>
 
-    // Insert current year into footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+<script>
+/* ------------------------------------------------------------------------
+   Spot‑light – moves a transparent circle over the dot‑layer only.
+   ------------------------------------------------------------------------ */
+document.addEventListener('DOMContentLoaded', () => {
+  const dotLayer = document.querySelector('.dot-bg');
+
+  document.addEventListener('mousemove', e => {
+    dotLayer.style.setProperty('--x', `${e.clientX}px`);
+    dotLayer.style.setProperty('--y', `${e.clientY}px`);
+  });
+});
+</script>
+
 </body>
 </html>
