@@ -2,120 +2,337 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Journey Dropdown</title>
+<title>School of Awakening</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- KIDS TYPOGRAPHY -->
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+<!-- ADULT TYPOGRAPHY -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-/* ---------- القواعد الأصلية (من كودك) ---------- */
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif}
+/* ================= VARIABLES ================= */
 :root{
-  --accent:#ff9800;--text:#000;--radius:8px;
-}
-.header{position:sticky;top:0;background:#fff;z-index:10}
-.header .header-left{display:flex;align-items:center}
-.header .logo{font-size:24px;font-weight:700;margin-right:30px}
-.header .nav{display:flex;gap:30px}
-.header .nav .nav-item{position:relative}   /* <‑‑ أضفناه هنا */
-.header .nav a{font-size:.95rem}
-.mode-switch{margin-left:auto;display:flex;gap:10px}
-
-/* ---------- القوائم المنسدلة (الـ dropdown) ---------- */
-nav .nav-item{
-  position:relative;               /* لتثبيت القائمة داخل العنصر */
-}
-nav .dropbtn{
-  font-size:.95rem;
-  cursor:pointer;
-}
-nav .dropdown-content{
-  display:none;
-  position:absolute;
-  top:100%; left:0;
-  min-width:180px;
-  background:#fff;
-  border:1px solid var(--accent);
-  border-radius:var(--radius);
-  box-shadow:2px 2px 8px rgba(0,0,0,.15);
-  z-index:100;
-}
-nav .dropdown-content a{
-  display:block;
-  padding:8px 12px;
-  color:var(--text);
-  text-decoration:none;
-  white-space:nowrap;
-  font-size:.9rem;
-}
-nav .dropdown-content a:hover{
-  background:var(--accent);
-  color:#fff;
-}
-nav .dropdown:hover .dropdown-content{
-  display:block;
+  --bg-main:#fff7d6;
+  --bg-soft:#ffeaa7;
+  --card:#ffffff;
+  --text:#4b4b4b;
+  --accent:#e17055;
+  --radius:14px;
+  --shadow:5px 5px 0 var(--accent);
 }
 
-/* ==== توافق الخطوط مع الوضع Kids/Adult ==== */
-body.kids nav .dropdown-content a{
-  font-family:'Permanent Marker',cursive;
+/* ================= MODES ================= */
+body.kids{
+  font-family:'Indie Flower',cursive;
 }
-body.adult nav .dropdown-content a{
+body.adult{
+  --bg-main:#f4f1ec;
+  --bg-soft:#e6e1da;
+  --accent:#3f4a3c;
+  --shadow:none;
   font-family:'Inter',sans-serif;
 }
 
-/* ---------- باقي القواعد الأصلية (من كودك) ---------- */
-.header{display:flex;align-items:center;padding:10px 20px;background:#fff}
-.logo{font-weight:700}
-.nav{display:flex;gap:30px}
-.nav a{font-size:.95rem}
-.mode-switch{margin-left:auto;display:flex;gap:10px}
-.header .mode-switch button{padding:5px 10px;background:var(--accent);border:none;color:#fff;cursor:pointer}
-.header .mode-switch button:hover{opacity:.8}
-body.kids nav a{font-family:'Permanent Marker',cursive}
-body.adult nav a{font-family:'Inter',sans-serif}
+/* ================= BASE ================= */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg-main);
+  color:var(--text);
+  transition:.3s;
+}
+a{text-decoration:none;color:inherit}
 
-/* ---------- ربط الـ nav مع الـ header (لأنها داخل .header) ---------- */
-.header .header-left{display:flex;align-items:center}
+/* ================= HEADER ================= */
+header{
+  position:sticky;top:0;z-index:10;
+  background:rgba(255,255,255,.95);
+  border-bottom:1px solid var(--accent);
+}
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 24px;
+}
+.logo{
+  font-size:1.6rem;
+}
+body.adult .logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+}
 
-/* ---------- استجابة للهواتف (nav مخفي) ---------- */
-@media (max-width:900px){
+/* nav */
+nav{display:flex;gap:20px}
+nav a{
+  font-size:.95rem;
+}
+body.kids nav a{
+  font-family:'Permanent Marker',cursive;
+}
+
+/* mode switch */
+.mode-switch{
+  display:flex;
+  border:1px solid var(--accent);
+  border-radius:20px;
+  overflow:hidden;
+}
+.mode-switch button{
+  background:#fff;
+  border:none;
+  padding:6px 16px;
+  cursor:pointer;
+  font-size:.85rem;
+}
+.mode-switch button.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* ================= HERO ================= */
+.hero{
+  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
+  padding:120px 24px 80px;
+}
+.hero-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:40px;
+}
+.hero h1{
+  font-size:clamp(2.4rem,6vw,3.6rem);
+  line-height:1.2;
+}
+body.adult .hero h1{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+}
+.hero p{
+  font-size:1.1rem;
+  max-width:520px;
+}
+
+/* buttons */
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 26px;
+  border:1px solid var(--accent);
+  border-radius:10px;
+}
+body.kids .btn{
+  font-family:'Permanent Marker',cursive;
+  background:var(--accent);
+  color:#fff;
+}
+body.adult .btn{
+  background:transparent;
+  font-weight:500;
+}
+
+/* ================= HERO SLIDES ================= */
+.hero-visual{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.hero-visual::-webkit-scrollbar{display:none}
+.slide{
+  min-width:220px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:14px;
+  padding:40px 20px;
+  text-align:center;
+  scroll-snap-align:center;
+}
+body.kids .slide{
+  font-family:'Permanent Marker',cursive;
+  font-size:1.4rem;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* ================= CONTENT ================= */
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 24px;
+}
+section{margin-top:120px}
+h2{
+  font-size:2rem;
+}
+body.adult h2{
+  font-family:'Playfair Display',serif;
+}
+
+/* cards */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+}
+.card{
+  padding:28px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:14px;
+}
+body.kids .card{
+  box-shadow:var(--shadow);
+  transform:rotate(-0.5deg);
+}
+
+/* ================= MAP ================= */
+#mapCanvas{
+  width:100%;
+  max-width:900px;
+  height:420px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:20px;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  margin-top:120px;
+  padding:30px;
+  text-align:center;
+  font-size:.85rem;
+  background:#fff;
+  border-top:1px solid var(--accent);
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
   nav{display:none}
 }
 </style>
 </head>
+
 <body class="kids">
 
-<div class="header">
-  <div class="header-left">
-    <div class="logo">Logo</div>
+<header>
+  <div class="header">
+    <div class="logo">School of Awakening</div>
 
-    <!-- ======== شريط التنقل مع dropdown ======== -->
     <nav>
-      <div class="nav-item"><a href="#">Home</a></div>
-
-      <div class="nav-item dropdown">
-        <a href="#" class="dropbtn">Journey</a>
-        <div class="dropdown-content">
-          <a href="#">Confusion</a>
-          <a href="#">Healing</a>
-          <a href="#">Tawheed</a>
-          <a href="#">Authority</a>
-          <a href="#">Choice</a>
-          <a href="#">Death &amp; Barzakh</a>
-          <a href="#">Judgment</a>
-        </div>
-      </div>
-
-      <div class="nav-item"><a href="#">Map</a></div>
-      <div class="nav-item"><a href="#">Why Qur’an?</a></div>
+      <a href="#">Home</a>
+      <a href="#">Journey</a>
+      <a href="#">Map</a>
+      <a href="#">Why Qur’an?</a>
     </nav>
-  </div>
 
-  <div class="mode-switch">
-    <button onclick="document.body.className='kids'">Kids</button>
-    <button onclick="document.body.className='adult'">Adult</button>
+    <div class="mode-switch">
+      <button id="adultBtn">Adult</button>
+      <button id="kidsBtn" class="active">Kids</button>
+    </div>
   </div>
-</div>
+</header>
 
-<!-- باقي الصفحة (content) يبقى كما هو -->
-...
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1>Life is a journey.<br>Every traveller needs provision.</h1>
+      <p>The Qur’an was meant to walk with you — not sit on a shelf.</p>
+      <a class="btn" href="#">Begin the Journey</a>
+    </div>
+
+    <div class="hero-visual">
+      <div class="slide">📖 Meaning</div>
+      <div class="slide">🌱 Awareness</div>
+      <div class="slide">🌙 Hereafter</div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+<section>
+  <h2>Who is this for?</h2>
+  <div class="cards">
+    <div class="card">🌱 Young hearts</div>
+    <div class="card">🧭 Seekers</div>
+    <div class="card">🌙 Thinkers</div>
+    <div class="card">📖 Believers</div>
+  </div>
+</section>
+
+<section>
+  <h2>The Map</h2>
+  <canvas id="mapCanvas" width="900" height="420"></canvas>
+</section>
+
+</main>
+
+<footer>
+  © 2025 School of Awakening — A Path of Awareness
+</footer>
+
+<script>
+/* ===== MODE SWITCH ===== */
+const adultBtn=document.getElementById('adultBtn');
+const kidsBtn=document.getElementById('kidsBtn');
+
+adultBtn.onclick=()=>{
+  document.body.className='adult';
+  adultBtn.classList.add('active');
+  kidsBtn.classList.remove('active');
+  drawMap();
+};
+kidsBtn.onclick=()=>{
+  document.body.className='kids';
+  kidsBtn.classList.add('active');
+  adultBtn.classList.remove('active');
+  drawMap();
+};
+
+/* ===== MAP CANVAS ===== */
+const canvas=document.getElementById('mapCanvas');
+const ctx=canvas.getContext('2d');
+const zones=[
+  {x:140,y:260,r:28,label:'Al-Mulk'},
+  {x:330,y:140,r:28,label:'Awareness'},
+  {x:520,y:260,r:28,label:'Meaning'},
+  {x:720,y:160,r:28,label:'Hereafter'}
+];
+
+function drawMap(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const accent=getComputedStyle(document.body).getPropertyValue('--accent');
+
+  ctx.strokeStyle=accent;
+  ctx.lineWidth=3;
+  ctx.beginPath();
+  zones.forEach((z,i)=>{ i?ctx.lineTo(z.x,z.y):ctx.moveTo(z.x,z.y); });
+  ctx.stroke();
+
+  zones.forEach(z=>{
+    ctx.beginPath();
+    ctx.fillStyle='#fff';
+    ctx.arc(z.x,z.y,z.r,0,Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle='#000';
+    ctx.font='14px Inter';
+    ctx.textAlign='center';
+    ctx.fillText(z.label,z.x,z.y+44);
+  });
+}
+drawMap();
+</script>
+
 </body>
 </html>
