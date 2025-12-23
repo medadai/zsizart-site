@@ -124,9 +124,6 @@ body.kids .main-nav a{
   pointer-events:auto;
 }
 
-/* -------- لغة (English/Arabic) -------- */
-/* the old .lang-switch is no longer used – keep it only if you need it elsewhere */
-
 /* ======== وضع (Kids/Adult) minimal toggle on right edge ======== */
 .mode-toggle{
   position:fixed;
@@ -444,9 +441,9 @@ html[lang="ar"] footer{
     </div>
 
     <div class="hero-visual">
-      <div class="slide">📖 Meaning</div>
-      <div class="slide">🌱 Awareness</div>
-      <div class="slide">🌙 Hereafter</div>
+      <div class="slide">Meaning</div>
+      <div class="slide">Awareness</div>
+      <div class="slide">Hereafter</div>
     </div>
   </div>
 </section>
@@ -459,16 +456,16 @@ html[lang="ar"] footer{
     <div class="cards">
       <div class="card"
            data-en="Young hearts"
-           data-ar="قلوب شابة">🌱 Young hearts</div>
+           data-ar="قلوب شابة">Young hearts</div>
       <div class="card"
            data-en="Seekers"
-           data-ar="الباحثون">🧭 Seekers</div>
+           data-ar="الباحثون">Seekers</div>
       <div class="card"
            data-en="Thinkers"
-           data-ar="المفكرون">🌙 Thinkers</div>
+           data-ar="المفكرون">Thinkers</div>
       <div class="card"
            data-en="Believers"
-           data-ar="المؤمنون">📖 Believers</div>
+           data-ar="المؤمنون">Believers</div>
     </div>
   </section>
 
@@ -516,11 +513,11 @@ function setLanguage(lang){
     el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
   });
 
-  // 3️⃣ تحديث زر اللغة (show Arabic when site is English, otherwise show "E")
+  // 3️⃣ تحديث زر اللغة (ع عندما يكون الموقع الآن بالإنجليزية، وإلا إظهار E)
   langBtn.textContent = (lang === 'en') ? 'ع' : 'E';
 }
 
-// تعيين اللغة الافتراضية (English) عند تحميل الصفحة
+// اللغة الافتراضية (English) عند تحميل الصفحة
 setLanguage('en');
 
 // تبديل اللغة عند الضغط على الزر
