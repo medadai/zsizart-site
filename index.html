@@ -1,341 +1,362 @@
 <!DOCTYPE html>
-<html lang="ar"><!-- اللغة العربية (يمكن تغييره إلى "en" إذا رغبت) -->
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>School of Awakening – Home</title>
+<title>School of Awakening</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description"
-      content="A learning journey where the Qur’an becomes your companion through life.">
 
-<!-- Hand‑written Google fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap"
-      rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
 
 <style>
-/* ────────────────────── PALETTE & UI VARIABLES ────────────────────── */
 :root{
-  --clr-bg-main:#e6D5C3;      /* خلفية الورق الصلبة */
-  --clr-bg-soft:#BAAFA3;      /* سطح ثانوي */
-  --clr-card:#e1DAD7;         /* بطاقات / مناطق */
-  --clr-text-main:#817065;   /* النص الرئيسي */
-  --clr-accent:#70794F;       /* لون الحدّ والتفاصيل */
-  --clr-accent-trans:rgba(112,121,79,0.6);   /* أخضر شبه شفاف */
-  --radius:12px;               /* زوايا مستديرة */
-  --shadow:4px 4px 0 var(--clr-accent);
-  --max-width:1400px;         /* أقصى عرض للصفحة (فقط للغرض الداخلي) */
+  --bg-main:#e6d5c3;
+  --bg-soft:#c9bfb4;
+  --card:#ffffff;
+  --text:#6b5e55;
+  --accent:#70794f;
+  --accent-soft:rgba(112,121,79,.6);
+  --radius:14px;
+  --shadow:5px 5px 0 var(--accent);
 }
 
-/* ────────────────────── GLOBAL RESET & BASIC TYPOGRAPHY ────────────────────── */
+/* -------- MODES -------- */
+body.adult{
+  --bg-main:#e6d5c3;
+  --bg-soft:#c9bfb4;
+  --accent:#70794f;
+}
+body.kids{
+  --bg-main:#fff7d6;
+  --bg-soft:#ffeaa7;
+  --accent:#e17055;
+}
+
+/* -------- BASE -------- */
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:'Indie Flower',cursive;
-  background-color:var(--clr-bg-main);
-  color:var(--clr-text-main);
-  line-height:1.6;
+  background:var(--bg-main);
+  color:var(--text);
+  transition:.3s;
 }
-a{color:inherit;text-decoration:none}
-img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
 
-/* ---------- .wrap ----------
-   • أزلت الحشو الجانبي (padding) والهوامش (margin) لتصبح الصفحة ممتدة إلى الطرفين.
-   • تركت فقط الحشو العمودي (padding‑top / padding‑bottom) ليحافظ على المسافة
-     بين المحتوى وحدود المتصفح.
-*/
-.wrap{
-  width:100%;                /* يملأ كامل العرض */
-  max-width:none;            /* ألغينا الحد الأقصى للعرض – أصبح المحتوى كامل */
-  margin:0;                  /* لا هوامش جانبية */
-  padding:40px 0;           /* حشو عمودي فقط (يمكن تعديل القيم) */
-}
-
-/* ------------------- DOT BACKGROUND (aligned grid) ------------------- */
-.dot-bg{
-  position:fixed; inset:0;
-  pointer-events:none;
-  z-index:-2;                     /* خلف كل شيء */
-  background-image:
-    radial-gradient(circle 1px at 3px 3px, var(--clr-accent) 100%, transparent 0%);
-  background-size:20px 20px;
-}
-.dot-bg::after{
-  content:"";
-  position:absolute; inset:0;
-  pointer-events:none;
-  background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
-                              transparent, rgba(255,255,255,.6));
-  opacity:0; transition:opacity .3s ease;
-}
-body:hover .dot-bg::after{opacity:1;}
-
-/* ────────────────────── SCRIBBLE STYLE ────────────────────── */
-.scribble{
-  position:relative;
-  background:#fff;
-  border:2px solid var(--clr-accent);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-}
-.scribble::before{
-  content:"";
-  position:absolute;
-  inset:-4px;
-  border:2px solid var(--clr-accent);
-  transform:rotate(-1deg);
-  pointer-events:none;
-}
-
-/* ────────────────────── HEADER ────────────────────── */
+/* -------- HEADER -------- */
 header{
-  position:sticky;top:0;z-index:100;
-  background:transparent;
-  border-bottom:2px solid var(--clr-accent);
-  transition:background .3s,box-shadow .3s;
-}
-header:hover{
+  position:sticky;top:0;z-index:10;
   background:rgba(255,255,255,.9);
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  border-bottom:2px solid var(--accent);
 }
 .header{
-  display:flex;justify-content:space-between;align-items:center;
-  /* أزلنا الحشو الأفقي داخل الـ header لتقليل الفراغ الجانبي */
-  padding:0 20px;                 /* يمكنك تعديل هذا الحشو إذا رغبت بحد أدنى */
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 24px;
 }
 .logo{
   font-family:'Permanent Marker',cursive;
   font-size:1.6rem;
-  color:var(--clr-text-main);
 }
 nav{
-  display:flex;gap:22px;
-}
-nav a{
-  font-family:'Permanent Marker',cursive;
-  padding:6px 10px;
-  color:var(--clr-text-main);
-  transition:background .2s,color .2s,transform .2s;
-}
-nav a:hover{
-  background:var(--clr-accent-trans);
-  color:#fff;
-  transform:scale(1.1);
-}
-.join{
-  background:var(--clr-accent-trans);
-  color:#fff;
-  padding:8px 14px;
-  border-radius:var(--radius);
-  cursor:pointer;
-  transition:background .2s,transform .2s;
-}
-.join:hover{transform:scale(1.1);}
-
-/* ────────────────────── BUTTONS (داخل الصفحة) ────────────────────── */
-.btn{
-  display:inline-block;
-  padding:12px 24px;
-  border:2px solid var(--clr-accent);
-  border-radius:var(--radius);
-  font-family:'Permanent Marker',cursive;
-  cursor:pointer;
-  transition:background .2s,color .2s,transform .2s;
-}
-.btn-primary{
-  background:var(--clr-accent-trans);
-  color:#fff;
-}
-.btn-secondary{
-  background:#fff;
-  color:var(--clr-accent);
-}
-.btn-primary:hover,
-.btn-secondary:hover{
-  background:#fff;
-  color:var(--clr-accent);
-  transform:scale(1.05);
-}
-
-/* ────────────────────── HERO ────────────────────── */
-.hero{
-  padding:120px 0 80px;
-  background:linear-gradient(135deg,var(--clr-bg-main),var(--clr-bg-soft));
-}
-.hero .grid{
-  display:grid;
-  grid-template-columns:1.2fr 1fr;   /* 60 % نص – 40 % صورة على الشاشات الكبيرة */
-  gap:48px;
-  align-items:center;
-}
-.hero h1{
-  font-family:'Permanent Marker',cursive;
-  font-size:clamp(2.5rem,8vw,4rem);
-  line-height:1.2;
-  margin:0 0 18px;
-  color:var(--clr-text-main);
-}
-.hero p{
-  font-size:clamp(1rem,3.5vw,1.2rem);
-  color:var(--clr-text-main);
-}
-.buttons{
-  margin-top:30px;
   display:flex;
   gap:16px;
 }
-
-/* ────────────────────── SECTIONS ────────────────────── */
-section{margin-top:100px}
-section h2{
+nav a{
   font-family:'Permanent Marker',cursive;
-  font-size:clamp(1.4rem,4vw,2.2rem);
-  color:var(--clr-text-main);
+  padding:8px 12px;
 }
 
-/* ────────────────────── IDEA ────────────────────── */
-.idea{
-  padding:36px;
+/* -------- MODE SWITCH -------- */
+.mode-switch{
+  display:flex;
+  border:2px solid var(--accent);
+  border-radius:20px;
+  overflow:hidden;
+}
+.mode-switch button{
+  background:#fff;
+  border:none;
+  padding:6px 14px;
+  font-family:'Permanent Marker',cursive;
+  cursor:pointer;
+}
+.mode-switch button.active{
+  background:var(--accent-soft);
+  color:#fff;
+}
+
+/* -------- HERO -------- */
+.hero{
+  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
+  padding:120px 24px 80px;
+}
+.hero-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:40px;
+}
+.hero h1{
+  font-family:'Permanent Marker',cursive;
+  font-size:clamp(2.4rem,6vw,4rem);
+}
+.hero p{font-size:1.2rem}
+.btn{
+  display:inline-block;
+  border:2px solid var(--accent);
+  border-radius:14px;
+  padding:14px 26px;
+  font-family:'Permanent Marker',cursive;
+}
+.btn.primary{
+  background:var(--accent-soft);
+  color:#fff;
+}
+
+/* -------- HERO SLIDES -------- */
+.hero-visual{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.hero-visual::-webkit-scrollbar{display:none}
+.slide{
+  min-width:220px;
+  background:#fff;
+  border:2px solid var(--accent);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:40px 20px;
+  font-family:'Permanent Marker',cursive;
+  font-size:1.4rem;
   text-align:center;
+  scroll-snap-align:center;
+}
+body.kids .slide{
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
 }
 
-/* ────────────────────── CARD GRID ────────────────────── */
+/* -------- LAYOUT -------- */
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 24px;
+}
+section{margin-top:120px}
+h2{
+  font-family:'Permanent Marker',cursive;
+  font-size:2.2rem;
+}
+
+/* -------- SCRIBBLE -------- */
+.scribble{
+  background:#fff;
+  border:2px solid var(--accent);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:28px;
+}
+body.kids .scribble{
+  transform:rotate(-0.5deg);
+}
+
+/* -------- CARDS -------- */
 .cards{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
   gap:24px;
 }
-.card-small{
-  padding:24px;
+
+/* -------- JOURNEY -------- */
+.track{
+  display:flex;
+  gap:24px;
+  overflow-x:auto;
+}
+.step{
+  min-width:200px;
   text-align:center;
+  font-family:'Permanent Marker',cursive;
 }
 
-/* ────────────────────── MAP ZONE ────────────────────── */
-.zone{
-  padding:28px;
-  max-width:340px;
-}
-.zone .visual{
-  height:180px;
-  background:linear-gradient(135deg,var(--clr-bg-main),var(--clr-bg-soft));
-  border-radius:var(--radius);
-  margin-bottom:16px;
-}
-
-/* ────────────────────── RESPONSIVE BREAKPOINTS ────────────────────── */
-@media (max-width:600px){
-  .hero .grid{grid-template-columns:1fr;text-align:center}
-  .hero h1{font-size:clamp(2rem,9vw,3rem)}
-  .hero p{font-size:clamp(0.9rem,4vw,1rem)}
-  .buttons{justify-content:center}
-  .wrap{padding:20px 0}               /* تقليل الحشو العمودي على الشاشات الصغيرة */
-}
-@media (max-width:900px){
-  .hero .grid{grid-template-columns:1fr}
-  nav{display:none}                  /* إخفاء القائمة على الشاشات الضيقة */
-}
-@media (min-width:1400px){
-  .wrap{padding:80px 0}             /* حشو عمودي أكثر على الشاشات الواسعة */
+/* -------- MAP CANVAS -------- */
+#mapCanvas{
+  width:100%;
+  max-width:900px;
+  height:420px;
+  background:#fff;
+  border:2px solid var(--accent);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  touch-action:manipulation;
 }
 
-/* Focus outline – visible for keyboard navigation */
-a:focus, .btn:focus, .join:focus{
-  outline:2px solid var(--clr-accent);
-  outline-offset:2px;
+/* -------- FOOTER -------- */
+footer{
+  margin-top:120px;
+  padding:30px;
+  text-align:center;
+  background:rgba(255,255,255,.7);
+  border-top:2px solid var(--accent);
+}
+
+/* -------- RESPONSIVE -------- */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  nav{display:none}
 }
 </style>
 </head>
 
-<body>
-<!-- طبقة النقاط (dot‑bg) هي الطبقة الوحيدة التي تحتوي على نمط النقاط وتظهر فيها الـ spot‑light -->
-<div class="dot-bg"></div>
+<body class="adult">
 
 <header>
   <div class="header">
     <div class="logo">School of Awakening</div>
+
     <nav>
-      <a href="index.html">Home</a>
-      <a href="journey.html">The Journey</a>
-      <a href="map.html">The Map</a>
-      <a href="why.html">Why Qur’an?</a>
-      <a href="film.html">Film</a>
-      <a href="join.html">Join</a>
+      <a href="#">Home</a>
+      <a href="#">Journey</a>
+      <a href="#">Map</a>
+      <a href="#">Why Qur’an?</a>
     </nav>
-    <a class="join" href="join.html">Join the Journey</a>
+
+    <div class="mode-switch">
+      <button id="adultBtn" class="active">Adult</button>
+      <button id="kidsBtn">Kids</button>
+    </div>
   </div>
 </header>
 
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1>Life is a journey.<br>Every traveller needs provision.</h1>
+      <p>The Qur’an was meant to walk with you — not sit on a shelf.</p>
+      <a class="btn primary" href="#">Begin the Journey</a>
+    </div>
+
+    <div class="hero-visual">
+      <div class="slide">📖 Meaning</div>
+      <div class="slide">🌱 Awareness</div>
+      <div class="slide">🌙 Hereafter</div>
+    </div>
+  </div>
+</section>
+
 <main class="wrap">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="grid">
-      <div>
-        <h1>Life is a journey.<br>Every traveller needs provision.</h1>
-        <p class="hero-subtext">The Qur’an was never meant to be distant.<br>It was meant to walk with you.</p>
-        <div class="buttons">
-          <a class="btn btn-primary" href="journey.html">Begin the Journey</a>
-          <a class="btn btn-secondary" href="film.html">Watch the Awakening</a>
-        </div>
-      </div>
-      <img src="https://dummyimage.com/500x300/e0f2ff/3b82f6&text=Calm+Visual"
-           alt="Calm visual">
-    </div>
-  </section>
+<section class="scribble">
+  <h2>The Idea</h2>
+  <p>A learning journey where the Qur’an becomes a companion — not a subject.</p>
+</section>
 
-  <!-- IDEA -->
-  <section class="idea scribble">
-    <h2>The Idea</h2>
-    <p>School of Awakening is a learning journey,</p>
-    <p>where the Qur’an becomes a companion —</p>
-    <p>not a subject.</p>
+<section>
+  <h2>Who is this for?</h2>
+  <div class="cards">
+    <div class="scribble">🌱 Young hearts</div>
+    <div class="scribble">🧭 Seekers</div>
+    <div class="scribble">🌙 Thinkers</div>
+    <div class="scribble">📖 Believers</div>
+  </div>
+</section>
 
-    <div class="cards" style="margin-top:32px">
-      <p>Awareness</p>
-      <p>Meaning</p>
-      <p>Hereafter</p>
-    </div>
-  </section>
+<section>
+  <h2>The Journey</h2>
+  <div class="track">
+    <div class="scribble step">Start 🌱</div>
+    <div class="scribble step">Reflect 🧠</div>
+    <div class="scribble step">Understand 📖</div>
+    <div class="scribble step">Awaken 🌙</div>
+  </div>
+</section>
 
-  <!-- AUDIENCE -->
-  <section>
-    <h2>Who is this for?</h2>
-    <div class="cards">
-      <div class="card-small scribble">For the seeker</div>
-      <div class="card-small scribble">For the lost</div>
-      <div class="card-small scribble">For the curious</div>
-      <div class="card-small scribble">For the believer</div>
-      <div class="card-small scribble">For the silent question inside you</div>
-    </div>
-  </section>
-
-  <!-- MAP -->
-  <section>
-    <h2>The Map</h2>
-    <div class="zone scribble">
-      <div class="visual"></div>
-      <h4>Zone 01 – Surah Al‑Mulk</h4>
-      <p>Your first provision.</p>
-      <a class="btn btn-primary" href="map.html">Enter Zone</a>
-    </div>
-  </section>
+<section>
+  <h2>The Map</h2>
+  <canvas id="mapCanvas" width="900" height="420"></canvas>
+</section>
 
 </main>
 
-<footer class="scribble" style="padding:28px;text-align:center">
+<footer>
   © 2025 School of Awakening — A Path of Awareness
 </footer>
 
 <script>
-/* ------------------------------------------------------------------------
-   Spot‑light – moves a transparent circle over the dot‑layer only.
-   ------------------------------------------------------------------------ */
-document.addEventListener('DOMContentLoaded', () => {
-  const dotLayer = document.querySelector('.dot-bg');
+/* -------- MODE SWITCH -------- */
+const adultBtn=document.getElementById('adultBtn');
+const kidsBtn=document.getElementById('kidsBtn');
 
-  document.addEventListener('mousemove', e => {
-    dotLayer.style.setProperty('--x', `${e.clientX}px`);
-    dotLayer.style.setProperty('--y', `${e.clientY}px`);
+adultBtn.onclick=()=>{
+  document.body.className='adult';
+  adultBtn.classList.add('active');
+  kidsBtn.classList.remove('active');
+  drawMap();
+};
+kidsBtn.onclick=()=>{
+  document.body.className='kids';
+  kidsBtn.classList.add('active');
+  adultBtn.classList.remove('active');
+  drawMap();
+};
+
+/* -------- MAP CANVAS -------- */
+const canvas=document.getElementById('mapCanvas');
+const ctx=canvas.getContext('2d');
+
+const zones=[
+  {x:140,y:260,r:32,label:'Al-Mulk'},
+  {x:330,y:140,r:32,label:'Awareness'},
+  {x:520,y:260,r:32,label:'Meaning'},
+  {x:720,y:160,r:32,label:'Hereafter'}
+];
+
+function drawMap(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const accent=getComputedStyle(document.body).getPropertyValue('--accent');
+
+  ctx.strokeStyle=accent;
+  ctx.lineWidth=4;
+  ctx.beginPath();
+  zones.forEach((z,i)=>{
+    if(i===0) ctx.moveTo(z.x,z.y);
+    else ctx.lineTo(z.x,z.y);
+  });
+  ctx.stroke();
+
+  zones.forEach(z=>{
+    ctx.beginPath();
+    ctx.fillStyle='#fff';
+    ctx.arc(z.x,z.y,z.r,0,Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle='#000';
+    ctx.font='14px Indie Flower';
+    ctx.textAlign='center';
+    ctx.fillText(z.label,z.x,z.y+50);
+  });
+}
+
+drawMap();
+
+canvas.addEventListener('click',e=>{
+  const r=canvas.getBoundingClientRect();
+  const x=(e.clientX-r.left)*(canvas.width/r.width);
+  const y=(e.clientY-r.top)*(canvas.height/r.height);
+  zones.forEach(z=>{
+    if(Math.hypot(x-z.x,y-z.y)<z.r){
+      alert('Enter '+z.label);
+    }
   });
 });
 </script>
