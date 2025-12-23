@@ -5,90 +5,95 @@
 <title>School of Awakening</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- KIDS TYPOGRAPHY -->
 <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
 
+<!-- ADULT TYPOGRAPHY -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
+/* ================= VARIABLES ================= */
 :root{
-  --bg-main:#e6d5c3;
-  --bg-soft:#c9bfb4;
+  --bg-main:#fff7d6;
+  --bg-soft:#ffeaa7;
   --card:#ffffff;
-  --text:#6b5e55;
-  --accent:#70794f;
-  --accent-soft:rgba(112,121,79,.6);
+  --text:#4b4b4b;
+  --accent:#e17055;
   --radius:14px;
   --shadow:5px 5px 0 var(--accent);
 }
 
-/* -------- MODES -------- */
-body.adult{
-  --bg-main:#e6d5c3;
-  --bg-soft:#c9bfb4;
-  --accent:#70794f;
-}
+/* ================= MODES ================= */
 body.kids{
-  --bg-main:#fff7d6;
-  --bg-soft:#ffeaa7;
-  --accent:#e17055;
+  font-family:'Indie Flower',cursive;
+}
+body.adult{
+  --bg-main:#f4f1ec;
+  --bg-soft:#e6e1da;
+  --accent:#3f4a3c;
+  --shadow:none;
+  font-family:'Inter',sans-serif;
 }
 
-/* -------- BASE -------- */
+/* ================= BASE ================= */
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Indie Flower',cursive;
   background:var(--bg-main);
   color:var(--text);
   transition:.3s;
 }
 a{text-decoration:none;color:inherit}
 
-/* -------- HEADER -------- */
+/* ================= HEADER ================= */
 header{
   position:sticky;top:0;z-index:10;
-  background:rgba(255,255,255,.9);
-  border-bottom:2px solid var(--accent);
+  background:rgba(255,255,255,.95);
+  border-bottom:1px solid var(--accent);
 }
 .header{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   padding:16px 24px;
 }
 .logo{
-  font-family:'Permanent Marker',cursive;
   font-size:1.6rem;
 }
-nav{
-  display:flex;
-  gap:16px;
-}
-nav a{
-  font-family:'Permanent Marker',cursive;
-  padding:8px 12px;
+body.adult .logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
 }
 
-/* -------- MODE SWITCH -------- */
+/* nav */
+nav{display:flex;gap:20px}
+nav a{
+  font-size:.95rem;
+}
+body.kids nav a{
+  font-family:'Permanent Marker',cursive;
+}
+
+/* mode switch */
 .mode-switch{
   display:flex;
-  border:2px solid var(--accent);
+  border:1px solid var(--accent);
   border-radius:20px;
   overflow:hidden;
 }
 .mode-switch button{
   background:#fff;
   border:none;
-  padding:6px 14px;
-  font-family:'Permanent Marker',cursive;
+  padding:6px 16px;
   cursor:pointer;
+  font-size:.85rem;
 }
 .mode-switch button.active{
-  background:var(--accent-soft);
+  background:var(--accent);
   color:#fff;
 }
 
-/* -------- HERO -------- */
+/* ================= HERO ================= */
 .hero{
   background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
   padding:120px 24px 80px;
@@ -101,23 +106,37 @@ nav a{
   gap:40px;
 }
 .hero h1{
-  font-family:'Permanent Marker',cursive;
-  font-size:clamp(2.4rem,6vw,4rem);
+  font-size:clamp(2.4rem,6vw,3.6rem);
+  line-height:1.2;
 }
-.hero p{font-size:1.2rem}
-.btn{
-  display:inline-block;
-  border:2px solid var(--accent);
-  border-radius:14px;
-  padding:14px 26px;
-  font-family:'Permanent Marker',cursive;
+body.adult .hero h1{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
 }
-.btn.primary{
-  background:var(--accent-soft);
-  color:#fff;
+.hero p{
+  font-size:1.1rem;
+  max-width:520px;
 }
 
-/* -------- HERO SLIDES -------- */
+/* buttons */
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 26px;
+  border:1px solid var(--accent);
+  border-radius:10px;
+}
+body.kids .btn{
+  font-family:'Permanent Marker',cursive;
+  background:var(--accent);
+  color:#fff;
+}
+body.adult .btn{
+  background:transparent;
+  font-weight:500;
+}
+
+/* ================= HERO SLIDES ================= */
 .hero-visual{
   display:flex;
   gap:16px;
@@ -128,16 +147,15 @@ nav a{
 .slide{
   min-width:220px;
   background:#fff;
-  border:2px solid var(--accent);
+  border:1px solid var(--accent);
   border-radius:14px;
-  box-shadow:var(--shadow);
   padding:40px 20px;
-  font-family:'Permanent Marker',cursive;
-  font-size:1.4rem;
   text-align:center;
   scroll-snap-align:center;
 }
 body.kids .slide{
+  font-family:'Permanent Marker',cursive;
+  font-size:1.4rem;
   animation:float 4s ease-in-out infinite;
 }
 @keyframes float{
@@ -145,7 +163,7 @@ body.kids .slide{
   50%{transform:translateY(-10px)}
 }
 
-/* -------- LAYOUT -------- */
+/* ================= CONTENT ================= */
 .wrap{
   max-width:1200px;
   margin:auto;
@@ -153,63 +171,50 @@ body.kids .slide{
 }
 section{margin-top:120px}
 h2{
-  font-family:'Permanent Marker',cursive;
-  font-size:2.2rem;
+  font-size:2rem;
+}
+body.adult h2{
+  font-family:'Playfair Display',serif;
 }
 
-/* -------- SCRIBBLE -------- */
-.scribble{
-  background:#fff;
-  border:2px solid var(--accent);
-  border-radius:14px;
-  box-shadow:var(--shadow);
-  padding:28px;
+/* cards */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
 }
-body.kids .scribble{
+.card{
+  padding:28px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:14px;
+}
+body.kids .card{
+  box-shadow:var(--shadow);
   transform:rotate(-0.5deg);
 }
 
-/* -------- CARDS -------- */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:24px;
-}
-
-/* -------- JOURNEY -------- */
-.track{
-  display:flex;
-  gap:24px;
-  overflow-x:auto;
-}
-.step{
-  min-width:200px;
-  text-align:center;
-  font-family:'Permanent Marker',cursive;
-}
-
-/* -------- MAP CANVAS -------- */
+/* ================= MAP ================= */
 #mapCanvas{
   width:100%;
   max-width:900px;
   height:420px;
   background:#fff;
-  border:2px solid var(--accent);
+  border:1px solid var(--accent);
   border-radius:20px;
-  box-shadow:var(--shadow);
-  touch-action:manipulation;
 }
 
-/* -------- FOOTER -------- */
+/* ================= FOOTER ================= */
 footer{
   margin-top:120px;
   padding:30px;
   text-align:center;
-  background:rgba(255,255,255,.7);
-  border-top:2px solid var(--accent);
+  font-size:.85rem;
+  background:#fff;
+  border-top:1px solid var(--accent);
 }
 
-/* -------- RESPONSIVE -------- */
+/* ================= RESPONSIVE ================= */
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr}
   nav{display:none}
@@ -217,7 +222,7 @@ footer{
 </style>
 </head>
 
-<body class="adult">
+<body class="kids">
 
 <header>
   <div class="header">
@@ -231,8 +236,8 @@ footer{
     </nav>
 
     <div class="mode-switch">
-      <button id="adultBtn" class="active">Adult</button>
-      <button id="kidsBtn">Kids</button>
+      <button id="adultBtn">Adult</button>
+      <button id="kidsBtn" class="active">Kids</button>
     </div>
   </div>
 </header>
@@ -242,7 +247,7 @@ footer{
     <div>
       <h1>Life is a journey.<br>Every traveller needs provision.</h1>
       <p>The Qur’an was meant to walk with you — not sit on a shelf.</p>
-      <a class="btn primary" href="#">Begin the Journey</a>
+      <a class="btn" href="#">Begin the Journey</a>
     </div>
 
     <div class="hero-visual">
@@ -255,28 +260,13 @@ footer{
 
 <main class="wrap">
 
-<section class="scribble">
-  <h2>The Idea</h2>
-  <p>A learning journey where the Qur’an becomes a companion — not a subject.</p>
-</section>
-
 <section>
   <h2>Who is this for?</h2>
   <div class="cards">
-    <div class="scribble">🌱 Young hearts</div>
-    <div class="scribble">🧭 Seekers</div>
-    <div class="scribble">🌙 Thinkers</div>
-    <div class="scribble">📖 Believers</div>
-  </div>
-</section>
-
-<section>
-  <h2>The Journey</h2>
-  <div class="track">
-    <div class="scribble step">Start 🌱</div>
-    <div class="scribble step">Reflect 🧠</div>
-    <div class="scribble step">Understand 📖</div>
-    <div class="scribble step">Awaken 🌙</div>
+    <div class="card">🌱 Young hearts</div>
+    <div class="card">🧭 Seekers</div>
+    <div class="card">🌙 Thinkers</div>
+    <div class="card">📖 Believers</div>
   </div>
 </section>
 
@@ -292,7 +282,7 @@ footer{
 </footer>
 
 <script>
-/* -------- MODE SWITCH -------- */
+/* ===== MODE SWITCH ===== */
 const adultBtn=document.getElementById('adultBtn');
 const kidsBtn=document.getElementById('kidsBtn');
 
@@ -309,15 +299,14 @@ kidsBtn.onclick=()=>{
   drawMap();
 };
 
-/* -------- MAP CANVAS -------- */
+/* ===== MAP CANVAS ===== */
 const canvas=document.getElementById('mapCanvas');
 const ctx=canvas.getContext('2d');
-
 const zones=[
-  {x:140,y:260,r:32,label:'Al-Mulk'},
-  {x:330,y:140,r:32,label:'Awareness'},
-  {x:520,y:260,r:32,label:'Meaning'},
-  {x:720,y:160,r:32,label:'Hereafter'}
+  {x:140,y:260,r:28,label:'Al-Mulk'},
+  {x:330,y:140,r:28,label:'Awareness'},
+  {x:520,y:260,r:28,label:'Meaning'},
+  {x:720,y:160,r:28,label:'Hereafter'}
 ];
 
 function drawMap(){
@@ -325,12 +314,9 @@ function drawMap(){
   const accent=getComputedStyle(document.body).getPropertyValue('--accent');
 
   ctx.strokeStyle=accent;
-  ctx.lineWidth=4;
+  ctx.lineWidth=3;
   ctx.beginPath();
-  zones.forEach((z,i)=>{
-    if(i===0) ctx.moveTo(z.x,z.y);
-    else ctx.lineTo(z.x,z.y);
-  });
+  zones.forEach((z,i)=>{ i?ctx.lineTo(z.x,z.y):ctx.moveTo(z.x,z.y); });
   ctx.stroke();
 
   zones.forEach(z=>{
@@ -339,26 +325,13 @@ function drawMap(){
     ctx.arc(z.x,z.y,z.r,0,Math.PI*2);
     ctx.fill();
     ctx.stroke();
-
     ctx.fillStyle='#000';
-    ctx.font='14px Indie Flower';
+    ctx.font='14px Inter';
     ctx.textAlign='center';
-    ctx.fillText(z.label,z.x,z.y+50);
+    ctx.fillText(z.label,z.x,z.y+44);
   });
 }
-
 drawMap();
-
-canvas.addEventListener('click',e=>{
-  const r=canvas.getBoundingClientRect();
-  const x=(e.clientX-r.left)*(canvas.width/r.width);
-  const y=(e.clientY-r.top)*(canvas.height/r.height);
-  zones.forEach(z=>{
-    if(Math.hypot(x-z.x,y-z.y)<z.r){
-      alert('Enter '+z.label);
-    }
-  });
-});
 </script>
 
 </body>
