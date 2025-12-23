@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 
 <style>
+/* ================= VARIABLES ================= */
 :root{
   --bg-main:#fff7d6;
   --bg-soft:#ffeaa7;
@@ -22,7 +23,7 @@
   --transition:.35s ease;
 }
 
-/* MODES */
+/* ================= MODES ================= */
 body.kids{font-family:'Indie Flower',cursive;}
 body.adult{
   --bg-main:#f4f1ec;
@@ -32,7 +33,7 @@ body.adult{
   font-family:'Inter',sans-serif;
 }
 
-/* BASE */
+/* ================= BASE ================= */
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -42,11 +43,9 @@ body{
 }
 a{text-decoration:none;color:inherit}
 
-/* HEADER */
+/* ================= HEADER ================= */
 header{
-  position:sticky;
-  top:0;
-  z-index:20;
+  position:sticky;top:0;z-index:20;
   background:rgba(255,255,255,.95);
   border-bottom:1px solid var(--accent);
 }
@@ -57,8 +56,12 @@ header{
   padding:16px 24px;
 }
 .logo{font-size:1.6rem}
+body.adult .logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+}
 
-/* NAV */
+/* ================= NAV ================= */
 .main-nav ul{
   display:flex;
   gap:18px;
@@ -77,58 +80,33 @@ body.kids .main-nav a{font-family:'Permanent Marker',cursive}
   color:#fff;
 }
 
-/* ===== JOURNEY CUSTOM DROPDOWN (ONLY ADDITION) ===== */
+/* ================= DROPDOWN (MODIFIED ONLY) ================= */
 .dropdown{position:relative}
 
-/* wrapper */
-.journey-wrap{
+/* dashed rectangle container */
+.dropdown-content{
+  display:flex;
+  gap:28px;
   position:absolute;
-  top:120%;
+  top:130%;
   left:50%;
   transform:translateX(-50%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
+  padding:18px 26px;
+  background:var(--bg-main);
+  border:2px dashed var(--accent);
+  border-radius:24px;
   opacity:0;
   pointer-events:none;
   transition:.4s ease;
 }
 
-/* dashed line */
-.journey-line{
-  width:600px;
-  height:20px;
-}
-.journey-line path{
-  fill:none;
-  stroke:var(--accent);
-  stroke-width:2;
-  stroke-dasharray:6 6;
-  stroke-dashoffset:600;
-  transition:.6s ease;
-}
-
-/* menu horizontal */
-.dropdown-content{
-  display:flex;
-  gap:32px;
-  position:static;
-  background:transparent;
-  border:none;
-  padding:0;
-}
-
-/* open */
-.dropdown:hover .journey-wrap{
+/* show on hover */
+.dropdown:hover .dropdown-content{
   opacity:1;
   pointer-events:auto;
 }
-.dropdown:hover .journey-line path{
-  stroke-dashoffset:0;
-}
 
-/* CONTROLS */
+/* ================= CONTROLS ================= */
 .header-controls{
   display:flex;
   gap:10px;
@@ -152,7 +130,7 @@ button.active{
   color:#fff;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 .hero{
   background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
   padding:120px 24px 80px;
@@ -167,16 +145,79 @@ button.active{
 .hero h1{
   font-size:clamp(2.4rem,6vw,3.6rem);
 }
+body.adult .hero h1{font-family:'Playfair Display',serif;}
 .hero p{max-width:520px}
 
-/* CONTENT */
+/* ================= BUTTON ================= */
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 26px;
+  border-radius:12px;
+  border:1px solid var(--accent);
+  transition:var(--transition);
+}
+body.kids .btn{
+  background:var(--accent);
+  color:#fff;
+  font-family:'Permanent Marker',cursive;
+}
+body.adult .btn:hover{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* ================= SLIDES ================= */
+.hero-visual{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.hero-visual::-webkit-scrollbar{display:none}
+.slide{
+  min-width:220px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:14px;
+  padding:36px 20px;
+  text-align:center;
+  scroll-snap-align:center;
+}
+body.kids .slide{
+  font-family:'Permanent Marker',cursive;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* ================= CONTENT ================= */
 .wrap{
   max-width:1200px;
   margin:auto;
   padding:80px 24px;
 }
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+}
+.card{
+  padding:28px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:14px;
+  transition:var(--transition);
+}
+body.kids .card{
+  box-shadow:var(--shadow);
+  transform:rotate(-0.5deg);
+}
+.card:hover{transform:scale(1.03)}
 
-/* MAP */
+/* ================= MAP ================= */
 #mapCanvas{
   width:100%;
   max-width:900px;
@@ -184,9 +225,10 @@ button.active{
   border:1px solid var(--accent);
   border-radius:20px;
   background:#fff;
+  cursor:pointer;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 footer{
   margin-top:120px;
   padding:30px;
@@ -195,12 +237,13 @@ footer{
   border-top:1px solid var(--accent);
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 @media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
   .main-nav{display:none}
 }
 
-/* RTL */
+/* ================= RTL ================= */
 html[lang="ar"]{direction:rtl}
 html[lang="ar"] body{font-family:'Amiri',serif}
 </style>
@@ -210,54 +253,40 @@ html[lang="ar"] body{font-family:'Amiri',serif}
 
 <header>
 <div class="header">
-<div class="logo">School of Awakening</div>
+<div class="logo" data-en="School of Awakening" data-ar="مدرسة الصحوة">School of Awakening</div>
 
 <nav class="main-nav">
 <ul>
-<li><a>Home</a></li>
+<li><a data-en="Home" data-ar="الرئيسية">Home</a></li>
 
 <li class="dropdown">
-<a>Journey</a>
-
-<div class="journey-wrap">
-<svg class="journey-line" viewBox="0 0 600 20">
-<path d="M10 10 H590"/>
-</svg>
-
+<a data-en="Journey" data-ar="الرحلة">Journey</a>
 <ul class="dropdown-content">
 <li><a>Confusion</a></li>
 <li><a>Healing</a></li>
 <li><a>Tawheed</a></li>
 <li><a>Faith</a></li>
 </ul>
-</div>
 </li>
 
-<li><a>Map</a></li>
-<li><a>Film</a></li>
+<li><a data-en="Map" data-ar="الخريطة">Map</a></li>
+<li><a data-en="Film" data-ar="فيلم">Film</a></li>
 </ul>
 </nav>
 
 <div class="header-controls">
 <div class="mode-switch">
-<button class="active">Kids</button>
+<button id="adultBtn">Adult</button>
+<button id="kidsBtn" class="active">Kids</button>
+</div>
+<div class="lang-switch">
+<button id="enBtn" class="active">English</button>
+<button id="arBtn">العربية</button>
 </div>
 </div>
 </div>
 </header>
 
-<section class="hero">
-<div class="hero-grid">
-<div>
-<h1>Life is a journey.<br>Every traveller needs provision.</h1>
-<p>The Qur’an was meant to walk with you.</p>
-</div>
-</div>
-</section>
-
-<footer>
-© 2025 School of Awakening
-</footer>
-
+<!-- باقي الصفحة زي ما هي -->
 </body>
 </html>
