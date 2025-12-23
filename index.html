@@ -37,7 +37,7 @@ body.adult{
   font-family:'Inter',sans-serif;
 }
 
-/* ==================== قاعدة الأساس ==================== */
+/* ==================== القاعدة الأساسية ==================== */
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -56,33 +56,9 @@ header{
 .header{
   display:flex;
   align-items:center;
-  justify-content:space-between;      /* يبقى الشعار على اليسار والباقي على اليمين */
+  justify-content:space-between;
   padding:16px 24px;
 }
-/* مساحة بسيطة بين مجموعة أزرار وضع الـ mode و الـ language */
-.mode-switch,
-.lang-switch{
-  display:flex;
-  border:1px solid var(--accent);
-  border-radius:20px;
-  overflow:hidden;
-  margin-left:12px;                   /* فاصل بين المجموعتين */
-}
-.mode-switch button,
-.lang-switch button{
-  background:#fff;
-  border:none;
-  padding:6px 16px;
-  cursor:pointer;
-  font-size:.85rem;
-}
-.mode-switch button.active,
-.lang-switch button.active{
-  background:var(--accent);
-  color:#fff;
-}
-
-/* ---------- الشعار ---------- */
 .logo{
   font-size:1.6rem;
 }
@@ -91,19 +67,97 @@ body.adult .logo{
   font-weight:700;
 }
 
-/* ---------- القائمة ---------- */
-nav{
+/* ---- القائمة الرئيسية (main‑nav) ---- */
+.main-nav ul{
   display:flex;
   gap:20px;
+  list-style:none;
+  margin:0;
+  padding:0;
 }
-nav a{
+.main-nav a{
   font-size:.95rem;
+  color:inherit;
+  display:block;
+  padding:6px 12px;
 }
-body.kids nav a{
+body.kids .main-nav a{
   font-family:'Permanent Marker',cursive;
 }
+.main-nav a:hover{
+  background:var(--accent);
+  color:#fff;
+}
 
-/* ==================== الـ HERO ==================== */
+/* ---- Dropdown (Journey) ---- */
+.dropdown{
+  position:relative;                       /* لتثبيت قائمة الفروع */
+}
+.dropdown-content{
+  display:none;
+  position:absolute;
+  top:100%; left:0;
+  min-width:200px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  z-index:500;
+}
+.dropdown-content a{
+  white-space:nowrap;
+}
+.dropdown:hover .dropdown-content{
+  display:block;
+}
+
+/* ---- مجموعة التحكم (الوضع + اللغة) ---- */
+.header-controls{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+/* -------- وضع (Kids/Adult) -------- */
+.mode-switch{
+  display:flex;
+  border:1px solid var(--accent);
+  border-radius:20px;
+  overflow:hidden;
+}
+.mode-switch button{
+  background:#fff;
+  border:none;
+  padding:6px 16px;
+  cursor:pointer;
+  font-size:.85rem;
+}
+.mode-switch button.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* -------- لغة (English/Arabic) -------- */
+.lang-switch{
+  display:flex;
+  border:1px solid var(--accent);
+  border-radius:20px;
+  overflow:hidden;
+  margin-left:12px;                        /* فاصل بين المجموعتين */
+}
+.lang-switch button{
+  background:#fff;
+  border:none;
+  padding:6px 16px;
+  cursor:pointer;
+  font-size:.85rem;
+}
+.lang-switch button.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* ==================== HERO ==================== */
 .hero{
   background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
   padding:120px 24px 80px;
@@ -227,20 +281,20 @@ footer{
 /* ==================== الاستجابة ==================== */
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr}
-  nav{display:none}
+  .main-nav{display:none}                 /* إخفاء القائمة على الشاشات الضيقة */
 }
 
-/* ========== تعديل للغة العربية (RTL) ========== */
+/* ========== دعم اللغة العربية (RTL) ========== */
 html[lang="ar"]{
   direction:rtl;                     /* يغيّر اتجاه النص */
 }
 html[lang="ar"] body{
-  font-family:'Amiri',serif;        /* خط عربي اختياري */
+  font-family:'Amiri',serif;
 }
 html[lang="ar"] .hero,
 html[lang="ar"] .wrap,
 html[lang="ar"] footer{
-  text-align:right;                 /* محاذاة النص إلى اليمين */
+  text-align:right;                 /* محاذاة محتوى الصفحة إلى اليمين */
 }
 </style>
 </head>
@@ -249,29 +303,55 @@ html[lang="ar"] footer{
 
 <header>
   <div class="header">
-    <!-- الشعار (مع بيانات اللغة) -->
+    <!-- الشعار -->
     <div class="logo"
          data-en="School of Awakening"
          data-ar="مدرسة الصحوة">School of Awakening</div>
 
-    <!-- القائمة (مع بيانات اللغة) -->
-    <nav>
-      <a href="#" data-en="Home"    data-ar="الرئيسية">Home</a>
-      <a href="#" data-en="Journey" data-ar="الرحلة">Journey</a>
-      <a href="#" data-en="Map"     data-ar="الخريطة">Map</a>
-      <a href="#" data-en="Why Qur’an?" data-ar="لماذا القرآن؟">Why Qur’an?</a>
+    <!-- القائمة الرئيسية -->
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#" data-en="Home" data-ar="الرئيسية">Home</a></li>
+
+        <!-- Journey – Dropdown -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn"
+             data-en="Journey" data-ar="الرحلة">Journey</a>
+          <ul class="dropdown-content">
+            <li><a href="#" data-en="Confusion" data-ar="الحيرة">Confusion</a></li>
+            <li><a href="#" data-en="Healing"   data-ar="الشفاء">Healing</a></li>
+            <li><a href="#" data-en="Tawheed"  data-ar="التوحيد">Tawheed</a></li>
+            <li><a href="#" data-en="The Prophet" data-ar="النبي">The Prophet</a></li>
+            <li><a href="#" data-en="Holy Quran" data-ar="القرآن الكريم">Holy Quran</a></li>
+            <li><a href="#" data-en="Faith" data-ar="الإيمان">Faith</a></li>
+            <li><a href="#" data-en="Choice" data-ar="الاختيار">Choice</a></li>
+            <li><a href="#" data-en="Death" data-ar="الموت">Death</a></li>
+            <li><a href="#" data-en="Barzakh" data-ar="البرزخ">Barzakh</a></li>
+            <li><a href="#" data-en="Judgment" data-ar="الحساب">Judgment</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
+        <li><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
+        <li><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
+        <li><a href="#" data-en="Film" data-ar="فيلم">Film</a></li>
+        <li><a href="#" data-en="Join" data-ar="انضمام">Join</a></li>
+      </ul>
     </nav>
 
-    <!-- زرّ تبديل وضع (Kids/Adult) -->
-    <div class="mode-switch">
-      <button id="adultBtn">Adult</button>
-      <button id="kidsBtn" class="active">Kids</button>
-    </div>
+    <!-- مجموعة التحكم (الوضع + اللغة) -->
+    <div class="header-controls">
+      <!-- وضع Kids / Adult -->
+      <div class="mode-switch">
+        <button id="adultBtn">Adult</button>
+        <button id="kidsBtn" class="active">Kids</button>
+      </div>
 
-    <!-- زرّ تبديل اللغة (English / Arabic) -->
-    <div class="lang-switch">
-      <button id="enBtn" class="active">English</button>
-      <button id="arBtn">العربية</button>
+      <!-- لغة English / العربية -->
+      <div class="lang-switch">
+        <button id="enBtn" class="active">English</button>
+        <button id="arBtn">العربية</button>
+      </div>
     </div>
   </div>
 </header>
@@ -281,9 +361,15 @@ html[lang="ar"] footer{
   <div class="hero-grid">
     <div>
       <h1 data-en="Life is a journey.<br>Every traveller needs provision."
-          data-ar="الحياة رحلة.<br>كل مسافر يحتاج إلى ما يُعطيه.">Life is a journey.<br>Every traveller needs provision.</h1>
+          data-ar="الحياة رحلة.<br>كل مسافر يحتاج إلى ما يُعطيه.">
+        Life is a journey.<br>Every traveller needs provision.
+      </h1>
+
       <p data-en="The Qur’an was meant to walk with you — not sit on a shelf."
-         data-ar="القرآن مرادف لك أن يمشي معك — لا أن يُحفظ على رف.">The Qur’an was meant to walk with you — not sit on a shelf.</p>
+         data-ar="القرآن مرادف لك أن يسير معك — لا أن يُحفظ على رف.">
+        The Qur’an was meant to walk with you — not sit on a shelf.
+      </p>
+
       <a class="btn"
          href="#"
          data-en="Begin the Journey"
@@ -300,7 +386,7 @@ html[lang="ar"] footer{
 
 <main class="wrap">
 
-  <!-- ========== Who is this for? ========== -->
+  <!-- ========= Who is this for? ========= -->
   <section>
     <h2 data-en="Who is this for?" data-ar="لمن هذا؟">Who is this for?</h2>
     <div class="cards">
@@ -319,7 +405,7 @@ html[lang="ar"] footer{
     </div>
   </section>
 
-  <!-- ========== The Map ========== -->
+  <!-- ========= The Map ========= -->
   <section>
     <h2 data-en="The Map" data-ar="الخريطة">The Map</h2>
     <canvas id="mapCanvas" width="900" height="420"></canvas>
@@ -335,7 +421,7 @@ html[lang="ar"] footer{
 <script>
 /* ==================== تبديل وضع (Kids / Adult) ==================== */
 const adultBtn = document.getElementById('adultBtn');
-const kidsBtn = document.getElementById('kidsBtn');
+const kidsBtn  = document.getElementById('kidsBtn');
 
 adultBtn.onclick = () => {
   document.body.className = 'adult';
@@ -355,26 +441,24 @@ const enBtn = document.getElementById('enBtn');
 const arBtn = document.getElementById('arBtn');
 
 function setLanguage(lang){
-  // 1️⃣ ضبط سمات الـ <html>
+  // 1️⃣ ضبط سمات <html>
   document.documentElement.lang = lang;
   document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
 
-  // 2️⃣ وضع / إزالة حالة الـ active على الأزرار
+  // 2️⃣ تعديل حالة الأزرار
   enBtn.classList.toggle('active', lang === 'en');
   arBtn.classList.toggle('active', lang === 'ar');
 
-  // 3️⃣ استبدال النصوص بناءً على data‑en / data‑ar
+  // 3️⃣ استبدال النصوص حسب data‑en / data‑ar
   document.querySelectorAll('[data-en]').forEach(el => {
     el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
   });
 }
 
-// أزرار اللغة
+// تعيين اللغة الافتراضية (English) عند تحميل الصفحة
+setLanguage('en');
 enBtn.onclick = () => setLanguage('en');
 arBtn.onclick = () => setLanguage('ar');
-
-// اللغة الافتراضية هي English (تفعيلها مرة واحدة عند تحميل الصفحة)
-setLanguage('en');
 
 /* ==================== رسم الخريطة على الـ Canvas ==================== */
 const canvas = document.getElementById('mapCanvas');
