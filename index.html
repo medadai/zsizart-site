@@ -106,6 +106,55 @@ body.kids .main-nav a{font-family:'Permanent Marker',cursive}
   pointer-events:auto;
 }
 
+  /* ===== Journey Hand-drawn dashed box ===== */
+
+.dropdown-content{
+  position:absolute;
+  top:140%;
+  left:50%;
+  transform:translateX(-50%) scale(0.9);
+  display:flex;
+  gap:28px;
+  padding:20px 28px;
+  background:var(--bg-main);
+  border-radius:26px;
+
+  /* dashed look */
+  border:2px dashed var(--accent);
+
+  /* animation */
+  opacity:0;
+  pointer-events:none;
+  transition:
+    opacity .25s ease,
+    transform .45s cubic-bezier(.25,1,.4,1);
+}
+
+/* fake hand-drawn extension */
+.dropdown-content::before{
+  content:'';
+  position:absolute;
+  inset:-10px;
+  border:2px dashed var(--accent);
+  border-radius:30px;
+  opacity:.4;
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .55s cubic-bezier(.25,1,.4,1);
+}
+
+/* hover trigger */
+.dropdown:hover .dropdown-content{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(-50%) scale(1);
+}
+
+.dropdown:hover .dropdown-content::before{
+  transform:scaleX(1);
+}
+
+
 /* ================= CONTROLS ================= */
 .header-controls{
   display:flex;
