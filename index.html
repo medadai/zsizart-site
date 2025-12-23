@@ -1,10 +1,3 @@
-Here’s the **updated file** with the requested changes:
-
-* **Adult** mode is now the default (`<body class="adult">` and the Adult button is active).  
-* The Kids/Adult switch has been turned into a **minimal slide‑out toggle** that appears when you move the mouse to the right edge of the screen.  
-* All other code and styling remain unchanged.
-
-```html
 <!DOCTYPE html>
 <html lang="en">                     <!-- اللغة الافتراضية هي English -->
 <head>
@@ -132,24 +125,7 @@ body.kids .main-nav a{
 }
 
 /* -------- لغة (English/Arabic) -------- */
-.lang-switch{
-  display:flex;
-  border:1px solid var(--accent);
-  border-radius:20px;
-  overflow:hidden;
-  margin-left:12px;                        /* فاصل بين المجموعتين */
-}
-.lang-switch button{
-  background:#fff;
-  border:none;
-  padding:6px 16px;
-  cursor:pointer;
-  font-size:.85rem;
-}
-.lang-switch button.active{
-  background:var(--accent);
-  color:#fff;
-}
+/* the old .lang-switch is no longer used – keep it only if you need it elsewhere */
 
 /* ======== وضع (Kids/Adult) minimal toggle on right edge ======== */
 .mode-toggle{
@@ -352,6 +328,33 @@ html[lang="ar"] .wrap,
 html[lang="ar"] footer{
   text-align:right;                 /* محاذاة محتوى الصفحة إلى اليمين */
 }
+
+/* ==================== زر تبديل اللغة المستدير ==================== */
+.lang-toggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:2100;
+}
+.lang-toggle button{
+  width:48px;
+  height:48px;
+  border:none;
+  border-radius:50%;
+  background:var(--accent);
+  opacity:0.5;
+  color:#fff;
+  font-size:1rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .2s, opacity .2s;
+}
+.lang-toggle button:hover{
+  background:var(--accent);
+  opacity:0.8;
+}
 </style>
 </head>
 
@@ -395,12 +398,12 @@ html[lang="ar"] footer{
       </ul>
     </nav>
 
-    <!-- مجموعة التحكم (اللغة فقط) -->
+    <!-- مجموعة التحكم (الوضع) -->
     <div class="header-controls">
-      <!-- لغة English / العربية -->
-      <div class="lang-switch">
-        <button id="enBtn" class="active">English</button>
-        <button id="arBtn">العربية</button>
+      <!-- وضع Kids / Adult -->
+      <div class="mode-switch">
+        <button id="adultBtn" class="active">Adult</button>
+        <button id="kidsBtn">Kids</button>
       </div>
     </div>
   </div>
@@ -415,16 +418,18 @@ html[lang="ar"] footer{
   </div>
 </div>
 
+<!-- ==================== زر تبديل اللغة المستدير ==================== -->
+<div class="lang-toggle">
+  <button id="langBtn">ع</button>
+</div>
+
 <!-- ==================== HERO ==================== -->
 <section class="hero">
   <div class="hero-grid">
     <div>
-      <h1 data-en="In a journey where everything changes,
-            the Qur’an remains.
-            A companion for life…
-            and beyond it."
+      <h1 data-en="In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it."
           data-ar="الحياة رحلة.<br>كل مسافر يحتاج إلى ما يُعطيه.">
-        In a journey where everything changes,<br>the Qur’an remains.<br>A companion for life…<br>and beyond it.
+        In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it.
       </h1>
 
       <p data-en="The Qur’an was meant to walk with you — not sit on a shelf."
@@ -499,28 +504,30 @@ kidsBtn.onclick = () => {
 };
 
 /* ==================== تبديل اللغة (English ↔ Arabic) ==================== */
-const enBtn = document.getElementById('enBtn');
-const arBtn = document.getElementById('arBtn');
+const langBtn = document.getElementById('langBtn');
 
 function setLanguage(lang){
   // 1️⃣ ضبط سمات <html>
   document.documentElement.lang = lang;
   document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
 
-  // 2️⃣ تعديل حالة الأزرار
-  enBtn.classList.toggle('active', lang === 'en');
-  arBtn.classList.toggle('active', lang === 'ar');
-
-  // 3️⃣ استبدال النصوص حسب data‑en / data‑ar
+  // 2️⃣ استبدال النصوص حسب data‑en / data‑ar
   document.querySelectorAll('[data-en]').forEach(el => {
     el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
   });
+
+  // 3️⃣ تحديث زر اللغة (show Arabic when site is English, otherwise show "E")
+  langBtn.textContent = (lang === 'en') ? 'ع' : 'E';
 }
 
 // تعيين اللغة الافتراضية (English) عند تحميل الصفحة
 setLanguage('en');
-enBtn.onclick = () => setLanguage('en');
-arBtn.onclick = () => setLanguage('ar');
+
+// تبديل اللغة عند الضغط على الزر
+langBtn.addEventListener('click', () => {
+  const newLang = document.documentElement.lang === 'en' ? 'ar' : 'en';
+  setLanguage(newLang);
+});
 
 /* ==================== رسم الخريطة على الـ Canvas ==================== */
 const canvas = document.getElementById('mapCanvas');
@@ -560,4 +567,3 @@ drawMap();
 
 </body>
 </html>
-```
