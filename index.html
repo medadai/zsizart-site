@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">                     <!-- اللغة الافتراضية هي English -->
 <head>
 <meta charset="UTF-8">
 <title>School of Awakening</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ========== Fonts ========== -->
-<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+<!-- ---------- الخطوط ---------- -->
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap"
+      rel="stylesheet">                            <!-- Kids -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet">                            <!-- Adult -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap"
+      rel="stylesheet">                            <!-- Arabic (optional) -->
 
 <style>
-/* ================= VARIABLES ================= */
+/* ==================== المتغيّرات العامة ==================== */
 :root{
   --bg-main:#fff7d6;
   --bg-soft:#ffeaa7;
@@ -20,11 +23,12 @@
   --accent:#e17055;
   --radius:14px;
   --shadow:5px 5px 0 var(--accent);
-  --transition:.35s ease;
 }
 
-/* ================= MODES ================= */
-body.kids{font-family:'Indie Flower',cursive;}
+/* ==================== وضعيات الـ Modes ==================== */
+body.kids{
+  font-family:'Indie Flower',cursive;
+}
 body.adult{
   --bg-main:#f4f1ec;
   --bg-soft:#e6e1da;
@@ -33,19 +37,19 @@ body.adult{
   font-family:'Inter',sans-serif;
 }
 
-/* ================= BASE ================= */
+/* ==================== القاعدة الأساسية ==================== */
 *{box-sizing:border-box}
 body{
   margin:0;
   background:var(--bg-main);
   color:var(--text);
-  transition:var(--transition);
+  transition:.3s;
 }
 a{text-decoration:none;color:inherit}
 
-/* ================= HEADER ================= */
+/* ==================== الهيدر ==================== */
 header{
-  position:sticky;top:0;z-index:20;
+  position:sticky;top:0;z-index:10;
   background:rgba(255,255,255,.95);
   border-bottom:1px solid var(--accent);
 }
@@ -55,26 +59,31 @@ header{
   justify-content:space-between;
   padding:16px 24px;
 }
-.logo{font-size:1.6rem}
+.logo{
+  font-size:1.6rem;
+}
 body.adult .logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
 }
 
-/* ================= NAV ================= */
+/* ---- القائمة الرئيسية (main‑nav) ---- */
 .main-nav ul{
   display:flex;
-  gap:18px;
+  gap:20px;
   list-style:none;
   margin:0;
   padding:0;
 }
 .main-nav a{
+  font-size:.95rem;
+  color:inherit;
+  display:block;
   padding:6px 12px;
-  border-radius:20px;
-  transition:var(--transition);
 }
-body.kids .main-nav a{font-family:'Permanent Marker',cursive}
+body.kids .main-nav a{
+  font-family:'Permanent Marker',cursive;
+}
 .main-nav a:hover{
   background:var(--accent);
   color:#fff;
@@ -114,73 +123,383 @@ body.kids .main-nav a{font-family:'Permanent Marker',cursive}
   pointer-events:auto;
 }
 
-/* ================= CONTROLS ================= */
-.header-controls{
-  display:flex;
-  gap:10px;
-}
-.mode-switch,
-.lang-switch{
+/* -------- وضع (Kids/Adult) -------- */
+.mode-switch{
   display:flex;
   border:1px solid var(--accent);
   border-radius:20px;
   overflow:hidden;
 }
-.mode-switch button,
+.mode-switch button{
+  background:#fff;
+  border:none;
+  padding:6px 16px;
+  cursor:pointer;
+  font-size:.85rem;
+}
+.mode-switch button.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* -------- لغة (English/Arabic) -------- */
+.lang-switch{
+  display:flex;
+  border:1px solid var(--accent);
+  border-radius:20px;
+  overflow:hidden;
+  margin-left:12px;                        /* فاصل بين المجموعتين */
+}
 .lang-switch button{
   background:#fff;
   border:none;
   padding:6px 16px;
   cursor:pointer;
+  font-size:.85rem;
 }
-button.active{
+.lang-switch button.active{
   background:var(--accent);
   color:#fff;
 }
 
-/* ================= RTL ================= */
-html[lang="ar"]{direction:rtl}
-html[lang="ar"] body{font-family:'Amiri',serif}
+/* ==================== HERO ==================== */
+.hero{
+  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
+  padding:120px 24px 80px;
+}
+.hero-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:40px;
+}
+.hero h1{
+  font-size:clamp(2.4rem,6vw,3.6rem);
+  line-height:1.2;
+}
+body.adult .hero h1{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+}
+.hero p{
+  font-size:1.1rem;
+  max-width:520px;
+}
+
+/* ==================== الأزرار داخل الـ HERO ==================== */
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 26px;
+  border:1px solid var(--accent);
+  border-radius:10px;
+}
+body.kids .btn{
+  font-family:'Permanent Marker',cursive;
+  background:var(--accent);
+  color:#fff;
+}
+body.adult .btn{
+  background:transparent;
+  font-weight:500;
+}
+
+/* ==================== الشرائح المتحركة ==================== */
+.hero-visual{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.hero-visual::-webkit-scrollbar{display:none}
+.slide{
+  min-width:220px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:14px;
+  padding:40px 20px;
+  text-align:center;
+  scroll-snap-align:center;
+}
+body.kids .slide{
+  font-family:'Permanent Marker',cursive;
+  font-size:1.4rem;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* ==================== المحتوى العام ==================== */
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 24px;
+}
+section{margin-top:120px}
+h2{
+  font-size:2rem;
+}
+body.adult h2{
+  font-family:'Playfair Display',serif;
+}
+
+/* ==================== البطاقات ==================== */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+}
+.card{
+  padding:28px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:14px;
+}
+body.kids .card{
+  box-shadow:var(--shadow);
+  transform:rotate(-0.5deg);
+}
+
+/* ==================== الخريطة ==================== */
+#mapCanvas{
+  width:100%;
+  max-width:900px;
+  height:420px;
+  background:#fff;
+  border:1px solid var(--accent);
+  border-radius:20px;
+}
+
+/* ==================== الفوتر ==================== */
+footer{
+  margin-top:120px;
+  padding:30px;
+  text-align:center;
+  font-size:.85rem;
+  background:#fff;
+  border-top:1px solid var(--accent);
+}
+
+/* ==================== الاستجابة ==================== */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .main-nav{display:none}                 /* إخفاء القائمة على الشاشات الضيقة */
+}
+
+/* ========== دعم اللغة العربية (RTL) ========== */
+html[lang="ar"]{
+  direction:rtl;                     /* يغيّر اتجاه النص */
+}
+html[lang="ar"] body{
+  font-family:'Amiri',serif;
+}
+html[lang="ar"] .hero,
+html[lang="ar"] .wrap,
+html[lang="ar"] footer{
+  text-align:right;                 /* محاذاة محتوى الصفحة إلى اليمين */
+}
 </style>
 </head>
 
 <body class="kids">
 
 <header>
-<div class="header">
-<div class="logo" data-en="School of Awakening" data-ar="مدرسة الصحوة">School of Awakening</div>
+  <div class="header">
+    <!-- الشعار -->
+    <div class="logo"
+         data-en="School of Awakening"
+         data-ar="مدرسة الصحوة">School of Awakening</div>
 
-<nav class="main-nav">
-<ul>
-<li><a>Home</a></li>
+    <!-- القائمة الرئيسية -->
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#" data-en="Home" data-ar="الرئيسية">Home</a></li>
 
-<li class="dropdown">
-<a>Journey</a>
-<ul class="dropdown-content">
-<li><a>Confusion</a></li>
-<li><a>Healing</a></li>
-<li><a>Tawheed</a></li>
-<li><a>Faith</a></li>
-</ul>
-</li>
+        <!-- Journey – Dropdown -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn"
+             data-en="Journey" data-ar="الرحلة">Journey</a>
+          <ul class="dropdown-content">
+            <li><a href="#" data-en="Confusion" data-ar="الحيرة">Confusion</a></li>
+            <li><a href="#" data-en="Healing"   data-ar="الشفاء">Healing</a></li>
+            <li><a href="#" data-en="Tawheed"  data-ar="التوحيد">Tawheed</a></li>
+            <li><a href="#" data-en="The Prophet" data-ar="النبي">The Prophet</a></li>
+            <li><a href="#" data-en="Holy Quran" data-ar="القرآن الكريم">Holy Quran</a></li>
+            <li><a href="#" data-en="Faith" data-ar="الإيمان">Faith</a></li>
+            <li><a href="#" data-en="Choice" data-ar="الاختيار">Choice</a></li>
+            <li><a href="#" data-en="Death" data-ar="الموت">Death</a></li>
+            <li><a href="#" data-en="Barzakh" data-ar="البرزخ">Barzakh</a></li>
+            <li><a href="#" data-en="Judgment" data-ar="الحساب">Judgment</a></li>
+          </ul>
+        </li>
 
-<li><a>Map</a></li>
-<li><a>Film</a></li>
-</ul>
-</nav>
+        <li><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
+        <li><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
+        <li><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
+        <li><a href="#" data-en="Film" data-ar="فيلم">Film</a></li>
+        <li><a href="#" data-en="Join" data-ar="انضمام">Join</a></li>
+      </ul>
+    </nav>
 
-<div class="header-controls">
-<div class="mode-switch">
-<button>Adult</button>
-<button class="active">Kids</button>
-</div>
-<div class="lang-switch">
-<button class="active">English</button>
-<button>العربية</button>
-</div>
-</div>
-</div>
+    <!-- مجموعة التحكم (الوضع + اللغة) -->
+    <div class="header-controls">
+      <!-- وضع Kids / Adult -->
+      <div class="mode-switch">
+        <button id="adultBtn">Adult</button>
+        <button id="kidsBtn" class="active">Kids</button>
+      </div>
+
+      <!-- لغة English / العربية -->
+      <div class="lang-switch">
+        <button id="enBtn" class="active">English</button>
+        <button id="arBtn">العربية</button>
+      </div>
+    </div>
+  </div>
 </header>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1 data-en="Life is a journey.<br>Every traveller needs provision."
+          data-ar="الحياة رحلة.<br>كل مسافر يحتاج إلى ما يُعطيه.">
+        Life is a journey.<br>Every traveller needs provision.
+      </h1>
+
+      <p data-en="The Qur’an was meant to walk with you — not sit on a shelf."
+         data-ar="القرآن مرادف لك أن يسير معك — لا أن يُحفظ على رف.">
+        The Qur’an was meant to walk with you — not sit on a shelf.
+      </p>
+
+      <a class="btn"
+         href="#"
+         data-en="Begin the Journey"
+         data-ar="ابدأ الرحلة">Begin the Journey</a>
+    </div>
+
+    <div class="hero-visual">
+      <div class="slide">📖 Meaning</div>
+      <div class="slide">🌱 Awareness</div>
+      <div class="slide">🌙 Hereafter</div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <!-- ========= Who is this for? ========= -->
+  <section>
+    <h2 data-en="Who is this for?" data-ar="لمن هذا؟">Who is this for?</h2>
+    <div class="cards">
+      <div class="card"
+           data-en="Young hearts"
+           data-ar="قلوب شابة">🌱 Young hearts</div>
+      <div class="card"
+           data-en="Seekers"
+           data-ar="الباحثون">🧭 Seekers</div>
+      <div class="card"
+           data-en="Thinkers"
+           data-ar="المفكرون">🌙 Thinkers</div>
+      <div class="card"
+           data-en="Believers"
+           data-ar="المؤمنون">📖 Believers</div>
+    </div>
+  </section>
+
+  <!-- ========= The Map ========= -->
+  <section>
+    <h2 data-en="The Map" data-ar="الخريطة">The Map</h2>
+    <canvas id="mapCanvas" width="900" height="420"></canvas>
+  </section>
+
+</main>
+
+<footer>
+  © 2025 <span data-en="School of Awakening — A Path of Awareness"
+                data-ar="مدرسة الصحوة — طريق الوعي">School of Awakening — A Path of Awareness</span>
+</footer>
+
+<script>
+/* ==================== تبديل وضع (Kids / Adult) ==================== */
+const adultBtn = document.getElementById('adultBtn');
+const kidsBtn  = document.getElementById('kidsBtn');
+
+adultBtn.onclick = () => {
+  document.body.className = 'adult';
+  adultBtn.classList.add('active');
+  kidsBtn.classList.remove('active');
+  drawMap();
+};
+kidsBtn.onclick = () => {
+  document.body.className = 'kids';
+  kidsBtn.classList.add('active');
+  adultBtn.classList.remove('active');
+  drawMap();
+};
+
+/* ==================== تبديل اللغة (English ↔ Arabic) ==================== */
+const enBtn = document.getElementById('enBtn');
+const arBtn = document.getElementById('arBtn');
+
+function setLanguage(lang){
+  // 1️⃣ ضبط سمات <html>
+  document.documentElement.lang = lang;
+  document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
+
+  // 2️⃣ تعديل حالة الأزرار
+  enBtn.classList.toggle('active', lang === 'en');
+  arBtn.classList.toggle('active', lang === 'ar');
+
+  // 3️⃣ استبدال النصوص حسب data‑en / data‑ar
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
+  });
+}
+
+// تعيين اللغة الافتراضية (English) عند تحميل الصفحة
+setLanguage('en');
+enBtn.onclick = () => setLanguage('en');
+arBtn.onclick = () => setLanguage('ar');
+
+/* ==================== رسم الخريطة على الـ Canvas ==================== */
+const canvas = document.getElementById('mapCanvas');
+const ctx = canvas.getContext('2d');
+const zones = [
+  {x:140, y:260, r:28, label:'Al‑Mulk'},
+  {x:330, y:140, r:28, label:'Awareness'},
+  {x:520, y:260, r:28, label:'Meaning'},
+  {x:720, y:160, r:28, label:'Hereafter'}
+];
+
+function drawMap(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const accent = getComputedStyle(document.body).getPropertyValue('--accent');
+
+  ctx.strokeStyle = accent;
+  ctx.lineWidth   = 3;
+  ctx.beginPath();
+  zones.forEach((z,i)=>{ i ? ctx.lineTo(z.x,z.y) : ctx.moveTo(z.x,z.y); });
+  ctx.stroke();
+
+  zones.forEach(z=>{
+    ctx.beginPath();
+    ctx.fillStyle = '#fff';
+    ctx.arc(z.x,z.y,z.r,0,Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#000';
+    ctx.font = '14px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText(z.label, z.x, z.y + 44);
+  });
+}
+drawMap();
+</script>
 
 </body>
 </html>
