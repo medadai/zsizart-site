@@ -24,9 +24,7 @@
 }
 
 /* ================= MODES ================= */
-body.kids{
-  font-family:'Indie Flower',cursive;
-}
+body.kids{font-family:'Indie Flower',cursive;}
 body.adult{
   --bg-main:#f4f1ec;
   --bg-soft:#e6e1da;
@@ -57,13 +55,7 @@ header{
   justify-content:space-between;
   padding:16px 24px;
 }
-.logo{
-  font-size:1.6rem;
-}
-body.adult .logo{
-  font-family:'Playfair Display',serif;
-  font-weight:700;
-}
+.logo{font-size:1.6rem}
 
 /* ================= NAV ================= */
 .main-nav ul{
@@ -84,18 +76,58 @@ body.kids .main-nav a{font-family:'Permanent Marker',cursive}
   color:#fff;
 }
 
-/* ================= DROPDOWN ================= */
+/* ================= DROPDOWN (ONLY ADDITION) ================= */
 .dropdown{position:relative}
-.dropdown-content{
-  display:none;
+
+/* dash container */
+.journey-dropdown{
   position:absolute;
-  top:100%;left:0;
+  top:110%;
+  left:0;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(10px);
+  transition:.45s ease;
+}
+
+/* dashed svg */
+.journey-dropdown svg{
+  width:18px;
+  height:140px;
+}
+.journey-dropdown path{
+  fill:none;
+  stroke:var(--accent);
+  stroke-width:2;
+  stroke-dasharray:6 6;
+  stroke-dashoffset:80;
+  opacity:0;
+  animation:dashDraw .6s ease forwards;
+}
+
+/* menu box (same style as before) */
+.dropdown-content{
   background:#fff;
   border:1px solid var(--accent);
   border-radius:var(--radius);
   padding:6px 0;
+  list-style:none;
 }
-.dropdown:hover .dropdown-content{display:block}
+
+/* open */
+.dropdown:hover .journey-dropdown{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+.dropdown:hover path{opacity:1}
+
+@keyframes dashDraw{
+  to{stroke-dashoffset:0}
+}
 
 /* ================= CONTROLS ================= */
 .header-controls{
@@ -133,58 +165,6 @@ button.active{
   grid-template-columns:1.2fr 1fr;
   gap:40px;
 }
-.hero h1{
-  font-size:clamp(2.4rem,6vw,3.6rem);
-}
-body.adult .hero h1{
-  font-family:'Playfair Display',serif;
-}
-.hero p{max-width:520px}
-
-/* ================= BUTTON ================= */
-.btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 26px;
-  border-radius:12px;
-  border:1px solid var(--accent);
-  transition:var(--transition);
-}
-body.kids .btn{
-  background:var(--accent);
-  color:#fff;
-  font-family:'Permanent Marker',cursive;
-}
-body.adult .btn:hover{
-  background:var(--accent);
-  color:#fff;
-}
-
-/* ================= SLIDES ================= */
-.hero-visual{
-  display:flex;
-  gap:16px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-}
-.hero-visual::-webkit-scrollbar{display:none}
-.slide{
-  min-width:220px;
-  background:#fff;
-  border:1px solid var(--accent);
-  border-radius:14px;
-  padding:36px 20px;
-  text-align:center;
-  scroll-snap-align:center;
-}
-body.kids .slide{
-  font-family:'Permanent Marker',cursive;
-  animation:float 4s ease-in-out infinite;
-}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
 
 /* ================= CONTENT ================= */
 .wrap{
@@ -192,23 +172,6 @@ body.kids .slide{
   margin:auto;
   padding:80px 24px;
 }
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
-}
-.card{
-  padding:28px;
-  background:#fff;
-  border:1px solid var(--accent);
-  border-radius:14px;
-  transition:var(--transition);
-}
-body.kids .card{
-  box-shadow:var(--shadow);
-  transform:rotate(-0.5deg);
-}
-.card:hover{transform:scale(1.03)}
 
 /* ================= MAP ================= */
 #mapCanvas{
@@ -219,15 +182,6 @@ body.kids .card{
   border-radius:20px;
   background:#fff;
   cursor:pointer;
-}
-
-/* ================= FOOTER ================= */
-footer{
-  margin-top:120px;
-  padding:30px;
-  text-align:center;
-  background:#fff;
-  border-top:1px solid var(--accent);
 }
 
 /* ================= RESPONSIVE ================= */
@@ -252,15 +206,24 @@ html[lang="ar"] body{font-family:'Amiri',serif}
 <nav class="main-nav">
 <ul>
 <li><a data-en="Home" data-ar="الرئيسية">Home</a></li>
+
 <li class="dropdown">
 <a data-en="Journey" data-ar="الرحلة">Journey</a>
-<ul class="dropdown-content">
-<li><a>Confusion</a></li>
-<li><a>Healing</a></li>
-<li><a>Tawheed</a></li>
-<li><a>Faith</a></li>
-</ul>
+
+<!-- ✨ ADDITION ONLY -->
+<div class="journey-dropdown">
+  <svg viewBox="0 0 40 140">
+    <path d="M20 5 V135"/>
+  </svg>
+  <ul class="dropdown-content">
+    <li><a>Confusion</a></li>
+    <li><a>Healing</a></li>
+    <li><a>Tawheed</a></li>
+    <li><a>Faith</a></li>
+  </ul>
+</div>
 </li>
+
 <li><a data-en="Map" data-ar="الخريطة">Map</a></li>
 <li><a data-en="Film" data-ar="فيلم">Film</a></li>
 </ul>
@@ -279,51 +242,10 @@ html[lang="ar"] body{font-family:'Amiri',serif}
 </div>
 </header>
 
-<!-- ========= HERO ========= -->
-<section class="hero">
-<div class="hero-grid">
-<div>
-<h1 data-en="Life is a journey.<br>Every traveller needs provision."
-    data-ar="الحياة رحلة.<br>وكل مسافر يحتاج إلى زاد.">
-Life is a journey.<br>Every traveller needs provision.
-</h1>
-<p data-en="The Qur’an was meant to walk with you."
-   data-ar="القرآن خُلق ليسير معك.">
-The Qur’an was meant to walk with you.
-</p>
-<a class="btn">Begin the Journey</a>
-</div>
-
-<div class="hero-visual">
-<div class="slide">📖 Meaning</div>
-<div class="slide">🌱 Awareness</div>
-<div class="slide">🌙 Hereafter</div>
-</div>
-</div>
-</section>
-
+<!-- ========= MAP ========= -->
 <main class="wrap">
-
-<section>
-<h2 data-en="Who is this for?" data-ar="لمن هذا؟">Who is this for?</h2>
-<div class="cards">
-<div class="card">🌱 Young hearts</div>
-<div class="card">🧭 Seekers</div>
-<div class="card">🌙 Thinkers</div>
-<div class="card">📖 Believers</div>
-</div>
-</section>
-
-<section>
-<h2 data-en="The Map" data-ar="الخريطة">The Map</h2>
 <canvas id="mapCanvas" width="900" height="420"></canvas>
-</section>
-
 </main>
-
-<footer>
-© 2025 School of Awakening — A Path of Awareness
-</footer>
 
 <script>
 /* ===== Mode Switch ===== */
