@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 
 <style>
-/* ================= VARIABLES ================= */
 :root{
   --bg-main:#fff7d6;
   --bg-soft:#ffeaa7;
@@ -23,7 +22,7 @@
   --transition:.35s ease;
 }
 
-/* ================= MODES ================= */
+/* MODES */
 body.kids{font-family:'Indie Flower',cursive;}
 body.adult{
   --bg-main:#f4f1ec;
@@ -33,7 +32,7 @@ body.adult{
   font-family:'Inter',sans-serif;
 }
 
-/* ================= BASE ================= */
+/* BASE */
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -43,9 +42,11 @@ body{
 }
 a{text-decoration:none;color:inherit}
 
-/* ================= HEADER ================= */
+/* HEADER */
 header{
-  position:sticky;top:0;z-index:20;
+  position:sticky;
+  top:0;
+  z-index:20;
   background:rgba(255,255,255,.95);
   border-bottom:1px solid var(--accent);
 }
@@ -57,7 +58,7 @@ header{
 }
 .logo{font-size:1.6rem}
 
-/* ================= NAV ================= */
+/* NAV */
 .main-nav ul{
   display:flex;
   gap:18px;
@@ -76,60 +77,58 @@ body.kids .main-nav a{font-family:'Permanent Marker',cursive}
   color:#fff;
 }
 
-/* ================= DROPDOWN (ONLY ADDITION) ================= */
+/* ===== JOURNEY CUSTOM DROPDOWN (ONLY ADDITION) ===== */
 .dropdown{position:relative}
 
-/* dash container */
-.journey-dropdown{
+/* wrapper */
+.journey-wrap{
   position:absolute;
-  top:110%;
-  left:0;
+  top:120%;
+  left:50%;
+  transform:translateX(-50%);
   display:flex;
-  gap:14px;
-  align-items:flex-start;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
   opacity:0;
   pointer-events:none;
-  transform:translateY(10px);
-  transition:.45s ease;
+  transition:.4s ease;
 }
 
-/* dashed svg */
-.journey-dropdown svg{
-  width:18px;
-  height:140px;
+/* dashed line */
+.journey-line{
+  width:600px;
+  height:20px;
 }
-.journey-dropdown path{
+.journey-line path{
   fill:none;
   stroke:var(--accent);
   stroke-width:2;
   stroke-dasharray:6 6;
-  stroke-dashoffset:80;
-  opacity:0;
-  animation:dashDraw .6s ease forwards;
+  stroke-dashoffset:600;
+  transition:.6s ease;
 }
 
-/* menu box (same style as before) */
+/* menu horizontal */
 .dropdown-content{
-  background:#fff;
-  border:1px solid var(--accent);
-  border-radius:var(--radius);
-  padding:6px 0;
-  list-style:none;
+  display:flex;
+  gap:32px;
+  position:static;
+  background:transparent;
+  border:none;
+  padding:0;
 }
 
 /* open */
-.dropdown:hover .journey-dropdown{
+.dropdown:hover .journey-wrap{
   opacity:1;
   pointer-events:auto;
-  transform:translateY(0);
 }
-.dropdown:hover path{opacity:1}
-
-@keyframes dashDraw{
-  to{stroke-dashoffset:0}
+.dropdown:hover .journey-line path{
+  stroke-dashoffset:0;
 }
 
-/* ================= CONTROLS ================= */
+/* CONTROLS */
 .header-controls{
   display:flex;
   gap:10px;
@@ -153,7 +152,7 @@ button.active{
   color:#fff;
 }
 
-/* ================= HERO ================= */
+/* HERO */
 .hero{
   background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
   padding:120px 24px 80px;
@@ -165,15 +164,19 @@ button.active{
   grid-template-columns:1.2fr 1fr;
   gap:40px;
 }
+.hero h1{
+  font-size:clamp(2.4rem,6vw,3.6rem);
+}
+.hero p{max-width:520px}
 
-/* ================= CONTENT ================= */
+/* CONTENT */
 .wrap{
   max-width:1200px;
   margin:auto;
   padding:80px 24px;
 }
 
-/* ================= MAP ================= */
+/* MAP */
 #mapCanvas{
   width:100%;
   max-width:900px;
@@ -181,16 +184,23 @@ button.active{
   border:1px solid var(--accent);
   border-radius:20px;
   background:#fff;
-  cursor:pointer;
 }
 
-/* ================= RESPONSIVE ================= */
+/* FOOTER */
+footer{
+  margin-top:120px;
+  padding:30px;
+  text-align:center;
+  background:#fff;
+  border-top:1px solid var(--accent);
+}
+
+/* RESPONSIVE */
 @media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr}
   .main-nav{display:none}
 }
 
-/* ================= RTL ================= */
+/* RTL */
 html[lang="ar"]{direction:rtl}
 html[lang="ar"] body{font-family:'Amiri',serif}
 </style>
@@ -198,116 +208,56 @@ html[lang="ar"] body{font-family:'Amiri',serif}
 
 <body class="kids">
 
-<!-- ========= HEADER ========= -->
 <header>
 <div class="header">
-<div class="logo" data-en="School of Awakening" data-ar="مدرسة الصحوة">School of Awakening</div>
+<div class="logo">School of Awakening</div>
 
 <nav class="main-nav">
 <ul>
-<li><a data-en="Home" data-ar="الرئيسية">Home</a></li>
+<li><a>Home</a></li>
 
 <li class="dropdown">
-<a data-en="Journey" data-ar="الرحلة">Journey</a>
+<a>Journey</a>
 
-<!-- ✨ ADDITION ONLY -->
-<div class="journey-dropdown">
-  <svg viewBox="0 0 40 140">
-    <path d="M20 5 V135"/>
-  </svg>
-  <ul class="dropdown-content">
-    <li><a>Confusion</a></li>
-    <li><a>Healing</a></li>
-    <li><a>Tawheed</a></li>
-    <li><a>Faith</a></li>
-  </ul>
+<div class="journey-wrap">
+<svg class="journey-line" viewBox="0 0 600 20">
+<path d="M10 10 H590"/>
+</svg>
+
+<ul class="dropdown-content">
+<li><a>Confusion</a></li>
+<li><a>Healing</a></li>
+<li><a>Tawheed</a></li>
+<li><a>Faith</a></li>
+</ul>
 </div>
 </li>
 
-<li><a data-en="Map" data-ar="الخريطة">Map</a></li>
-<li><a data-en="Film" data-ar="فيلم">Film</a></li>
+<li><a>Map</a></li>
+<li><a>Film</a></li>
 </ul>
 </nav>
 
 <div class="header-controls">
 <div class="mode-switch">
-<button id="adultBtn">Adult</button>
-<button id="kidsBtn" class="active">Kids</button>
-</div>
-<div class="lang-switch">
-<button id="enBtn" class="active">English</button>
-<button id="arBtn">العربية</button>
+<button class="active">Kids</button>
 </div>
 </div>
 </div>
 </header>
 
-<!-- ========= MAP ========= -->
-<main class="wrap">
-<canvas id="mapCanvas" width="900" height="420"></canvas>
-</main>
+<section class="hero">
+<div class="hero-grid">
+<div>
+<h1>Life is a journey.<br>Every traveller needs provision.</h1>
+<p>The Qur’an was meant to walk with you.</p>
+</div>
+</div>
+</section>
 
-<script>
-/* ===== Mode Switch ===== */
-adultBtn.onclick=()=>{document.body.className='adult';adultBtn.classList.add('active');kidsBtn.classList.remove('active');drawMap()}
-kidsBtn.onclick=()=>{document.body.className='kids';kidsBtn.classList.add('active');adultBtn.classList.remove('active');drawMap()}
-
-/* ===== Language ===== */
-function setLanguage(lang){
-document.documentElement.lang=lang
-document.documentElement.dir=lang==='ar'?'rtl':'ltr'
-document.querySelectorAll('[data-en]').forEach(el=>{
-el.innerHTML=lang==='en'?el.dataset.en:el.dataset.ar
-})
-}
-enBtn.onclick=()=>setLanguage('en')
-arBtn.onclick=()=>setLanguage('ar')
-
-/* ===== Interactive Map ===== */
-const canvas=document.getElementById('mapCanvas')
-const ctx=canvas.getContext('2d')
-const zones=[
-{x:140,y:260,r:26,label:'Al-Mulk'},
-{x:330,y:140,r:26,label:'Awareness'},
-{x:520,y:260,r:26,label:'Meaning'},
-{x:720,y:160,r:26,label:'Hereafter'}
-]
-
-let hover=null
-
-canvas.onmousemove=e=>{
-const r=canvas.getBoundingClientRect()
-const mx=e.clientX-r.left,my=e.clientY-r.top
-hover=null
-zones.forEach((z,i)=>{
-if(Math.hypot(mx-z.x,my-z.y)<z.r)hover=i
-})
-drawMap()
-}
-
-function drawMap(){
-ctx.clearRect(0,0,canvas.width,canvas.height)
-const accent=getComputedStyle(document.body).getPropertyValue('--accent')
-ctx.strokeStyle=accent
-ctx.lineWidth=3
-ctx.beginPath()
-zones.forEach((z,i)=>i?ctx.lineTo(z.x,z.y):ctx.moveTo(z.x,z.y))
-ctx.stroke()
-
-zones.forEach((z,i)=>{
-ctx.beginPath()
-ctx.fillStyle=hover===i?accent:'#fff'
-ctx.arc(z.x,z.y,z.r,0,Math.PI*2)
-ctx.fill()
-ctx.stroke()
-ctx.fillStyle=hover===i?'#fff':'#000'
-ctx.font='14px Inter'
-ctx.textAlign='center'
-ctx.fillText(z.label,z.x,z.y+44)
-})
-}
-drawMap()
-</script>
+<footer>
+© 2025 School of Awakening
+</footer>
 
 </body>
 </html>
