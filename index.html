@@ -1,4 +1,8 @@
-Here is the corrected **index.html** with only the requested text replaced. All other code and content remain unchanged.
+Here’s the **updated file** with the requested changes:
+
+* **Adult** mode is now the default (`<body class="adult">` and the Adult button is active).  
+* The Kids/Adult switch has been turned into a **minimal slide‑out toggle** that appears when you move the mouse to the right edge of the screen.  
+* All other code and styling remain unchanged.
 
 ```html
 <!DOCTYPE html>
@@ -127,25 +131,6 @@ body.kids .main-nav a{
   pointer-events:auto;
 }
 
-/* -------- وضع (Kids/Adult) -------- */
-.mode-switch{
-  display:flex;
-  border:1px solid var(--accent);
-  border-radius:20px;
-  overflow:hidden;
-}
-.mode-switch button{
-  background:#fff;
-  border:none;
-  padding:6px 16px;
-  cursor:pointer;
-  font-size:.85rem;
-}
-.mode-switch button.active{
-  background:var(--accent);
-  color:#fff;
-}
-
 /* -------- لغة (English/Arabic) -------- */
 .lang-switch{
   display:flex;
@@ -164,6 +149,68 @@ body.kids .main-nav a{
 .lang-switch button.active{
   background:var(--accent);
   color:#fff;
+}
+
+/* ======== وضع (Kids/Adult) minimal toggle on right edge ======== */
+.mode-toggle{
+  position:fixed;
+  top:0;
+  right:0;
+  width:40px;
+  height:100%;
+  z-index:2000;
+}
+.mode-toggle .mode-trigger{
+  position:absolute;
+  top:0;
+  right:0;
+  width:10px;
+  height:100%;
+  cursor:pointer;
+}
+.mode-toggle .mode-switch{
+  position:absolute;
+  top:50%;
+  right:-80px;               /* hidden off‑screen */
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  background:var(--bg-soft);
+  border:1px solid var(--accent);
+  border-right:none;
+  border-radius:8px 0 0 8px;
+  overflow:hidden;
+  transition:right .3s ease;
+}
+.mode-toggle .mode-switch button{
+  background:transparent;
+  border:none;
+  padding:8px 12px;
+  cursor:pointer;
+  font-size:.9rem;
+  color:var(--text);
+}
+.mode-toggle .mode-switch button.active{
+  background:var(--accent);
+  color:#fff;
+}
+.mode-toggle .mode-switch:hover,
+.mode-toggle .mode-trigger:hover + .mode-switch{
+  right:0;
+}
+
+/* Adjust for small screens */
+@media(max-width:600px){
+  .mode-toggle{
+    width:30px;
+  }
+  .mode-toggle .mode-switch{
+    right:-60px;
+  }
+  .mode-toggle .mode-switch:hover,
+  .mode-toggle .mode-trigger:hover + .mode-switch{
+    right:0;
+  }
 }
 
 /* ==================== HERO ==================== */
@@ -308,7 +355,7 @@ html[lang="ar"] footer{
 </style>
 </head>
 
-<body class="kids">
+<body class="adult">
       
 <header>
   <div class="header">
@@ -348,14 +395,8 @@ html[lang="ar"] footer{
       </ul>
     </nav>
 
-    <!-- مجموعة التحكم (الوضع + اللغة) -->
+    <!-- مجموعة التحكم (اللغة فقط) -->
     <div class="header-controls">
-      <!-- وضع Kids / Adult -->
-      <div class="mode-switch">
-        <button id="adultBtn">Adult</button>
-        <button id="kidsBtn" class="active">Kids</button>
-      </div>
-
       <!-- لغة English / العربية -->
       <div class="lang-switch">
         <button id="enBtn" class="active">English</button>
@@ -364,6 +405,15 @@ html[lang="ar"] footer{
     </div>
   </div>
 </header>
+
+<!-- ==================== Slide‑out Kids/Adult toggle ==================== -->
+<div class="mode-toggle">
+  <div class="mode-trigger"></div>
+  <div class="mode-switch">
+    <button id="adultBtn" class="active">Adult</button>
+    <button id="kidsBtn">Kids</button>
+  </div>
+</div>
 
 <!-- ==================== HERO ==================== -->
 <section class="hero">
