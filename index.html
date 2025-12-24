@@ -352,11 +352,129 @@ html[lang="ar"] footer{
   background:var(--accent);
   opacity:0.8;
 }
+
+/* -------------------------------------------------
+   === SCRIBBLE STYLE – ONLY IN KIDS MODE ===
+   ------------------------------------------------- */
+
+/* overwrite palette when we are in kids mode */
+body.kids{
+  --bg-main:#e6D5C3;      /* solid paper background               */
+  --bg-soft:#BAAFA3;      /* secondary surface                    */
+  --card:#e1DAD7;         /* cards / zones                        */
+  --text:#817065;         /* main headings & body text            */
+  --accent:#70794F;       /* solid green – borders & strokes       */
+  --accent-trans:rgba(112,121,79,0.6);
+  --radius:12px;
+  --shadow:4px 4px 0 var(--accent);
+}
+
+/* ----- dot background (only visible in kids) ----- */
+body:not(.kids) .dot-bg{
+  display:none;
+}
+.dot-bg{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:-2;
+  background-image:
+    radial-gradient(circle 1px at 3px 3px, var(--accent) 100%, transparent 0%);
+  background-size:20px 20px;
+}
+.dot-bg::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
+                              transparent,
+                              rgba(255,255,255,0.6));
+  opacity:0;
+  transition:opacity .3s ease;
+}
+body.kids:hover .dot-bg::after{
+  opacity:1;
+}
+
+/* ----- header – hand‑written look ----- */
+body.kids header{
+  background:transparent;
+  border-bottom:2px solid var(--accent);
+  transition:background .3s,box-shadow .3s;
+}
+body.kids header:hover{
+  background:rgba(255,255,255,.9);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+/* ----- logo & navigation ----- */
+body.kids .logo{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+}
+body.kids .main-nav a{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+  transition:background .2s,color .2s,transform .2s;
+}
+body.kids .main-nav a:hover{
+  background:var(--accent-trans);
+  color:#fff;
+  transform:scale(1.1);
+}
+
+/* ----- HERO ----- */
+body.kids .hero{
+  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
+}
+body.kids .hero h1{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+}
+body.kids .hero p{
+  color:var(--text);
+}
+
+/* ----- BUTTONS inside HERO (primary) ----- */
+body.kids .btn{
+  background:var(--accent-trans);
+  color:#fff;
+  border:2px solid var(--accent);
+  border-radius:var(--radius);
+}
+body.kids .btn:hover{
+  background:#fff;
+  color:var(--accent);
+  transform:scale(1.05);
+}
+
+/* ----- CARDS ----- */
+body.kids .card{
+  background:var(--card);
+  border:2px solid var(--accent);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  transform:none;
+}
+
+/* ----- SECTION HEADINGS ----- */
+body.kids h2{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+}
+
+/* ----- FOOTER ----- */
+body.kids footer{
+  background:#fff;
+  border-top:1px solid var(--accent);
+}
 </style>
 </head>
 
 <body class="adult">
-      
+
+<!-- ------- DOT BACKGROUND (only visible in kids mode) ------- -->
+<div class="dot-bg"></div>
+
 <header>
   <div class="header">
     <!-- الشعار -->
@@ -508,23 +626,21 @@ function setLanguage(lang){
   document.documentElement.lang = lang;
   document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
 
-  // 2️⃣ استبدال النصوص حسب data‑en / data‑ar
+  // 2️⃣ تعديل حالة الأزرار
+  langBtn.textContent = (lang === 'en') ? 'ع' : 'E';
+
+  // 3️⃣ استبدال النصوص حسب data‑en / data‑ar
   document.querySelectorAll('[data-en]').forEach(el => {
     el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
   });
-
-  // 3️⃣ تحديث زر اللغة (ع عندما يكون الموقع الآن بالإنجليزية، وإلا إظهار E)
-  langBtn.textContent = (lang === 'en') ? 'ع' : 'E';
 }
 
 // اللغة الافتراضية (English) عند تحميل الصفحة
 setLanguage('en');
-
-// تبديل اللغة عند الضغط على الزر
-langBtn.addEventListener('click', () => {
+langBtn.onclick = () => {
   const newLang = document.documentElement.lang === 'en' ? 'ar' : 'en';
   setLanguage(newLang);
-});
+};
 
 /* ==================== رسم الخريطة على الـ Canvas ==================== */
 const canvas = document.getElementById('mapCanvas');
@@ -560,6 +676,16 @@ function drawMap(){
   });
 }
 drawMap();
+
+/* ==================== Spotlight (dot‑background) – always active ==================== */
+(function initSpotlight(){
+  const dotLayer = document.querySelector('.dot-bg');
+  if (!dotLayer) return;
+  document.addEventListener('mousemove', e => {
+    dotLayer.style.setProperty('--x', `${e.clientX}px`);
+    dotLayer.style.setProperty('--y', `${e.clientY}px`);
+  });
+})();
 </script>
 
 </body>
