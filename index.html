@@ -57,12 +57,10 @@ header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  /* 50 % larger padding (original 16px / 24px) */
-  padding:24px 36px;
+  padding:16px 24px;
 }
 .logo{
-  /* 50 % larger – 1.6rem × 1.5 = 2.4rem */
-  font-size:2.4rem;
+  font-size:1.6rem;
 }
 body.adult .logo{
   font-family:'Playfair Display',serif;
@@ -78,8 +76,7 @@ body.adult .logo{
   padding:0;
 }
 .main-nav a{
-  /* 50 % larger – 0.95rem × 1.5 = 1.425rem */
-  font-size:1.425rem;
+  font-size:.95rem;
   color:inherit;
   display:block;
   padding:6px 12px;
@@ -95,7 +92,37 @@ body.kids .main-nav a{
 /* ================= DROPDOWN (VERTICAL + DOWN) ================= */
 .dropdown{position:relative}
 
-/* … (unchanged) … */
+.dropdown-content{
+  position:absolute;
+  top:140%;
+  left:50%;
+  transform:translateX(-50%) scaleY(0);
+  transform-origin:top center;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+
+  padding:18px 30px;
+  background:var(--bg-main);
+
+  border:2px dashed var(--accent);
+  border-radius:0;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:
+    transform .5s cubic-bezier(.25,1,.35,1),
+    opacity .25s ease;
+}
+
+.dropdown:hover .dropdown-content{
+  transform:translateX(-50%) scaleY(1);
+  opacity:1;
+  pointer-events:auto;
+}
 
 /* ======== وضع (Kids/Adult) minimal toggle on right edge ======== */
 .mode-toggle{
@@ -157,28 +184,6 @@ body.kids .main-nav a{
   .mode-toggle .mode-trigger:hover + .mode-switch{
     right:0;
   }
-}
-
-/* -------- لغة (English/Arabic) -------- */
-.lang-switch{
-  display:flex;
-  border:1px solid var(--accent);
-  border-radius:20px;
-  overflow:hidden;
-  margin-left:12px;                        /* فاصل بين المجموعتين */
-}
-.lang-switch button{
-  background:#fff;
-  border:none;
-  padding:6px 16px;
-  cursor:pointer;
-  /* 50 % larger – 0.85rem × 1.5 = 1.275rem */
-  font-size:1.275rem;
-  color:var(--text);
-}
-.lang-switch button.active{
-  background:var(--accent);
-  color:#fff;
 }
 
 /* ==================== HERO ==================== */
@@ -352,18 +357,19 @@ html[lang="ar"] footer{
    === SCRIBBLE STYLE – ONLY IN KIDS MODE ===
    ------------------------------------------------- */
 
+/* overwrite palette when we are in kids mode */
 body.kids{
-  --bg-main:#e6D5C3;
-  --bg-soft:#BAAFA3;
-  --card:#e1DAD7;
-  --text:#817065;
-  --accent:#70794F;
+  --bg-main:#e6D5C3;      /* solid paper background               */
+  --bg-soft:#BAAFA3;      /* secondary surface                    */
+  --card:#e1DAD7;         /* cards / zones                        */
+  --text:#817065;         /* main headings & body text            */
+  --accent:#70794F;       /* solid green – borders & strokes       */
   --accent-trans:rgba(112,121,79,0.6);
   --radius:12px;
   --shadow:4px 4px 0 var(--accent);
 }
 
-/* dot background (only visible in kids) */
+/* ----- dot background (only visible in kids) ----- */
 body:not(.kids) .dot-bg{
   display:none;
 }
@@ -389,7 +395,7 @@ body.kids:hover .dot-bg::after{
   opacity:1;
 }
 
-/* header – hand‑written look */
+/* ----- header – hand‑written look ----- */
 body.kids header{
   background:transparent;
   border-bottom:2px solid var(--accent);
@@ -400,7 +406,7 @@ body.kids header:hover{
   box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-/* logo & navigation */
+/* ----- logo & navigation ----- */
 body.kids .logo{
   font-family:'Permanent Marker',cursive;
   color:var(--text);
@@ -416,7 +422,7 @@ body.kids .main-nav a:hover{
   transform:scale(1.1);
 }
 
-/* HERO */
+/* ----- HERO ----- */
 body.kids .hero{
   background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
 }
@@ -428,7 +434,7 @@ body.kids .hero p{
   color:var(--text);
 }
 
-/* BUTTONS inside HERO (primary) */
+/* ----- BUTTONS inside HERO (primary) ----- */
 body.kids .btn{
   background:var(--accent-trans);
   color:#fff;
@@ -441,7 +447,7 @@ body.kids .btn:hover{
   transform:scale(1.05);
 }
 
-/* CARDS */
+/* ----- CARDS ----- */
 body.kids .card{
   background:var(--card);
   border:2px solid var(--accent);
@@ -450,13 +456,13 @@ body.kids .card{
   transform:none;
 }
 
-/* SECTION HEADINGS */
+/* ----- SECTION HEADINGS ----- */
 body.kids h2{
   font-family:'Permanent Marker',cursive;
   color:var(--text);
 }
 
-/* FOOTER */
+/* ----- FOOTER ----- */
 body.kids footer{
   background:#fff;
   border-top:1px solid var(--accent);
@@ -466,7 +472,7 @@ body.kids footer{
 
 <body class="adult">
 
-<!-- DOT BACKGROUND (only visible in kids mode) -->
+<!-- ------- DOT BACKGROUND (only visible in kids mode) ------- -->
 <div class="dot-bg"></div>
 
 <header>
@@ -480,6 +486,7 @@ body.kids footer{
     <nav class="main-nav">
       <ul>
         <li><a href="#" data-en="Home" data-ar="الرئيسية">Home</a></li>
+
         <!-- Journey – Dropdown -->
         <li class="dropdown">
           <a href="#" class="dropbtn"
@@ -512,11 +519,6 @@ body.kids footer{
       <div class="mode-switch">
         <button id="adultBtn" class="active">Adult</button>
         <button id="kidsBtn">Kids</button>
-      </div>
-      <!-- لغة English / العربية -->
-      <div class="lang-switch">
-        <button id="enBtn" class="active">English</button>
-        <button id="arBtn">العربية</button>
       </div>
     </div>
   </div>
@@ -617,8 +619,6 @@ kidsBtn.onclick = () => {
 };
 
 /* ==================== تبديل اللغة (English ↔ Arabic) ==================== */
-const enBtn = document.getElementById('enBtn');
-const arBtn = document.getElementById('arBtn');
 const langBtn = document.getElementById('langBtn');
 
 function setLanguage(lang){
@@ -626,7 +626,7 @@ function setLanguage(lang){
   document.documentElement.lang = lang;
   document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
 
-  // 2️⃣ زر اللغة المستدير – إظهار العكس
+  // 2️⃣ تعديل حالة الأزرار
   langBtn.textContent = (lang === 'en') ? 'ع' : 'E';
 
   // 3️⃣ استبدال النصوص حسب data‑en / data‑ar
@@ -637,8 +637,10 @@ function setLanguage(lang){
 
 // اللغة الافتراضية (English) عند تحميل الصفحة
 setLanguage('en');
-enBtn.onclick = () => setLanguage('en');
-arBtn.onclick = () => setLanguage('ar');
+langBtn.onclick = () => {
+  const newLang = document.documentElement.lang === 'en' ? 'ar' : 'en';
+  setLanguage(newLang);
+};
 
 /* ==================== رسم الخريطة على الـ Canvas ==================== */
 const canvas = document.getElementById('mapCanvas');
