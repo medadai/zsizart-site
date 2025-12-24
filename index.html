@@ -472,62 +472,7 @@ body.kids footer{
 
 <!-- ------- DOT BACKGROUND (only visible in kids mode) ------- -->
 <div class="dot-bg"></div>
-}
-      /* =====================================================
-   FIX + HEADER EXTEND DROPDOWN (Journey)
-   إضافة فقط – بدون حذف أي كود
-===================================================== */
 
-/* خلي الهيدر يتمدد لتحت */
-header{
-  overflow:hidden;
-}
-
-/* Override على dropdown الحالي */
-.dropdown-content{
-  position:static !important;     /* مش عايم */
-  transform:none !important;
-
-  max-height:0;
-  overflow:hidden;
-
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:18px;
-
-  padding:0 24px;
-  margin:0;
-
-  background:transparent;
-  border:none;
-
-  opacity:1;
-  pointer-events:auto;
-
-  transition:
-    max-height .45s ease,
-    padding .35s ease;
-}
-
-/* لما أقف على Journey */
-.dropdown:hover .dropdown-content{
-  max-height:260px;               /* الهيدر يتمدد */
-  padding:20px 24px;
-}
-
-/* انسيابية العناصر */
-.dropdown-content a{
-  opacity:0;
-  transform:translateY(-6px);
-  transition:.25s ease;
-}
-
-.dropdown:hover .dropdown-content a{
-  opacity:1;
-  transform:translateY(0);
-}
 <header>
   <div class="header">
     <!-- الشعار -->
