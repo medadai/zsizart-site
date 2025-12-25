@@ -145,10 +145,6 @@ body.kids .nav-item > a:hover{
   transform:translateX(-50%) translateY(0);
   pointer-events:auto;
 }
-.mega-col h4{
-  margin-bottom:15px;
-  font-size:16px;
-}
 .mega-col a{
   display:block;
   margin-bottom:10px;
@@ -164,7 +160,7 @@ body.kids .nav-item > a:hover{
   .nav-links{display:none}
 }
 
-/* ==================== 4️⃣  MODE‑TOGGLE (ADULT / KIDS) – inside header ==================== */
+/* ==================== 4️⃣  MODE‑TOGGLE (Adult / Kids) – inside header ==================== */
 .header-controls .mode-switch button{
   background:transparent;
   border:none;
@@ -434,19 +430,18 @@ body.kids footer{
 
           <div class="mega-menu">
             <div class="mega-col">
-              <h4 data-en="Stage 1" data-ar="المرحلة 1">Stage 1</h4>
               <a href="#" data-en="Confusion" data-ar="الحيرة">Confusion</a>
               <a href="#" data-en="Healing"   data-ar="الشفاء">Healing</a>
               <a href="#" data-en="Tawheed"  data-ar="التوحيد">Tawheed</a>
             </div>
+
             <div class="mega-col">
-              <h4 data-en="Stage 2" data-ar="المرحلة 2">Stage 2</h4>
               <a href="#" data-en="The Prophet" data-ar="النبي">The Prophet</a>
               <a href="#" data-en="Holy Quran" data-ar="القرآن الكريم">Holy Quran</a>
               <a href="#" data-en="Faith" data-ar="الإيمان">Faith</a>
             </div>
+
             <div class="mega-col">
-              <h4 data-en="Stage 3" data-ar="المرحلة 3">Stage 3</h4>
               <a href="#" data-en="Choice" data-ar="الاختيار">Choice</a>
               <a href="#" data-en="Death" data-ar="الموت">Death</a>
               <a href="#" data-en="Barzakh" data-ar="البرزخ">Barzakh</a>
@@ -547,7 +542,7 @@ const kidsBtn  = document.getElementById('kidsBtn');
 
 function setMode(mode){
   document.body.className = mode;              // "adult" or "kids"
-  drawMap();                                   // redraw map with the new accent colour
+  drawMap();                                   // redraw map with new accent colour
   adultBtn.classList.toggle('active', mode === 'adult');
   kidsBtn .classList.toggle('active', mode === 'kids');
 }
