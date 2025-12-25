@@ -29,18 +29,23 @@
 }
 
 /* ==========================================================
-   1️⃣  ADULT & KIDS PALETTES  (now work on body *or* any .kids element)
+   1️⃣  ADULT & KIDS PALETTES (apply to body **or** any wrapper)
    ========================================================== */
-body.adult{
+body.kids,
+.kids{
+  font-family:'Indie Flower',cursive;
+}
+body.adult,
+.adult{
   --bg-main:#f4f1ec;
   --bg-soft:#e6e1da;
   --accent:#3f4a3c;
   --shadow:none;
   font-family:'Inter',sans-serif;
 }
-body.kids,
+
+/* Kids‑specific palette (overwrites defaults) */
 .kids{
-  font-family:'Indie Flower',cursive;
   --bg-main:#e6D5C3;
   --bg-soft:#BAAFA3;
   --card:#e1DAD7;
@@ -58,7 +63,6 @@ body{
   margin:0;
   background:var(--bg-main);
   color:var(--text);
-  overflow-x:hidden;               /* hide the viewport while sliding */
   transition:.3s;
 }
 a{text-decoration:none;color:inherit}
@@ -82,10 +86,17 @@ header{
 .logo{
   font-size:1.6rem;
 }
-body.adult .logo,
-.adult .logo{
+.adult .logo,
+body.adult .logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
+}
+
+/* Kids logo */
+.kids .logo,
+body.kids .logo{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
 }
 
 /* NAVIGATION */
@@ -107,18 +118,16 @@ nav{
   padding:10px 5px;
   color:inherit;
 }
-
-/* Kids‑specific navigation font */
-body.kids .nav-item a,
-.kids .nav-item a{
+.kids .nav-item a,
+body.kids .nav-item a{
   font-family:'Permanent Marker',cursive;
 }
 .nav-item > a:hover{
   background:var(--accent);
   color:#fff;
 }
-body.kids .nav-item > a:hover,
-.kids .nav-item > a:hover{
+.kids .nav-item > a:hover,
+body.kids .nav-item > a:hover{
   background:var(--accent-trans);
   transform:scale(1.1);
 }
@@ -223,14 +232,23 @@ body.kids .nav-item > a:hover,
   font-size:clamp(2.4rem,6vw,3.6rem);
   line-height:1.2;
 }
-body.adult .hero h1,
-.adult .hero h1{
+.adult .hero h1,
+body.adult .hero h1{
   font-family:'Playfair Display',serif;
   font-weight:700;
+}
+.kids .hero h1,
+body.kids .hero h1{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
 }
 .hero p{
   font-size:1.1rem;
   max-width:520px;
+}
+.kids .hero p,
+body.kids .hero p{
+  color:var(--text);
 }
 
 /* Buttons inside hero */
@@ -241,14 +259,14 @@ body.adult .hero h1,
   border:1px solid var(--accent);
   border-radius:10px;
 }
-body.kids .btn,
-.kids .btn{
+.kids .btn,
+body.kids .btn{
   font-family:'Permanent Marker',cursive;
   background:var(--accent);
   color:#fff;
 }
-body.adult .btn,
-.adult .btn{
+.adult .btn,
+body.adult .btn{
   background:transparent;
   font-weight:500;
 }
@@ -270,8 +288,8 @@ body.adult .btn,
   text-align:center;
   scroll-snap-align:center;
 }
-body.kids .slide,
-.kids .slide{
+.kids .slide,
+body.kids .slide{
   font-family:'Permanent Marker',cursive;
   font-size:1.4rem;
   animation:float 4s ease-in-out infinite;
@@ -282,15 +300,11 @@ body.kids .slide,
 }
 
 /* ==========================================================
-   6️⃣  PAGE CONTAINER (the sliding element)
+   6️⃣  PAGE WRAPPER (the element that hides the gap)
    ========================================================== */
-#pageContainer{
+#pageWrapper{
   position:relative;
-  overflow:hidden;
-  width:100%;
-}
-#page{
-  position:relative;
+  overflow:hidden;          /* hides the empty space while sliding */
 }
 
 /* ==========================================================
@@ -305,8 +319,8 @@ section{margin-top:120px}
 h2{
   font-size:2rem;
 }
-body.adult h2,
-.adult h2{
+.adult h2,
+body.adult h2{
   font-family:'Playfair Display',serif;
 }
 
@@ -322,8 +336,8 @@ body.adult h2,
   border:1px solid var(--accent);
   border-radius:14px;
 }
-body.kids .card,
-.kids .card{
+.kids .card,
+body.kids .card{
   background:var(--card);
   border:2px solid var(--accent);
   border-radius:var(--radius);
@@ -398,80 +412,46 @@ body:not(.kids) .dot-bg{display:none}
   opacity:0;
   transition:opacity .3s ease;
 }
-body.kids:hover .dot-bg::after{opacity:1}
+.kids:hover .dot-bg::after{opacity:1}
 
 /* Header – hand‑written look (Kids) */
-body.kids header,
-.kids header{
+.kids header,
+body.kids header{
   background:transparent;
   border-bottom:2px solid var(--accent);
   transition:background .3s,box-shadow .3s;
 }
-body.kids header:hover,
-.kids header:hover{
+.kids header:hover,
+body.kids header:hover{
   background:rgba(255,255,255,.9);
   box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-/* Logo & navigation (Kids) */
-body.kids .logo,
-.kids .logo{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
-}
-body.kids .nav-item a,
-.kids .nav-item a{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
-  transition:background .2s,color .2s,transform .2s;
-}
-body.kids .nav-item a:hover,
-.kids .nav-item a:hover{
-  background:var(--accent-trans);
-  color:#fff;
-  transform:scale(1.1);
-}
-
-/* HERO (Kids) */
-body.kids .hero,
-.kids .hero{
-  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
-}
-body.kids .hero h1,
-.kids .hero h1{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
-}
-body.kids .hero p,
-.kids .hero p{
-  color:var(--text);
-}
-
-/* HERO BUTTON (Kids) */
-body.kids .btn,
-.kids .btn{
+/* Hero button (Kids) */
+.kids .btn,
+body.kids .btn{
   background:var(--accent-trans);
   color:#fff;
   border:2px solid var(--accent);
   border-radius:var(--radius);
 }
-body.kids .btn:hover,
-.kids .btn:hover{
+.kids .btn:hover,
+body.kids .btn:hover{
   background:#fff;
   color:var(--accent);
   transform:scale(1.05);
 }
 
-/* SECTION HEADINGS (Kids) */
-body.kids h2,
-.kids h2{
+/* Section headings (Kids) */
+.kids h2,
+body.kids h2{
   font-family:'Permanent Marker',cursive;
   color:var(--text);
 }
 
-/* FOOTER (Kids) */
-body.kids footer,
-.kids footer{
+/* Footer (Kids) */
+.kids footer,
+body.kids footer{
   background:#fff;
   border-top:1px solid var(--accent);
 }
@@ -485,6 +465,7 @@ body.kids footer,
 
 <header>
   <div class="header">
+
     <!-- LOGO -->
     <div class="logo"
          data-en="School of Awakening"
@@ -529,12 +510,12 @@ body.kids footer,
   </div>
 </header>
 
-<!-- Language toggle (round button) -->
+<!-- LANGUAGE TOGGLE (round button) -->
 <div class="lang-toggle">
   <button id="langBtn">ع</button>
 </div>
 
-<!-- Mode‑toggle (">" button) -->
+<!-- MODE‑TOGGLE (">" button) -->
 <div class="mode-toggle">
   <button class="mode-trigger" aria-label="Switch mode">&#9654;</button>
   <div class="mode-switch">
@@ -543,11 +524,11 @@ body.kids footer,
   </div>
 </div>
 
-<!-- PAGE CONTAINER – the element that slides -->
-<div id="pageContainer">
+<!-- PAGE WRAPPER – the sliding container -->
+<div id="pageWrapper">
   <div id="page">
 
-    <!-- HERO -->
+    <!-- ==================== HERO ==================== -->
     <section class="hero">
       <div class="hero-grid">
         <div>
@@ -610,7 +591,7 @@ body.kids footer,
     </footer>
 
   </div> <!-- end #page -->
-</div> <!-- end #pageContainer -->
+</div> <!-- end #pageWrapper -->
 
 <script>
 /* ---------------------------------------------------------
@@ -634,7 +615,7 @@ langBtn.onclick = () => {
 };
 
 /* ---------------------------------------------------------
-   1️⃣  MAP DRAWING – (re‑gets canvas each call so it works after swap)
+   1️⃣  MAP DRAWING (gets fresh canvas each call)
    --------------------------------------------------------- */
 function drawMap(){
   const canvas = document.getElementById('mapCanvas');
@@ -685,80 +666,75 @@ drawMap();
 })();
 
 /* ---------------------------------------------------------
-   3️⃣  MODE SWITCH – QUICK slide, “>” button reveals Adult/Kids
+   3️⃣  MODE SWITCH – *push* slide animation (no gap)
    --------------------------------------------------------- */
 const adultBtns = document.querySelectorAll('#adultBtn');
 const kidsBtns  = document.querySelectorAll('#kidsBtn');
+
 let currentMode = document.body.classList.contains('kids') ? 'kids' : 'adult';
+let currentPage = document.getElementById('page');
+const wrapper    = document.getElementById('pageWrapper');
 
 function setActiveButtons(mode){
   adultBtns.forEach(b=>b.classList.toggle('active', mode==='adult'));
   kidsBtns .forEach(b=>b.classList.toggle('active', mode==='kids'));
 }
 
-/*  Core sliding function  */
+/* Core slide function --------------------------------------------------- */
 function slideToMode(targetMode){
-  if (currentMode===targetMode) return;
+  if (currentMode===targetMode) return;      // nothing to do
 
-  const container = document.getElementById('pageContainer');
-  const oldPage   = document.getElementById('page');
+  /* --------- 1️⃣ create the incoming page (clone) ---------------------- */
+  const incoming = currentPage.cloneNode(true);
+  incoming.id = 'incomingPage';
+  incoming.classList.add(targetMode);      // give it the right palette
+  incoming.style.position = 'absolute';
+  incoming.style.top = '0';
+  incoming.style.left = '0';
+  incoming.style.width = '100%';
+  incoming.style.transition = 'transform .3s ease';
 
-  /* ---- clone the whole page (content only) ---- */
-  const newPage = oldPage.cloneNode(true);
-  newPage.id = 'pageNext';
-  newPage.classList.add(targetMode);          // give it the new palette
-  container.appendChild(newPage);
+  // start off‑screen (right for Kids, left for Adult)
+  const startX = (targetMode==='adult') ? '-100%' : '100%';
+  incoming.style.transform = `translateX(${startX})`;
 
-  /* ---- positioning ---- */
-  const direction = (targetMode==='adult') ? 1 : -1;   // adult comes from left, kids from right
-  const outOffset = -direction * 100;                 // old page moves opposite to direction
-  const inStart   = direction * 100;                 // new page starts opposite side
+  // append to wrapper (it will sit on top of the current page)
+  wrapper.appendChild(incoming);
 
-  // make new page absolute and off‑screen
-  newPage.style.position = 'absolute';
-  newPage.style.top      = '0';
-  newPage.style.left     = '0';
-  newPage.style.width    = '100%';
-  newPage.style.transform = `translateX(${inStart}%)`;
+  /* --------- 2️⃣ slide both pages ----------------------------------- */
+  // move current page out
+  const outX = (targetMode==='adult') ? '100%' : '-100%';
+  currentPage.style.transition = 'transform .3s ease';
+  currentPage.style.transform = `translateX(${outX})`;
 
-  // ensure transitions are set
-  oldPage.style.transition = 'transform .3s ease';
-  newPage.style.transition = 'transform .3s ease';
+  // force re‑flow before starting the animation of the incoming page
+  void incoming.offsetWidth;
+  incoming.style.transform = 'translateX(0)';
 
-  // force re‑flow before starting animation
-  void newPage.offsetWidth;
+  /* --------- 3️⃣ clean‑up after animation --------------------------- */
+  const onEnd = () => {
+    // remove listener to avoid multiple calls
+    incoming.removeEventListener('transitionend', onEnd);
 
-  // start sliding
-  requestAnimationFrame(()=>{
-    oldPage.style.transform = `translateX(${outOffset}%)`;
-    newPage.style.transform = 'translateX(0)';
-  });
+    // remove the old page and rename the incoming one
+    wrapper.removeChild(currentPage);
+    incoming.id = 'page';
+    currentPage = incoming;                 // keep reference for next toggle
 
-  /* ---- when animation finishes ---- */
-  const cleanUp = () => {
-    // remove old page & clean styles
-    oldPage.remove();
-    newPage.id = 'page';
-    newPage.style.position = 'relative';
-    newPage.style.transform = '';
-    newPage.style.transition = '';
-
-    // now set the body class for the *real* mode (so the rest of the UI follows)
+    // finally switch the body class (so the rest of the page follows)
     document.body.className = targetMode;
     currentMode = targetMode;
     setActiveButtons(targetMode);
-    drawMap();                     // redraw map on the (new) canvas
-
-    newPage.removeEventListener('transitionend', cleanUp);
+    drawMap();                              // redraw canvas with new accent
   };
-  newPage.addEventListener('transitionend', cleanUp);
+  incoming.addEventListener('transitionend', onEnd);
 }
 
-/* Attach listeners (both sets of buttons share the same IDs) */
+/* Attach listeners (both Adult / Kids buttons share the same IDs) */
 adultBtns.forEach(b=>b.addEventListener('click',()=>slideToMode('adult')));
 kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 
-/* initialise active state */
+/* Initialise active state */
 setActiveButtons(currentMode);
 </script>
 
