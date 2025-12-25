@@ -14,8 +14,10 @@
       rel="stylesheet">                            <!-- Arabic (optional) -->
 
 <style>
-/* ==================== 0️⃣  RESET & GLOBAL VARIABLES ==================== */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+/* ==========================================================
+   0️⃣  RESET & GLOBAL VARIABLES
+   ========================================================== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 :root{
   --bg-main:#fff7d6;
   --bg-soft:#ffeaa7;
@@ -26,20 +28,11 @@
   --shadow:5px 5px 0 var(--accent);
 }
 
-/* ==================== 1️⃣  ADULT & KIDS MODE ==================== */
+/* ==========================================================
+   1️⃣  ADULT & KIDS MODE (palette overrides)
+   ========================================================== */
 body.kids{
   font-family:'Indie Flower',cursive;
-}
-body.adult{
-  --bg-main:#f4f1ec;
-  --bg-soft:#e6e1da;
-  --accent:#3f4a3c;
-  --shadow:none;
-  font-family:'Inter',sans-serif;
-}
-
-/* ---- Kids colour palette (overwrites the defaults) ---- */
-body.kids{
   --bg-main:#e6D5C3;
   --bg-soft:#BAAFA3;
   --card:#e1DAD7;
@@ -49,17 +42,29 @@ body.kids{
   --radius:12px;
   --shadow:4px 4px 0 var(--accent);
 }
+body.adult{
+  --bg-main:#f4f1ec;
+  --bg-soft:#e6e1da;
+  --accent:#3f4a3c;
+  --shadow:none;
+  font-family:'Inter',sans-serif;
+}
 
-/* ==================== 2️⃣  BASIC PAGE STYLE ==================== */
+/* ==========================================================
+   2️⃣  BASIC PAGE STYLE
+   ========================================================== */
 body{
   margin:0;
   background:var(--bg-main);
   color:var(--text);
+  overflow-x:hidden;               /* hide scrollbars during slide animation */
   transition:.3s;
 }
 a{text-decoration:none;color:inherit}
 
-/* ==================== 3️⃣  HEADER & NAVIGATION (EXXETA STYLE) ==================== */
+/* ==========================================================
+   3️⃣  HEADER & NAVIGATION (Exxeta‑style mega‑menu)
+   ========================================================== */
 header{
   position:sticky;top:0;z-index:10;
   background:rgba(255,255,255,.95);
@@ -72,7 +77,7 @@ header{
   padding:16px 24px;
 }
 
-/* Logo -------------------------------------------------------- */
+/* LOGO */
 .logo{
   font-size:1.6rem;
 }
@@ -81,7 +86,7 @@ body.adult .logo{
   font-weight:700;
 }
 
-/* Navigation --------------------------------------------------- */
+/* NAVIGATION */
 nav{
   display:flex;
   justify-content:center;
@@ -106,31 +111,27 @@ body.kids .nav-item a{
   font-family:'Permanent Marker',cursive;
 }
 
-/* Hover colour (common for both modes) */
+/* Hover – common */
 .nav-item > a:hover{
   background:var(--accent);
   color:#fff;
 }
-
-/* Kids‑specific hover (transparent‑green) */
+/* Kids hover – transparent‑green */
 body.kids .nav-item > a:hover{
   background:var(--accent-trans);
   transform:scale(1.1);
 }
 
-/* ------------------- MEGA MENU ------------------- */
+/* ----------- MEGA MENU ------------ */
 .has-dropdown .mega-menu{
   position:absolute;
-  top:100%;
-  left:50%;
+  top:100%; left:50%;
   transform:translateX(-50%) translateY(20px);
-  opacity:0;
-  pointer-events:none;
+  opacity:0; pointer-events:none;
 
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:40px;
-
   min-width:700px;
   padding:40px;
   background:#fff;
@@ -151,30 +152,67 @@ body.kids .nav-item > a:hover{
   font-size:14px;
   color:#444;
 }
-.mega-col a:hover{
-  color:#000;
-}
+.mega-col a:hover{color:#000;}
 
-/* Hide the navigation on narrow screens (kept from original) */
-@media(max-width:900px){
-  .nav-links{display:none}
-}
+/* Hide nav on very small screens (kept from original) */
+@media(max-width:900px){ .nav-links{display:none} }
 
-/* ==================== 4️⃣  MODE‑TOGGLE (Adult / Kids) – inside header ==================== */
-.header-controls .mode-switch button{
+/* ==========================================================
+   4️⃣  MODE‑TOGGLE (Adult / Kids) – now *outside* the slide container
+   ========================================================== */
+.mode-toggle{
+  position:fixed;
+  top:0; right:0;
+  width:40px; height:100%;
+  z-index:2000;
+}
+.mode-toggle .mode-trigger{
+  position:absolute;
+  top:0; right:0;
+  width:10px; height:100%;
+  cursor:pointer;
+}
+.mode-toggle .mode-switch{
+  position:absolute;
+  top:50%; right:-80px;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  background:var(--bg-soft);
+  border:1px solid var(--accent);
+  border-right:none;
+  border-radius:8px 0 0 8px;
+  overflow:hidden;
+  transition:right .3s ease;
+}
+.mode-toggle .mode-switch button{
   background:transparent;
   border:none;
-  padding:6px 12px;
-  font-size:.9rem;
+  padding:8px 12px;
   cursor:pointer;
+  font-size:.9rem;
   color:var(--text);
 }
-.header-controls .mode-switch button.active{
+.mode-toggle .mode-switch button.active{
   background:var(--accent);
   color:#fff;
 }
+.mode-toggle .mode-switch:hover,
+.mode-toggle .mode-trigger:hover + .mode-switch{
+  right:0;
+}
 
-/* ==================== 5️⃣  HERO SECTION ==================== */
+/* Small‑screen tweak */
+@media(max-width:600px){
+  .mode-toggle{width:30px}
+  .mode-toggle .mode-switch{right:-60px}
+  .mode-toggle .mode-switch:hover,
+  .mode-toggle .mode-trigger:hover + .mode-switch{right:0}
+}
+
+/* ==========================================================
+   5️⃣  HERO
+   ========================================================== */
 .hero{
   background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
   padding:120px 24px 80px;
@@ -217,7 +255,7 @@ body.adult .btn{
   font-weight:500;
 }
 
-/* ==== HERO SLIDES (horizontal scroll) ==== */
+/* Horizontal slides */
 .hero-visual{
   display:flex;
   gap:16px;
@@ -244,7 +282,17 @@ body.kids .slide{
   50%{transform:translateY(-10px)}
 }
 
-/* ==================== 6️⃣  MAIN CONTENT WRAP ==================== */
+/* ==========================================================
+   6️⃣  PAGE CONTAINER – the element that will slide
+   ========================================================== */
+#page{
+  position:relative;
+  transition:transform .6s ease;
+}
+
+/* ==========================================================
+   7️⃣  MAIN CONTENT (cards, map, etc.)
+   ========================================================== */
 .wrap{
   max-width:1200px;
   margin:auto;
@@ -258,7 +306,7 @@ body.adult h2{
   font-family:'Playfair Display',serif;
 }
 
-/* Cards ----------------------------------------------------------- */
+/* Cards */
 .cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -278,7 +326,7 @@ body.kids .card{
   transform:none;
 }
 
-/* Map ------------------------------------------------------------- */
+/* Map canvas */
 #mapCanvas{
   width:100%;
   max-width:900px;
@@ -288,7 +336,7 @@ body.kids .card{
   border-radius:20px;
 }
 
-/* Footer ----------------------------------------------------------- */
+/* Footer */
 footer{
   margin-top:120px;
   padding:30px;
@@ -298,7 +346,9 @@ footer{
   border-top:1px solid var(--accent);
 }
 
-/* ==================== 7️⃣  LANGUAGE TOGGLE (round button) ==================== */
+/* ==========================================================
+   8️⃣  LANGUAGE TOGGLE (round button)
+   ========================================================== */
 .lang-toggle{
   position:fixed;
   bottom:20px;
@@ -306,18 +356,14 @@ footer{
   z-index:2100;
 }
 .lang-toggle button{
-  width:48px;
-  height:48px;
-  border:none;
-  border-radius:50%;
+  width:48px; height:48px;
+  border:none; border-radius:50%;
   background:var(--accent);
   opacity:0.5;
   color:#fff;
   font-size:1rem;
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   transition:background .2s, opacity .2s;
 }
 .lang-toggle button:hover{
@@ -325,16 +371,16 @@ footer{
   opacity:0.8;
 }
 
-/* ==============================================================
-   SCRIBBLE STYLE – ONLY IN KIDS MODE (dot background, etc.)
-   ============================================================== */
+/* ==========================================================
+   9️⃣  SCRIBBLE STYLE – ONLY IN KIDS MODE
+   ========================================================== */
 body:not(.kids) .dot-bg{display:none}
 .dot-bg{
   position:fixed; inset:0;
   pointer-events:none;
   z-index:-2;
   background-image:
-    radial-gradient(circle 1px at 3px 3px, var(--accent) 100%, transparent 0%);
+    radial-gradient(circle 1px at 3px 3px,var(--accent) 100%,transparent 0%);
   background-size:20px 20px;
 }
 .dot-bg::after{
@@ -349,7 +395,7 @@ body:not(.kids) .dot-bg{display:none}
 }
 body.kids:hover .dot-bg::after{opacity:1}
 
-/* Header – hand‑written look (Kids) */
+/* Header adjustments for Kids */
 body.kids header{
   background:transparent;
   border-bottom:2px solid var(--accent);
@@ -360,13 +406,23 @@ body.kids header:hover{
   box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-/* Logo & navigation (Kids) */
+/* Logo & navigation in Kids mode */
 body.kids .logo{
   font-family:'Permanent Marker',cursive;
   color:var(--text);
 }
+body.kids .nav-item a{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+  transition:background .2s,color .2s,transform .2s;
+}
+body.kids .nav-item a:hover{
+  background:var(--accent-trans);
+  color:#fff;
+  transform:scale(1.1);
+}
 
-/* HERO (Kids) */
+/* Hero in Kids mode */
 body.kids .hero{
   background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
 }
@@ -378,7 +434,7 @@ body.kids .hero p{
   color:var(--text);
 }
 
-/* HERO BUTTON (Kids) */
+/* Hero button in Kids mode */
 body.kids .btn{
   background:var(--accent-trans);
   color:#fff;
@@ -391,13 +447,13 @@ body.kids .btn:hover{
   transform:scale(1.05);
 }
 
-/* SECTION HEADINGS (Kids) */
+/* Section headings in Kids mode */
 body.kids h2{
   font-family:'Permanent Marker',cursive;
   color:var(--text);
 }
 
-/* FOOTER (Kids) */
+/* Footer in Kids mode */
 body.kids footer{
   background:#fff;
   border-top:1px solid var(--accent);
@@ -407,149 +463,144 @@ body.kids footer{
 
 <body class="adult">
 
-<!-- DOT BACKGROUND (only visible in kids mode) -->
+<!-- ------- DOT BACKGROUND (only visible in kids mode) ------- -->
 <div class="dot-bg"></div>
 
-<header>
-  <div class="header">
-
-    <!-- LOGO -->
-    <div class="logo"
-         data-en="School of Awakening"
-         data-ar="مَدْرَسَةُ الصَّحْوَةِ">School of Awakening</div>
-
-    <!-- NAVIGATION (Mega‑Menu) -->
-    <nav>
-      <ul class="nav-links">
-
-        <li class="nav-item"><a href="#" data-en="Home" data-ar="الرَّئِيسِيَّةُ">Home</a></li>
-
-        <!-- Journey – Mega Menu -->
-        <li class="nav-item has-dropdown">
-          <a href="#" data-en="Journey" data-ar="الرحلة">Journey</a>
-
-          <div class="mega-menu">
-            <div class="mega-col">
-              <a href="#" data-en="Confusion" data-ar="الحيرة">Confusion</a>
-              <a href="#" data-en="Healing"   data-ar="الشفاء">Healing</a>
-              <a href="#" data-en="Tawheed"  data-ar="التوحيد">Tawheed</a>
-            </div>
-
-            <div class="mega-col">
-              <a href="#" data-en="The Prophet" data-ar="النبي">The Prophet</a>
-              <a href="#" data-en="Holy Quran" data-ar="القرآن الكريم">Holy Quran</a>
-              <a href="#" data-en="Faith" data-ar="الإيمان">Faith</a>
-            </div>
-
-            <div class="mega-col">
-              <a href="#" data-en="Choice" data-ar="الاختيار">Choice</a>
-              <a href="#" data-en="Death" data-ar="الموت">Death</a>
-              <a href="#" data-en="Barzakh" data-ar="البرزخ">Barzakh</a>
-              <a href="#" data-en="Judgment" data-ar="الحساب">Judgment</a>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
-        <li class="nav-item"><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
-        <li class="nav-item"><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
-        <li class="nav-item"><a href="#" data-en="Film" data-ar="فيلم">Film</a></li>
-        <li class="nav-item"><a href="#" data-en="Join" data-ar="انضمام">Join</a></li>
-      </ul>
-    </nav>
-
-    <!-- ADULT / KIDS TOGGLE (inside header) -->
-    <div class="header-controls">
-      <div class="mode-switch">
-        <button id="adultBtn" class="active">Adult</button>
-        <button id="kidsBtn">Kids</button>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- Language toggle (round button) -->
+<!-- ---------- LANGUAGE TOGGLE (fixed round button) ---------- -->
 <div class="lang-toggle">
   <button id="langBtn">ع</button>
 </div>
 
-<!-- ==================== HERO ==================== -->
-<section class="hero">
-  <div class="hero-grid">
-    <div>
-      <h1 data-en="In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it."
-          data-ar="فِي رِحْلَةٍ يَتَغَيَّرُ فِيهَا كُلُّ شَيْءٍ، يَبْقَى الْقُرْآنُ رَفِيقًا فِي الْحَيَاةِ وَمَا بَعْدَهَا.">
-        In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it.
-      </h1>
-
-      <p data-en="The Qur’an awakens hearts that had lost all hope of healing."
-         data-ar="الْقُرْآنُ شِفَاءٌ لِقُلُوبٍ ظَنَّتْ أَنَّهَا لَنْ تُشْفَى.">
-        The Qur’an was meant to walk with you — not sit on a shelf.
-      </p>
-
-      <a class="btn"
-         href="#"
-         data-en="Begin the Journey"
-         data-ar="اِبْدَأِ الرِّحْلَةَ">Begin the Journey</a>
-    </div>
-
-    <div class="hero-visual">
-      <div class="slide">Allah</div>
-      <div class="slide">Self</div>
-      <div class="slide">Others</div>
-    </div>
+<!-- ---------- MODE‑TOGGLE (fixed at the right edge) ---------- -->
+<div class="mode-toggle">
+  <div class="mode-trigger"></div>
+  <div class="mode-switch">
+    <button id="adultBtn" class="active">Adult</button>
+    <button id="kidsBtn">Kids</button>
   </div>
-</section>
+</div>
 
-<main class="wrap">
+<!-- ---------- EVERYTHING THAT SHOULD SLIDE ---------- -->
+<div id="page">
 
-  <!-- ==== Who is this for? ==== -->
-  <section>
-    <h2 data-en="Who is this for?" data-ar="لِمَنْ هَذَا؟">Who is this for?</h2>
-    <div class="cards">
-      <div class="card"
-           data-en="Young hearts"
-           data-ar="قُلُوبٌ شَابَّةٌ">Young hearts</div>
-      <div class="card"
-           data-en="Seekers"
-           data-ar="الْبَاحِثُونَ">Seekers</div>
-      <div class="card"
-           data-en="Thinkers"
-           data-ar="الْمُفَكِّرُونَ">Thinkers</div>
-      <div class="card"
-           data-en="Believers"
-           data-ar="الْمُؤْمِنُونَ">Believers</div>
+  <!-- Header (logo + mega‑menu) -->
+  <header>
+    <div class="header">
+      <div class="logo"
+           data-en="School of Awakening"
+           data-ar="مَدْرَسَةُ الصَّحْوَةِ">School of Awakening</div>
+
+      <nav>
+        <ul class="nav-links">
+
+          <li class="nav-item"><a href="#" data-en="Home" data-ar="الرَّئِيسِيَّةُ">Home</a></li>
+
+          <!-- Journey – Mega‑Menu -->
+          <li class="nav-item has-dropdown">
+            <a href="#" data-en="Journey" data-ar="الرحلة">Journey</a>
+
+            <div class="mega-menu">
+              <div class="mega-col">
+                <a href="#" data-en="Confusion" data-ar="الحيرة">Confusion</a>
+                <a href="#" data-en="Healing"   data-ar="الشفاء">Healing</a>
+                <a href="#" data-en="Tawheed"  data-ar="التوحيد">Tawheed</a>
+              </div>
+
+              <div class="mega-col">
+                <a href="#" data-en="The Prophet" data-ar="النبي">The Prophet</a>
+                <a href="#" data-en="Holy Quran" data-ar="القرآن الكريم">Holy Quran</a>
+                <a href="#" data-en="Faith" data-ar="الإيمان">Faith</a>
+              </div>
+
+              <div class="mega-col">
+                <a href="#" data-en="Choice" data-ar="الاختيار">Choice</a>
+                <a href="#" data-en="Death" data-ar="الموت">Death</a>
+                <a href="#" data-en="Barzakh" data-ar="البرزخ">Barzakh</a>
+                <a href="#" data-en="Judgment" data-ar="الحساب">Judgment</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
+          <li class="nav-item"><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
+          <li class="nav-item"><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
+          <li class="nav-item"><a href="#" data-en="Film" data-ar="فيلم">Film</a></li>
+          <li class="nav-item"><a href="#" data-en="Join" data-ar="انضمام">Join</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <h1 data-en="In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it."
+            data-ar="فِي رِحْلَةٍ يَتَغَيَّرُ فِيهَا كُلُّ شَيْءٍ، يَبْقَى الْقُرْآنُ رَفِيقًا فِي الْحَيَاةِ وَمَا بَعْدَهَا.">
+          In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it.
+        </h1>
+
+        <p data-en="The Qur’an awakens hearts that had lost all hope of healing."
+           data-ar="الْقُرْآنُ شِفَاءٌ لِقُلُوبٍ ظَنَّتْ أَنَّهَا لَنْ تُشْفَى.">
+          The Qur’an was meant to walk with you — not sit on a shelf.
+        </p>
+
+        <a class="btn"
+           href="#"
+           data-en="Begin the Journey"
+           data-ar="اِبْدَأِ الرِّحْلَةَ">Begin the Journey</a>
+      </div>
+
+      <div class="hero-visual">
+        <div class="slide">Allah</div>
+        <div class="slide">Self</div>
+        <div class="slide">Others</div>
+      </div>
     </div>
   </section>
 
-  <!-- ==== The Map ==== -->
-  <section>
-    <h2 data-en="The Map" data-ar="الْخَرِيطَةُ">The Map</h2>
-    <canvas id="mapCanvas" width="900" height="420"></canvas>
-  </section>
+  <!-- Main content -->
+  <main class="wrap">
 
-</main>
+    <!-- Who is this for? -->
+    <section>
+      <h2 data-en="Who is this for?" data-ar="لِمَنْ هَذَا؟">Who is this for?</h2>
+      <div class="cards">
+        <div class="card"
+             data-en="Young hearts"
+             data-ar="قُلُوبٌ شَابَّةٌ">Young hearts</div>
+        <div class="card"
+             data-en="Seekers"
+             data-ar="الْبَاحِثُونَ">Seekers</div>
+        <div class="card"
+             data-en="Thinkers"
+             data-ar="الْمُفَكِّرُونَ">Thinkers</div>
+        <div class="card"
+             data-en="Believers"
+             data-ar="الْمُؤْمِنُونَ">Believers</div>
+      </div>
+    </section>
 
-<footer>
-  © 2025 <span data-en="School of Awakening — A Path of Awareness"
-                data-ar="مَدْرَسَةُ الصَّحْوَةِ — طَرِيقُ الْوَعْيِ">School of Awakening — A Path of Awareness</span>
-</footer>
+    <!-- The Map -->
+    <section>
+      <h2 data-en="The Map" data-ar="الْخَرِيطَةُ">The Map</h2>
+      <canvas id="mapCanvas" width="900" height="420"></canvas>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 <span data-en="School of Awakening — A Path of Awareness"
+                  data-ar="مَدْرَسَةُ الصَّحْوَةِ — طَرِيقُ الْوَعْيِ">School of Awakening — A Path of Awareness</span>
+  </footer>
+
+</div> <!-- end #page -->
 
 <script>
-/* -------------------- 0️⃣  MODE SWITCH (Adult / Kids) -------------------- */
-const adultBtn = document.getElementById('adultBtn');
-const kidsBtn  = document.getElementById('kidsBtn');
-
-function setMode(mode){
-  document.body.className = mode;              // "adult" or "kids"
-  drawMap();                                   // redraw map with new accent colour
-  adultBtn.classList.toggle('active', mode === 'adult');
-  kidsBtn .classList.toggle('active', mode === 'kids');
-}
-adultBtn.onclick = () => setMode('adult');
-kidsBtn.onclick  = () => setMode('kids');
-
-/* -------------------- 1️⃣  LANGUAGE SWITCHER -------------------- */
+/* ---------------------------------------------------------
+   0️⃣  LANGUAGE SWITCHER
+   --------------------------------------------------------- */
 const langBtn = document.getElementById('langBtn');
 
 function setLanguage(lang){
@@ -557,17 +608,19 @@ function setLanguage(lang){
   document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
   langBtn.textContent = (lang === 'en') ? 'ع' : 'E';
 
-  document.querySelectorAll('[data-en]').forEach(el => {
+  document.querySelectorAll('[data-en]').forEach(el=>{
     el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
   });
 }
 setLanguage('en');               // default
-langBtn.onclick = () => {
+langBtn.onclick = ()=>{
   const newLang = document.documentElement.lang === 'en' ? 'ar' : 'en';
   setLanguage(newLang);
 };
 
-/* -------------------- 2️⃣  CANVAS MAP -------------------- */
+/* ---------------------------------------------------------
+   1️⃣  MAP DRAWING (uses current accent colour)
+   --------------------------------------------------------- */
 const canvas = document.getElementById('mapCanvas');
 const ctx    = canvas.getContext('2d');
 
@@ -602,15 +655,73 @@ function drawMap(){
 }
 drawMap();
 
-/* -------------------- 3️⃣  SPOTLIGHT (dot‑background) -------------------- */
+/* ---------------------------------------------------------
+   2️⃣  SPOTLIGHT (dot‑background)
+   --------------------------------------------------------- */
 (function initSpotlight(){
   const dotLayer = document.querySelector('.dot-bg');
   if (!dotLayer) return;
-  document.addEventListener('mousemove', e => {
+  document.addEventListener('mousemove', e=>{
     dotLayer.style.setProperty('--x', `${e.clientX}px`);
     dotLayer.style.setProperty('--y', `${e.clientY}px`);
   });
 })();
+
+/* ---------------------------------------------------------
+   3️⃣  MODE SWITCH WITH SLIDE ANIMATION
+   --------------------------------------------------------- */
+const adultBtns = document.querySelectorAll('#adultBtn');
+const kidsBtns  = document.querySelectorAll('#kidsBtn');
+const page      = document.getElementById('page');
+
+let currentMode = document.body.classList.contains('kids') ? 'kids' : 'adult';
+
+/* Helper – set active class on all toggle buttons */
+function setActiveButtons(mode){
+  adultBtns.forEach(b=>b.classList.toggle('active', mode==='adult'));
+  kidsBtns .forEach(b=>b.classList.toggle('active', mode==='kids'));
+}
+
+/* Core transition function */
+function slideToMode(targetMode){
+  if (currentMode===targetMode) return;           // already there
+
+  // ------- slide out -------
+  const outDir = (targetMode==='adult') ? 100 : -100;    // 100 % → right, -100 % → left
+  page.style.transform = `translateX(${outDir}%)`;
+
+  // Listen for the *first* transition (the slide‑out)
+  const onOut = () => {
+    page.removeEventListener('transitionend', onOut);
+
+    // ----- swap the theme -----
+    document.body.className = targetMode;      // replaces the whole class list
+    currentMode = targetMode;
+    setActiveButtons(targetMode);
+    drawMap();                                 // redraw canvas with new accent
+
+    // ----- prepare slide‑in from the opposite side -----
+    const inStart = (targetMode==='adult') ? -100 : 100;
+    page.style.transition = 'none';            // turn off transition temporarily
+    page.style.transform = `translateX(${inStart}%)`;
+
+    // force reflow so the browser registers the change
+    void page.offsetWidth;
+
+    // ----- slide in -----
+    page.style.transition = 'transform .6s ease';
+    page.style.transform = 'translateX(0)';
+  };
+
+  page.addEventListener('transitionend', onOut);
+}
+
+/* Attach listeners to *all* toggle buttons (header & side‑toggle) */
+adultBtns.forEach(b=>b.addEventListener('click',()=>slideToMode('adult')));
+kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
+
+/* Initialise the active state (Adult is default) */
+setActiveButtons('adult');
 </script>
 
 </body>
