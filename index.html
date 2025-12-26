@@ -29,8 +29,15 @@
 }
 
 /* ==========================================================
-   1️⃣  ADULT & KIDS MODE (palette overrides)
+   1️⃣  ADULT & KIDS PALETTES
    ========================================================== */
+body.adult{
+  --bg-main:#f4f1ec;
+  --bg-soft:#e6e1da;
+  --accent:#3f4a3c;
+  --shadow:none;
+  font-family:'Inter',sans-serif;
+}
 body.kids{
   font-family:'Indie Flower',cursive;
   --bg-main:#e6D5C3;
@@ -41,13 +48,6 @@ body.kids{
   --accent-trans:rgba(112,121,79,0.6);
   --radius:12px;
   --shadow:4px 4px 0 var(--accent);
-}
-body.adult{
-  --bg-main:#f4f1ec;
-  --bg-soft:#e6e1da;
-  --accent:#3f4a3c;
-  --shadow:none;
-  font-family:'Inter',sans-serif;
 }
 
 /* ==========================================================
@@ -71,6 +71,8 @@ header{
   border-bottom:1px solid var(--accent);
 }
 .header{
+  max-width:1200px;
+  margin:auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -89,8 +91,6 @@ body.adult .logo{
 /* NAVIGATION */
 nav{
   display:flex;
-  justify-content:center;
-  padding:20px 40px;
 }
 .nav-links{
   list-style:none;
@@ -197,9 +197,7 @@ body.kids .nav-item > a:hover{
   background:var(--accent);
   color:#fff;
 }
-.mode-toggle:hover .mode-switch{
-  right:0;
-}
+.mode-toggle:hover .mode-switch{right:0;}
 
 /* ==========================================================
    5️⃣  HERO
@@ -223,9 +221,16 @@ body.adult .hero h1{
   font-family:'Playfair Display',serif;
   font-weight:700;
 }
+body.kids .hero h1{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+}
 .hero p{
   font-size:1.1rem;
   max-width:520px;
+}
+body.kids .hero p{
+  color:var(--text);
 }
 
 /* Buttons inside hero */
@@ -278,7 +283,7 @@ body.kids .slide{
    ========================================================== */
 #page{
   position:relative;
-  transition:transform .3s ease;   /* quicker slide */
+  transition:transform .25s ease;   /* quicker slide */
 }
 
 /* ==========================================================
@@ -295,6 +300,10 @@ h2{
 }
 body.adult h2{
   font-family:'Playfair Display',serif;
+}
+body.kids h2{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
 }
 
 /* Cards */
@@ -363,30 +372,33 @@ footer{
 }
 
 /* ==========================================================
-   9️⃣  SCRIBBLE STYLE – ONLY IN KIDS MODE
+   9️⃣  DOT‑BACKGROUND (Exxeta‑style) – ONLY IN KIDS MODE
    ========================================================== */
 body:not(.kids) .dot-bg{display:none}
 .dot-bg{
   position:fixed; inset:0;
   pointer-events:none;
   z-index:-2;
+  /* small gray‑green dots – feel free to tweak size / spacing */
   background-image:
-    radial-gradient(circle 1px at 3px 3px,var(--accent) 100%,transparent 0%);
-  background-size:20px 20px;
+    radial-gradient(circle 2px at 4px 4px, var(--accent) 100%, transparent 0%);
+  background-size:30px 30px;          /* space between dots */
 }
 .dot-bg::after{
   content:"";
   position:absolute; inset:0;
   pointer-events:none;
+  /* big soft “spot‑light” that follows the mouse */
   background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
-                              transparent,
-                              rgba(255,255,255,0.6));
+                              rgba(255,255,255,.6), transparent);
   opacity:0;
   transition:opacity .3s ease;
 }
 body.kids:hover .dot-bg::after{opacity:1}
 
-/* Header – hand‑written look (Kids) */
+/* ==========================================================
+   10️⃣  KIDS‑MODE TWEAKS (hand‑written look, etc.)
+   ========================================================== */
 body.kids header{
   background:transparent;
   border-bottom:2px solid var(--accent);
@@ -396,36 +408,19 @@ body.kids header:hover{
   background:rgba(255,255,255,.9);
   box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
-
-/* Logo & navigation (Kids) */
 body.kids .logo{
   font-family:'Permanent Marker',cursive;
-  color:var(--text);
 }
 body.kids .nav-item a{
   font-family:'Permanent Marker',cursive;
-  color:var(--text);
-  transition:background .2s,color .2s,transform .2s;
 }
 body.kids .nav-item a:hover{
   background:var(--accent-trans);
   color:#fff;
-  transform:scale(1.1);
 }
-
-/* Hero (Kids) */
 body.kids .hero{
   background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
 }
-body.kids .hero h1{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
-}
-body.kids .hero p{
-  color:var(--text);
-}
-
-/* Hero button (Kids) */
 body.kids .btn{
   background:var(--accent-trans);
   color:#fff;
@@ -437,18 +432,6 @@ body.kids .btn:hover{
   color:var(--accent);
   transform:scale(1.05);
 }
-
-/* Section headings (Kids) */
-body.kids h2{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
-}
-
-/* Footer (Kids) */
-body.kids footer{
-  background:#fff;
-  border-top:1px solid var(--accent);
-}
 </style>
 </head>
 
@@ -459,7 +442,7 @@ body.kids footer{
 
 <header>
   <div class="header">
-    <!-- Logo -->
+    <!-- LOGO -->
     <div class="logo"
          data-en="School of Awakening"
          data-ar="مَدْرَسَةُ الصَّحْوَةِ">School of Awakening</div>
@@ -503,12 +486,12 @@ body.kids footer{
   </div>
 </header>
 
-<!-- Language toggle (round button) -->
+<!-- LANGUAGE TOGGLE (round button) -->
 <div class="lang-toggle">
   <button id="langBtn">ع</button>
 </div>
 
-<!-- Mode‑toggle (">" button) -->
+<!-- MODE‑TOGGLE (">" button) -->
 <div class="mode-toggle">
   <button class="mode-trigger" aria-label="Switch mode">&#9654;</button>
   <div class="mode-switch">
@@ -517,7 +500,7 @@ body.kids footer{
   </div>
 </div>
 
-<!-- Everything that slides -->
+<!-- EVERYTHING THAT SLIDES -->
 <div id="page">
 
   <!-- ==================== HERO ==================== -->
@@ -586,7 +569,7 @@ body.kids footer{
 
 <script>
 /* ---------------------------------------------------------
-   0️⃣  LANGUAGE SWITCHER
+   0️⃣ LANGUAGE SWITCHER
    --------------------------------------------------------- */
 const langBtn = document.getElementById('langBtn');
 
@@ -606,18 +589,20 @@ langBtn.onclick = () => {
 };
 
 /* ---------------------------------------------------------
-   1️⃣  MAP DRAWING (uses current accent colour)
+   1️⃣ MAP DRAWING (uses current accent colour)
    --------------------------------------------------------- */
-const canvas = document.getElementById('mapCanvas');
-const ctx    = canvas.getContext('2d');
-
-const zones = [
-  {x:140, y:260, r:28, label:'Al‑Mulk'},
-  {x:330, y:140, r:28, label:'Awareness'},
-  {x:520, y:260, r:28, label:'Meaning'},
-  {x:720, y:160, r:28, label:'Hereafter'}
-];
 function drawMap(){
+  const canvas = document.getElementById('mapCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const zones = [
+    {x:140, y:260, r:28, label:'Al‑Mulk'},
+    {x:330, y:140, r:28, label:'Awareness'},
+    {x:520, y:260, r:28, label:'Meaning'},
+    {x:720, y:160, r:28, label:'Hereafter'}
+  ];
+
   ctx.clearRect(0,0,canvas.width,canvas.height);
   const accent = getComputedStyle(document.body).getPropertyValue('--accent');
 
@@ -643,7 +628,7 @@ function drawMap(){
 drawMap();
 
 /* ---------------------------------------------------------
-   2️⃣  SPOTLIGHT (dot‑background)
+   2️⃣ SPOTLIGHT (dot‑background) – follow cursor
    --------------------------------------------------------- */
 (function initSpotlight(){
   const dotLayer = document.querySelector('.dot-bg');
@@ -655,7 +640,7 @@ drawMap();
 })();
 
 /* ---------------------------------------------------------
-   3️⃣  MODE SWITCH WITH QUICK SLIDE ANIMATION
+   3️⃣ MODE SWITCH (quick slide)
    --------------------------------------------------------- */
 const adultBtns = document.querySelectorAll('#adultBtn');
 const kidsBtns  = document.querySelectorAll('#kidsBtn');
@@ -663,15 +648,15 @@ const page      = document.getElementById('page');
 
 let currentMode = document.body.classList.contains('kids') ? 'kids' : 'adult';
 
-/* Helper – set active class on the two toggle buttons */
+/* set active class on toggle buttons */
 function setActiveButtons(mode){
   adultBtns.forEach(b=>b.classList.toggle('active', mode==='adult'));
   kidsBtns .forEach(b=>b.classList.toggle('active', mode==='kids'));
 }
 
-/* Core transition (quick 0.3 s) */
+/* core slide function */
 function slideToMode(targetMode){
-  if (currentMode===targetMode) return;            // already there
+  if (currentMode===targetMode) return;            // nothing to do
 
   // 1️⃣ slide out (right for Adult, left for Kids)
   const outDir = (targetMode==='adult') ? 100 : -100;   // % of viewport width
@@ -685,30 +670,30 @@ function slideToMode(targetMode){
     document.body.className = targetMode;
     currentMode = targetMode;
     setActiveButtons(targetMode);
-    drawMap();
+    drawMap();                    // redraw map with new accent colour
 
-    // prepare slide‑in from opposite side
+    // 3️⃣ prepare slide‑in from opposite side
     const inStart = (targetMode==='adult') ? -100 : 100;
-    page.style.transition = 'none';                // turn off transition temporarily
+    page.style.transition = 'none';                // temporarily disable transition
     page.style.transform = `translateX(${inStart}%)`;
 
-    // force reflow
+    // force re‑flow
     void page.offsetWidth;
 
-    // slide‑in
-    page.style.transition = 'transform .3s ease';
+    // 4️⃣ slide‑in
+    page.style.transition = 'transform .25s ease';
     page.style.transform = 'translateX(0)';
   };
 
   page.addEventListener('transitionend', onOut);
 }
 
-/* Attach listeners (both buttons share the same IDs) */
+/* attach listeners (both buttons share the same IDs) */
 adultBtns.forEach(b=>b.addEventListener('click',()=>slideToMode('adult')));
 kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 
-/* Initialise active state */
-setActiveButtons('adult');
+/* initialise active state */
+setActiveButtons(currentMode);
 </script>
 
 </body>
