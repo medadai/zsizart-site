@@ -29,23 +29,10 @@
 }
 
 /* ==========================================================
-   1️⃣  ADULT & KIDS PALETTES (apply to body **or** any wrapper)
+   1️⃣  ADULT & KIDS MODE (palette overrides)
    ========================================================== */
-body.kids,
-.kids{
+body.kids{
   font-family:'Indie Flower',cursive;
-}
-body.adult,
-.adult{
-  --bg-main:#f4f1ec;
-  --bg-soft:#e6e1da;
-  --accent:#3f4a3c;
-  --shadow:none;
-  font-family:'Inter',sans-serif;
-}
-
-/* Kids‑specific palette (overwrites defaults) */
-.kids{
   --bg-main:#e6D5C3;
   --bg-soft:#BAAFA3;
   --card:#e1DAD7;
@@ -55,6 +42,13 @@ body.adult,
   --radius:12px;
   --shadow:4px 4px 0 var(--accent);
 }
+body.adult{
+  --bg-main:#f4f1ec;
+  --bg-soft:#e6e1da;
+  --accent:#3f4a3c;
+  --shadow:none;
+  font-family:'Inter',sans-serif;
+}
 
 /* ==========================================================
    2️⃣  BASIC PAGE STYLE
@@ -63,6 +57,7 @@ body{
   margin:0;
   background:var(--bg-main);
   color:var(--text);
+  overflow-x:hidden;               /* hide the horizontal scroll while sliding */
   transition:.3s;
 }
 a{text-decoration:none;color:inherit}
@@ -86,17 +81,9 @@ header{
 .logo{
   font-size:1.6rem;
 }
-.adult .logo,
 body.adult .logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-}
-
-/* Kids logo */
-.kids .logo,
-body.kids .logo{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
 }
 
 /* NAVIGATION */
@@ -118,7 +105,6 @@ nav{
   padding:10px 5px;
   color:inherit;
 }
-.kids .nav-item a,
 body.kids .nav-item a{
   font-family:'Permanent Marker',cursive;
 }
@@ -126,7 +112,6 @@ body.kids .nav-item a{
   background:var(--accent);
   color:#fff;
 }
-.kids .nav-item > a:hover,
 body.kids .nav-item > a:hover{
   background:var(--accent-trans);
   transform:scale(1.1);
@@ -212,7 +197,9 @@ body.kids .nav-item > a:hover{
   background:var(--accent);
   color:#fff;
 }
-.mode-toggle:hover .mode-switch{right:0;}
+.mode-toggle:hover .mode-switch{
+  right:0;
+}
 
 /* ==========================================================
    5️⃣  HERO
@@ -232,23 +219,13 @@ body.kids .nav-item > a:hover{
   font-size:clamp(2.4rem,6vw,3.6rem);
   line-height:1.2;
 }
-.adult .hero h1,
 body.adult .hero h1{
   font-family:'Playfair Display',serif;
   font-weight:700;
 }
-.kids .hero h1,
-body.kids .hero h1{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
-}
 .hero p{
   font-size:1.1rem;
   max-width:520px;
-}
-.kids .hero p,
-body.kids .hero p{
-  color:var(--text);
 }
 
 /* Buttons inside hero */
@@ -259,13 +236,11 @@ body.kids .hero p{
   border:1px solid var(--accent);
   border-radius:10px;
 }
-.kids .btn,
 body.kids .btn{
   font-family:'Permanent Marker',cursive;
   background:var(--accent);
   color:#fff;
 }
-.adult .btn,
 body.adult .btn{
   background:transparent;
   font-weight:500;
@@ -288,7 +263,6 @@ body.adult .btn{
   text-align:center;
   scroll-snap-align:center;
 }
-.kids .slide,
 body.kids .slide{
   font-family:'Permanent Marker',cursive;
   font-size:1.4rem;
@@ -300,15 +274,15 @@ body.kids .slide{
 }
 
 /* ==========================================================
-   6️⃣  PAGE WRAPPER (the element that hides the gap)
+   6️⃣  PAGE CONTAINER (the element that slides)
    ========================================================== */
-#pageWrapper{
+#page{
   position:relative;
-  overflow:hidden;          /* hides the empty space while sliding */
+  transition:transform .3s ease;   /* quicker slide */
 }
 
 /* ==========================================================
-   7️⃣  MAIN CONTENT
+   7️⃣  MAIN CONTENT (cards, map, etc.)
    ========================================================== */
 .wrap{
   max-width:1200px;
@@ -319,7 +293,6 @@ section{margin-top:120px}
 h2{
   font-size:2rem;
 }
-.adult h2,
 body.adult h2{
   font-family:'Playfair Display',serif;
 }
@@ -336,7 +309,6 @@ body.adult h2{
   border:1px solid var(--accent);
   border-radius:14px;
 }
-.kids .card,
 body.kids .card{
   background:var(--card);
   border:2px solid var(--accent);
@@ -412,30 +384,54 @@ body:not(.kids) .dot-bg{display:none}
   opacity:0;
   transition:opacity .3s ease;
 }
-.kids:hover .dot-bg::after{opacity:1}
+body.kids:hover .dot-bg::after{opacity:1}
 
 /* Header – hand‑written look (Kids) */
-.kids header,
 body.kids header{
   background:transparent;
   border-bottom:2px solid var(--accent);
   transition:background .3s,box-shadow .3s;
 }
-.kids header:hover,
 body.kids header:hover{
   background:rgba(255,255,255,.9);
   box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
+/* Logo & navigation (Kids) */
+body.kids .logo{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+}
+body.kids .nav-item a{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+  transition:background .2s,color .2s,transform .2s;
+}
+body.kids .nav-item a:hover{
+  background:var(--accent-trans);
+  color:#fff;
+  transform:scale(1.1);
+}
+
+/* Hero (Kids) */
+body.kids .hero{
+  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
+}
+body.kids .hero h1{
+  font-family:'Permanent Marker',cursive;
+  color:var(--text);
+}
+body.kids .hero p{
+  color:var(--text);
+}
+
 /* Hero button (Kids) */
-.kids .btn,
 body.kids .btn{
   background:var(--accent-trans);
   color:#fff;
   border:2px solid var(--accent);
   border-radius:var(--radius);
 }
-.kids .btn:hover,
 body.kids .btn:hover{
   background:#fff;
   color:var(--accent);
@@ -443,14 +439,12 @@ body.kids .btn:hover{
 }
 
 /* Section headings (Kids) */
-.kids h2,
 body.kids h2{
   font-family:'Permanent Marker',cursive;
   color:var(--text);
 }
 
 /* Footer (Kids) */
-.kids footer,
 body.kids footer{
   background:#fff;
   border-top:1px solid var(--accent);
@@ -465,13 +459,12 @@ body.kids footer{
 
 <header>
   <div class="header">
-
-    <!-- LOGO -->
+    <!-- Logo -->
     <div class="logo"
          data-en="School of Awakening"
          data-ar="مَدْرَسَةُ الصَّحْوَةِ">School of Awakening</div>
 
-    <!-- NAVIGATION (mega‑menu) -->
+    <!-- Navigation (mega‑menu) -->
     <nav>
       <ul class="nav-links">
         <li class="nav-item"><a href="#" data-en="Home" data-ar="الرَّئِيسِيَّةُ">Home</a></li>
@@ -510,12 +503,12 @@ body.kids footer{
   </div>
 </header>
 
-<!-- LANGUAGE TOGGLE (round button) -->
+<!-- Language toggle (round button) -->
 <div class="lang-toggle">
   <button id="langBtn">ع</button>
 </div>
 
-<!-- MODE‑TOGGLE (">" button) -->
+<!-- Mode‑toggle (">" button) -->
 <div class="mode-toggle">
   <button class="mode-trigger" aria-label="Switch mode">&#9654;</button>
   <div class="mode-switch">
@@ -524,74 +517,72 @@ body.kids footer{
   </div>
 </div>
 
-<!-- PAGE WRAPPER – the sliding container -->
-<div id="pageWrapper">
-  <div id="page">
+<!-- Everything that slides -->
+<div id="page">
 
-    <!-- ==================== HERO ==================== -->
-    <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <h1 data-en="In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it."
-              data-ar="فِي رِحْلَةٍ يَتَغَيَّرُ فِيهَا كُلُّ شَيْءٍ، يَبْقَى الْقُرْآنُ رَفِيقًا فِي الْحَيَاةِ وَمَا بَعْدَهَا.">
-            In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it.
-          </h1>
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <h1 data-en="In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it."
+            data-ar="فِي رِحْلَةٍ يَتَغَيَّرُ فِيهَا كُلُّ شَيْءٍ، يَبْقَى الْقُرْآنُ رَفِيقًا فِي الْحَيَاةِ وَمَا بَعْدَهَا.">
+          In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it.
+        </h1>
 
-          <p data-en="The Qur’an awakens hearts that had lost all hope of healing."
-             data-ar="الْقُرْآنُ شِفَاءٌ لِقُلُوبٍ ظَنَّتْ أَنَّهَا لَنْ تُشْفَى.">
-            The Qur’an was meant to walk with you — not sit on a shelf.
-          </p>
+        <p data-en="The Qur’an awakens hearts that had lost all hope of healing."
+           data-ar="الْقُرْآنُ شِفَاءٌ لِقُلُوبٍ ظَنَّتْ أَنَّهَا لَنْ تُشْفَى.">
+          The Qur’an was meant to walk with you — not sit on a shelf.
+        </p>
 
-          <a class="btn"
-             href="#"
-             data-en="Begin the Journey"
-             data-ar="اِبْدَأِ الرِّحْلَةَ">Begin the Journey</a>
-        </div>
+        <a class="btn"
+           href="#"
+           data-en="Begin the Journey"
+           data-ar="اِبْدَأِ الرِّحْلَةَ">Begin the Journey</a>
+      </div>
 
-        <div class="hero-visual">
-          <div class="slide">Allah</div>
-          <div class="slide">Self</div>
-          <div class="slide">Others</div>
-        </div>
+      <div class="hero-visual">
+        <div class="slide">Allah</div>
+        <div class="slide">Self</div>
+        <div class="slide">Others</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap">
+
+    <!-- ==== Who is this for? ==== -->
+    <section>
+      <h2 data-en="Who is this for?" data-ar="لِمَنْ هَذَا؟">Who is this for?</h2>
+      <div class="cards">
+        <div class="card"
+             data-en="Young hearts"
+             data-ar="قُلُوبٌ شَابَّةٌ">Young hearts</div>
+        <div class="card"
+             data-en="Seekers"
+             data-ar="الْبَاحِثُونَ">Seekers</div>
+        <div class="card"
+             data-en="Thinkers"
+             data-ar="الْمُفَكِّرُونَ">Thinkers</div>
+        <div class="card"
+             data-en="Believers"
+             data-ar="الْمُؤْمِنُونَ">Believers</div>
       </div>
     </section>
 
-    <main class="wrap">
+    <!-- ==== The Map ==== -->
+    <section>
+      <h2 data-en="The Map" data-ar="الْخَرِيطَةُ">The Map</h2>
+      <canvas id="mapCanvas" width="900" height="420"></canvas>
+    </section>
 
-      <!-- ==== Who is this for? ==== -->
-      <section>
-        <h2 data-en="Who is this for?" data-ar="لِمَنْ هَذَا؟">Who is this for?</h2>
-        <div class="cards">
-          <div class="card"
-               data-en="Young hearts"
-               data-ar="قُلُوبٌ شَابَّةٌ">Young hearts</div>
-          <div class="card"
-               data-en="Seekers"
-               data-ar="الْبَاحِثُونَ">Seekers</div>
-          <div class="card"
-               data-en="Thinkers"
-               data-ar="الْمُفَكِّرُونَ">Thinkers</div>
-          <div class="card"
-               data-en="Believers"
-               data-ar="الْمُؤْمِنُونَ">Believers</div>
-        </div>
-      </section>
+  </main>
 
-      <!-- ==== The Map ==== -->
-      <section>
-        <h2 data-en="The Map" data-ar="الْخَرِيطَةُ">The Map</h2>
-        <canvas id="mapCanvas" width="900" height="420"></canvas>
-      </section>
+  <footer>
+    © 2025 <span data-en="School of Awakening — A Path of Awareness"
+                  data-ar="مَدْرَسَةُ الصَّحْوَةِ — طَرِيقُ الْوَعْيِ">School of Awakening — A Path of Awareness</span>
+  </footer>
 
-    </main>
-
-    <footer>
-      © 2025 <span data-en="School of Awakening — A Path of Awareness"
-                    data-ar="مَدْرَسَةُ الصَّحْوَةِ — طَرِيقُ الْوَعْيِ">School of Awakening — A Path of Awareness</span>
-    </footer>
-
-  </div> <!-- end #page -->
-</div> <!-- end #pageWrapper -->
+</div> <!-- end #page -->
 
 <script>
 /* ---------------------------------------------------------
@@ -615,20 +606,18 @@ langBtn.onclick = () => {
 };
 
 /* ---------------------------------------------------------
-   1️⃣  MAP DRAWING (gets fresh canvas each call)
+   1️⃣  MAP DRAWING (uses current accent colour)
    --------------------------------------------------------- */
+const canvas = document.getElementById('mapCanvas');
+const ctx    = canvas.getContext('2d');
+
+const zones = [
+  {x:140, y:260, r:28, label:'Al‑Mulk'},
+  {x:330, y:140, r:28, label:'Awareness'},
+  {x:520, y:260, r:28, label:'Meaning'},
+  {x:720, y:160, r:28, label:'Hereafter'}
+];
 function drawMap(){
-  const canvas = document.getElementById('mapCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  const zones = [
-    {x:140, y:260, r:28, label:'Al‑Mulk'},
-    {x:330, y:140, r:28, label:'Awareness'},
-    {x:520, y:260, r:28, label:'Meaning'},
-    {x:720, y:160, r:28, label:'Hereafter'}
-  ];
-
   ctx.clearRect(0,0,canvas.width,canvas.height);
   const accent = getComputedStyle(document.body).getPropertyValue('--accent');
 
@@ -666,76 +655,60 @@ drawMap();
 })();
 
 /* ---------------------------------------------------------
-   3️⃣  MODE SWITCH – *push* slide animation (no gap)
+   3️⃣  MODE SWITCH WITH QUICK SLIDE ANIMATION
    --------------------------------------------------------- */
 const adultBtns = document.querySelectorAll('#adultBtn');
 const kidsBtns  = document.querySelectorAll('#kidsBtn');
+const page      = document.getElementById('page');
 
 let currentMode = document.body.classList.contains('kids') ? 'kids' : 'adult';
-let currentPage = document.getElementById('page');
-const wrapper    = document.getElementById('pageWrapper');
 
+/* Helper – set active class on the two toggle buttons */
 function setActiveButtons(mode){
   adultBtns.forEach(b=>b.classList.toggle('active', mode==='adult'));
   kidsBtns .forEach(b=>b.classList.toggle('active', mode==='kids'));
 }
 
-/* Core slide function --------------------------------------------------- */
+/* Core transition (quick 0.3 s) */
 function slideToMode(targetMode){
-  if (currentMode===targetMode) return;      // nothing to do
+  if (currentMode===targetMode) return;            // already there
 
-  /* --------- 1️⃣ create the incoming page (clone) ---------------------- */
-  const incoming = currentPage.cloneNode(true);
-  incoming.id = 'incomingPage';
-  incoming.classList.add(targetMode);      // give it the right palette
-  incoming.style.position = 'absolute';
-  incoming.style.top = '0';
-  incoming.style.left = '0';
-  incoming.style.width = '100%';
-  incoming.style.transition = 'transform .3s ease';
+  // 1️⃣ slide out (right for Adult, left for Kids)
+  const outDir = (targetMode==='adult') ? 100 : -100;   // % of viewport width
+  page.style.transform = `translateX(${outDir}%)`;
 
-  // start off‑screen (right for Kids, left for Adult)
-  const startX = (targetMode==='adult') ? '-100%' : '100%';
-  incoming.style.transform = `translateX(${startX})`;
+  // 2️⃣ when slide‑out finishes…
+  const onOut = () => {
+    page.removeEventListener('transitionend', onOut);
 
-  // append to wrapper (it will sit on top of the current page)
-  wrapper.appendChild(incoming);
-
-  /* --------- 2️⃣ slide both pages ----------------------------------- */
-  // move current page out
-  const outX = (targetMode==='adult') ? '100%' : '-100%';
-  currentPage.style.transition = 'transform .3s ease';
-  currentPage.style.transform = `translateX(${outX})`;
-
-  // force re‑flow before starting the animation of the incoming page
-  void incoming.offsetWidth;
-  incoming.style.transform = 'translateX(0)';
-
-  /* --------- 3️⃣ clean‑up after animation --------------------------- */
-  const onEnd = () => {
-    // remove listener to avoid multiple calls
-    incoming.removeEventListener('transitionend', onEnd);
-
-    // remove the old page and rename the incoming one
-    wrapper.removeChild(currentPage);
-    incoming.id = 'page';
-    currentPage = incoming;                 // keep reference for next toggle
-
-    // finally switch the body class (so the rest of the page follows)
+    // swap theme
     document.body.className = targetMode;
     currentMode = targetMode;
     setActiveButtons(targetMode);
-    drawMap();                              // redraw canvas with new accent
+    drawMap();
+
+    // prepare slide‑in from opposite side
+    const inStart = (targetMode==='adult') ? -100 : 100;
+    page.style.transition = 'none';                // turn off transition temporarily
+    page.style.transform = `translateX(${inStart}%)`;
+
+    // force reflow
+    void page.offsetWidth;
+
+    // slide‑in
+    page.style.transition = 'transform .3s ease';
+    page.style.transform = 'translateX(0)';
   };
-  incoming.addEventListener('transitionend', onEnd);
+
+  page.addEventListener('transitionend', onOut);
 }
 
-/* Attach listeners (both Adult / Kids buttons share the same IDs) */
+/* Attach listeners (both buttons share the same IDs) */
 adultBtns.forEach(b=>b.addEventListener('click',()=>slideToMode('adult')));
 kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 
 /* Initialise active state */
-setActiveButtons(currentMode);
+setActiveButtons('adult');
 </script>
 
 </body>
