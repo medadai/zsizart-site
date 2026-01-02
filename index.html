@@ -13,6 +13,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap"
       rel="stylesheet">                            <!-- Arabic (optional) -->
 
+<!-- Font‑Awesome for the social‑media icons -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-7yEw+T7nJj2b1FJXZohbJc6nKfXjLyR5NEU+S6oDIQrcCKQC4Z9wGH+Z9JtKlrWWVvxnUa2jhSd7yGf2Q36cYQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
 /* ==========================================================
    0️⃣  RESET & GLOBAL VARIABLES
@@ -493,6 +499,22 @@ footer{
   border-top:1px solid var(--accent);
 }
 
+/* Social‑media icons (new) */
+.social-icons{
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+.social-icons a{
+  color:var(--text);
+  font-size:1.4rem;
+  transition:color .2s;
+}
+.social-icons a:hover{
+  color:var(--accent);
+}
+
 /* ==========================================================
    8️⃣  LANGUAGE TOGGLE (round button)
    ========================================================== */
@@ -576,6 +598,128 @@ body.kids .btn:hover{
   background:#fff;
   color:var(--accent);
   transform:scale(1.05);
+}
+
+/* ==========================================================
+   11️⃣  CHATBOT STYLES (new)
+   ========================================================== */
+:root{
+  --chat-primary:#2C7E9E;
+  --chat-bg:#fff;
+  --chat-bot-bg:#f1f8ff;
+  --chat-user-bg:#e1f5e8;
+  --chat-text:#222;
+}
+
+/* floating bubble */
+#chatbot-bubble{
+  position:fixed;
+  bottom:24px; right:24px;
+  width:56px; height:56px;
+  background:var(--chat-primary);
+  color:#fff;
+  border-radius:50%;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  z-index:1000;
+  transition:transform .2s;
+}
+#chatbot-bubble:hover{transform:scale(1.08);}
+#chatbot-bubble svg{width:28px;height:28px;}
+
+/* modal */
+#chatbot-modal{
+  position:fixed;
+  bottom:90px; right:24px;
+  width:320px;
+  max-height:480px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+  display:flex;
+  flex-direction:column;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(20px);
+  transition:opacity .25s ease, transform .2s ease;
+  z-index:1000;
+}
+#chatbot-modal.open{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+/* header of the chat */
+.chatbot-header{
+  background:var(--chat-primary);
+  color:#fff;
+  padding:12px 16px;
+  border-top-left-radius:12px;
+  border-top-right-radius:12px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.chatbot-header button{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:1.2rem;
+  cursor:pointer;
+}
+
+/* body (chat bubbles) */
+.chatbot-body{
+  flex:1;
+  overflow-y:auto;
+  padding:12px 16px;
+}
+.chatbot-body .chat-bot{
+  background:var(--chat-bot-bg);
+  padding:8px 12px;
+  border-radius:8px;
+  margin-bottom:8px;
+  max-width:80%;
+}
+.chatbot-body .chat-user{
+  background:var(--chat-user-bg);
+  padding:8px 12px;
+  border-radius:8px;
+  margin-bottom:8px;
+  margin-left:auto;
+  max-width:80%;
+}
+
+/* input area (option buttons) */
+.chatbot-input{
+  padding:8px 12px;
+  border-top:1px solid #eee;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.chatbot-input button.chat-option{
+  flex:1 1 auto;
+  background:var(--chat-primary);
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:6px 10px;
+  cursor:pointer;
+  font-size:0.9rem;
+  transition:background .2s;
+}
+.chatbot-input button.chat-option:hover{
+  background:#236d8b;
+}
+
+/* links inside chat bubbles */
+.chatbot-body a{
+  color:var(--chat-primary);
+  text-decoration:none;
+}
+.chatbot-body a:hover{
+  text-decoration:underline;
 }
 </style>
 </head>
@@ -843,62 +987,77 @@ body.kids .btn:hover{
   <footer>
     © 2025 <span data-en="School of Awakening — A Path of Awareness"
                   data-ar="مَدْرَسَةُ الصَّحْوَةِ — طَرِيقُ الوَعْيِ">School of Awakening — A Path of Awareness</span>
+
+    <!-- Social‑media icons -->
+    <div class="social-icons">
+      <a href="https://wa.me/15551234567" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.youtube.com/channel/yourchannel" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.tiktok.com/@yourprofile" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    </div>
   </footer>
 
 </div> <!-- end #page -->
 
+<!-- ==================== CHATBOT ==================== -->
+<div id="chatbot-bubble" title="Need help buying? Click me!">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.08 2 11.5c0 2.77 1.5 5.28 3.86 7.06-.24.9-.94 2.78-2.74 4.44 2.44-.13 4.6-1.02 6.58-2.4 1.43.33 2.94.5 4.5.5 5.52 0 10-4.08 10-9.5S17.52 2 12 2zm-.5 13h-2v-2h2v2zm0-4h-2V7h2v4z"/></svg>
+</div>
+
+<div id="chatbot-modal" aria-hidden="true">
+  <div class="chatbot-header">
+    <span>🛒 Purchase Assistant</span>
+    <button id="chatbot-close" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="chatbot-body" id="chatbot-messages"></div>
+  <div class="chatbot-input" id="chatbot-input-area"></div>
+</div>
+
 <script>
 /* ---------------------------------------------------------
-   0️⃣ LANGUAGE SWITCHER
+   LANGUAGE SWITCHER (unchanged)
    --------------------------------------------------------- */
 const langBtn = document.getElementById('langBtn');
-
 function setLanguage(lang){
   document.documentElement.lang = lang;
   document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
   langBtn.textContent = (lang === 'en') ? 'ع' : 'E';
-
   document.querySelectorAll('[data-en]').forEach(el=>{
     el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
   });
 }
-setLanguage('en');               // default language
+setLanguage('en');
 langBtn.onclick = () => {
   const newLang = document.documentElement.lang === 'en' ? 'ar' : 'en';
   setLanguage(newLang);
 };
 
 /* ---------------------------------------------------------
-   1️⃣ MAP DRAWING (uses current accent colour)
+   MAP DRAWING (unchanged)
    --------------------------------------------------------- */
 function drawMap(){
   const canvas = document.getElementById('mapCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-
   const zones = [
     {x:140, y:260, r:28, label:'Al‑Mulk'},
     {x:330, y:140, r:28, label:'Awareness'},
     {x:520, y:260, r:28, label:'Meaning'},
     {x:720, y:160, r:28, label:'Hereafter'}
   ];
-
   ctx.clearRect(0,0,canvas.width,canvas.height);
   const accent = getComputedStyle(document.body).getPropertyValue('--accent');
-
   ctx.strokeStyle = accent;
   ctx.lineWidth   = 3;
   ctx.beginPath();
   zones.forEach((z,i)=>{ i ? ctx.lineTo(z.x,z.y) : ctx.moveTo(z.x,z.y); });
   ctx.stroke();
-
   zones.forEach(z=>{
     ctx.beginPath();
     ctx.fillStyle = '#fff';
     ctx.arc(z.x,z.y,z.r,0,Math.PI*2);
     ctx.fill();
     ctx.stroke();
-
     ctx.fillStyle = '#000';
     ctx.font = '14px Inter';
     ctx.textAlign = 'center';
@@ -908,7 +1067,7 @@ function drawMap(){
 drawMap();
 
 /* ---------------------------------------------------------
-   2️⃣ SPOTLIGHT (dot‑background) – follow cursor
+   SPOTLIGHT (dot‑background) – unchanged
    --------------------------------------------------------- */
 (function initSpotlight(){
   const dotLayer = document.querySelector('.dot-bg');
@@ -920,59 +1079,165 @@ drawMap();
 })();
 
 /* ---------------------------------------------------------
-   3️⃣ MODE SWITCH (quick slide)
+   MODE SWITCH (unchanged)
    --------------------------------------------------------- */
 const adultBtns = document.querySelectorAll('#adultBtn');
 const kidsBtns  = document.querySelectorAll('#kidsBtn');
 const page      = document.getElementById('page');
-
 let currentMode = document.body.classList.contains('kids') ? 'kids' : 'adult';
-
 function setActiveButtons(mode){
   adultBtns.forEach(b=>b.classList.toggle('active', mode==='adult'));
   kidsBtns .forEach(b=>b.classList.toggle('active', mode==='kids'));
 }
-
-/* core slide function */
 function slideToMode(targetMode){
-  if (currentMode===targetMode) return;            // nothing to do
-
-  // 1️⃣ slide out (right for Adult, left for Kids)
-  const outDir = (targetMode==='adult') ? 100 : -100;   // % of viewport width
+  if (currentMode===targetMode) return;
+  const outDir = (targetMode==='adult') ? 100 : -100;
   page.style.transform = `translateX(${outDir}%)`;
-
-  // 2️⃣ when slide‑out finishes…
   const onOut = () => {
     page.removeEventListener('transitionend', onOut);
-
-    // swap theme
     document.body.className = targetMode;
     currentMode = targetMode;
     setActiveButtons(targetMode);
-    drawMap();                    // redraw map with new accent colour
-
-    // 3️⃣ prepare slide‑in from opposite side
+    drawMap();
     const inStart = (targetMode==='adult') ? -100 : 100;
-    page.style.transition = 'none';                // temporarily disable transition
+    page.style.transition = 'none';
     page.style.transform = `translateX(${inStart}%)`;
-
-    // force re‑flow
     void page.offsetWidth;
-
-    // 4️⃣ slide‑in
     page.style.transition = 'transform .25s ease';
     page.style.transform = 'translateX(0)';
   };
-
   page.addEventListener('transitionend', onOut);
 }
-
-/* attach listeners */
 adultBtns.forEach(b=>b.addEventListener('click',()=>slideToMode('adult')));
 kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
-
-/* initialise active state */
 setActiveButtons(currentMode);
+
+/* ---------------------------------------------------------
+   PURCHASE‑ASSISTANT CHATBOT
+   --------------------------------------------------------- */
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const bubble   = $('#chatbot-bubble');
+  const modal    = $('#chatbot-modal');
+  const closeBtn = $('#chatbot-close');
+  const msgsDiv  = $('#chatbot-messages');
+  const inputDiv = $('#chatbot-input-area');
+
+  const data = {
+    greetings: "Hello! 👋 I’m here to help you purchase a course. How would you like to pay?",
+    paymentOptions: [
+      {label:"PayPal",               type:"link",  url:"https://www.paypal.com/paypalme/youraccount"},
+      {label:"Stripe (credit‑card)", type:"link", url:"https://buy.stripe.com/test_7sIaFm4UO2mQ8zqfZZ"},
+      {label:"Bank Transfer",    type:"info",  text:"Please transfer the amount to the following IBAN:\n\nIBAN: **DE89 3704 0044 0532 0130 00**\nReference: YOUR‑NAME‑COURSE\nOnce done, email the receipt to support@example.com."},
+      {label:"Cash on Delivery", type:"info",  text:"You can pay the driver in cash when the course materials are delivered to your address."},
+      {label:"Talk to Support",   type:"support"}
+    ],
+    supportOptions: [
+      {label:"WhatsApp",   type:"link", url:"https://wa.me/15551234567?text=I%20need%20help%20with%20my%20purchase"},
+      {label:"Email",      type:"link", url:"mailto:support@example.com?subject=Purchase%20Help"},
+      {label:"Phone",      type:"info", text:"Call us now at **+1 555‑123‑4567** (Mon‑Fri 9 am‑6 pm)."}
+    ],
+    fallback: "Let me know if you need anything else!"
+  };
+
+  const addMessage = (text, from = "bot") => {
+    const bubble = document.createElement('div');
+    bubble.className = `chat-${from}`;
+    bubble.innerHTML = text.replace(/\n/g, "<br>");
+    msgsDiv.appendChild(bubble);
+    msgsDiv.scrollTop = msgsDiv.scrollHeight;
+  };
+
+  const renderButtons = (buttons) => {
+    inputDiv.innerHTML = "";
+    buttons.forEach(btn => {
+      const el = document.createElement('button');
+      el.className = "chat-option";
+      el.textContent = btn.label;
+      el.dataset.action = btn.type;
+      if (btn.url) el.dataset.url = btn.url;
+      if (btn.text) el.dataset.text = btn.text;
+      inputDiv.appendChild(el);
+    });
+  };
+
+  const startConversation = () => {
+    addMessage(data.greetings);
+    renderButtons(data.paymentOptions);
+  };
+
+  const handlePaymentChoice = (choice) => {
+    switch (choice.type) {
+      case "link":
+        addMessage(`🔗 Here’s your payment link: <a href="${choice.url}" target="_blank" rel="noopener">Open ${choice.label}</a>`);
+        break;
+      case "info":
+        addMessage(`ℹ️ ${choice.text}`);
+        break;
+      case "support":
+        addMessage("Sure! How would you like to reach our support team?");
+        renderButtons(data.supportOptions);
+        return;   // wait for support choice
+    }
+    setTimeout(() => {
+      addMessage(data.fallback);
+      renderButtons(data.paymentOptions);
+    }, 1200);
+  };
+
+  const handleSupportChoice = (choice) => {
+    switch (choice.type) {
+      case "link":
+        addMessage(`📞 Contact us here: <a href="${choice.url}" target="_blank" rel="noopener">${choice.label}</a>`);
+        break;
+      case "info":
+        addMessage(`📞 ${choice.text}`);
+        break;
+    }
+    setTimeout(() => {
+      addMessage(data.fallback);
+      renderButtons(data.paymentOptions);
+    }, 1200);
+  };
+
+  bubble.addEventListener('click', () => {
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('open');
+    if (!modal.dataset.started) {
+      startConversation();
+      modal.dataset.started = "true";
+    }
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.setAttribute('aria-hidden', 'true');
+    modal.classList.remove('open');
+  });
+
+  inputDiv.addEventListener('click', (e) => {
+    if (!e.target.matches('.chat-option')) return;
+    const action = e.target.dataset.action;
+    const label  = e.target.textContent;
+    addMessage(label, "user");
+
+    // Determine whether we are in the support menu or the payment menu
+    if (modal.dataset.started && data.supportOptions.some(o => o.label === label)) {
+      const choice = data.supportOptions.find(o => o.label === label);
+      handleSupportChoice(choice);
+    } else {
+      const choice = data.paymentOptions.find(o => o.label === label);
+      if (choice) handlePaymentChoice(choice);
+    }
+  });
+
+  // close modal when clicking outside of it
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.classList.remove('open');
+    }
+  });
+})();
 </script>
 
 </body>
