@@ -137,7 +137,18 @@ body.kids .nav-item > a:hover{
   transition:opacity .3s ease,
              transform .4s cubic-bezier(.4,0,.2,1);
 }
+
+/* ---------------------------------------------------------
+   ORIGINAL HOVER‑TO‑SHOW RULE – COMMENTED OUT
+   --------------------------------------------------------- */
 .has-dropdown:hover .mega-menu{
+  /*opacity:1;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;*/
+}
+
+/* ------ NEW RULE: show when parent has .active class ----- */
+.has-dropdown.active .mega-menu{
   opacity:1;
   transform:translateX(-50%) translateY(0);
   pointer-events:auto;
@@ -462,7 +473,14 @@ body.kids .btn:hover{
 
         <!-- ***** NEW: COURSES TAB ***** -->
         <li class="nav-item has-dropdown">
-          <a href="#" data-en="Courses" data-ar="الدورات">Courses</a>
+          <!-- We keep the <a> element but give it ARIA attributes for accessibility.
+               The `js` below will toggle the parent .active class on click. -->
+          <a href="#" class="dropdown-toggle"
+             role="button"
+             aria-haspopup="true"
+             aria-expanded="false"
+             data-en="Courses"
+             data-ar="الدورات">Courses</a>
 
           <div class="mega-menu">
             <!-- 1️⃣ Quran Classes -->
@@ -542,7 +560,12 @@ body.kids .btn:hover{
 
         <!-- Existing other top‑level items -->
         <li class="nav-item has-dropdown">
-          <a href="#" data-en="Journey" data-ar="الرحلة">Journey</a>
+          <a href="#" class="dropdown-toggle"
+             role="button"
+             aria-haspopup="true"
+             aria-expanded="false"
+             data-en="Journey"
+             data-ar="الرحلة">Journey</a>
 
           <div class="mega-menu">
             <div class="mega-col">
@@ -781,6 +804,58 @@ kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 
 /* initialise active state */
 setActiveButtons(currentMode);
+
+/* ---------------------------------------------------------
+   4️⃣ MEGA‑MENU TOGGLE (click instead of hover)
+   --------------------------------------------------------- */
+const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+function closeAllMenus(){
+  document.querySelectorAll('.nav-item.has-dropdown').forEach(item=>{
+    item.classList.remove('active');
+    const link = item.querySelector('.dropdown-toggle');
+    if (link) link.setAttribute('aria-expanded','false');
+  });
+}
+
+/* open/close on click (or keypress) */
+dropdownToggles.forEach(toggle=>{
+  // mouse click
+  toggle.addEventListener('click', e=>{
+    e.preventDefault();                 // prevent “#” navigation
+    const parent = toggle.closest('.nav-item');
+    const isOpen = parent.classList.toggle('active');
+    toggle.setAttribute('aria-expanded', isOpen);
+    // close other open menus
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(item=>{
+      if (item!==parent) {
+        item.classList.remove('active');
+        const other = item.querySelector('.dropdown-toggle');
+        if (other) other.setAttribute('aria-expanded','false');
+      }
+    });
+  });
+
+  // keyboard – Space or Enter should work the same
+  toggle.addEventListener('keydown', e=>{
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle.click();
+    }
+  });
+});
+
+/* close menus when clicking/tapping outside */
+document.addEventListener('click', e=>{
+  if (!e.target.closest('.nav-item.has-dropdown')) {
+    closeAllMenus();
+  }
+});
+
+/* optional: close on Escape */
+document.addEventListener('keydown', e=>{
+  if (e.key === 'Escape') closeAllMenus();
+});
 </script>
 
 </body>
