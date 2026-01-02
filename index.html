@@ -101,7 +101,7 @@ nav{
   position:relative;
 }
 .nav-item > a{
-  font-weight:600;               /* <-- make all top‑level links bold */
+  font-weight:600;               /* all top‑level links are bold now */
   padding:10px 5px;
   color:inherit;
 }
@@ -117,7 +117,9 @@ body.kids .nav-item > a:hover{
   transform:scale(1.1);
 }
 
-/* ----------- MEGA MENU (used by Journey before rebuild) ------------ */
+/* ---------------------------------------------------------
+   ORIGINAL MEGA‑MENU (used by Journey before we rebuild it)
+   --------------------------------------------------------- */
 .has-dropdown .mega-menu{
   position:absolute;
   top:100%; left:50%;
@@ -134,8 +136,8 @@ body.kids .nav-item > a:hover{
   border-radius:20px;
   box-shadow:0 30px 60px rgba(0,0,0,.15);
 
-  transition:opacity .3s ease,
-             transform .4s cubic-bezier(.4,0,.2,1);
+  /* ---- LONGER FADE‑OUT / SLIDE‑OUT ---- */
+  transition:opacity .6s ease, transform .6s ease;
 }
 .has-dropdown:hover .mega-menu{
   opacity:1;
@@ -157,10 +159,7 @@ body.kids .nav-item > a:hover{
   color:#222;
 }
 
-/* ---------------------------------------------------------
-   NEW: Courses – first‑level shows only headlines,
-   second‑level (hover) shows the full list
-   --------------------------------------------------------- */
+/* ------------------- NEW: Courses ------------------- */
 .nav-item.courses .courses-dropdown{
   position:absolute;
   top:100%;
@@ -173,7 +172,7 @@ body.kids .nav-item > a:hover{
   border-radius:20px;
   box-shadow:0 30px 60px rgba(0,0,0,.15);
   padding:20px;
-  transition:opacity .3s ease, transform .3s ease;
+  transition:opacity .6s ease, transform .6s ease;
 }
 .nav-item.courses:hover .courses-dropdown{
   opacity:1;
@@ -181,9 +180,7 @@ body.kids .nav-item > a:hover{
   transform:translateY(0);
 }
 
-/* ---------------------------------------------------------
-   NEW: Journey – same structure as Courses
-   --------------------------------------------------------- */
+/* ------------------- New: Journey (same as Courses) ------------------- */
 .nav-item.journey .journey-dropdown{
   position:absolute;
   top:100%;
@@ -196,7 +193,7 @@ body.kids .nav-item > a:hover{
   border-radius:20px;
   box-shadow:0 30px 60px rgba(0,0,0,.15);
   padding:20px;
-  transition:opacity .3s ease, transform .3s ease;
+  transition:opacity .6s ease, transform .6s ease;
 }
 .nav-item.journey:hover .journey-dropdown{
   opacity:1;
@@ -204,7 +201,7 @@ body.kids .nav-item > a:hover{
   transform:translateY(0);
 }
 
-/* common rules for the two dropdown‑groups */
+/* Shared rules for the two dropdown‑groups (Courses & Journey) */
 .courses-dropdown .category-list,
 .journey-dropdown .category-list{
   list-style:none;
@@ -245,7 +242,7 @@ body.kids .nav-item > a:hover{
   border-radius:20px;
   box-shadow:0 30px 60px rgba(0,0,0,.15);
   padding:15px;
-  transition:opacity .3s ease, transform .3s ease;
+  transition:opacity .6s ease, transform .6s ease;
 }
 .courses-dropdown .category-item:hover .submenu,
 .journey-dropdown .category-item:hover .submenu{
@@ -675,7 +672,7 @@ body.kids .btn:hover{
           </div> <!-- /.courses-dropdown -->
         </li> <!-- /.nav-item.courses -->
 
-        <!-- ***** NEW: JOURNEY TAB ***** (same behavior as Courses) -->
+        <!-- ***** NEW: JOURNEY TAB ***** (same behaviour as Courses) -->
         <li class="nav-item journey">
           <a href="#" class="dropdown-toggle"
              role="button"
@@ -726,7 +723,7 @@ body.kids .btn:hover{
           </div> <!-- /.journey-dropdown -->
         </li> <!-- /.nav-item.journey -->
 
-        <!-- The remaining top‑level items stay unchanged -->
+        <!-- Remaining top‑level items (unchanged) -->
         <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
         <li class="nav-item"><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
         <li class="nav-item"><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
