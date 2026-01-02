@@ -1,1188 +1,927 @@
 <!DOCTYPE html>
-<html lang="en">                     <!-- default language is English -->
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>School of Awakening</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Studies Course</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c5e1a;
+            --secondary: #4a9c3d;
+            --accent: #ff9800;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 8px;
+        }
 
-<!-- ---------- Fonts ---------- -->
-<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap"
-      rel="stylesheet">                            <!-- Kids -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap"
-      rel="stylesheet">                            <!-- Adult -->
-<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap"
-      rel="stylesheet">                            <!-- Arabic (optional) -->
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- Font‑Awesome for social icons and chat icon -->
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-7yEw+T7nJj2b1FJXZohbJc6nKfXjLyR5NEU+S6oDIQrcCKQC4Z9wGH+Z9JtKlrWWVvxnUa2jhSd7yGf2Q36cYQ=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-<style>
-/* ==========================================================
-   0️⃣  RESET & GLOBAL VARIABLES
-   ========================================================== */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-:root{
-  --bg-main:#fff7d6;
-  --bg-soft:#ffeaa7;
-  --card:#ffffff;
-  --text:#4b4b4b;
-  --accent:#e17055;
-  --radius:14px;
-  --shadow:5px 5px 0 var(--accent);
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
 
-  /* Chatbot colours (match website) */
-  --chat-primary:#2C7E9E;
-  --chat-bg:#fff;
-  --chat-bot-bg:#f1f8ff;
-  --chat-user-bg:#e1f5e8;
-}
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
 
-/* ==========================================================
-   1️⃣  ADULT & KIDS PALETTES
-   ========================================================== */
-body.adult{
-  --bg-main:#f4f1ec;
-  --bg-soft:#e6e1da;
-  --accent:#3f4a3c;
-  --shadow:none;
-  font-family:'Inter',sans-serif;
-}
-body.kids{
-  font-family:'Indie Flower',cursive;
-  --bg-main:#e6D5C3;
-  --bg-soft:#BAAFA3;
-  --card:#e1DAD7;
-  --text:#817065;
-  --accent:#70794F;
-  --accent-trans:rgba(112,121,79,0.6);
-  --radius:12px;
-  --shadow:4px 4px 0 var(--accent);
-}
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
 
-/* ==========================================================
-   2️⃣  BASIC PAGE STYLE
-   ========================================================== */
-body{
-  margin:0;
-  background:var(--bg-main);
-  color:var(--text);
-  overflow-x:hidden;               /* hide the horizontal scroll while sliding */
-  transition:.3s;
-}
-a{text-decoration:none;color:inherit}
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
 
-/* ==========================================================
-   3️⃣  HEADER & NAVIGATION (Exxeta‑style mega‑menu)
-   ========================================================== */
-header{
-  position:sticky;top:0;z-index:10;
-  background:rgba(255,255,255,.95);
-  border-bottom:1px solid var(--accent);
-}
-.header{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:16px 24px;
-}
+        .btn-accent {
+            background-color: var(--accent);
+        }
 
-/* LOGO */
-.logo{
-  font-size:1.6rem;
-}
-body.adult .logo{
-  font-family:'Playfair Display',serif;
-  font-weight:700;
-}
+        .btn-accent:hover {
+            background-color: #e68a00;
+        }
 
-/* ----------- LANGUAGE TOGGLE (now in header) ----------- */
-.lang-toggle-header{
-  display:flex;
-  align-items:center;
-}
-.lang-toggle-header button{
-  background:var(--accent);
-  color:#fff;
-  border:none;
-  border-radius:4px;
-  padding:6px 12px;
-  font-size:0.9rem;
-  cursor:pointer;
-  transition:background .2s, opacity .2s;
-}
-.lang-toggle-header button:hover{
-  opacity:0.8;
-}
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-/* NAVIGATION */
-nav{
-  display:flex;
-}
-.nav-links{
-  list-style:none;
-  display:flex;
-  gap:30px;
-}
-.nav-item{
-  position:relative;
-}
-.nav-item > a{
-  font-weight:600;               /* all top‑level links are bold */
-  padding:10px 5px;
-  color:inherit;
-}
-body.kids .nav-item a{
-  font-family:'Permanent Marker',cursive;
-}
-.nav-item > a:hover{
-  background:var(--accent);
-  color:#fff;
-}
-body.kids .nav-item > a:hover{
-  background:var(--accent-trans);
-  transform:scale(1.1);
-}
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
 
-/* ---------------------------------------------------------
-   ORIGINAL MEGA‑MENU (kept for possible future use)
-   --------------------------------------------------------- */
-.has-dropdown .mega-menu{
-  position:absolute;
-  top:100%; left:50%;
-  transform:translateX(-50%) translateY(20px);
-  opacity:0; pointer-events:none;
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
 
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
-  gap:40px;
-  min-width:700px;
-  padding:40px;
-  background:#fff;
-  border-radius:20px;
-  box-shadow:0 30px 60px rgba(0,0,0,.15);
+        .logo span {
+            color: var(--accent);
+        }
 
-  /* FADE‑OUT + DELAY for the *closed* state */
-  transition:
-    opacity 0.6s ease 0.2s,
-    transform 0.6s ease 0.2s;
-}
-.has-dropdown:hover .mega-menu{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-  pointer-events:auto;
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
 
-  /* QUICK SHOW when hovered */
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
-}
-.mega-col a{
-  display:block;
-  margin-bottom:10px;
-  font-size:14px;
-  color:#444;
-}
-.mega-col a:hover{color:#000;}
-.mega-col .cat-title{
-  font-weight:600;
-  margin-bottom:12px;
-  font-size:15px;
-  color:#222;
-}
+        nav ul li {
+            margin: 0 15px;
+        }
 
-/* ---------------------------------------------------------
-   NEW: Courses – headline‑only → second‑level submenu
-   --------------------------------------------------------- */
-.nav-item.courses .courses-dropdown{
-  position:absolute;
-  top:100%;
-  left:0;
-  transform:translateY(20px);
-  opacity:0;
-  pointer-events:none;
-  min-width:250px;
-  background:#fff;
-  border-radius:20px;
-  box-shadow:0 30px 60px rgba(0,0,0,.15);
-  padding:20px;
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
 
-  /* delayed + slow fade‑out */
-  transition:
-    opacity 0.6s ease 0.2s,
-    transform 0.6s ease 0.2s;
-}
-.nav-item.courses:hover .courses-dropdown{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateY(0);
+        nav ul li a:hover {
+            color: var(--primary);
+        }
 
-  /* fast show */
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
-}
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
 
-/* ---------------------------------------------------------
-   NEW: Journey – same behaviour as Courses
-   --------------------------------------------------------- */
-.nav-item.journey .journey-dropdown{
-  position:absolute;
-  top:100%;
-  left:0;
-  transform:translateY(20px);
-  opacity:0;
-  pointer-events:none;
-  min-width:250px;
-  background:#fff;
-  border-radius:20px;
-  box-shadow:0 30px 60px rgba(0,0,0,.15);
-  padding:20px;
+        nav ul li a:hover::after {
+            width: 100%;
+        }
 
-  /* delayed + slow fade‑out */
-  transition:
-    opacity 0.6s ease 0.2s,
-    transform 0.6s ease 0.2s;
-}
-.nav-item.journey:hover .journey-dropdown{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateY(0);
+        .language-switcher {
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
 
-  /* fast show */
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
-}
+        .language-switcher:hover {
+            background-color: var(--primary);
+            color: white;
+        }
 
-/* shared rules for the two “headline → submenu” groups */
-.courses-dropdown .category-list,
-.journey-dropdown .category-list{
-  list-style:none;
-  margin:0;
-  padding:0;
-}
-.courses-dropdown .category-item,
-.journey-dropdown .category-item{
-  position:relative;
-  margin-bottom:8px;
-}
-.courses-dropdown .cat-link,
-.journey-dropdown .cat-link{
-  display:block;
-  font-weight:600;
-  padding:8px 12px;
-  color:#444;
-  border-radius:6px;
-}
-.courses-dropdown .cat-link:hover,
-.journey-dropdown .cat-link:hover{
-  background:var(--accent);
-  color:#fff;
-}
-.courses-dropdown .submenu,
-.journey-dropdown .submenu{
-  position:absolute;
-  top:0;
-  left:100%;
-  margin-left:8px;
-  transform:translateX(10px);
-  opacity:0;
-  pointer-events:none;
-  min-width:200px;
-  background:#fff;
-  border-radius:20px;
-  box-shadow:0 30px 60px rgba(0,0,0,.15);
-  padding:15px;
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(44, 94, 26, 0.1) 0%, rgba(74, 156, 61, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
 
-  /* same delayed fade‑out as the parent */
-  transition:
-    opacity 0.6s ease 0.2s,
-    transform 0.6s ease 0.2s;
-}
-.courses-dropdown .category-item:hover .submenu,
-.journey-dropdown .category-item:hover .submenu{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateX(0);
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,152,0,0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
 
-  /* quick show */
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
-}
-.courses-dropdown .submenu a,
-.journey-dropdown .submenu a{
-  display:block;
-  margin-bottom:6px;
-  font-size:14px;
-  color:#444;
-}
-.courses-dropdown .submenu a:hover,
-.journey-dropdown .submenu a:hover{
-  color:#000;
-}
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
 
-/* Hide navigation on very narrow screens */
-@media(max-width:900px){ .nav-links{display:none} }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
 
-/* ==========================================================
-   4️⃣  MODE‑TOGGLE (">" button that reveals Adult/Kids)
-   ========================================================== */
-.mode-toggle{
-  position:fixed;
-  top:50%; right:0;
-  transform:translateY(-50%);
-  display:flex;
-  align-items:center;
-  z-index:2000;
-}
-.mode-trigger{
-  background:var(--bg-soft);
-  border:1px solid var(--accent);
-  border-radius:0 8px 8px 0;
-  padding:8px 12px;
-  cursor:pointer;
-  font-size:1.2rem;
-  color:var(--text);
-}
-.mode-switch{
-  position:absolute;
-  top:0;
-  right:-80px;               /* hidden off‑screen */
-  display:flex;
-  flex-direction:column;
-  background:var(--bg-soft);
-  border:1px solid var(--accent);
-  border-right:none;
-  border-radius:8px 0 0 8px;
-  overflow:hidden;
-  transition:right .2s ease;
-}
-.mode-switch button{
-  background:transparent;
-  border:none;
-  padding:8px 12px;
-  cursor:pointer;
-  font-size:.9rem;
-  color:var(--text);
-}
-.mode-switch button.active{
-  background:var(--accent);
-  color:#fff;
-}
-.mode-toggle:hover .mode-switch{right:0;}
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
 
-/* ==========================================================
-   5️⃣  HERO
-   ========================================================== */
-.hero{
-  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
-  padding:120px 24px 80px;
-}
-.hero-grid{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:40px;
-}
-.hero h1{
-  font-size:clamp(2.4rem,6vw,3.6rem);
-  line-height:1.2;
-}
-body.adult .hero h1{
-  font-family:'Playfair Display',serif;
-  font-weight:700;
-}
-body.kids .hero h1{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
-}
-.hero p{
-  font-size:1.1rem;
-  max-width:520px;
-}
-body.kids .hero p{
-  color:var(--text);
-}
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
 
-/* Buttons inside hero */
-.btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 26px;
-  border:1px solid var(--accent);
-  border-radius:10px;
-}
-body.kids .btn{
-  font-family:'Permanent Marker',cursive;
-  background:var(--accent);
-  color:#fff;
-}
-body.adult .btn{
-  background:transparent;
-  font-weight:500;
-}
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
 
-/* Horizontal slides */
-.hero-visual{
-  display:flex;
-  gap:16px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-}
-.hero-visual::-webkit-scrollbar{display:none}
-.slide{
-  min-width:220px;
-  background:#fff;
-  border:1px solid var(--accent);
-  border-radius:14px;
-  padding:40px 20px;
-  text-align:center;
-  scroll-snap-align:center;
-}
-body.kids .slide{
-  font-family:'Permanent Marker',cursive;
-  font-size:1.4rem;
-  animation:float 4s ease-in-out infinite;
-}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
 
-/* ==========================================================
-   6️⃣  PAGE CONTAINER (the element that slides)
-   ========================================================== */
-#page{
-  position:relative;
-  transition:transform .25s ease;   /* quicker slide */
-}
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
 
-/* ==========================================================
-   7️⃣  MAIN CONTENT (cards, map, etc.)
-   ========================================================== */
-.wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:80px 24px;
-}
-section{margin-top:120px}
-h2{
-  font-size:2rem;
-}
-body.adult h2{
-  font-family:'Playfair Display',serif;
-}
-body.kids h2{
-  font-family:'Permanent Marker',cursive;
-  color:var(--text);
-}
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
 
-/* Cards */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
-}
-.card{
-  padding:28px;
-  background:#fff;
-  border:1px solid var(--accent);
-  border-radius:14px;
-}
-body.kids .card{
-  background:var(--card);
-  border:2px solid var(--accent);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  transform:none;
-}
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
 
-/* Map canvas */
-#mapCanvas{
-  width:100%;
-  max-width:900px;
-  height:420px;
-  background:#fff;
-  border:1px solid var(--accent);
-  border-radius:20px;
-}
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
 
-/* Footer */
-footer{
-  margin-top:120px;
-  padding:30px;
-  text-align:center;
-  font-size:.85rem;
-  background:#fff;
-  border-top:1px solid var(--accent);
-}
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
 
-/* Social‑media icons (new) */
-.social-icons{
-  margin-top:12px;
-  display:flex;
-  justify-content:center;
-  gap:20px;
-}
-.social-icons a{
-  color:var(--text);
-  font-size:1.4rem;
-  transition:color .2s;
-}
-.social-icons a:hover{
-  color:var(--accent);
-}
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(44, 94, 26, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
 
-/* ==========================================================
-   11️⃣  CHATBOT – SIDE DRAWER
-   ========================================================== */
-#chatbot-tab{
-  position:fixed;
-  top:50%;
-  right:0;
-  transform:translateY(-50%);
-  background:var(--chat-primary);
-  color:#fff;
-  border-top-left-radius:8px;
-  border-bottom-left-radius:8px;
-  padding:12px 8px;
-  cursor:pointer;
-  font-size:1rem;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  z-index:1100;
-  transition:background .2s;
-}
-#chatbot-tab:hover{
-  background:#236d8b;
-}
-#chatbot-tab i{
-  font-size:1.2rem;
-}
+        .feature-icon i {
+            font-size: 30px;
+            color: var(--primary);
+        }
 
-/* drawer (initially hidden, shifted fully to the right) */
-#chatbot-drawer{
-  position:fixed;
-  top:0;
-  right:0;
-  width:320px;
-  height:100vh;
-  background:#fff;
-  border-left:1px solid #ddd;
-  box-shadow:-4px 0 12px rgba(0,0,0,.15);
-  display:flex;
-  flex-direction:column;
-  transform:translateX(100%);   /* hidden */
-  transition:transform .3s ease;
-  z-index:1100;
-}
-#chatbot-drawer.open{
-  transform:translateX(0);
-}
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
 
-/* drawer header */
-.chatbot-header{
-  background:var(--chat-primary);
-  color:#fff;
-  padding:12px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.chatbot-header button{
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:1.2rem;
-  cursor:pointer;
-}
+        /* Courses Section */
+        .courses {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
 
-/* drawer body (messages) */
-.chatbot-body{
-  flex:1;
-  overflow-y:auto;
-  padding:12px 16px;
-}
-.chatbot-body .chat-bot{
-  background:var(--chat-bot-bg);
-  padding:8px 12px;
-  border-radius:8px;
-  margin-bottom:8px;
-  max-width:80%;
-}
-.chatbot-body .chat-user{
-  background:var(--chat-user-bg);
-  padding:8px 12px;
-  border-radius:8px;
-  margin-bottom:8px;
-  margin-left:auto;
-  max-width:80%;
-}
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
 
-/* input area (choices) */
-.chatbot-input{
-  padding:8px 12px;
-  border-top:1px solid #eee;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-.chatbot-input button.chat-option{
-  flex:1 1 auto;
-  background:var(--chat-primary);
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  padding:6px 10px;
-  cursor:pointer;
-  font-size:0.9rem;
-  transition:background .2s;
-}
-.chatbot-input button.chat-option:hover{
-  background:#236d8b;
-}
+        .course-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
 
-/* links inside chat bubbles */
-.chatbot-body a{
-  color:var(--chat-primary);
-  text-decoration:none;
-}
-.chatbot-body a:hover{
-  text-decoration:underline;
-}
-</style>
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .course-image {
+            height: 200px;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .course-content {
+            padding: 25px;
+        }
+
+        .course-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(44, 94, 26, 0.1) 0%, rgba(74, 156, 61, 0.1) 100%);
+        }
+
+        .map-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        #mapCanvas {
+            width: 100%;
+            height: 400px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .testimonial-content {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .hero {
+                text-align: center;
+                padding: 60px 0;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .chat-toggle:hover {
+            background-color: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            height: 400px;
+        }
+
+        .chat-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: var(--radius) var(--radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: var(--radius);
+            max-width: 80%;
+        }
+
+        .message.user {
+            background-color: #e3f2fd;
+            margin-left: auto;
+        }
+
+        .message.bot {
+            background-color: #f5f5f5;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .chat-window.active {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">Islamic<span>Studies</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="language-switcher">عربي</button>
+        </div>
+    </header>
 
-<body class="adult">
-
-<!-- ------- DOT BACKGROUND (only visible in kids mode) ------- -->
-<div class="dot-bg"></div>
-
-<header>
-  <div class="header">
-    <!-- LOGO -->
-    <div class="logo"
-         data-en="School of Awakening"
-         data-ar="مَدْرَسَةُ الصَّحْوَةِ">School of Awakening</div>
-
-    <!-- Language toggle – now in the header -->
-    <div class="lang-toggle-header">
-      <button id="langBtn">ع</button>
-    </div>
-
-    <!-- Navigation (mega‑menu) -->
-    <nav>
-      <ul class="nav-links">
-        <li class="nav-item"><a href="#" data-en="Home" data-ar="الرَّئِيسِيَّةُ">Home</a></li>
-
-        <!-- ***** COURSES ***** -->
-        <li class="nav-item courses">
-          <a href="#" class="dropdown-toggle"
-             role="button"
-             aria-haspopup="true"
-             aria-expanded="false"
-             data-en="Courses"
-             data-ar="الدورات">Courses</a>
-
-          <div class="courses-dropdown">
-            <ul class="category-list">
-              <!-- Quran Classes -->
-              <li class="category-item">
-                <a href="#" class="cat-link"
-                   data-en="Quran Classes"
-                   data-ar="دروس القرآن">Quran Classes</a>
-                <div class="submenu">
-                  <a href="#" data-en="Learn Quran With Tajweed" data-ar="تعلم القرآن بالتجويد">Learn Quran With Tajweed</a>
-                  <a href="#" data-en="Quran Memorization" data-ar="حفظ القرآن">Quran Memorization</a>
-                  <a href="#" data-en="Quran Recitation Course" data-ar="دورة تجويد القرآن">Quran Recitation Course</a>
-                  <a href="#" data-en="Quran Classes For Kids" data-ar="دروس القرآن للأطفال">Quran Classes For Kids</a>
-                  <a href="#" data-en="Quran Classes For Adults" data-ar="دروس القرآن للبالغين">Quran Classes For Adults</a>
-                  <a href="#" data-en="Quran Classes For Sisters" data-ar="دروس القرآن للأخوات">Quran Classes For Sisters</a>
-                  <a href="#" data-en="Quran Classes For Beginners" data-ar="دروس القرآن للمبتدئين">Quran Classes For Beginners</a>
-                  <a href="#" data-en="Weekend Quran Classes" data-ar="دروس القرآن في عطلة الأسبوع">Weekend Quran Classes</a>
-                  <a href="#" data-en="Sunni Quran Classes" data-ar="دروس القرآن السنية">Sunni Quran Classes</a>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Expand Your Knowledge of Islamic Studies</h1>
+                <p>Join our comprehensive courses designed by expert scholars to deepen your understanding of Islamic teachings, history, and practices.</p>
+                <div class="hero-buttons">
+                    <a href="#courses" class="btn">Explore Courses</a>
+                    <a href="#contact" class="btn btn-accent">Contact Us</a>
                 </div>
-              </li>
-
-              <!-- Quran Memorization -->
-              <li class="category-item">
-                <a href="#" class="cat-link"
-                   data-en="Quran Memorization"
-                   data-ar="حفظ القرآن">Quran Memorization</a>
-                <div class="submenu">
-                  <a href="#" data-en="Quran Memorization Program" data-ar="برنامج حفظ القرآن">Quran Memorization Program</a>
-                  <a href="#" data-en="Online Hifz Course" data-ar="دورة حفظ أونلاين">Online Hifz Course</a>
-                  <a href="#" data-en="Hifz Classes For Beginners" data-ar="حفظ للمبتدئين">Hifz Classes For Beginners</a>
-                  <a href="#" data-en="Hifz Classes For Kids" data-ar="حفظ للأطفال">Hifz Classes For Kids</a>
-                  <a href="#" data-en="Hifz Classes For Adults" data-ar="حفظ للبالغين">Hifz Classes For Adults</a>
-                  <a href="#" data-en="Hifz Classes For Ladies" data-ar="حفظ للسيدات">Hifz Classes For Ladies</a>
-                  <a href="#" data-en="Intensive Hifz Course" data-ar="دورة حفظ مكثفة">Intensive Hifz Course</a>
-                  <a href="#" data-en="Full‑time Hifz Program" data-ar="برنامج حفظ بدوام كامل">Full‑time Hifz Program</a>
-                  <a href="#" data-en="Part‑time Hifz Program" data-ar="برنامج حفظ بدوام جزئي">Part‑time Hifz Program</a>
-                </div>
-              </li>
-
-              <!-- Tajweed Classes -->
-              <li class="category-item">
-                <a href="#" class="cat-link"
-                   data-en="Tajweed Classes"
-                   data-ar="دروس التجويد">Tajweed Classes</a>
-                <div class="submenu">
-                  <a href="#" data-en="Tajweed Rules Course" data-ar="دورة قواعد التجويد">Tajweed Rules Course</a>
-                  <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجوي
-
-د للأطفال">Tajweed Classes For Kids</a>
-                  <a href="#" data-en="Tajweed Classes For Sisters" data-ar="تجويد للأخوات">Tajweed Classes For Sisters</a>
-                  <a href="#" data-en="Tajweed Classes For Adults" data-ar="تجويد للبالغين">Tajweed Classes For Adults</a>
-                  <a href="#" data-en="Tajweed Classes For Beginners" data-ar="تجويد للمبتدئين">Tajweed Classes For Beginners</a>
-                  <a href="#" data-en="Advance Tajweed Course" data-ar="دورة تجويد متقدم">Advance Tajweed Course</a>
-                  <a href="#" data-en="Quran Ijazah Course" data-ar="دورة إجازة القرآن">Quran Ijazah Course</a>
-                  <a href="#" data-en="10 Quran Qirat Course" data-ar="دورة قراءة 10 قرآن">10 Quran Qirat Course</a>
-                </div>
-              </li>
-
-              <!-- Arabic Classes -->
-              <li class="category-item">
-                <a href="#" class="cat-link"
-                   data-en="Arabic Classes"
-                   data-ar="دروس العربية">Arabic Classes</a>
-                <div class="submenu">
-                  <a href="#" data-en="Noorani Qaida Course" data-ar="دورة نوراني القاعدة">Noorani Qaida Course</a>
-                  <a href="#" data-en="Quranic Arabic Course" data-ar="دورة العربية القرآنية">Quranic Arabic Course</a>
-                  <a href="#" data-en="Arabic Classes For Kids" data-ar="دروس العربية للأطفال">Arabic Classes For Kids</a>
-                  <a href="#" data-en="Arabic Conversation Course" data-ar="دورة محادثة عربية">Arabic Conversation Course</a>
-                  <a href="#" data-en="Arabic Grammar Course" data-ar="دورة قواعد العربية">Arabic Grammar Course</a>
-                  <a href="#" data-en="Arabic Course For Beginners" data-ar="دورة العربية للمبتدئين">Arabic Course For Beginners</a>
-                  <a href="#" data-en="Arabic Classes For Adults" data-ar="دروس العربية للبالغين">Arabic Classes For Adults</a>
-                  <a href="#" data-en="Modern Standard Arabic Course" data-ar="دورة العربية الفصحى الحديثة">Modern Standard Arabic Course</a>
-                  <a href="#" data-en="Classical Arabic Course" data-ar="دورة العربية الكلاسيكية">Classical Arabic Course</a>
-                  <a href="#" data-en="Egyptian Arabic Course" data-ar="دورة العربية المصرية">Egyptian Arabic Course</a>
-                  <a href="#" data-en="Arabic Classes For Sisters" data-ar="دروس العربية للأخوات">Arabic Classes For Sisters</a>
-                  <a href="#" data-en="Arabic Speaking Course" data-ar="دورة التحدث بالعربية">Arabic Speaking Course</a>
-                  <a href="#" data-en="Arabic Reading Course" data-ar="دورة القراءة العربية">Arabic Reading Course</a>
-                  <a href="#" data-en="Intensive Arabic Course" data-ar="دورة عربية مكثفة">Intensive Arabic Course</a>
-                  <a href="#" data-en="Arabic Fusha Course" data-ar="دورة العربية الفصحى">Arabic Fusha Course</a>
-                </div>
-              </li>
-
-              <!-- Islamic Classes -->
-              <li class="category-item">
-                <a href="#" class="cat-link"
-                   data-en="Islamic Classes"
-                   data-ar="دروس إسلامية">Islamic Classes</a>
-                <div class="submenu">
-                  <a href="#" data-en="Islamic Classes For Kids" data-ar="دروس إسلامية للأطفال">Islamic Classes For Kids</a>
-                  <a href="#" data-en="Islamic Classes For Beginners" data-ar="دروس إسلامية للمبتدئين">Islamic Classes For Beginners</a>
-                  <a href="#" data-en="Islamic Classes For Adults" data-ar="دروس إسلامية للبالغين">Islamic Classes For Adults</a>
-                  <a href="#" data-en="Islamic Classes For Sisters" data-ar="دروس إسلامية للأخوات">Islamic Classes For Sisters</a>
-                  <a href="#" data-en="Tafseer Quran Course" data-ar="دورة تفسير القرآن">Tafseer Quran Course</a>
-                  <a href="#" data-en="New Muslim Converts Course" data-ar="دورة التحول للمسلمين الجدد">New Muslim Converts Course</a>
-                  <a href="#" data-en="New Shahada Classes" data-ar="دورات شهادة جديدة">New Shahada Classes</a>
-                </div>
-              </li>
-            </ul>
-          </div> <!-- /.courses-dropdown -->
-        </li> <!-- /.nav-item.courses -->
-
-        <!-- ***** JOURNEY ***** (same behaviour as Courses) -->
-        <li class="nav-item journey">
-          <a href="#" class="dropdown-toggle"
-             role="button"
-             aria-haspopup="true"
-             aria-expanded="false"
-             data-en="Journey"
-             data-ar="الرحلة">Journey</a>
-
-          <div class="journey-dropdown">
-            <ul class="category-list">
-              <!-- Spiritual -->
-              <li class="category-item">
-                <a href="#" class="cat-link"
-                   data-en="Spiritual"
-                   data-ar="روحاني">Spiritual</a>
-                <div class="submenu">
-                  <a href="#" data-en="Confusion" data-ar="الحيرة">Confusion</a>
-                  <a href="#" data-en="Healing"   data-ar="الشفاء">Healing</a>
-                  <a href="#" data-en="Tawheed"  data-ar="التوحيد">Tawheed</a>
-                </div>
-              </li>
-
-              <!-- Prophetic -->
-              <li class="category-item">
-                <a href="#" class="cat-link"
-                   data-en="Prophetic"
-                   data-ar="نَبَوِي">Prophetic</a>
-                <div class="submenu">
-                  <a href="#" data-en="The Prophet" data-ar="النبي">The Prophet</a>
-                  <a href="#" data-en="Holy Quran"  data-ar="القرآن الكريم">Holy Quran</a>
-                  <a href="#" data-en="Faith"      data-ar="الإيمان">Faith</a>
-                </div>
-              </li>
-
-              <!-- Afterlife -->
-              <li class="category-item">
-                <a href="#" class="cat-link"
-                   data-en="Afterlife"
-                   data-ar="آخِرَة">Afterlife</a>
-                <div class="submenu">
-                  <a href="#" data-en="Choice"   data-ar="الاختيار">Choice</a>
-                  <a href="#" data-en="Death"    data-ar="الموت">Death</a>
-                  <a href="#" data-en="Barzakh"  data-ar="البرزخ">Barzakh</a>
-                  <a href="#" data-en="Judgment" data-ar="الحساب">Judgment</a>
-                </div>
-              </li>
-            </ul>
-          </div> <!-- /.journey-dropdown -->
-        </li> <!-- /.nav-item.journey -->
-
-        <!-- Remaining top‑level items (unchanged) -->
-        <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
-        <li class="nav-item"><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
-        <li class="nav-item"><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
-        <li class="nav-item"><a href="#" data-en="Film" data-ar="فيلم">Film</a></li>
-        <li class="nav-item"><a href="#" data-en="Join" data-ar="انضمام">Join</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<!-- MODE‑TOGGLE (">" button) -->
-<div class="mode-toggle">
-  <button class="mode-trigger" aria-label="Switch mode">&#9654;</button>
-  <div class="mode-switch">
-    <button id="adultBtn" class="active">Adult</button>
-    <button id="kidsBtn">Kids</button>
-  </div>
-</div>
-
-<!-- EVERYTHING THAT SLIDES -->
-<div id="page">
-
-  <!-- ==================== HERO ==================== -->
-  <section class="hero">
-    <div class="hero-grid">
-      <div>
-        <h1 data-en="In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it."
-            data-ar="فِي رِحْلَةٍ يَتَغَيَّرُ فِيهَا كُلُّ شَيْءٍ، يَبْقَى الْقُرْآنُ رَفِيقًا فِي الْحَيَاةِ وَمَا بَعْدَهَا.">
-          In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it.
-        </h1>
-
-        <p data-en="The Qur’an awakens hearts that had lost all hope of healing."
-           data-ar="الْقُرْآنُ شِفَاءٌ لِقُلُوبٍ ظَنَّتْ أَنَّهَا لَنْ تُشْفَى.">
-          The Qur’an awakens hearts that had lost all hope of healing.
-        </p>
-
-        <a class="btn"
-           href="#"
-           data-en="Begin the Journey"
-           data-ar="اِبْدَأِ الرِّحْلَةَ">Begin the Journey</a>
-      </div>
-
-      <div class="hero-visual">
-        <div class="slide">Allah</div>
-        <div class="slide">Self</div>
-        <div class="slide">Others</div>
-      </div>
-    </div>
-  </section>
-
-  <main class="wrap">
-
-    <!-- ==== Who is this for? ==== -->
-    <section>
-      <h2 data-en="Who is this for?" data-ar="لِمَنْ هَذَا؟">Who is this for?</h2>
-      <div class="cards">
-        <div class="card"
-             data-en="Young hearts"
-             data-ar="قُلُوبٌ شَابَّةٌ">Young hearts</div>
-        <div class="card"
-             data-en="Seekers"
-             data-ar="الْبَاحِثُونَ">Seekers</div>
-        <div class="card"
-             data-en="Thinkers"
-             data-ar="الْمُفَكِّرُونَ">Thinkers</div>
-        <div class="card"
-             data-en="Believers"
-             data-ar="الْمُؤْمِنُونَ">Believers</div>
-      </div>
+            </div>
+        </div>
     </section>
 
-    <!-- ==== The Map ==== -->
-    <section>
-      <h2 data-en="The Map" data-ar="الْخَرِيطَةُ">The Map</h2>
-      <canvas id="mapCanvas" width="900" height="420"></canvas>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Our Courses</h2>
+                <p>Our programs are designed to provide comprehensive learning experiences with expert guidance and practical insights.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i>📚</i>
+                    </div>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from renowned scholars and practitioners with years of experience in Islamic studies.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i>📖</i>
+                    </div>
+                    <h3>Comprehensive Curriculum</h3>
+                    <p>Our courses cover all major aspects of Islamic knowledge from fundamentals to advanced topics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i>🌐</i>
+                    </div>
+                    <h3>Global Access</h3>
+                    <p>Study anytime, anywhere with our online platform accessible from any device.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-  </main>
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Courses</h2>
+                <p>Explore our diverse range of courses designed for all levels of learners.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i>📜</i>
+                    </div>
+                    <h3>Quranic Studies</h3>
+                    <p>Deep dive into the meanings and interpretations of the Quranic verses.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i>🕌</i>
+                    </div>
+                    <h3>Islamic History</h3>
+                    <p>Learn about the rich history of Islam from its origins to modern times.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i>📜</i>
+                    </div>
+                    <h3>Hadith Studies</h3>
+                    <p>Understand the sayings and actions of Prophet Muhammad (PBUH).</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    © 2025 <span data-en="School of Awakening — A Path of Awareness"
-                  data-ar="مَدْرَسَةُ الصَّحْوَةِ — طَرِيقُ الوَعْيِ">School of Awakening — A Path of Awareness</span>
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Student Testimonials</h2>
+                <p>Hear what our students have to say about their learning experience.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>This course completely transformed my understanding of Islamic teachings. The instructors are knowledgeable and passionate about their subject.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h4>Ahmed Hassan</h4>
+                            <p>Student</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>The curriculum is well-structured and covers all essential topics. I've gained practical insights that I apply in my daily life.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Student</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>As a beginner, I found the course content accessible and engaging. The instructors make complex topics easy to understand.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h4>Mohammed Ali</h4>
+                            <p>Student</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Social‑media icons -->
-    <div class="social-icons">
-      <a href="https://wa.me/15551234567" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://www.youtube.com/channel/yourchannel" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.tiktok.com/@yourprofile" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-      <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>IslamicStudies</h3>
+                    <p>Providing quality Islamic education to students worldwide since 2010.</p>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">📷</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📺</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Our Courses</h3>
+                    <ul>
+                        <li><a href="#">Quranic Studies</a></li>
+                        <li><a href="#">Islamic History</a></li>
+                        <li><a href="#">Hadith Studies</a></li>
+                        <li><a href="#">Islamic Ethics</a></li>
+                        <li><a href="#">Islamic Law</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>📧 info@islamicstudies.com</li>
+                        <li>📞 +1 (555) 123-4567</li>
+                        <li>📍 123 Islamic Center, City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 IslamicStudies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <div class="chat-toggle">💬</div>
+        <div class="chat-window">
+            <div class="chat-header">
+                <h3>Support Chat</h3>
+                <span>×</span>
+            </div>
+            <div class="chat-messages">
+                <div class="message bot">Hello! How can I help you today?</div>
+                <div class="message user">I have questions about the courses.</div>
+                <div class="message bot">Sure, I can help with that. What specifically would you like to know?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button>Send</button>
+            </div>
+        </div>
     </div>
-  </footer>
 
-</div> <!-- end #page -->
+    <script>
+        // Chat widget functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatToggle = document.querySelector('.chat-toggle');
+            const chatWindow = document.querySelector('.chat-window');
+            const chatClose = chatWindow.querySelector('span');
+            const chatInput = chatWindow.querySelector('input');
+            const chatSend = chatWindow.querySelector('button');
+            const chatMessages = chatWindow.querySelector('.chat-messages');
 
-<!-- ==================== CHATBOT SIDE‑DRAWER ==================== -->
-<!-- Tab that sticks to the right side -->
-<div id="chatbot-tab" title="Need help buying? Click me!">
-  <i class="fas fa-shopping-cart"></i> <span>Chat</span>
-</div>
+            chatToggle.addEventListener('click', function() {
+                chatWindow.classList.toggle('active');
+            });
 
-<!-- Drawer (initially hidden) -->
-<div id="chatbot-drawer" aria-hidden="true">
-  <div class="chatbot-header">
-    <span>🛒 Purchase Assistant</span>
-    <button id="chatbot-close" aria-label="Close">&#10005;</button>
-  </div>
-  <div class="chatbot-body" id="chatbot-messages"></div>
-  <div class="chatbot-input" id="chatbot-input-area"></div>
-</div>
+            chatClose.addEventListener('click', function() {
+                chatWindow.classList.remove('active');
+            });
 
-<script>
-/* ---------------------------------------------------------
-   LANGUAGE SWITCHER (now header button)
-   --------------------------------------------------------- */
-const langBtnHeader = document.getElementById('langBtn');
-function setLanguage(lang){
-  document.documentElement.lang = lang;
-  document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
-  langBtnHeader.textContent = (lang === 'en') ? 'ع' : 'E';
-  document.querySelectorAll('[data-en]').forEach(el=>{
-    el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
-  });
-}
-setLanguage('en');               // default language
-langBtnHeader.onclick = () => {
-  const newLang = document.documentElement.lang === 'en' ? 'ar' : 'en';
-  setLanguage(newLang);
-};
+            chatSend.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
 
-/* ---------------------------------------------------------
-   MAP DRAWING (unchanged)
-   --------------------------------------------------------- */
-function drawMap(){
-  const canvas = document.getElementById('mapCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const zones = [
-    {x:140, y:260, r:28, label:'Al‑Mulk'},
-    {x:330, y:140, r:28, label:'Awareness'},
-    {x:520, y:260, r:28, label:'Meaning'},
-    {x:720, y:160, r:28, label:'Hereafter'}
-  ];
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  const accent = getComputedStyle(document.body).getPropertyValue('--accent');
-  ctx.strokeStyle = accent;
-  ctx.lineWidth   = 3;
-  ctx.beginPath();
-  zones.forEach((z,i)=>{ i ? ctx.lineTo(z.x,z.y) : ctx.moveTo(z.x,z.y); });
-  ctx.stroke();
-  zones.forEach(z=>{
-    ctx.beginPath();
-    ctx.fillStyle = '#fff';
-    ctx.arc(z.x,z.y,z.r,0,Math.PI*2);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = '#000';
-    ctx.font = '14px Inter';
-    ctx.textAlign = 'center';
-    ctx.fillText(z.label, z.x, z.y + 44);
-  });
-}
-drawMap();
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message) {
+                    // Add user message
+                    const userMessage = document.createElement('div');
+                    userMessage.className = 'message user';
+                    userMessage.textContent = message;
+                    chatMessages.appendChild(userMessage);
 
-/* ---------------------------------------------------------
-   DOT‑BACKGROUND (unchanged)
-   --------------------------------------------------------- */
-(function initSpotlight(){
-  const dotLayer = document.querySelector('.dot-bg');
-  if (!dotLayer) return;
-  document.addEventListener('mousemove', e => {
-    dotLayer.style.setProperty('--x', `${e.clientX}px`);
-    dotLayer.style.setProperty('--y', `${e.clientY}px`);
-  });
-})();
+                    // Clear input
+                    chatInput.value = '';
 
-/* ---------------------------------------------------------
-   MODE SWITCH (unchanged)
-   --------------------------------------------------------- */
-const adultBtns = document.querySelectorAll('#adultBtn');
-const kidsBtns  = document.querySelectorAll('#kidsBtn');
-const page      = document.getElementById('page');
-let currentMode = document.body.classList.contains('kids') ? 'kids' : 'adult';
-function setActiveButtons(mode){
-  adultBtns.forEach(b=>b.classList.toggle('active', mode==='adult'));
-  kidsBtns .forEach(b=>b.classList.toggle('active', mode==='kids'));
-}
-function slideToMode(targetMode){
-  if (currentMode===targetMode) return;
-  const outDir = (targetMode==='adult') ? 100 : -100;
-  page.style.transform = `translateX(${outDir}%)`;
-  const onOut = () => {
-    page.removeEventListener('transitionend', onOut);
-    document.body.className = targetMode;
-    currentMode = targetMode;
-    setActiveButtons(targetMode);
-    drawMap();
-    const inStart = (targetMode==='adult') ? -100 : 100;
-    page.style.transition = 'none';
-    page.style.transform = `translateX(${inStart}%)`;
-    void page.offsetWidth;
-    page.style.transition = 'transform .25s ease';
-    page.style.transform = 'translateX(0)';
-  };
-  page.addEventListener('transitionend', onOut);
-}
-adultBtns.forEach(b=>b.addEventListener('click',()=>slideToMode('adult')));
-kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
-setActiveButtons(currentMode);
+                    // Scroll to bottom
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
 
-/* ---------------------------------------------------------
-   PURCHASE‑ASSISTANT CHATBOT (now a side‑drawer)
-   --------------------------------------------------------- */
-(() => {
-  const $ = (s) => document.querySelector(s);
-  const tab      = $('#chatbot-tab');
-  const drawer   = $('#chatbot-drawer');
-  const closeBtn = $('#chatbot-close');
-  const msgsDiv  = $('#chatbot-messages');
-  const inputDiv = $('#chatbot-input-area');
+                    // Simulate bot response after a delay
+                    setTimeout(() => {
+                        const botResponse = document.createElement('div');
+                        botResponse.className = 'message bot';
+                        botResponse.textContent = getBotResponse(message);
+                        chatMessages.appendChild(botResponse);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1000);
+                }
+            }
 
-  const data = {
-    greetings: "Hello! 👋 I’m here to help you purchase a course. How would you like to pay?",
-    paymentOptions: [
-      {label:"PayPal",               type:"link",  url:"https://www.paypal.com/paypalme/youraccount"},
-      {label:"Stripe (credit‑card)", type:"link", url:"https://buy.stripe.com/test_7sIaFm4UO2mQ8zqfZZ"},
-      {label:"Bank Transfer",    type:"info",  text:"Please transfer the amount to the following IBAN:\n\nIBAN: **DE89 3704 0044 0532 0130 00**\nReference: YOUR‑NAME‑COURSE\nOnce done, email the receipt to support@example.com."},
-      {label:"Cash on Delivery", type:"info",  text:"You can pay the driver in cash when the course materials are delivered to your address."},
-      {label:"Talk to Support",   type:"support"}
-    ],
-    supportOptions: [
-      {label:"WhatsApp",   type:"link", url:"https://wa.me/15551234567?text=I%20need%20help%20with%20my%20purchase"},
-      {label:"Email",      type:"link", url:"mailto:support@example.com?subject=Purchase%20Help"},
-      {label:"Phone",      type:"info", text:"Call us now at **+1 555‑123‑4567** (Mon‑Fri 9 am‑6 pm)."}
-    ],
-    fallback: "Let me know if you need anything else!"
-  };
+            function getBotResponse(message) {
+                const responses = [
+                    "Thanks for your question! I can provide more information about our courses.",
+                    "That's a great question. Our courses are designed for all levels of learners.",
+                    "We offer various payment options and flexible schedules for your convenience.",
+                    "Our instructors are experts in their fields and are passionate about teaching.",
+                    "You can access our courses anytime, anywhere with our online platform."
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
 
-  const addMessage = (text, from = "bot") => {
-    const bubble = document.createElement('div');
-    bubble.className = `chat-${from}`;
-    bubble.innerHTML = text.replace(/\n/g, "<br>");
-    msgsDiv.appendChild(bubble);
-    msgsDiv.scrollTop = msgsDiv.scrollHeight;
-  };
-
-  const renderButtons = (buttons) => {
-    inputDiv.innerHTML = "";
-    buttons.forEach(btn => {
-      const el = document.createElement('button');
-      el.className = "chat-option";
-      el.textContent = btn.label;
-      el.dataset.action = btn.type;
-      if (btn.url) el.dataset.url = btn.url;
-      if (btn.text) el.dataset.text = btn.text;
-      inputDiv.appendChild(el);
-    });
-  };
-
-  const startConversation = () => {
-    addMessage(data.greetings);
-    renderButtons(data.paymentOptions);
-  };
-
-  const handlePaymentChoice = (choice) => {
-    switch (choice.type) {
-      case "link":
-        addMessage(`🔗 Here’s your payment link: <a href="${choice.url}" target="_blank" rel="noopener">Open ${choice.label}</a>`);
-        break;
-      case "info":
-        addMessage(`ℹ️ ${choice.text}`);
-        break;
-      case "support":
-        addMessage("Sure! How would you like to reach our support team?");
-        renderButtons(data.supportOptions);
-        return;   // wait for support choice
-    }
-    setTimeout(() => {
-      addMessage(data.fallback);
-      renderButtons(data.paymentOptions);
-    }, 1200);
-  };
-
-  const handleSupportChoice = (choice) => {
-    switch (choice.type) {
-      case "link":
-        addMessage(`📞 Contact us here: <a href="${choice.url}" target="_blank" rel="noopener">${choice.label}</a>`);
-        break;
-      case "info":
-        addMessage(`📞 ${choice.text}`);
-        break;
-    }
-    setTimeout(() => {
-      addMessage(data.fallback);
-      renderButtons(data.paymentOptions);
-    }, 1200);
-  };
-
-  // Open drawer when tab is clicked
-  tab.addEventListener('click', () => {
-    drawer.classList.add('open');
-    drawer.setAttribute('aria-hidden', 'false');
-    if (!drawer.dataset.started) {
-      startConversation();
-      drawer.dataset.started = "true";
-    }
-  });
-
-  // Close drawer
-  closeBtn.addEventListener('click', () => {
-    drawer.classList.remove('open');
-    drawer.setAttribute('aria-hidden', 'true');
-  });
-
-  // Choose an option
-  inputDiv.addEventListener('click', (e) => {
-    if (!e.target.matches('.chat-option')) return;
-    const action = e.target.dataset.action;
-    const label  = e.target.textContent;
-    addMessage(label, "user");
-
-    // Support menu?
-    if (data.supportOptions.some(o => o.label === label)) {
-      const choice = data.supportOptions.find(o => o.label === label);
-      handleSupportChoice(choice);
-    } else {
-      const choice = data.paymentOptions.find(o => o.label === label);
-      if (choice) handlePaymentChoice(choice);
-    }
-  });
-
-  // Clicking outside drawer (on overlay) closes it
-  drawer.addEventListener('click', (e) => {
-    if (e.target === drawer) {
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-    }
-  });
-})();
-</script>
-
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
