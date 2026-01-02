@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap"
       rel="stylesheet">                            <!-- Arabic (optional) -->
 
-<!-- Font‑Awesome for the social‑media icons -->
+<!-- Font‑Awesome for social icons and chat icon -->
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
       integrity="sha512-7yEw+T7nJj2b1FJXZohbJc6nKfXjLyR5NEU+S6oDIQrcCKQC4Z9wGH+Z9JtKlrWWVvxnUa2jhSd7yGf2Q36cYQ=="
@@ -32,6 +32,12 @@
   --accent:#e17055;
   --radius:14px;
   --shadow:5px 5px 0 var(--accent);
+
+  /* Chatbot colours (match website) */
+  --chat-primary:#2C7E9E;
+  --chat-bg:#fff;
+  --chat-bot-bg:#f1f8ff;
+  --chat-user-bg:#e1f5e8;
 }
 
 /* ==========================================================
@@ -92,6 +98,25 @@ header{
 body.adult .logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
+}
+
+/* ----------- LANGUAGE TOGGLE (now in header) ----------- */
+.lang-toggle-header{
+  display:flex;
+  align-items:center;
+}
+.lang-toggle-header button{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:4px;
+  padding:6px 12px;
+  font-size:0.9rem;
+  cursor:pointer;
+  transition:background .2s, opacity .2s;
+}
+.lang-toggle-header button:hover{
+  opacity:0.8;
 }
 
 /* NAVIGATION */
@@ -516,149 +541,61 @@ footer{
 }
 
 /* ==========================================================
-   8️⃣  LANGUAGE TOGGLE (round button)
+   11️⃣  CHATBOT – SIDE DRAWER
    ========================================================== */
-.lang-toggle{
+#chatbot-tab{
   position:fixed;
-  bottom:20px;
-  right:20px;
-  z-index:2100;
-}
-.lang-toggle button{
-  width:48px; height:48px;
-  border:none; border-radius:50%;
-  background:var(--accent);
-  opacity:0.5;
-  color:#fff;
-  font-size:1rem;
-  cursor:pointer;
-  display:flex; align-items:center; justify-content:center;
-  transition:background .2s, opacity .2s;
-}
-.lang-toggle button:hover{
-  background:var(--accent);
-  opacity:0.8;
-}
-
-/* ==========================================================
-   9️⃣  DOT‑BACKGROUND (Exxeta‑style) – ONLY IN KIDS MODE
-   ========================================================== */
-body:not(.kids) .dot-bg{display:none}
-.dot-bg{
-  position:fixed; inset:0;
-  pointer-events:none;
-  z-index:-2;
-  background-image:
-    radial-gradient(circle 2px at 4px 4px, var(--accent) 100%, transparent 0%);
-  background-size:30px 30px;
-}
-.dot-bg::after{
-  content:"";
-  position:absolute; inset:0;
-  pointer-events:none;
-  background:radial-gradient(circle 120px at var(--x,0) var(--y,0),
-                              rgba(255,255,255,.6), transparent);
-  opacity:0;
-  transition:opacity .3s ease;
-}
-body.kids:hover .dot-bg::after{opacity:1}
-
-/* ==========================================================
-   10️⃣  KIDS‑MODE TWEAKS (hand‑written look, etc.)
-   ========================================================== */
-body.kids header{
-  background:transparent;
-  border-bottom:2px solid var(--accent);
-  transition:background .3s,box-shadow .3s;
-}
-body.kids header:hover{
-  background:rgba(255,255,255,.9);
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
-}
-body.kids .logo{
-  font-family:'Permanent Marker',cursive;
-}
-body.kids .nav-item a{
-  font-family:'Permanent Marker',cursive;
-}
-body.kids .nav-item a:hover{
-  background:var(--accent-trans);
-  color:#fff;
-}
-body.kids .hero{
-  background:linear-gradient(135deg,var(--bg-main),var(--bg-soft));
-}
-body.kids .btn{
-  background:var(--accent-trans);
-  color:#fff;
-  border:2px solid var(--accent);
-  border-radius:var(--radius);
-}
-body.kids .btn:hover{
-  background:#fff;
-  color:var(--accent);
-  transform:scale(1.05);
-}
-
-/* ==========================================================
-   11️⃣  CHATBOT STYLES (new)
-   ========================================================== */
-:root{
-  --chat-primary:#2C7E9E;
-  --chat-bg:#fff;
-  --chat-bot-bg:#f1f8ff;
-  --chat-user-bg:#e1f5e8;
-  --chat-text:#222;
-}
-
-/* floating bubble */
-#chatbot-bubble{
-  position:fixed;
-  bottom:24px; right:24px;
-  width:56px; height:56px;
+  top:50%;
+  right:0;
+  transform:translateY(-50%);
   background:var(--chat-primary);
   color:#fff;
-  border-radius:50%;
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
-  display:flex; align-items:center; justify-content:center;
+  border-top-left-radius:8px;
+  border-bottom-left-radius:8px;
+  padding:12px 8px;
   cursor:pointer;
-  z-index:1000;
-  transition:transform .2s;
+  font-size:1rem;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  z-index:1100;
+  transition:background .2s;
 }
-#chatbot-bubble:hover{transform:scale(1.08);}
-#chatbot-bubble svg{width:28px;height:28px;}
+#chatbot-tab:hover{
+  background:#236d8b;
+}
+#chatbot-tab i{
+  font-size:1.2rem;
+}
 
-/* modal */
-#chatbot-modal{
+/* drawer (initially hidden, shifted fully to the right) */
+#chatbot-drawer{
   position:fixed;
-  bottom:90px; right:24px;
+  top:0;
+  right:0;
   width:320px;
-  max-height:480px;
+  height:100vh;
   background:#fff;
-  border-radius:12px;
-  box-shadow:0 8px 24px rgba(0,0,0,.2);
+  border-left:1px solid #ddd;
+  box-shadow:-4px 0 12px rgba(0,0,0,.15);
   display:flex;
   flex-direction:column;
-  opacity:0;
-  pointer-events:none;
-  transform:translateY(20px);
-  transition:opacity .25s ease, transform .2s ease;
-  z-index:1000;
+  transform:translateX(100%);   /* hidden */
+  transition:transform .3s ease;
+  z-index:1100;
 }
-#chatbot-modal.open{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateY(0);
+#chatbot-drawer.open{
+  transform:translateX(0);
 }
 
-/* header of the chat */
+/* drawer header */
 .chatbot-header{
   background:var(--chat-primary);
   color:#fff;
   padding:12px 16px;
-  border-top-left-radius:12px;
-  border-top-right-radius:12px;
-  display:flex; justify-content:space-between; align-items:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 .chatbot-header button{
   background:none;
@@ -668,7 +605,7 @@ body.kids .btn:hover{
   cursor:pointer;
 }
 
-/* body (chat bubbles) */
+/* drawer body (messages) */
 .chatbot-body{
   flex:1;
   overflow-y:auto;
@@ -690,7 +627,7 @@ body.kids .btn:hover{
   max-width:80%;
 }
 
-/* input area (option buttons) */
+/* input area (choices) */
 .chatbot-input{
   padding:8px 12px;
   border-top:1px solid #eee;
@@ -735,6 +672,11 @@ body.kids .btn:hover{
     <div class="logo"
          data-en="School of Awakening"
          data-ar="مَدْرَسَةُ الصَّحْوَةِ">School of Awakening</div>
+
+    <!-- Language toggle – now in the header -->
+    <div class="lang-toggle-header">
+      <button id="langBtn">ع</button>
+    </div>
 
     <!-- Navigation (mega‑menu) -->
     <nav>
@@ -795,7 +737,9 @@ body.kids .btn:hover{
                    data-ar="دروس التجويد">Tajweed Classes</a>
                 <div class="submenu">
                   <a href="#" data-en="Tajweed Rules Course" data-ar="دورة قواعد التجويد">Tajweed Rules Course</a>
-                  <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجويد للأطفال">Tajweed Classes For Kids</a>
+                  <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجوي
+
+د للأطفال">Tajweed Classes For Kids</a>
                   <a href="#" data-en="Tajweed Classes For Sisters" data-ar="تجويد للأخوات">Tajweed Classes For Sisters</a>
                   <a href="#" data-en="Tajweed Classes For Adults" data-ar="تجويد للبالغين">Tajweed Classes For Adults</a>
                   <a href="#" data-en="Tajweed Classes For Beginners" data-ar="تجويد للمبتدئين">Tajweed Classes For Beginners</a>
@@ -910,11 +854,6 @@ body.kids .btn:hover{
   </div>
 </header>
 
-<!-- LANGUAGE TOGGLE (round button) -->
-<div class="lang-toggle">
-  <button id="langBtn">ع</button>
-</div>
-
 <!-- MODE‑TOGGLE (">" button) -->
 <div class="mode-toggle">
   <button class="mode-trigger" aria-label="Switch mode">&#9654;</button>
@@ -999,12 +938,14 @@ body.kids .btn:hover{
 
 </div> <!-- end #page -->
 
-<!-- ==================== CHATBOT ==================== -->
-<div id="chatbot-bubble" title="Need help buying? Click me!">
-  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.08 2 11.5c0 2.77 1.5 5.28 3.86 7.06-.24.9-.94 2.78-2.74 4.44 2.44-.13 4.6-1.02 6.58-2.4 1.43.33 2.94.5 4.5.5 5.52 0 10-4.08 10-9.5S17.52 2 12 2zm-.5 13h-2v-2h2v2zm0-4h-2V7h2v4z"/></svg>
+<!-- ==================== CHATBOT SIDE‑DRAWER ==================== -->
+<!-- Tab that sticks to the right side -->
+<div id="chatbot-tab" title="Need help buying? Click me!">
+  <i class="fas fa-shopping-cart"></i> <span>Chat</span>
 </div>
 
-<div id="chatbot-modal" aria-hidden="true">
+<!-- Drawer (initially hidden) -->
+<div id="chatbot-drawer" aria-hidden="true">
   <div class="chatbot-header">
     <span>🛒 Purchase Assistant</span>
     <button id="chatbot-close" aria-label="Close">&#10005;</button>
@@ -1015,19 +956,19 @@ body.kids .btn:hover{
 
 <script>
 /* ---------------------------------------------------------
-   LANGUAGE SWITCHER (unchanged)
+   LANGUAGE SWITCHER (now header button)
    --------------------------------------------------------- */
-const langBtn = document.getElementById('langBtn');
+const langBtnHeader = document.getElementById('langBtn');
 function setLanguage(lang){
   document.documentElement.lang = lang;
   document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
-  langBtn.textContent = (lang === 'en') ? 'ع' : 'E';
+  langBtnHeader.textContent = (lang === 'en') ? 'ع' : 'E';
   document.querySelectorAll('[data-en]').forEach(el=>{
     el.textContent = (lang === 'en') ? el.dataset.en : el.dataset.ar;
   });
 }
-setLanguage('en');
-langBtn.onclick = () => {
+setLanguage('en');               // default language
+langBtnHeader.onclick = () => {
   const newLang = document.documentElement.lang === 'en' ? 'ar' : 'en';
   setLanguage(newLang);
 };
@@ -1067,7 +1008,7 @@ function drawMap(){
 drawMap();
 
 /* ---------------------------------------------------------
-   SPOTLIGHT (dot‑background) – unchanged
+   DOT‑BACKGROUND (unchanged)
    --------------------------------------------------------- */
 (function initSpotlight(){
   const dotLayer = document.querySelector('.dot-bg');
@@ -1113,12 +1054,12 @@ kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 setActiveButtons(currentMode);
 
 /* ---------------------------------------------------------
-   PURCHASE‑ASSISTANT CHATBOT
+   PURCHASE‑ASSISTANT CHATBOT (now a side‑drawer)
    --------------------------------------------------------- */
 (() => {
   const $ = (s) => document.querySelector(s);
-  const bubble   = $('#chatbot-bubble');
-  const modal    = $('#chatbot-modal');
+  const tab      = $('#chatbot-tab');
+  const drawer   = $('#chatbot-drawer');
   const closeBtn = $('#chatbot-close');
   const msgsDiv  = $('#chatbot-messages');
   const inputDiv = $('#chatbot-input-area');
@@ -1200,28 +1141,31 @@ setActiveButtons(currentMode);
     }, 1200);
   };
 
-  bubble.addEventListener('click', () => {
-    modal.setAttribute('aria-hidden', 'false');
-    modal.classList.add('open');
-    if (!modal.dataset.started) {
+  // Open drawer when tab is clicked
+  tab.addEventListener('click', () => {
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    if (!drawer.dataset.started) {
       startConversation();
-      modal.dataset.started = "true";
+      drawer.dataset.started = "true";
     }
   });
 
+  // Close drawer
   closeBtn.addEventListener('click', () => {
-    modal.setAttribute('aria-hidden', 'true');
-    modal.classList.remove('open');
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
   });
 
+  // Choose an option
   inputDiv.addEventListener('click', (e) => {
     if (!e.target.matches('.chat-option')) return;
     const action = e.target.dataset.action;
     const label  = e.target.textContent;
     addMessage(label, "user");
 
-    // Determine whether we are in the support menu or the payment menu
-    if (modal.dataset.started && data.supportOptions.some(o => o.label === label)) {
+    // Support menu?
+    if (data.supportOptions.some(o => o.label === label)) {
       const choice = data.supportOptions.find(o => o.label === label);
       handleSupportChoice(choice);
     } else {
@@ -1230,11 +1174,11 @@ setActiveButtons(currentMode);
     }
   });
 
-  // close modal when clicking outside of it
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.setAttribute('aria-hidden', 'true');
-      modal.classList.remove('open');
+  // Clicking outside drawer (on overlay) closes it
+  drawer.addEventListener('click', (e) => {
+    if (e.target === drawer) {
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
     }
   });
 })();
