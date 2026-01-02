@@ -117,7 +117,7 @@ body.kids .nav-item > a:hover{
   transform:scale(1.1);
 }
 
-/* ----------- MEGA MENU ------------ */
+/* ----------- MEGA MENU (used by Journey, etc.) ------------ */
 .has-dropdown .mega-menu{
   position:absolute;
   top:100%; left:50%;
@@ -137,18 +137,7 @@ body.kids .nav-item > a:hover{
   transition:opacity .3s ease,
              transform .4s cubic-bezier(.4,0,.2,1);
 }
-
-/* ---------------------------------------------------------
-   ORIGINAL HOVER‑TO‑SHOW RULE – COMMENTED OUT
-   --------------------------------------------------------- */
 .has-dropdown:hover .mega-menu{
-  /*opacity:1;
-  transform:translateX(-50%) translateY(0);
-  pointer-events:auto;*/
-}
-
-/* ------ NEW RULE: show when parent has .active class ----- */
-.has-dropdown.active .mega-menu{
   opacity:1;
   transform:translateX(-50%) translateY(0);
   pointer-events:auto;
@@ -166,6 +155,83 @@ body.kids .nav-item > a:hover{
   margin-bottom:12px;
   font-size:15px;
   color:#222;
+}
+
+/* ---------------------------------------------------------
+   NEW: Courses – first‑level shows only headlines,
+   second‑level (hover) shows the full list
+   --------------------------------------------------------- */
+.nav-item.courses .courses-dropdown{
+  position:absolute;
+  top:100%;
+  left:0;
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  min-width:250px;               /* width for the list of headlines */
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 30px 60px rgba(0,0,0,.15);
+  padding:20px;
+  transition:opacity .3s ease, transform .3s ease;
+}
+.nav-item.courses:hover .courses-dropdown{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+/* category headlines list */
+.courses-dropdown .category-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.courses-dropdown .category-item{
+  position:relative;
+  margin-bottom:8px;
+}
+.courses-dropdown .category-item .cat-link{
+  display:block;
+  font-weight:600;
+  padding:8px 12px;
+  color:#444;
+  border-radius:6px;
+}
+.courses-dropdown .category-item .cat-link:hover{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* second‑level submenu (appears to the right) */
+.courses-dropdown .category-item .submenu{
+  position:absolute;
+  top:0;
+  left:100%;
+  margin-left:8px;
+  transform:translateX(10px);
+  opacity:0;
+  pointer-events:none;
+  min-width:200px;
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 30px 60px rgba(0,0,0,.15);
+  padding:15px;
+  transition:opacity .3s ease, transform .3s ease;
+}
+.courses-dropdown .category-item:hover .submenu{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(0);
+}
+.courses-dropdown .submenu a{
+  display:block;
+  margin-bottom:6px;
+  font-size:14px;
+  color:#444;
+}
+.courses-dropdown .submenu a:hover{
+  color:#000;
 }
 
 /* Hide navigation on very narrow screens */
@@ -472,9 +538,8 @@ body.kids .btn:hover{
         <li class="nav-item"><a href="#" data-en="Home" data-ar="الرَّئِيسِيَّةُ">Home</a></li>
 
         <!-- ***** NEW: COURSES TAB ***** -->
-        <li class="nav-item has-dropdown">
-          <!-- We keep the <a> element but give it ARIA attributes for accessibility.
-               The `js` below will toggle the parent .active class on click. -->
+        <li class="nav-item courses">
+          <!-- No JS “dropdown‑toggle” class – we rely on pure CSS hover -->
           <a href="#" class="dropdown-toggle"
              role="button"
              aria-haspopup="true"
@@ -482,83 +547,110 @@ body.kids .btn:hover{
              data-en="Courses"
              data-ar="الدورات">Courses</a>
 
-          <div class="mega-menu">
-            <!-- 1️⃣ Quran Classes -->
-            <div class="mega-col">
-              <p class="cat-title" data-en="Quran Classes" data-ar="دروس القرآن">Quran Classes</p>
-              <a href="#" data-en="Learn Quran With Tajweed" data-ar="تعلم القرآن بالتجويد">Learn Quran With Tajweed</a>
-              <a href="#" data-en="Quran Memorization" data-ar="حفظ القرآن">Quran Memorization</a>
-              <a href="#" data-en="Quran Recitation Course" data-ar="دورة تجويد القرآن">Quran Recitation Course</a>
-              <a href="#" data-en="Quran Classes For Kids" data-ar="دروس القرآن للأطفال">Quran Classes For Kids</a>
-              <a href="#" data-en="Quran Classes For Adults" data-ar="دروس القرآن للبالغين">Quran Classes For Adults</a>
-              <a href="#" data-en="Quran Classes For Sisters" data-ar="دروس القرآن للأخوات">Quran Classes For Sisters</a>
-              <a href="#" data-en="Quran Classes For Beginners" data-ar="دروس القرآن للمبتدئين">Quran Classes For Beginners</a>
-              <a href="#" data-en="Weekend Quran Classes" data-ar="دروس القرآن في عطلة الأسبوع">Weekend Quran Classes</a>
-              <a href="#" data-en="Sunni Quran Classes" data-ar="دروس القرآن السنية">Sunni Quran Classes</a>
-            </div>
+          <div class="courses-dropdown">
+            <ul class="category-list">
+              <!-- ----- Quran Classes ------------------------------------------------- -->
+              <li class="category-item">
+                <a href="#" class="cat-link"
+                   data-en="Quran Classes"
+                   data-ar="دروس القرآن">Quran Classes</a>
 
-            <!-- 2️⃣ Quran Memorization (sub‑section) -->
-            <div class="mega-col">
-              <p class="cat-title" data-en="Quran Memorization" data-ar="حفظ القرآن">Quran Memorization</p>
-              <a href="#" data-en="Quran Memorization Program" data-ar="برنامج حفظ القرآن">Quran Memorization Program</a>
-              <a href="#" data-en="Online Hifz Course" data-ar="دورة حفظ أونلاين">Online Hifz Course</a>
-              <a href="#" data-en="Hifz Classes For Beginners" data-ar="حفظ للمبتدئين">Hifz Classes For Beginners</a>
-              <a href="#" data-en="Hifz Classes For Kids" data-ar="حفظ للأطفال">Hifz Classes For Kids</a>
-              <a href="#" data-en="Hifz Classes For Adults" data-ar="حفظ للبالغين">Hifz Classes For Adults</a>
-              <a href="#" data-en="Hifz Classes For Ladies" data-ar="حفظ للسيدات">Hifz Classes For Ladies</a>
-              <a href="#" data-en="Intensive Hifz Course" data-ar="دورة حفظ مكثفة">Intensive Hifz Course</a>
-              <a href="#" data-en="Full‑time Hifz Program" data-ar="برنامج حفظ بدوام كامل">Full‑time Hifz Program</a>
-              <a href="#" data-en="Part‑time Hifz Program" data-ar="برنامج حفظ بدوام جزئي">Part‑time Hifz Program</a>
-            </div>
+                <div class="submenu">
+                  <a href="#" data-en="Learn Quran With Tajweed" data-ar="تعلم القرآن بالتجويد">Learn Quran With Tajweed</a>
+                  <a href="#" data-en="Quran Memorization" data-ar="حفظ القرآن">Quran Memorization</a>
+                  <a href="#" data-en="Quran Recitation Course" data-ar="دورة تجويد القرآن">Quran Recitation Course</a>
+                  <a href="#" data-en="Quran Classes For Kids" data-ar="دروس القرآن للأطفال">Quran Classes For Kids</a>
+                  <a href="#" data-en="Quran Classes For Adults" data-ar="دروس القرآن للبالغين">Quran Classes For Adults</a>
+                  <a href="#" data-en="Quran Classes For Sisters" data-ar="دروس القرآن للأخوات">Quran Classes For Sisters</a>
+                  <a href="#" data-en="Quran Classes For Beginners" data-ar="دروس القرآن للمبتدئين">Quran Classes For Beginners</a>
+                  <a href="#" data-en="Weekend Quran Classes" data-ar="دروس القرآن في عطلة الأسبوع">Weekend Quran Classes</a>
+                  <a href="#" data-en="Sunni Quran Classes" data-ar="دروس القرآن السنية">Sunni Quran Classes</a>
+                </div>
+              </li>
 
-            <!-- 3️⃣ Tajweed Classes -->
-            <div class="mega-col">
-              <p class="cat-title" data-en="Tajweed Classes" data-ar="دروس التجويد">Tajweed Classes</p>
-              <a href="#" data-en="Tajweed Rules Course" data-ar="دورة قواعد التجويد">Tajweed Rules Course</a>
-              <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجويد للأطفال">Tajweed Classes For Kids</a>
-              <a href="#" data-en="Tajweed Classes For Sisters" data-ar="تجويد للأخوات">Tajweed Classes For Sisters</a>
-              <a href="#" data-en="Tajweed Classes For Adults" data-ar="تجويد للبالغين">Tajweed Classes For Adults</a>
-              <a href="#" data-en="Tajweed Classes For Beginners" data-ar="تجويد للمبتدئين">Tajweed Classes For Beginners</a>
-              <a href="#" data-en="Advance Tajweed Course" data-ar="دورة تجويد متقدم">Advance Tajweed Course</a>
-              <a href="#" data-en="Quran Ijazah Course" data-ar="دورة إجازة القرآن">Quran Ijazah Course</a>
-              <a href="#" data-en="10 Quran Qirat Course" data-ar="دورة قراءة 10 قرآن">10 Quran Qirat Course</a>
-            </div>
+              <!-- ----- Quran Memorization ------------------------------------------- -->
+              <li class="category-item">
+                <a href="#" class="cat-link"
+                   data-en="Quran Memorization"
+                   data-ar="حفظ القرآن">Quran Memorization</a>
 
-            <!-- 4️⃣ Arabic Classes -->
-            <div class="mega-col">
-              <p class="cat-title" data-en="Arabic Classes" data-ar="دروس العربية">Arabic Classes</p>
-              <a href="#" data-en="Noorani Qaida Course" data-ar="دورة نوراني القاعدة">Noorani Qaida Course</a>
-              <a href="#" data-en="Quranic Arabic Course" data-ar="دورة العربية القرآنية">Quranic Arabic Course</a>
-              <a href="#" data-en="Arabic Classes For Kids" data-ar="دروس العربية للأطفال">Arabic Classes For Kids</a>
-              <a href="#" data-en="Arabic Conversation Course" data-ar="دورة محادثة عربية">Arabic Conversation Course</a>
-              <a href="#" data-en="Arabic Grammar Course" data-ar="دورة قواعد العربية">Arabic Grammar Course</a>
-              <a href="#" data-en="Arabic Course For Beginners" data-ar="دورة العربية للمبتدئين">Arabic Course For Beginners</a>
-              <a href="#" data-en="Arabic Classes For Adults" data-ar="دروس العربية للبالغين">Arabic Classes For Adults</a>
-              <a href="#" data-en="Modern Standard Arabic Course" data-ar="دورة العربية الفصحى الحديثة">Modern Standard Arabic Course</a>
-              <a href="#" data-en="Classical Arabic Course" data-ar="دورة العربية الكلاسيكية">Classical Arabic Course</a>
-              <a href="#" data-en="Egyptian Arabic Course" data-ar="دورة العربية المصرية">Egyptian Arabic Course</a>
-              <a href="#" data-en="Arabic Classes For Sisters" data-ar="دروس العربية للأخوات">Arabic Classes For Sisters</a>
-              <a href="#" data-en="Arabic Speaking Course" data-ar="دورة التحدث بالعربية">Arabic Speaking Course</a>
-              <a href="#" data-en="Arabic Reading Course" data-ar="دورة القراءة العربية">Arabic Reading Course</a>
-              <a href="#" data-en="Intensive Arabic Course" data-ar="دورة عربية مكثفة">Intensive Arabic Course</a>
-              <a href="#" data-en="Arabic Fusha Course" data-ar="دورة العربية الفصحى">Arabic Fusha Course</a>
-            </div>
+                <div class="submenu">
+                  <a href="#" data-en="Quran Memorization Program" data-ar="برنامج حفظ القرآن">Quran Memorization Program</a>
+                  <a href="#" data-en="Online Hifz Course" data-ar="دورة حفظ أونلاين">Online Hifz Course</a>
+                  <a href="#" data-en="Hifz Classes For Beginners" data-ar="حفظ للمبتدئين">Hifz Classes For Beginners</a>
+                  <a href="#" data-en="Hifz Classes For Kids" data-ar="حفظ للأطفال">Hifz Classes For Kids</a>
+                  <a href="#" data-en="Hifz Classes For Adults" data-ar="حفظ للبالغين">Hifz Classes For Adults</a>
+                  <a href="#" data-en="Hifz Classes For Ladies" data-ar="حفظ للسيدات">Hifz Classes For Ladies</a>
+                  <a href="#" data-en="Intensive Hifz Course" data-ar="دورة حفظ مكثفة">Intensive Hifz Course</a>
+                  <a href="#" data-en="Full‑time Hifz Program" data-ar="برنامج حفظ بدوام كامل">Full‑time Hifz Program</a>
+                  <a href="#" data-en="Part‑time Hifz Program" data-ar="برنامج حفظ بدوام جزئي">Part‑time Hifz Program</a>
+                </div>
+              </li>
 
-            <!-- 5️⃣ Islamic Classes -->
-            <div class="mega-col">
-              <p class="cat-title" data-en="Islamic Classes" data-ar="دروس إسلامية">Islamic Classes</p>
-              <a href="#" data-en="Islamic Classes For Kids" data-ar="دروس إسلامية للأطفال">Islamic Classes For Kids</a>
-              <a href="#" data-en="Islamic Classes For Beginners" data-ar="دروس إسلامية للمبتدئين">Islamic Classes For Beginners</a>
-              <a href="#" data-en="Islamic Classes For Adults" data-ar="دروس إسلامية للبالغين">Islamic Classes For Adults</a>
-              <a href="#" data-en="Islamic Classes For Sisters" data-ar="دروس إسلامية للأخوات">Islamic Classes For Sisters</a>
-              <a href="#" data-en="Tafseer Quran Course" data-ar="دورة تفسير القرآن">Tafseer Quran Course</a>
-              <a href="#" data-en="New Muslim Converts Course" data-ar="دورة التحول للمسلمين الجدد">New Muslim Converts Course</a>
-              <a href="#" data-en="New Shahada Classes" data-ar="دورات شهادة جديدة">New Shahada Classes</a>
-            </div>
-          </div> <!-- /.mega-menu -->
-        </li> <!-- /.nav-item.has-dropdown (Courses) -->
+              <!-- ----- Tajweed Classes ------------------------------------------------ -->
+              <li class="category-item">
+                <a href="#" class="cat-link"
+                   data-en="Tajweed Classes"
+                   data-ar="دروس التجويد">Tajweed Classes</a>
 
-        <!-- Existing other top‑level items -->
+                <div class="submenu">
+                  <a href="#" data-en="Tajweed Rules Course" data-ar="دورة قواعد التجويد">Tajweed Rules Course</a>
+                  <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجويد للأطفال">Tajweed Classes For Kids</a>
+                  <a href="#" data-en="Tajweed Classes For Sisters" data-ar="تجويد للأخوات">Tajweed Classes For Sisters</a>
+                  <a href="#" data-en="Tajweed Classes For Adults" data-ar="تجويد للبالغين">Tajweed Classes For Adults</a>
+                  <a href="#" data-en="Tajweed Classes For Beginners" data-ar="تجويد للمبتدئين">Tajweed Classes For Beginners</a>
+                  <a href="#" data-en="Advance Tajweed Course" data-ar="دورة تجويد متقدم">Advance Tajweed Course</a>
+                  <a href="#" data-en="Quran Ijazah Course" data-ar="دورة إجازة القرآن">Quran Ijazah Course</a>
+                  <a href="#" data-en="10 Quran Qirat Course" data-ar="دورة قراءة 10 قرآن">10 Quran Qirat Course</a>
+                </div>
+              </li>
+
+              <!-- ----- Arabic Classes ------------------------------------------------- -->
+              <li class="category-item">
+                <a href="#" class="cat-link"
+                   data-en="Arabic Classes"
+                   data-ar="دروس العربية">Arabic Classes</a>
+
+                <div class="submenu">
+                  <a href="#" data-en="Noorani Qaida Course" data-ar="دورة نوراني القاعدة">Noorani Qaida Course</a>
+                  <a href="#" data-en="Quranic Arabic Course" data-ar="دورة العربية القرآنية">Quranic Arabic Course</a>
+                  <a href="#" data-en="Arabic Classes For Kids" data-ar="دروس العربية للأطفال">Arabic Classes For Kids</a>
+                  <a href="#" data-en="Arabic Conversation Course" data-ar="دورة محادثة عربية">Arabic Conversation Course</a>
+                  <a href="#" data-en="Arabic Grammar Course" data-ar="دورة قواعد العربية">Arabic Grammar Course</a>
+                  <a href="#" data-en="Arabic Course For Beginners" data-ar="دورة العربية للمبتدئين">Arabic Course For Beginners</a>
+                  <a href="#" data-en="Arabic Classes For Adults" data-ar="دروس العربية للبالغين">Arabic Classes For Adults</a>
+                  <a href="#" data-en="Modern Standard Arabic Course" data-ar="دورة العربية الفصحى الحديثة">Modern Standard Arabic Course</a>
+                  <a href="#" data-en="Classical Arabic Course" data-ar="دورة العربية الكلاسيكية">Classical Arabic Course</a>
+                  <a href="#" data-en="Egyptian Arabic Course" data-ar="دورة العربية المصرية">Egyptian Arabic Course</a>
+                  <a href="#" data-en="Arabic Classes For Sisters" data-ar="دروس العربية للأخوات">Arabic Classes For Sisters</a>
+                  <a href="#" data-en="Arabic Speaking Course" data-ar="دورة التحدث بالعربية">Arabic Speaking Course</a>
+                  <a href="#" data-en="Arabic Reading Course" data-ar="دورة القراءة العربية">Arabic Reading Course</a>
+                  <a href="#" data-en="Intensive Arabic Course" data-ar="دورة عربية مكثفة">Intensive Arabic Course</a>
+                  <a href="#" data-en="Arabic Fusha Course" data-ar="دورة العربية الفصحى">Arabic Fusha Course</a>
+                </div>
+              </li>
+
+              <!-- ----- Islamic Classes ------------------------------------------------- -->
+              <li class="category-item">
+                <a href="#" class="cat-link"
+                   data-en="Islamic Classes"
+                   data-ar="دروس إسلامية">Islamic Classes</a>
+
+                <div class="submenu">
+                  <a href="#" data-en="Islamic Classes For Kids" data-ar="دروس إسلامية للأطفال">Islamic Classes For Kids</a>
+                  <a href="#" data-en="Islamic Classes For Beginners" data-ar="دروس إسلامية للمبتدئين">Islamic Classes For Beginners</a>
+                  <a href="#" data-en="Islamic Classes For Adults" data-ar="دروس إسلامية للبالغين">Islamic Classes For Adults</a>
+                  <a href="#" data-en="Islamic Classes For Sisters" data-ar="دروس إسلامية للأخوات">Islamic Classes For Sisters</a>
+                  <a href="#" data-en="Tafseer Quran Course" data-ar="دورة تفسير القرآن">Tafseer Quran Course</a>
+                  <a href="#" data-en="New Muslim Converts Course" data-ar="دورة التحول للمسلمين الجدد">New Muslim Converts Course</a>
+                  <a href="#" data-en="New Shahada Classes" data-ar="دورات شهادة جديدة">New Shahada Classes</a>
+                </div>
+              </li>
+            </ul>
+          </div> <!-- /.courses-dropdown -->
+        </li> <!-- /.nav-item.courses -->
+
+        <!-- Existing other top‑level items (Journey still uses the original mega‑menu) -->
         <li class="nav-item has-dropdown">
           <a href="#" class="dropdown-toggle"
              role="button"
@@ -806,56 +898,8 @@ kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 setActiveButtons(currentMode);
 
 /* ---------------------------------------------------------
-   4️⃣ MEGA‑MENU TOGGLE (click instead of hover)
+   4️⃣  (No extra JS needed for the hover‑only Courses menu)
    --------------------------------------------------------- */
-const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-function closeAllMenus(){
-  document.querySelectorAll('.nav-item.has-dropdown').forEach(item=>{
-    item.classList.remove('active');
-    const link = item.querySelector('.dropdown-toggle');
-    if (link) link.setAttribute('aria-expanded','false');
-  });
-}
-
-/* open/close on click (or keypress) */
-dropdownToggles.forEach(toggle=>{
-  // mouse click
-  toggle.addEventListener('click', e=>{
-    e.preventDefault();                 // prevent “#” navigation
-    const parent = toggle.closest('.nav-item');
-    const isOpen = parent.classList.toggle('active');
-    toggle.setAttribute('aria-expanded', isOpen);
-    // close other open menus
-    document.querySelectorAll('.nav-item.has-dropdown').forEach(item=>{
-      if (item!==parent) {
-        item.classList.remove('active');
-        const other = item.querySelector('.dropdown-toggle');
-        if (other) other.setAttribute('aria-expanded','false');
-      }
-    });
-  });
-
-  // keyboard – Space or Enter should work the same
-  toggle.addEventListener('keydown', e=>{
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggle.click();
-    }
-  });
-});
-
-/* close menus when clicking/tapping outside */
-document.addEventListener('click', e=>{
-  if (!e.target.closest('.nav-item.has-dropdown')) {
-    closeAllMenus();
-  }
-});
-
-/* optional: close on Escape */
-document.addEventListener('keydown', e=>{
-  if (e.key === 'Escape') closeAllMenus();
-});
 </script>
 
 </body>
