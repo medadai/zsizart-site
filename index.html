@@ -101,7 +101,7 @@ nav{
   position:relative;
 }
 .nav-item > a{
-  font-weight:500;
+  font-weight:600;               /* <-- make all top‑level links bold */
   padding:10px 5px;
   color:inherit;
 }
@@ -117,7 +117,7 @@ body.kids .nav-item > a:hover{
   transform:scale(1.1);
 }
 
-/* ----------- MEGA MENU (used by Journey, etc.) ------------ */
+/* ----------- MEGA MENU (used by Journey before rebuild) ------------ */
 .has-dropdown .mega-menu{
   position:absolute;
   top:100%; left:50%;
@@ -168,7 +168,7 @@ body.kids .nav-item > a:hover{
   transform:translateY(20px);
   opacity:0;
   pointer-events:none;
-  min-width:250px;               /* width for the list of headlines */
+  min-width:250px;
   background:#fff;
   border-radius:20px;
   box-shadow:0 30px 60px rgba(0,0,0,.15);
@@ -181,30 +181,58 @@ body.kids .nav-item > a:hover{
   transform:translateY(0);
 }
 
-/* category headlines list */
-.courses-dropdown .category-list{
+/* ---------------------------------------------------------
+   NEW: Journey – same structure as Courses
+   --------------------------------------------------------- */
+.nav-item.journey .journey-dropdown{
+  position:absolute;
+  top:100%;
+  left:0;
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  min-width:250px;
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 30px 60px rgba(0,0,0,.15);
+  padding:20px;
+  transition:opacity .3s ease, transform .3s ease;
+}
+.nav-item.journey:hover .journey-dropdown{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+/* common rules for the two dropdown‑groups */
+.courses-dropdown .category-list,
+.journey-dropdown .category-list{
   list-style:none;
   margin:0;
   padding:0;
 }
-.courses-dropdown .category-item{
+.courses-dropdown .category-item,
+.journey-dropdown .category-item{
   position:relative;
   margin-bottom:8px;
 }
-.courses-dropdown .category-item .cat-link{
+.courses-dropdown .cat-link,
+.journey-dropdown .cat-link{
   display:block;
   font-weight:600;
   padding:8px 12px;
   color:#444;
   border-radius:6px;
 }
-.courses-dropdown .category-item .cat-link:hover{
+.courses-dropdown .cat-link:hover,
+.journey-dropdown .cat-link:hover{
   background:var(--accent);
   color:#fff;
 }
 
 /* second‑level submenu (appears to the right) */
-.courses-dropdown .category-item .submenu{
+.courses-dropdown .submenu,
+.journey-dropdown .submenu{
   position:absolute;
   top:0;
   left:100%;
@@ -219,18 +247,21 @@ body.kids .nav-item > a:hover{
   padding:15px;
   transition:opacity .3s ease, transform .3s ease;
 }
-.courses-dropdown .category-item:hover .submenu{
+.courses-dropdown .category-item:hover .submenu,
+.journey-dropdown .category-item:hover .submenu{
   opacity:1;
   pointer-events:auto;
   transform:translateX(0);
 }
-.courses-dropdown .submenu a{
+.courses-dropdown .submenu a,
+.journey-dropdown .submenu a{
   display:block;
   margin-bottom:6px;
   font-size:14px;
   color:#444;
 }
-.courses-dropdown .submenu a:hover{
+.courses-dropdown .submenu a:hover,
+.journey-dropdown .submenu a:hover{
   color:#000;
 }
 
@@ -539,7 +570,6 @@ body.kids .btn:hover{
 
         <!-- ***** NEW: COURSES TAB ***** -->
         <li class="nav-item courses">
-          <!-- No JS “dropdown‑toggle” class – we rely on pure CSS hover -->
           <a href="#" class="dropdown-toggle"
              role="button"
              aria-haspopup="true"
@@ -549,12 +579,11 @@ body.kids .btn:hover{
 
           <div class="courses-dropdown">
             <ul class="category-list">
-              <!-- ----- Quran Classes ------------------------------------------------- -->
+              <!-- ---------- Quran Classes ---------- -->
               <li class="category-item">
                 <a href="#" class="cat-link"
                    data-en="Quran Classes"
                    data-ar="دروس القرآن">Quran Classes</a>
-
                 <div class="submenu">
                   <a href="#" data-en="Learn Quran With Tajweed" data-ar="تعلم القرآن بالتجويد">Learn Quran With Tajweed</a>
                   <a href="#" data-en="Quran Memorization" data-ar="حفظ القرآن">Quran Memorization</a>
@@ -568,12 +597,11 @@ body.kids .btn:hover{
                 </div>
               </li>
 
-              <!-- ----- Quran Memorization ------------------------------------------- -->
+              <!-- ---------- Quran Memorization ---------- -->
               <li class="category-item">
                 <a href="#" class="cat-link"
                    data-en="Quran Memorization"
                    data-ar="حفظ القرآن">Quran Memorization</a>
-
                 <div class="submenu">
                   <a href="#" data-en="Quran Memorization Program" data-ar="برنامج حفظ القرآن">Quran Memorization Program</a>
                   <a href="#" data-en="Online Hifz Course" data-ar="دورة حفظ أونلاين">Online Hifz Course</a>
@@ -587,12 +615,11 @@ body.kids .btn:hover{
                 </div>
               </li>
 
-              <!-- ----- Tajweed Classes ------------------------------------------------ -->
+              <!-- ---------- Tajweed Classes ---------- -->
               <li class="category-item">
                 <a href="#" class="cat-link"
                    data-en="Tajweed Classes"
                    data-ar="دروس التجويد">Tajweed Classes</a>
-
                 <div class="submenu">
                   <a href="#" data-en="Tajweed Rules Course" data-ar="دورة قواعد التجويد">Tajweed Rules Course</a>
                   <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجويد للأطفال">Tajweed Classes For Kids</a>
@@ -605,12 +632,11 @@ body.kids .btn:hover{
                 </div>
               </li>
 
-              <!-- ----- Arabic Classes ------------------------------------------------- -->
+              <!-- ---------- Arabic Classes ---------- -->
               <li class="category-item">
                 <a href="#" class="cat-link"
                    data-en="Arabic Classes"
                    data-ar="دروس العربية">Arabic Classes</a>
-
                 <div class="submenu">
                   <a href="#" data-en="Noorani Qaida Course" data-ar="دورة نوراني القاعدة">Noorani Qaida Course</a>
                   <a href="#" data-en="Quranic Arabic Course" data-ar="دورة العربية القرآنية">Quranic Arabic Course</a>
@@ -630,12 +656,11 @@ body.kids .btn:hover{
                 </div>
               </li>
 
-              <!-- ----- Islamic Classes ------------------------------------------------- -->
+              <!-- ---------- Islamic Classes ---------- -->
               <li class="category-item">
                 <a href="#" class="cat-link"
                    data-en="Islamic Classes"
                    data-ar="دروس إسلامية">Islamic Classes</a>
-
                 <div class="submenu">
                   <a href="#" data-en="Islamic Classes For Kids" data-ar="دروس إسلامية للأطفال">Islamic Classes For Kids</a>
                   <a href="#" data-en="Islamic Classes For Beginners" data-ar="دروس إسلامية للمبتدئين">Islamic Classes For Beginners</a>
@@ -650,8 +675,8 @@ body.kids .btn:hover{
           </div> <!-- /.courses-dropdown -->
         </li> <!-- /.nav-item.courses -->
 
-        <!-- Existing other top‑level items (Journey still uses the original mega‑menu) -->
-        <li class="nav-item has-dropdown">
+        <!-- ***** NEW: JOURNEY TAB ***** (same behavior as Courses) -->
+        <li class="nav-item journey">
           <a href="#" class="dropdown-toggle"
              role="button"
              aria-haspopup="true"
@@ -659,26 +684,49 @@ body.kids .btn:hover{
              data-en="Journey"
              data-ar="الرحلة">Journey</a>
 
-          <div class="mega-menu">
-            <div class="mega-col">
-              <a href="#" data-en="Confusion" data-ar="الحيرة">Confusion</a>
-              <a href="#" data-en="Healing"   data-ar="الشفاء">Healing</a>
-              <a href="#" data-en="Tawheed"  data-ar="التوحيد">Tawheed</a>
-            </div>
-            <div class="mega-col">
-              <a href="#" data-en="The Prophet" data-ar="النبي">The Prophet</a>
-              <a href="#" data-en="Holy Quran" data-ar="القرآن الكريم">Holy Quran</a>
-              <a href="#" data-en="Faith" data-ar="الإيمان">Faith</a>
-            </div>
-            <div class="mega-col">
-              <a href="#" data-en="Choice" data-ar="الاختيار">Choice</a>
-              <a href="#" data-en="Death" data-ar="الموت">Death</a>
-              <a href="#" data-en="Barzakh" data-ar="البرزخ">Barzakh</a>
-              <a href="#" data-en="Judgment" data-ar="الحساب">Judgment</a>
-            </div>
-          </div>
-        </li>
+          <div class="journey-dropdown">
+            <ul class="category-list">
+              <!-- Spiritual group -->
+              <li class="category-item">
+                <a href="#" class="cat-link"
+                   data-en="Spiritual"
+                   data-ar="روحاني">Spiritual</a>
+                <div class="submenu">
+                  <a href="#" data-en="Confusion" data-ar="الحيرة">Confusion</a>
+                  <a href="#" data-en="Healing"   data-ar="الشفاء">Healing</a>
+                  <a href="#" data-en="Tawheed"  data-ar="التوحيد">Tawheed</a>
+                </div>
+              </li>
 
+              <!-- Prophetic group -->
+              <li class="category-item">
+                <a href="#" class="cat-link"
+                   data-en="Prophetic"
+                   data-ar="نَبَوِي">Prophetic</a>
+                <div class="submenu">
+                  <a href="#" data-en="The Prophet" data-ar="النبي">The Prophet</a>
+                  <a href="#" data-en="Holy Quran"  data-ar="القرآن الكريم">Holy Quran</a>
+                  <a href="#" data-en="Faith"      data-ar="الإيمان">Faith</a>
+                </div>
+              </li>
+
+              <!-- Afterlife group -->
+              <li class="category-item">
+                <a href="#" class="cat-link"
+                   data-en="Afterlife"
+                   data-ar="آخِرَة">Afterlife</a>
+                <div class="submenu">
+                  <a href="#" data-en="Choice"   data-ar="الاختيار">Choice</a>
+                  <a href="#" data-en="Death"    data-ar="الموت">Death</a>
+                  <a href="#" data-en="Barzakh"  data-ar="البرزخ">Barzakh</a>
+                  <a href="#" data-en="Judgment" data-ar="الحساب">Judgment</a>
+                </div>
+              </li>
+            </ul>
+          </div> <!-- /.journey-dropdown -->
+        </li> <!-- /.nav-item.journey -->
+
+        <!-- The remaining top‑level items stay unchanged -->
         <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
         <li class="nav-item"><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
         <li class="nav-item"><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
@@ -896,10 +944,6 @@ kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 
 /* initialise active state */
 setActiveButtons(currentMode);
-
-/* ---------------------------------------------------------
-   4️⃣  (No extra JS needed for the hover‑only Courses menu)
-   --------------------------------------------------------- */
 </script>
 
 </body>
