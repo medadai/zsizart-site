@@ -110,7 +110,7 @@ body.adult .logo{
   color:#fff;
   border:none;
   border-radius:4px;
-  padding:8px 12px;                 /* larger tap‑area */
+  padding:6px 12px;
   font-size:0.9rem;
   cursor:pointer;
   transition:background .2s, opacity .2s;
@@ -148,7 +148,9 @@ body.kids .nav-item > a:hover{
   transform:scale(1.1);
 }
 
-/* ORIGINAL MEGA‑MENU (kept for possible future use) */
+/* ---------------------------------------------------------
+   ORIGINAL MEGA‑MENU (kept for possible future use)
+   --------------------------------------------------------- */
 .has-dropdown .mega-menu{
   position:absolute;
   top:100%; left:50%;
@@ -193,8 +195,41 @@ body.kids .nav-item > a:hover{
   color:#222;
 }
 
-/* NEW: Courses – headline‑only → second‑level submenu */
-.nav-item.courses .courses-dropdown,
+/* ---------------------------------------------------------
+   NEW: Courses – headline‑only → second‑level submenu
+   --------------------------------------------------------- */
+.nav-item.courses .courses-dropdown{
+  position:absolute;
+  top:100%;
+  left:0;
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  min-width:250px;
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 30px 60px rgba(0,0,0,.15);
+  padding:20px;
+
+  /* delayed + slow fade‑out */
+  transition:
+    opacity 0.6s ease 0.2s,
+    transform 0.6s ease 0.2s;
+}
+.nav-item.courses:hover .courses-dropdown{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+
+  /* fast show */
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* ---------------------------------------------------------
+   NEW: Journey – same behaviour as Courses
+   --------------------------------------------------------- */
 .nav-item.journey .journey-dropdown{
   position:absolute;
   top:100%;
@@ -213,11 +248,15 @@ body.kids .nav-item > a:hover{
     opacity 0.6s ease 0.2s,
     transform 0.6s ease 0.2s;
 }
-.nav-item.courses.open .courses-dropdown,
-.nav-item.journey.open .journey-dropdown{
+.nav-item.journey:hover .journey-dropdown{
   opacity:1;
   pointer-events:auto;
   transform:translateY(0);
+
+  /* fast show */
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 /* shared rules for the two “headline → submenu” groups */
@@ -291,43 +330,8 @@ body.kids .nav-item > a:hover{
 /* Hide navigation on very narrow screens */
 @media(max-width:900px){ .nav-links{display:none} }
 
-/* ==================== Mobile navigation (hamburger) ==================== */
-.mobile-nav-btn{
-  display:none;            /* only shown on small screens */
-  width:44px; height:34px; background:transparent; border:none; cursor:pointer;
-}
-.mobile-nav-btn .bars,
-.mobile-nav-btn .bars::before,
-.mobile-nav-btn .bars::after{
-  content:""; display:block; width:22px; height:3px; background:#333; border-radius:2px;
-  margin:5px 0;
-}
-.mobile-nav{
-  position:fixed; inset:0; background:rgba(255,255,255,.97);
-  transform:translateX(100%); transition:transform .3s ease;
-  z-index:2000; padding:2rem; overflow-y:auto;
-}
-.mobile-nav.open{transform:translateX(0);}
-.mobile-nav-close{
-  background:none; border:none; font-size:2rem; position:absolute;
-  top:1rem; right:1rem; cursor:pointer;
-}
-.mobile-nav-links{
-  list-style:none; margin:0; padding:0;
-}
-.mobile-nav-links li{margin-bottom:1rem;}
-.mobile-nav-links a{
-  display:block; font-size:1.2rem; color:var(--text);
-}
-
-/* Show hamburger on mobile, hide default nav */
-@media(max-width:900px){
-  .nav-links{display:none;}
-  .mobile-nav-btn{display:flex; align-items:center; justify-content:center;}
-}
-
 /* ==========================================================
-   4️⃣  MODE‑TOGGLE (">" button) that reveals Adult/Kids
+   4️⃣  MODE‑TOGGLE (">" button that reveals Adult/Kids)
    ========================================================== */
 .mode-toggle{
   position:fixed;
@@ -431,10 +435,8 @@ body.adult .btn{
   gap:16px;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
 }
 .hero-visual::-webkit-scrollbar{display:none}
-.hero-visual{scrollbar-width:none;}
 .slide{
   min-width:220px;
   background:#fff;
@@ -522,7 +524,7 @@ footer{
   border-top:1px solid var(--accent);
 }
 
-/* Social‑media icons */
+/* Social‑media icons (new) */
 .social-icons{
   margin-top:12px;
   display:flex;
@@ -539,74 +541,12 @@ footer{
 }
 
 /* ==========================================================
-   8️⃣  DOT‑BACKGROUND (kids mode only)
-   ========================================================== */
-.dot-bg{
-  position:fixed; inset:0; pointer-events:none;
-  background:
-    radial-gradient(circle at var(--x) var(--y),
-    rgba(255,255,255,.15) 2%,
-    transparent 7%);
-  z-index:0;
-}
-
-/* ==========================================================
-   9️⃣  BACK‑TO‑TOP (animated to logo)
-   ========================================================== */
-.top-btn{
-  position:fixed; right:22px; bottom:22px; z-index:120;
-  display:flex; align-items:center; gap:8px;
-  padding:10px 14px; border-radius:14px;
-  background:rgba(14,17,22,.92);
-  border:1px solid #1a1f27;
-  box-shadow:0 8px 30px rgba(0,0,0,.35);
-  color:#cfe2ff; font-weight:700; cursor:pointer;
-  opacity:0; transform:translateY(10px) scale(.98);
-  transition:opacity .25s ease, transform .25s ease, background .25s ease, box-shadow .25s ease;
-  pointer-events:none;
-}
-.top-btn.show{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
-.top-btn:hover{ box-shadow:0 10px 40px rgba(0,0,0,.45); }
-.top-glyph{ font-size:16px; line-height:1; display:inline-block; transform:translateY(-1px); }
-.top-text{ font-size:16px; }
-
-.top-btn.morph{
-  padding:10px; border-radius:50%; width:48px; height:48px;
-  justify-content:center; gap:0;
-}
-.top-btn.morph .top-text{
-  width:0; opacity:0; transform:scale(.8); transition:.2s ease;
-}
-.top-btn.morph .top-glyph{
-  width:24px; height:24px; font-size:0;
-  background:url("assets/logo.png") center/contain no-repeat;
-  animation:spinIn .7s cubic-bezier(.2,.65,.15,1);
-}
-@keyframes spinIn{ 0%{ transform:scale(.6) rotate(-90deg); opacity:.2 } 100%{ transform:scale(1) rotate(0deg); opacity:1 } }
-@media (prefers-reduced-motion:reduce){ .top-btn,.top-btn *{ transition:none !important; animation:none !important } }
-
-/* ==========================================================
-   10️⃣  WHY SECTION (new, already styled)
-   ========================================================== */
-#why { margin-top: 26px; }
-#why h2 { font-size: 28px; margin-bottom: 12px; font-weight: 800; }
-.proof-row{ display:flex; flex-wrap:wrap; gap:10px; margin: 6px 0 18px; }
-.chip-proof{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-size:13px; background:linear-gradient(180deg,#0c0e12,#0b0d0d); border:1px solid #1f2733; color:#cfe2ff; }
-.features-grid{ display:grid; gap:16px; grid-template-columns:repeat(4,1fr); }
-@media(max-width:1024px){ .features-grid{ grid-template-columns:repeat(2,1fr); } }
-@media(max-width:640px){ .features-grid{ grid-template-columns:1fr; } }
-.feature{ padding:16px; border-radius:14px; background: radial-gradient(120% 160% at 0% 0%, rgba(255,122,24,.08), transparent 45%), radial-gradient(120% 160% at 100% 100%, rgba(168,85,247,.08), transparent 45%), #0f1116; border:1px solid #1a1f27; box-shadow: 0 8px 30px rgba(0,0,0,.28); }
-.feature h3{ margin:0 0 6px; font-size:18px; }
-.feature p{ margin:0 0 10px; color:#9fb3c8; font-size:14px; }
-.feature ul{ margin:0; padding-left:18px; color:#cfe2ff; }
-.feature li{ margin:6px 0; }
-
-/* ==========================================================
    11️⃣  CHATBOT – SIDE DRAWER
    ========================================================== */
 #chatbot-tab{
   position:fixed;
-  top:50%; right:0;
+  top:50%;
+  right:0;
   transform:translateY(-50%);
   background:var(--chat-primary);
   color:#fff;
@@ -621,12 +561,18 @@ footer{
   z-index:1100;
   transition:background .2s;
 }
-#chatbot-tab:hover{background:#236d8b;}
-#chatbot-tab i{font-size:1.2rem;}
+#chatbot-tab:hover{
+  background:#236d8b;
+}
+#chatbot-tab i{
+  font-size:1.2rem;
+}
 
+/* drawer (initially hidden, shifted fully to the right) */
 #chatbot-drawer{
   position:fixed;
-  top:0; right:0;
+  top:0;
+  right:0;
   width:320px;
   height:100vh;
   background:#fff;
@@ -638,7 +584,9 @@ footer{
   transition:transform .3s ease;
   z-index:1100;
 }
-#chatbot-drawer.open{transform:translateX(0);}
+#chatbot-drawer.open{
+  transform:translateX(0);
+}
 
 /* drawer header */
 .chatbot-header{
@@ -698,20 +646,24 @@ footer{
   font-size:0.9rem;
   transition:background .2s;
 }
-.chatbot-input button.chat-option:hover{background:#236d8b;}
+.chatbot-input button.chat-option:hover{
+  background:#236d8b;
+}
 
 /* links inside chat bubbles */
 .chatbot-body a{
   color:var(--chat-primary);
   text-decoration:none;
 }
-.chatbot-body a:hover{text-decoration:underline;}
+.chatbot-body a:hover{
+  text-decoration:underline;
+}
 </style>
 </head>
 
 <body class="adult">
 
-<!-- DOT BACKGROUND (only visible in kids mode) -->
+<!-- ------- DOT BACKGROUND (only visible in kids mode) ------- -->
 <div class="dot-bg"></div>
 
 <header>
@@ -725,11 +677,6 @@ footer{
     <div class="lang-toggle-header">
       <button id="langBtn">ع</button>
     </div>
-
-    <!-- Mobile navigation hamburger (visible on small screens) -->
-    <button class="mobile-nav-btn" aria-label="Open navigation">
-      <span class="bars"></span>
-    </button>
 
     <!-- Navigation (mega‑menu) -->
     <nav>
@@ -790,7 +737,9 @@ footer{
                    data-ar="دروس التجويد">Tajweed Classes</a>
                 <div class="submenu">
                   <a href="#" data-en="Tajweed Rules Course" data-ar="دورة قواعد التجويد">Tajweed Rules Course</a>
-                  <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجويد للأطفال">Tajweed Classes For Kids</a>
+                  <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجوي
+
+د للأطفال">Tajweed Classes For Kids</a>
                   <a href="#" data-en="Tajweed Classes For Sisters" data-ar="تجويد للأخوات">Tajweed Classes For Sisters</a>
                   <a href="#" data-en="Tajweed Classes For Adults" data-ar="تجويد للبالغين">Tajweed Classes For Adults</a>
                   <a href="#" data-en="Tajweed Classes For Beginners" data-ar="تجويد للمبتدئين">Tajweed Classes For Beginners</a>
@@ -894,7 +843,7 @@ footer{
           </div> <!-- /.journey-dropdown -->
         </li> <!-- /.nav-item.journey -->
 
-        <!-- Remaining top‑level items -->
+        <!-- Remaining top‑level items (unchanged) -->
         <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
         <li class="nav-item"><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
         <li class="nav-item"><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
@@ -904,41 +853,6 @@ footer{
     </nav>
   </div>
 </header>
-
-<!-- Mobile navigation panel (off‑canvas) -->
-<aside class="mobile-nav" aria-hidden="true">
-  <button class="mobile-nav-close" aria-label="Close navigation">&times;</button>
-  <nav>
-    <ul class="mobile-nav-links">
-      <li><a href="#" data-en="Home" data-ar="الرَّئِيسِيَّةُ">Home</a></li>
-      <!-- The whole menu structure is duplicated for mobile for simplicity -->
-      <li class="nav-item courses">
-        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"
-           data-en="Courses" data-ar="الدورات">Courses</a>
-        <div class="courses-dropdown">
-          <ul class="category-list">
-            <!-- (same content as the desktop dropdown – copy‑paste) -->
-            <!-- …omit for brevity – you can reuse the same markup as above … -->
-          </ul>
-        </div>
-      </li>
-      <li class="nav-item journey">
-        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"
-           data-en="Journey" data-ar="الرحلة">Journey</a>
-        <div class="journey-dropdown">
-          <ul class="category-list">
-            <!-- (same content as above) -->
-          </ul>
-        </div>
-      </li>
-      <li><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
-      <li><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
-      <li><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
-      <li><a href="#" data-en="Film" data-ar="فيلم">Film</a></li>
-      <li><a href="#" data-en="Join" data-ar="انضمام">Join</a></li>
-    </ul>
-  </nav>
-</aside>
 
 <!-- MODE‑TOGGLE (">" button) -->
 <div class="mode-toggle">
@@ -957,12 +871,12 @@ footer{
     <div class="hero-grid">
       <div>
         <h1 data-en="In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it."
-            data-ar="فِي رِحْلَةٍ يَتَغَيَّرُ فِيهَا كُلُّ شَيْءٍ، يَبْقَى القُرْآنُ رَفِيقًا فِي الحَيَاةِ وَمَا بَعْدَهَا.">
+            data-ar="فِي رِحْلَةٍ يَتَغَيَّرُ فِيهَا كُلُّ شَيْءٍ، يَبْقَى الْقُرْآنُ رَفِيقًا فِي الْحَيَاةِ وَمَا بَعْدَهَا.">
           In a journey where everything changes, the Qur’an remains. A companion for life… and beyond it.
         </h1>
 
         <p data-en="The Qur’an awakens hearts that had lost all hope of healing."
-           data-ar="اللْقُرْآنُ شِفَاءٌ لِقُلُوبٍ ظَنَّتْ أَنَّهَا لَنْ تُشْفَى.">
+           data-ar="الْقُرْآنُ شِفَاءٌ لِقُلُوبٍ ظَنَّتْ أَنَّهَا لَنْ تُشْفَى.">
           The Qur’an awakens hearts that had lost all hope of healing.
         </p>
 
@@ -1007,55 +921,6 @@ footer{
       <canvas id="mapCanvas" width="900" height="420"></canvas>
     </section>
 
-    <!-- ==== Why us (new) ==== -->
-    <section id="why">
-      <h2 data-en="Why ZSIZART?" data-ar="لماذا ZSIZART؟">Why ZSIZART?</h2>
-
-      <div class="proof-row">
-        <span class="chip-proof">✓ 10+ Years Experience</span>
-        <span class="chip-proof">✓ 99% On‑time Delivery</span>
-        <span class="chip-proof">✓ 100% Client Satisfaction</span>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature">
-          <h3>Pixel‑perfect quality</h3>
-          <p>Every asset rendered at studio‑grade resolution and calibrated colour.</p>
-          <ul>
-            <li>Physically‑based rendering</li>
-            <li>Accurate lighting & materials</li>
-          </ul>
-        </div>
-
-        <div class="feature">
-          <h3>Fast turnaround</h3>
-          <p>Optimised pipelines let us deliver final renders in <strong>48 h</strong> on average.</p>
-          <ul>
-            <li>Realtime previews</li>
-            <li>Dedicated project manager</li>
-          </ul>
-        </div>
-
-        <div class="feature">
-          <h3>Story‑driven visuals</h3>
-          <p>We don’t just model – we craft a narrative that sells the project.</p>
-          <ul>
-            <li>Storyboard & mood‑board</li>
-            <li>Animated walkthroughs</li>
-          </ul>
-        </div>
-
-        <div class="feature">
-          <h3>Global client base</h3>
-          <p>We work with architects, developers & brands from the US, EU & Middle‑East.</p>
-          <ul>
-            <li>Multi‑language support</li>
-            <li>Secure file delivery</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer>
@@ -1074,10 +939,12 @@ footer{
 </div> <!-- end #page -->
 
 <!-- ==================== CHATBOT SIDE‑DRAWER ==================== -->
+<!-- Tab that sticks to the right side -->
 <div id="chatbot-tab" title="Need help buying? Click me!">
   <i class="fas fa-shopping-cart"></i> <span>Chat</span>
 </div>
 
+<!-- Drawer (initially hidden) -->
 <div id="chatbot-drawer" aria-hidden="true">
   <div class="chatbot-header">
     <span>🛒 Purchase Assistant</span>
@@ -1141,7 +1008,7 @@ function drawMap(){
 drawMap();
 
 /* ---------------------------------------------------------
-   DOT‑BACKGROUND (kids mode)
+   DOT‑BACKGROUND (unchanged)
    --------------------------------------------------------- */
 (function initSpotlight(){
   const dotLayer = document.querySelector('.dot-bg');
@@ -1172,11 +1039,11 @@ function slideToMode(targetMode){
     document.body.className = targetMode;
     currentMode = targetMode;
     setActiveButtons(targetMode);
-    drawMap();               // redraw map with new colours
+    drawMap();
     const inStart = (targetMode==='adult') ? -100 : 100;
     page.style.transition = 'none';
     page.style.transform = `translateX(${inStart}%)`;
-    void page.offsetWidth;                     // force reflow
+    void page.offsetWidth;
     page.style.transition = 'transform .25s ease';
     page.style.transform = 'translateX(0)';
   };
@@ -1187,43 +1054,10 @@ kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 setActiveButtons(currentMode);
 
 /* ---------------------------------------------------------
-   MOBILE NAVIGATION (hamburger + off‑canvas)
-   --------------------------------------------------------- */
-const mobileBtn   = document.querySelector('.mobile-nav-btn');
-const mobileNav   = document.querySelector('.mobile-nav');
-const mobileClose = document.querySelector('.mobile-nav-close');
-
-mobileBtn.addEventListener('click', () => {
-  mobileNav.classList.add('open');
-  mobileNav.setAttribute('aria-hidden','false');
-});
-mobileClose.addEventListener('click', () => {
-  mobileNav.classList.remove('open');
-  mobileNav.setAttribute('aria-hidden','true');
-});
-/* clicking a link inside mobile nav also closes it */
-mobileNav.addEventListener('click', e => {
-  if (e.target.matches('a')) mobileClose.click();
-});
-
-/* ---------------------------------------------------------
-   TOUCH‑ENABLED DROPDOWNS (Courses & Journey)
-   --------------------------------------------------------- */
-document.querySelectorAll('.nav-item.courses > a, .nav-item.journey > a')
-  .forEach(toggle => {
-    toggle.addEventListener('click', e => {
-      e.preventDefault();                      // stop navigation
-      const parent = toggle.parentNode;
-      const isOpen = parent.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen);
-    });
-});
-
-/* ---------------------------------------------------------
-   PURCHASE‑ASSISTANT CHATBOT (now a side‑drawer + focus trap)
+   PURCHASE‑ASSISTANT CHATBOT (now a side‑drawer)
    --------------------------------------------------------- */
 (() => {
-  const $ = s => document.querySelector(s);
+  const $ = (s) => document.querySelector(s);
   const tab      = $('#chatbot-tab');
   const drawer   = $('#chatbot-drawer');
   const closeBtn = $('#chatbot-close');
@@ -1262,7 +1096,7 @@ document.querySelectorAll('.nav-item.courses > a, .nav-item.journey > a')
       el.className = "chat-option";
       el.textContent = btn.label;
       el.dataset.action = btn.type;
-      if (btn.url)  el.dataset.url = btn.url;
+      if (btn.url) el.dataset.url = btn.url;
       if (btn.text) el.dataset.text = btn.text;
       inputDiv.appendChild(el);
     });
@@ -1315,9 +1149,6 @@ document.querySelectorAll('.nav-item.courses > a, .nav-item.journey > a')
       startConversation();
       drawer.dataset.started = "true";
     }
-    // focus trap – put focus on first button
-    const firstBtn = inputDiv.querySelector('button');
-    if (firstBtn) firstBtn.focus();
   });
 
   // Close drawer
@@ -1325,22 +1156,15 @@ document.querySelectorAll('.nav-item.courses > a, .nav-item.journey > a')
     drawer.classList.remove('open');
     drawer.setAttribute('aria-hidden', 'true');
   });
-  // Click outside drawer (on overlay) closes it
-  drawer.addEventListener('click', e => {
-    if (e.target === drawer) {
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-    }
-  });
 
   // Choose an option
-  inputDiv.addEventListener('click', e => {
+  inputDiv.addEventListener('click', (e) => {
     if (!e.target.matches('.chat-option')) return;
     const action = e.target.dataset.action;
     const label  = e.target.textContent;
     addMessage(label, "user");
 
-    // support menu?
+    // Support menu?
     if (data.supportOptions.some(o => o.label === label)) {
       const choice = data.supportOptions.find(o => o.label === label);
       handleSupportChoice(choice);
@@ -1350,62 +1174,12 @@ document.querySelectorAll('.nav-item.courses > a, .nav-item.journey > a')
     }
   });
 
-  /* ---------- Focus trap inside the drawer ---------- */
-  function trapFocus(container){
-    const focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const els = container.querySelectorAll(focusable);
-    if (!els.length) return;
-    const first = els[0];
-    const last  = els[els.length-1];
-    container.addEventListener('keydown', e=>{
-      if (e.key !== 'Tab') return;
-      if (e.shiftKey){
-        if (document.activeElement === first){
-          e.preventDefault(); last.focus();
-        }
-      }else{
-        if (document.activeElement === last){
-          e.preventDefault(); first.focus();
-        }
-      }
-    });
-  }
-  trapFocus(drawer);
-})();
-
-/* ---------------------------------------------------------
-   BACK‑TO‑TOP logic (morph to logo)
-   --------------------------------------------------------- */
-(function(){
-  const btn = document.getElementById('topBtn');
-  if(!btn) return;
-
-  function toggleTop(){
-    const y = window.pageYOffset || document.documentElement.scrollTop;
-    if (y > 600) btn.classList.add('show');
-    else btn.classList.remove('show');
-  }
-  window.addEventListener('scroll', toggleTop, { passive:true });
-  window.addEventListener('load', toggleTop);
-
-  btn.addEventListener('click', (e)=>{
-    e.preventDefault();
-    btn.classList.add('morph');
-    try{
-      window.scrollTo({ top:0, behavior:'smooth' });
-    }catch(_){
-      window.scrollTo(0,0);
+  // Clicking outside drawer (on overlay) closes it
+  drawer.addEventListener('click', (e) => {
+    if (e.target === drawer) {
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
     }
-    let reverted = false;
-    const revert = ()=>{ if(reverted) return; reverted = true; btn.classList.remove('morph'); };
-    setTimeout(revert, 1100);
-    const onScrollTop = ()=>{
-      if ((window.pageYOffset || document.documentElement.scrollTop) <= 2){
-        revert();
-        window.removeEventListener('scroll', onScrollTop);
-      }
-    };
-    window.addEventListener('scroll', onScrollTop, { passive:true });
   });
 })();
 </script>
