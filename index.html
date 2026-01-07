@@ -540,123 +540,6 @@ footer{
   color:var(--accent);
 }
 
-/* ==========================================================
-   11️⃣  CHATBOT – SIDE DRAWER
-   ========================================================== */
-#chatbot-tab{
-  position:fixed;
-  top:50%;
-  right:0;
-  transform:translateY(-50%);
-  background:var(--chat-primary);
-  color:#fff;
-  border-top-left-radius:8px;
-  border-bottom-left-radius:8px;
-  padding:12px 8px;
-  cursor:pointer;
-  font-size:1rem;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  z-index:1100;
-  transition:background .2s;
-}
-#chatbot-tab:hover{
-  background:#236d8b;
-}
-#chatbot-tab i{
-  font-size:1.2rem;
-}
-
-/* drawer (initially hidden, shifted fully to the right) */
-#chatbot-drawer{
-  position:fixed;
-  top:0;
-  right:0;
-  width:320px;
-  height:100vh;
-  background:#fff;
-  border-left:1px solid #ddd;
-  box-shadow:-4px 0 12px rgba(0,0,0,.15);
-  display:flex;
-  flex-direction:column;
-  transform:translateX(100%);   /* hidden */
-  transition:transform .3s ease;
-  z-index:1100;
-}
-#chatbot-drawer.open{
-  transform:translateX(0);
-}
-
-/* drawer header */
-.chatbot-header{
-  background:var(--chat-primary);
-  color:#fff;
-  padding:12px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.chatbot-header button{
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:1.2rem;
-  cursor:pointer;
-}
-
-/* drawer body (messages) */
-.chatbot-body{
-  flex:1;
-  overflow-y:auto;
-  padding:12px 16px;
-}
-.chatbot-body .chat-bot{
-  background:var(--chat-bot-bg);
-  padding:8px 12px;
-  border-radius:8px;
-  margin-bottom:8px;
-  max-width:80%;
-}
-.chatbot-body .chat-user{
-  background:var(--chat-user-bg);
-  padding:8px 12px;
-  border-radius:8px;
-  margin-bottom:8px;
-  margin-left:auto;
-  max-width:80%;
-}
-
-/* input area (choices) */
-.chatbot-input{
-  padding:8px 12px;
-  border-top:1px solid #eee;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-.chatbot-input button.chat-option{
-  flex:1 1 auto;
-  background:var(--chat-primary);
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  padding:6px 10px;
-  cursor:pointer;
-  font-size:0.9rem;
-  transition:background .2s;
-}
-.chatbot-input button.chat-option:hover{
-  background:#236d8b;
-}
-
-/* links inside chat bubbles */
-.chatbot-body a{
-  color:var(--chat-primary);
-  text-decoration:none;
-}
-.chatbot-body a:hover{
-  text-decoration:underline;
 }
 </style>
 </head>
@@ -792,43 +675,44 @@ footer{
           </div> <!-- /.courses-dropdown -->
         </li> <!-- /.nav-item.courses -->
 
-<header>
-  <div class="container">
-    <nav>
-      <ul class="nav-menu">
+        <!-- ***** JOURNEY ***** (same behaviour as Courses) -->
         <li class="nav-item journey">
-          <a href="#" class="dropdown-toggle" 
-             role="button" 
-             aria-haspopup="true" 
-             aria-expanded="false" 
-             data-en="Journey" 
+          <a href="#" class="dropdown-toggle"
+             role="button"
+             aria-haspopup="true"
+             aria-expanded="false"
+             data-en="Journey"
              data-ar="الرحلة">Journey</a>
 
-          <div class="journey-dropdown">
+       <div class="journey-dropdown">
             <ul class="category-list">
+              <!-- Confusion -->
               <li class="category-item">
-                <a href="#" class="cat-link" 
-                   data-en="Confusion" 
+                <a href="#" class="cat-link"
+                   data-en="Confusion"
                    data-ar="التيه">Confusion</a>
+                </div>
               </li>
-
+              <!-- Healing -->
               <li class="category-item">
-                <a href="#" class="cat-link" 
-                   data-en="Healing" 
+                <a href="#" class="cat-link"
+                   data-en="Healing"
                    data-ar="اَلْإِدْرَاكُ">Healing</a>
                 <div class="submenu">
-                  <ul class="submenu-list">
-                    <li><a href="#" data-en="CBT" data-ar="اَلْعِلَاجُ الْمَعْرِفِيُّ السُّلُوكِيُّ">CBT</a></li>
-                    <li><a href="#" data-en="Faith" data-ar="الإيمان">Faith</a></li>
-                    <li><a href="#" data-en="Tawheed" data-ar="تَوْحِيدٌ">Tawheed</a></li>
-                    <li><a href="#" data-en="The prophet’s life" data-ar="السِّيرَةُ النَّبَوِيَّةُ">The prophet’s life</a></li>
-                    <li><a href="#" data-en="Death" data-ar="اَلْبَرْزَخُ">Death</a></li>
-                    <li><a href="#" data-en="The Hereafter" data-ar="اَلدَّارُ الْآخِرَةُ">The Hereafter</a></li>
-                  </ul>
+                  <a href="#" data-en="CBT" data-ar="اَلْعِلَاجُ الْمَعْرِفِيُّ السُّلُوكِيُّ">CBT</a>
+                  <a href="#" data-en="Faith"      data-ar="الإيمان">Faith</a>    
+                  <a href="#" data-en="Tawheed"  data-ar="تَوْحِيدٌ">Tawheed</a>
+                  <a href="#" data-en="The prophet’s life"  data-ar="السِّيرَةُ النَّبَوِيَّةُ">The prophet’s life</a>
+                  <a href="#" data-en="Death"  data-ar="اَلْبَرْزَخُ">Death</a>  
+                  <a href="#" data-en="The Hereafter"  data-ar="اَلدَّارُ الْآخِرَةُ">The Hereafter</a>       
                 </div>
               </li>
             </ul>
-          </div> </li> <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
+          </div> <!-- /.journey-dropdown -->
+        </li> <!-- /.nav-item.journey -->
+
+        <!-- Remaining top‑level items (unchanged) -->
+        <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
         <li class="nav-item"><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
         <li class="nav-item"><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
         <li class="nav-item"><a href="#" data-en="Film" data-ar="فيلم">Film</a></li>
@@ -837,6 +721,7 @@ footer{
     </nav>
   </div>
 </header>
+
 <!-- MODE‑TOGGLE (">" button) -->
 <div class="mode-toggle">
   <button class="mode-trigger" aria-label="Switch mode">&#9654;</button>
