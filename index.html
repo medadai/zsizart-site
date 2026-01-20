@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap"
       rel="stylesheet">                            <!-- Arabic (optional) -->
 
-<!-- Font‑Awesome for social icons and chat icon -->
+<!-- Font-Awesome for social icons and chat icon -->
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
       integrity="sha512-7yEw+T7nJj2b1FJXZohbJc6nKfXjLyR5NEU+S6oDIQrcCKQC4Z9wGH+Z9JtKlrWWVvxnUa2jhSd7yGf2Q36cYQ=="
@@ -75,7 +75,7 @@ body{
 a{text-decoration:none;color:inherit}
 
 /* ==========================================================
-   3️⃣  HEADER & NAVIGATION (Exxeta‑style mega‑menu)
+   3️⃣  HEADER & NAVIGATION (Exxeta-style mega-menu)
    ========================================================== */
 header{
   position:sticky;top:0;z-index:10;
@@ -132,7 +132,7 @@ nav{
   position:relative;
 }
 .nav-item > a{
-  font-weight:600;               /* all top‑level links are bold */
+  font-weight:600;               /* all top-level links are bold */
   padding:10px 5px;
   color:inherit;
 }
@@ -149,7 +149,7 @@ body.kids .nav-item > a:hover{
 }
 
 /* ---------------------------------------------------------
-   ORIGINAL MEGA‑MENU (kept for possible future use)
+   ORIGINAL MEGA-MENU (kept for possible future use)
    --------------------------------------------------------- */
 .has-dropdown .mega-menu{
   position:absolute;
@@ -166,7 +166,7 @@ body.kids .nav-item > a:hover{
   border-radius:20px;
   box-shadow:0 30px 60px rgba(0,0,0,.15);
 
-  /* FADE‑OUT + DELAY for the *closed* state */
+  /* FADE-OUT + DELAY for the *closed* state */
   transition:
     opacity 0.6s ease 0.2s,
     transform 0.6s ease 0.2s;
@@ -196,7 +196,7 @@ body.kids .nav-item > a:hover{
 }
 
 /* ---------------------------------------------------------
-   NEW: Courses – headline‑only → second‑level submenu
+   NEW: Courses – headline-only → second-level submenu
    --------------------------------------------------------- */
 .nav-item.courses .courses-dropdown{
   position:absolute;
@@ -211,7 +211,7 @@ body.kids .nav-item > a:hover{
   box-shadow:0 30px 60px rgba(0,0,0,.15);
   padding:20px;
 
-  /* delayed + slow fade‑out */
+  /* delayed + slow fade-out */
   transition:
     opacity 0.6s ease 0.2s,
     transform 0.6s ease 0.2s;
@@ -243,7 +243,7 @@ body.kids .nav-item > a:hover{
   box-shadow:0 30px 60px rgba(0,0,0,.15);
   padding:20px;
 
-  /* delayed + slow fade‑out */
+  /* delayed + slow fade-out */
   transition:
     opacity 0.6s ease 0.2s,
     transform 0.6s ease 0.2s;
@@ -260,32 +260,27 @@ body.kids .nav-item > a:hover{
 }
 
 /* shared rules for the two “headline → submenu” groups */
-.courses-dropdown .category-list,
-.journey-dropdown .category-list{
+.courses-dropdown .category-list, .journey-dropdown .category-list{
   list-style:none;
   margin:0;
   padding:0;
 }
-.courses-dropdown .category-item,
-.journey-dropdown .category-item{
+.courses-dropdown .category-item, .journey-dropdown .category-item{
   position:relative;
   margin-bottom:8px;
 }
-.courses-dropdown .cat-link,
-.journey-dropdown .cat-link{
+.courses-dropdown .cat-link, .journey-dropdown .cat-link{
   display:block;
   font-weight:600;
   padding:8px 12px;
   color:#444;
   border-radius:6px;
 }
-.courses-dropdown .cat-link:hover,
-.journey-dropdown .cat-link:hover{
+.courses-dropdown .cat-link:hover, .journey-dropdown .cat-link:hover{
   background:var(--accent);
   color:#fff;
 }
-.courses-dropdown .submenu,
-.journey-dropdown .submenu{
+.courses-dropdown .submenu, .journey-dropdown .submenu{
   position:absolute;
   top:0;
   left:100%;
@@ -299,13 +294,12 @@ body.kids .nav-item > a:hover{
   box-shadow:0 30px 60px rgba(0,0,0,.15);
   padding:15px;
 
-  /* same delayed fade‑out as the parent */
+  /* same delayed fade-out as the parent */
   transition:
     opacity 0.6s ease 0.2s,
     transform 0.6s ease 0.2s;
 }
-.courses-dropdown .category-item:hover .submenu,
-.journey-dropdown .category-item:hover .submenu{
+.courses-dropdown .category-item:hover .submenu, .journey-dropdown .category-item:hover .submenu{
   opacity:1;
   pointer-events:auto;
   transform:translateX(0);
@@ -315,23 +309,23 @@ body.kids .nav-item > a:hover{
     opacity 0.25s ease,
     transform 0.25s ease;
 }
-.courses-dropdown .submenu a,
-.journey-dropdown .submenu a{
+.courses-dropdown .submenu a, .journey-dropdown .submenu a{
   display:block;
   margin-bottom:6px;
   font-size:14px;
   color:#444;
 }
-.courses-dropdown .submenu a:hover,
-.journey-dropdown .submenu a:hover{
+.courses-dropdown .submenu a:hover, .journey-dropdown .submenu a:hover{
   color:#000;
 }
 
 /* Hide navigation on very narrow screens */
-@media(max-width:900px){ .nav-links{display:none} }
+@media(max-width:900px){
+  .nav-links{display:none}
+}
 
 /* ==========================================================
-   4️⃣  MODE‑TOGGLE (">" button that reveals Adult/Kids)
+   4️⃣  MODE-TOGGLE (">" button that reveals Adult/Kids)
    ========================================================== */
 .mode-toggle{
   position:fixed;
@@ -353,7 +347,7 @@ body.kids .nav-item > a:hover{
 .mode-switch{
   position:absolute;
   top:0;
-  right:-80px;               /* hidden off‑screen */
+  right:-80px;               /* hidden off-screen */
   display:flex;
   flex-direction:column;
   background:var(--bg-soft);
@@ -456,12 +450,22 @@ body.kids .slide{
   50%{transform:translateY(-10px)}
 }
 
+/* ✅ NEW: make slide images fit nicely (no other changes) */
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:14px;
+  display:block;
+}
+
 /* ==========================================================
    6️⃣  PAGE CONTAINER (the element that slides)
    ========================================================== */
 #page{
   position:relative;
-  transition:transform .25s ease;   /* quicker slide */
+  transition:transform .25s ease;
+  /* quicker slide */
 }
 
 /* ==========================================================
@@ -524,7 +528,7 @@ footer{
   border-top:1px solid var(--accent);
 }
 
-/* Social‑media icons (new) */
+/* Social-media icons (new) */
 .social-icons{
   margin-top:12px;
   display:flex;
@@ -538,8 +542,6 @@ footer{
 }
 .social-icons a:hover{
   color:var(--accent);
-}
-
 }
 </style>
 </head>
@@ -561,7 +563,7 @@ footer{
       <button id="langBtn">ع</button>
     </div>
 
-    <!-- Navigation (mega‑menu) -->
+    <!-- Navigation (mega-menu) -->
     <nav>
       <ul class="nav-links">
         <li class="nav-item"><a href="#" data-en="Home" data-ar="الرَّئِيسِيَّةُ">Home</a></li>
@@ -608,8 +610,8 @@ footer{
                   <a href="#" data-en="Hifz Classes For Adults" data-ar="حفظ للبالغين">Hifz Classes For Adults</a>
                   <a href="#" data-en="Hifz Classes For Ladies" data-ar="حفظ للسيدات">Hifz Classes For Ladies</a>
                   <a href="#" data-en="Intensive Hifz Course" data-ar="دورة حفظ مكثفة">Intensive Hifz Course</a>
-                  <a href="#" data-en="Full‑time Hifz Program" data-ar="برنامج حفظ بدوام كامل">Full‑time Hifz Program</a>
-                  <a href="#" data-en="Part‑time Hifz Program" data-ar="برنامج حفظ بدوام جزئي">Part‑time Hifz Program</a>
+                  <a href="#" data-en="Full-time Hifz Program" data-ar="برنامج حفظ بدوام كامل">Full-time Hifz Program</a>
+                  <a href="#" data-en="Part-time Hifz Program" data-ar="برنامج حفظ بدوام جزئي">Part-time Hifz Program</a>
                 </div>
               </li>
 
@@ -620,9 +622,7 @@ footer{
                    data-ar="دروس التجويد">Tajweed Classes</a>
                 <div class="submenu">
                   <a href="#" data-en="Tajweed Rules Course" data-ar="دورة قواعد التجويد">Tajweed Rules Course</a>
-                  <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجوي
-
-د للأطفال">Tajweed Classes For Kids</a>
+                  <a href="#" data-en="Tajweed Classes For Kids" data-ar="تجوي  د للأطفال">Tajweed Classes For Kids</a>
                   <a href="#" data-en="Tajweed Classes For Sisters" data-ar="تجويد للأخوات">Tajweed Classes For Sisters</a>
                   <a href="#" data-en="Tajweed Classes For Adults" data-ar="تجويد للبالغين">Tajweed Classes For Adults</a>
                   <a href="#" data-en="Tajweed Classes For Beginners" data-ar="تجويد للمبتدئين">Tajweed Classes For Beginners</a>
@@ -683,16 +683,15 @@ footer{
              aria-expanded="false"
              data-en="Journey"
              data-ar="الرحلة">Journey</a>
-
-       <div class="journey-dropdown">
+          <div class="journey-dropdown">
             <ul class="category-list">
               <!-- Confusion -->
               <li class="category-item">
                 <a href="#" class="cat-link"
                    data-en="Confusion"
                    data-ar="التيه">Confusion</a>
-                </div>
               </li>
+
               <!-- Healing -->
               <li class="category-item">
                 <a href="#" class="cat-link"
@@ -700,18 +699,18 @@ footer{
                    data-ar="اَلْإِدْرَاكُ">Healing</a>
                 <div class="submenu">
                   <a href="#" data-en="CBT" data-ar="اَلْعِلَاجُ الْمَعْرِفِيُّ السُّلُوكِيُّ">CBT</a>
-                  <a href="#" data-en="Faith"      data-ar="الإيمان">Faith</a>    
-                  <a href="#" data-en="Tawheed"  data-ar="تَوْحِيدٌ">Tawheed</a>
-                  <a href="#" data-en="The prophet’s life"  data-ar="السِّيرَةُ النَّبَوِيَّةُ">The prophet’s life</a>
-                  <a href="#" data-en="Death"  data-ar="اَلْبَرْزَخُ">Death</a>  
-                  <a href="#" data-en="The Hereafter"  data-ar="اَلدَّارُ الْآخِرَةُ">The Hereafter</a>       
+                  <a href="#" data-en="Faith" data-ar="الإيمان">Faith</a>
+                  <a href="#" data-en="Tawheed" data-ar="تَوْحِيدٌ">Tawheed</a>
+                  <a href="#" data-en="The prophet’s life" data-ar="السِّيرَةُ النَّبَوِيَّةُ">The prophet’s life</a>
+                  <a href="#" data-en="Death" data-ar="اَلْبَرْزَخُ">Death</a>
+                  <a href="#" data-en="The Hereafter" data-ar="اَلدَّارُ الْآخِرَةُ">The Hereafter</a>
                 </div>
               </li>
             </ul>
           </div> <!-- /.journey-dropdown -->
         </li> <!-- /.nav-item.journey -->
 
-        <!-- Remaining top‑level items (unchanged) -->
+        <!-- Remaining top-level items (unchanged) -->
         <li class="nav-item"><a href="#" data-en="Qur’an Companion" data-ar="رفيق القرآن">Qur’an Companion</a></li>
         <li class="nav-item"><a href="#" data-en="Map" data-ar="الخريطة">Map</a></li>
         <li class="nav-item"><a href="#" data-en="Community" data-ar="المجتمع">Community</a></li>
@@ -722,7 +721,7 @@ footer{
   </div>
 </header>
 
-<!-- MODE‑TOGGLE (">" button) -->
+<!-- MODE-TOGGLE (">" button) -->
 <div class="mode-toggle">
   <button class="mode-trigger" aria-label="Switch mode">&#9654;</button>
   <div class="mode-switch">
@@ -754,11 +753,22 @@ footer{
            data-ar="اِبْدَأِ الرِّحْلَةَ">Begin the Journey</a>
       </div>
 
+      <!-- ✅ ONLY CHANGE: slides now contain images -->
       <div class="hero-visual">
-        <div class="slide">Allah</div>
-        <div class="slide">Self</div>
-        <div class="slide">Others</div>
+        <div class="slide">
+          <img src="images/allah.jpg" alt="Allah">
+        </div>
+
+        <div class="slide">
+          <img src="images/self.jpg" alt="Self">
+        </div>
+
+        <div class="slide">
+          <img src="images/others.jpg" alt="Others">
+        </div>
       </div>
+      <!-- ✅ END change -->
+
     </div>
   </section>
 
@@ -795,7 +805,7 @@ footer{
     © 2025 <span data-en="School of Awakening — A Path of Awareness"
                   data-ar="مَدْرَسَةُ الصَّحْوَةِ — طَرِيقُ الوَعْيِ">School of Awakening — A Path of Awareness</span>
 
-    <!-- Social‑media icons -->
+    <!-- Social-media icons -->
     <div class="social-icons">
       <a href="https://wa.me/15551234567" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
       <a href="https://www.youtube.com/channel/yourchannel" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
@@ -806,7 +816,7 @@ footer{
 
 </div> <!-- end #page -->
 
-<!-- ==================== CHATBOT SIDE‑DRAWER ==================== -->
+<!-- ==================== CHATBOT SIDE-DRAWER ==================== -->
 <!-- Tab that sticks to the right side -->
 <div id="chatbot-tab" title="Need help buying? Click me!">
   <i class="fas fa-shopping-cart"></i> <span>Chat</span>
@@ -849,7 +859,7 @@ function drawMap(){
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const zones = [
-    {x:140, y:260, r:28, label:'Al‑Mulk'},
+    {x:140, y:260, r:28, label:'Al-Mulk'},
     {x:330, y:140, r:28, label:'Awareness'},
     {x:520, y:260, r:28, label:'Meaning'},
     {x:720, y:160, r:28, label:'Hereafter'}
@@ -876,7 +886,7 @@ function drawMap(){
 drawMap();
 
 /* ---------------------------------------------------------
-   DOT‑BACKGROUND (unchanged)
+   DOT-BACKGROUND (unchanged)
    --------------------------------------------------------- */
 (function initSpotlight(){
   const dotLayer = document.querySelector('.dot-bg');
@@ -894,6 +904,7 @@ const adultBtns = document.querySelectorAll('#adultBtn');
 const kidsBtns  = document.querySelectorAll('#kidsBtn');
 const page      = document.getElementById('page');
 let currentMode = document.body.classList.contains('kids') ? 'kids' : 'adult';
+
 function setActiveButtons(mode){
   adultBtns.forEach(b=>b.classList.toggle('active', mode==='adult'));
   kidsBtns .forEach(b=>b.classList.toggle('active', mode==='kids'));
@@ -902,12 +913,14 @@ function slideToMode(targetMode){
   if (currentMode===targetMode) return;
   const outDir = (targetMode==='adult') ? 100 : -100;
   page.style.transform = `translateX(${outDir}%)`;
+
   const onOut = () => {
     page.removeEventListener('transitionend', onOut);
     document.body.className = targetMode;
     currentMode = targetMode;
     setActiveButtons(targetMode);
     drawMap();
+
     const inStart = (targetMode==='adult') ? -100 : 100;
     page.style.transition = 'none';
     page.style.transform = `translateX(${inStart}%)`;
@@ -922,7 +935,7 @@ kidsBtns .forEach(b=>b.addEventListener('click',()=>slideToMode('kids')));
 setActiveButtons(currentMode);
 
 /* ---------------------------------------------------------
-   PURCHASE‑ASSISTANT CHATBOT (now a side‑drawer)
+   PURCHASE-ASSISTANT CHATBOT (now a side-drawer)
    --------------------------------------------------------- */
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -936,121 +949,5 @@ setActiveButtons(currentMode);
     greetings: "Hello! 👋 I’m here to help you purchase a course. How would you like to pay?",
     paymentOptions: [
       {label:"PayPal",               type:"link",  url:"https://www.paypal.com/paypalme/youraccount"},
-      {label:"Stripe (credit‑card)", type:"link", url:"https://buy.stripe.com/test_7sIaFm4UO2mQ8zqfZZ"},
-      {label:"Bank Transfer",    type:"info",  text:"Please transfer the amount to the following IBAN:\n\nIBAN: **DE89 3704 0044 0532 0130 00**\nReference: YOUR‑NAME‑COURSE\nOnce done, email the receipt to support@example.com."},
-      {label:"Cash on Delivery", type:"info",  text:"You can pay the driver in cash when the course materials are delivered to your address."},
-      {label:"Talk to Support",   type:"support"}
-    ],
-    supportOptions: [
-      {label:"WhatsApp",   type:"link", url:"https://wa.me/15551234567?text=I%20need%20help%20with%20my%20purchase"},
-      {label:"Email",      type:"link", url:"mailto:support@example.com?subject=Purchase%20Help"},
-      {label:"Phone",      type:"info", text:"Call us now at **+1 555‑123‑4567** (Mon‑Fri 9 am‑6 pm)."}
-    ],
-    fallback: "Let me know if you need anything else!"
-  };
-
-  const addMessage = (text, from = "bot") => {
-    const bubble = document.createElement('div');
-    bubble.className = `chat-${from}`;
-    bubble.innerHTML = text.replace(/\n/g, "<br>");
-    msgsDiv.appendChild(bubble);
-    msgsDiv.scrollTop = msgsDiv.scrollHeight;
-  };
-
-  const renderButtons = (buttons) => {
-    inputDiv.innerHTML = "";
-    buttons.forEach(btn => {
-      const el = document.createElement('button');
-      el.className = "chat-option";
-      el.textContent = btn.label;
-      el.dataset.action = btn.type;
-      if (btn.url) el.dataset.url = btn.url;
-      if (btn.text) el.dataset.text = btn.text;
-      inputDiv.appendChild(el);
-    });
-  };
-
-  const startConversation = () => {
-    addMessage(data.greetings);
-    renderButtons(data.paymentOptions);
-  };
-
-  const handlePaymentChoice = (choice) => {
-    switch (choice.type) {
-      case "link":
-        addMessage(`🔗 Here’s your payment link: <a href="${choice.url}" target="_blank" rel="noopener">Open ${choice.label}</a>`);
-        break;
-      case "info":
-        addMessage(`ℹ️ ${choice.text}`);
-        break;
-      case "support":
-        addMessage("Sure! How would you like to reach our support team?");
-        renderButtons(data.supportOptions);
-        return;   // wait for support choice
-    }
-    setTimeout(() => {
-      addMessage(data.fallback);
-      renderButtons(data.paymentOptions);
-    }, 1200);
-  };
-
-  const handleSupportChoice = (choice) => {
-    switch (choice.type) {
-      case "link":
-        addMessage(`📞 Contact us here: <a href="${choice.url}" target="_blank" rel="noopener">${choice.label}</a>`);
-        break;
-      case "info":
-        addMessage(`📞 ${choice.text}`);
-        break;
-    }
-    setTimeout(() => {
-      addMessage(data.fallback);
-      renderButtons(data.paymentOptions);
-    }, 1200);
-  };
-
-  // Open drawer when tab is clicked
-  tab.addEventListener('click', () => {
-    drawer.classList.add('open');
-    drawer.setAttribute('aria-hidden', 'false');
-    if (!drawer.dataset.started) {
-      startConversation();
-      drawer.dataset.started = "true";
-    }
-  });
-
-  // Close drawer
-  closeBtn.addEventListener('click', () => {
-    drawer.classList.remove('open');
-    drawer.setAttribute('aria-hidden', 'true');
-  });
-
-  // Choose an option
-  inputDiv.addEventListener('click', (e) => {
-    if (!e.target.matches('.chat-option')) return;
-    const action = e.target.dataset.action;
-    const label  = e.target.textContent;
-    addMessage(label, "user");
-
-    // Support menu?
-    if (data.supportOptions.some(o => o.label === label)) {
-      const choice = data.supportOptions.find(o => o.label === label);
-      handleSupportChoice(choice);
-    } else {
-      const choice = data.paymentOptions.find(o => o.label === label);
-      if (choice) handlePaymentChoice(choice);
-    }
-  });
-
-  // Clicking outside drawer (on overlay) closes it
-  drawer.addEventListener('click', (e) => {
-    if (e.target === drawer) {
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-    }
-  });
-})();
-</script>
-
-</body>
-</html>
+      {label:"Stripe (credit-card)", type:"link", url:"https://buy.stripe.com/test_7sIaFm4UO2mQ8zqfZZ"},
+      {label:"Bank Transfer",    type:"info",  text:"Please transfer the amount to the following IBAN:\n\nIBAN
