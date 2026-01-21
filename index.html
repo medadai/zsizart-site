@@ -509,14 +509,16 @@ body.kids .card{
   transform:none;
 }
 
-/* Map canvas */
-#mapCanvas{
+/* Map image (replaces canvas) */
+#mapImage{
   width:100%;
   max-width:900px;
   height:420px;
   background:#fff;
   border:1px solid var(--accent);
   border-radius:20px;
+  object-fit:cover;
+  display:block;
 }
 
 /* Footer */
@@ -995,7 +997,8 @@ function drawMap(){
     ctx.fillText(z.label, z.x, z.y + 44);
   });
 }
-drawMap();
+// drawMap(); // disabled because we replaced canvas with an image
+
 
 /* ---------------------------------------------------------
    DOT-BACKGROUND (unchanged)
@@ -1029,7 +1032,8 @@ function slideToMode(targetMode){
     document.body.className = targetMode;
     currentMode = targetMode;
     setActiveButtons(targetMode);
-    drawMap();
+    // drawMap(); // disabled because we replaced canvas with an image
+
     const inStart = (targetMode==='adult') ? -100 : 100;
     page.style.transition = 'none';
     page.style.transform = `translateX(${inStart}%)`;
