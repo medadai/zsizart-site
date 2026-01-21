@@ -163,12 +163,12 @@
   @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
 
   /* Clay overlay (masked by circle) */
-  .tile .img-clay{
-    position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .15s ease;
-    -webkit-mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
-            mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
-    will-change:transform,opacity;
-  }
+.tile .img-clay {
+  -webkit-mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
+          mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
+  /* ... باقي الخصائص ... */
+}
+
   .tile:hover .img-clay{opacity:1}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
@@ -488,7 +488,7 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   const supportsMask = CSS && (CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') || CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))'));
   if(!supportsMask) return;
   const exts = ['.jpg','.png','.webp'];
-  const RADIUS = 140;
+  const RADIUS = 80;
   const tiles = [...document.querySelectorAll('#grid .tile')];
   tiles.forEach(tile=>{
     const base = tile.dataset.project || '';
