@@ -220,35 +220,38 @@
   .pv__close:hover{background:rgba(0,0,0,.6)}
 
   /* ===== Viewer Arrows (ADDED) ===== */
+/* ===== Viewer Arrows ===== */
+.pv__arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:64px;
+  height:64px;
+  font-size:44px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  background:rgba(0,0,0,.45);
+  color:#fff;
+  z-index:10;
+  backdrop-filter:blur(4px);
+  transition:.25s;
+}
+
+.pv__arrow:hover{
+  background:rgba(0,0,0,.7);
+}
+
+.pv__prev{ left:20px; }
+.pv__next{ right:20px; }
+
+@media(max-width:768px){
   .pv__arrow{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
     width:48px;
     height:48px;
-    border-radius:50%;
-    border:none;
-    background:rgba(0,0,0,.35);
-    color:#fff;
     font-size:34px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:14;
-    transition:.25s;
-    backdrop-filter: blur(6px);
   }
-  .pv__arrow:hover{ background:rgba(0,0,0,.6); }
-  .pv__prev{ left:20px; }
-  .pv__next{ right:20px; }
-  .pv__arrow[disabled]{ opacity:.25; pointer-events:none; }
-
-  @media(max-width:768px){
-    .pv__arrow{ width:38px; height:38px; font-size:26px; }
-    .pv__prev{ left:12px; }
-    .pv__next{ right:12px; }
-  }
+}
 
   /* ===== Back-to-Top ===== */
   .top-btn{
