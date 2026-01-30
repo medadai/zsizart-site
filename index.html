@@ -13,7 +13,7 @@
   <meta property="og:image" content="assets/og-cover.jpg">
   <meta name="theme-color" content="#0b0d0d">
 
-  <!-- Twitter (optional) -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ZSIZART — Visualization Studio">
   <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
@@ -88,7 +88,7 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-  /* ===== Header (brand left / menu right) ===== */
+  /* ===== Header ===== */
   header{
     position:sticky;top:0;z-index:70;
     background:rgba(5,7,9,.92);
@@ -103,7 +103,7 @@
   .brand .logo{height:30px;width:auto}
   .brand .wordmark{font-weight:800;letter-spacing:.08em}
 
-  /* Menu button (icon only) */
+  /* Menu button */
   .menu-btn{width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;display:flex;align-items:center;justify-content:center;cursor:pointer}
   .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
   .menu-btn .bars::before{position:absolute;top:-6px}
@@ -149,7 +149,7 @@
   .section-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
   .inline-btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#cfe2ff;font-weight:700;cursor:pointer}
 
-  /* ===== Grid (no rounded/shadow) ===== */
+  /* ===== Grid ===== */
   .grid{display:grid;gap:28px;grid-template-columns:repeat(3,1fr)}
   @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
@@ -168,7 +168,10 @@
 
   /* B/W → color hover */
   .grid .tile .img-main{
-    width:100%; height:auto; object-fit:cover; display:block;
+    width:100%;
+    height:auto;
+    object-fit:cover;
+    display:block;
     filter:grayscale(100%) saturate(0.6) contrast(1.05);
     transition:filter .35s ease, transform .35s ease;
   }
@@ -212,14 +215,40 @@
     background:rgba(0,0,0,.45); border:1px solid #1a1f27;
     color:#fff; font-size:26px; line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:5;
+    box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:15;
   }
   .pv__close:hover{background:rgba(0,0,0,.6)}
 
-  /* ===== Scroll-scrub helpers (About) ===== */
-  .scrub{--p:0;--dx:0px;--dy:24px;opacity:calc(.2 + .8*var(--p));transform:translate3d(calc((1 - var(--p)) * var(--dx)),calc((1 - var(--p)) * var(--dy)),0) scale(calc(.96 + .04*var(--p)));transition:none!important;will-change:transform,opacity}
-  .scrub-left{--dx:-120px;--dy:0px}.scrub-right{--dx:120px;--dy:0px}
-  @media (prefers-reduced-motion:reduce){.scrub{opacity:1!important;transform:none!important;transition:none!important;will-change:auto!important}}
+  /* ===== Viewer Arrows (ADDED) ===== */
+  .pv__arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:none;
+    background:rgba(0,0,0,.35);
+    color:#fff;
+    font-size:34px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:14;
+    transition:.25s;
+    backdrop-filter: blur(6px);
+  }
+  .pv__arrow:hover{ background:rgba(0,0,0,.6); }
+  .pv__prev{ left:20px; }
+  .pv__next{ right:20px; }
+  .pv__arrow[disabled]{ opacity:.25; pointer-events:none; }
+
+  @media(max-width:768px){
+    .pv__arrow{ width:38px; height:38px; font-size:26px; }
+    .pv__prev{ left:12px; }
+    .pv__next{ right:12px; }
+  }
 
   /* ===== Back-to-Top ===== */
   .top-btn{
@@ -249,20 +278,6 @@
   @keyframes spinIn{ 0%{ transform:scale(.6) rotate(-90deg); opacity:.2 } 100%{ transform:scale(1) rotate(0deg); opacity:1 } }
   @media (prefers-reduced-motion:reduce){ .top-btn,.top-btn *{ transition:none !important; animation:none !important } }
 
-  /* ===== Why section polish ===== */
-  #why { margin-top: 26px; }
-  #why h2 { font-size: 28px; margin-bottom: 12px; font-weight: 800; }
-  .proof-row{ display:flex; flex-wrap:wrap; gap:10px; margin: 6px 0 18px; }
-  .chip-proof{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-size:13px; background:linear-gradient(180deg,#0c0e12,#0b0d0d); border:1px solid #1f2733; color:#cfe2ff; }
-  .features-grid{ display:grid; gap:16px; grid-template-columns:repeat(4,1fr); }
-  @media(max-width:1024px){ .features-grid{ grid-template-columns:repeat(2,1fr); } }
-  @media(max-width:640px){ .features-grid{ grid-template-columns:1fr; } }
-  .feature{ padding:16px; border-radius:14px; background: radial-gradient(120% 160% at 0% 0%, rgba(255,122,24,.08), transparent 45%), radial-gradient(120% 160% at 100% 100%, rgba(168,85,247,.08), transparent 45%), #0f1116; border:1px solid #1a1f27; box-shadow: 0 8px 30px rgba(0,0,0,.28); }
-  .feature h3{ margin:0 0 6px; font-size:18px; }
-  .feature p{ margin:0 0 10px; color:#9fb3c8; font-size:14px; }
-  .feature ul{ margin:0; padding-left:18px; color:#cfe2ff; }
-  .feature li{ margin:6px 0; }
-
   /* ===== Reveal classes ===== */
   .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
   .reveal.show{opacity:1; transform:none}
@@ -288,7 +303,7 @@
 <aside class="menu-panel" id="menuPanel" aria-label="Site menu">
   <a href="#work">Work</a>
   <a href="#services">Services</a>
-  <a href="#why">Why us</a>
+  <a href="#art">Art</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
 </aside>
@@ -338,74 +353,50 @@
     </div>
 
     <div class="grid" id="grid">
-      <!-- IMPORTANT: Using WebP only (no srcset) because you didn't export 640/960/1280 versions -->
       <div class="tile" data-project="assets/work-01" data-title="Como Gardens Project" data-desc="Como Gardens Project — modern villas surrounded by greenery." data-tags="exterior">
         <span class="label">EXTERIOR</span>
-        <img class="img-main"
-             src="assets/work-01.webp"
-             width="1600" height="900"
-             loading="eager" fetchpriority="high" decoding="async"
-             alt="Como Gardens Project">
+        <img class="img-main" src="assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Como Gardens Project">
       </div>
 
       <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
         <span class="label">EXTERIOR</span>
-        <img class="img-main"
-             src="assets/work-02.webp"
-             width="1600" height="900"
-             loading="lazy" decoding="async"
-             alt="Hillside Serenity">
+        <img class="img-main" src="assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
       </div>
 
       <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
         <span class="label">INTERIOR</span>
-        <img class="img-main"
-             src="assets/work-03.webp"
-             width="1600" height="900"
-             loading="lazy" decoding="async"
-             alt="Retro Home Sweet">
+        <img class="img-main" src="assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
       </div>
 
       <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition." data-tags="interior">
         <span class="label">INTERIOR</span>
-        <img class="img-main"
-             src="assets/work-04.webp"
-             width="1600" height="900"
-             loading="lazy" decoding="async"
-             alt="Serene Lines">
+        <img class="img-main" src="assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
       </div>
 
       <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living." data-tags="interior">
         <span class="label">INTERIOR</span>
-        <img class="img-main"
-             src="assets/work-05.webp"
-             width="1600" height="900"
-             loading="lazy" decoding="async"
-             alt="Modern Haven">
+        <img class="img-main" src="assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
       </div>
     </div>
   </section>
 
-    <!-- Art -->
+  <!-- Art -->
   <section id="art">
-  <h2>ZSIZART Lab</h2>
-
-  <div class="grid">
-    <div class="tile">
-      <img src="assets/art-01.webp" loading="lazy">
+    <h2>ZSIZART Lab</h2>
+    <div class="grid">
+      <div class="tile">
+        <img src="assets/art-01.webp" loading="lazy" decoding="async" alt="ZSIZART Lab artwork 01">
+      </div>
+      <div class="tile">
+        <img src="assets/art-02.webp" loading="lazy" decoding="async" alt="ZSIZART Lab artwork 02">
+      </div>
+      <div class="tile">
+        <img src="assets/art-03.webp" loading="lazy" decoding="async" alt="ZSIZART Lab artwork 03">
+      </div>
     </div>
+  </section>
 
-    <div class="tile">
-      <img src="assets/art-02.webp" loading="lazy">
-    </div>
-
-    <div class="tile">
-      <img src="assets/art-03.webp" loading="lazy">
-    </div>
-  </div>
-</section>
-
-  <!-- About (NO personal photo) -->
+  <!-- About -->
   <section id="about">
     <h2>About</h2>
     <div class="about">
@@ -443,17 +434,16 @@
 <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
   <div class="pv__content">
     <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
- <div class="pv__image">
 
-  <button class="pv__arrow pv__prev" id="pvPrev">‹</button>
+    <div class="pv__image">
+      <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
 
-  <img id="pvImageA" class="pv__img is-top" alt="">
-  <img id="pvImageB" class="pv__img" alt="">
+      <img id="pvImageA" class="pv__img is-top" alt="">
+      <img id="pvImageB" class="pv__img" alt="">
 
-  <button class="pv__arrow pv__next" id="pvNext">›</button>
+      <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+    </div>
 
-</div>
-    
     <aside class="pv__info">
       <h3 id="pvTitle"></h3>
       <p id="pvDesc"></p>
@@ -467,7 +457,7 @@
   <span class="top-text">Top</span>
 </button>
 
-<!-- Main JS (defer to avoid blocking) -->
+<!-- Main JS -->
 <script defer>
 /* ===== Lenis ===== */
 let lenis;
@@ -531,7 +521,6 @@ function applyFilters(){
     tile.style.display = (matchText && matchCat) ? '' : 'none';
   });
 }
-
 function resetFilters(){
   if(!qInput) return;
   qInput.value='';
@@ -539,7 +528,6 @@ function resetFilters(){
   if(chkExt) chkExt.checked=false;
   tiles.forEach(t=>t.style.display='');
 }
-
 applyBtn?.addEventListener('click',applyFilters);
 resetBtn?.addEventListener('click',resetFilters);
 qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
@@ -552,7 +540,6 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   );
   if(!supportsMask) return;
 
-  // Prefer webp first
   const exts = ['.webp','.jpg','.png'];
   const RADIUS = 80;
   const tiles = [...document.querySelectorAll('#grid .tile')];
@@ -586,24 +573,36 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   });
 })();
 
-/* ===== Project Viewer (WebP-first + cache) ===== */
+/* ===== Project Viewer (Work only + arrows wired) ===== */
 (function(){
   const viewer  = document.getElementById('pv'),
         imgA    = document.getElementById('pvImageA'),
         imgB    = document.getElementById('pvImageB'),
         titleEl = document.getElementById('pvTitle'),
         descEl  = document.getElementById('pvDesc'),
-        btnClose= document.getElementById('pvClose');
+        btnClose= document.getElementById('pvClose'),
+        btnPrev = document.getElementById('pvPrev'),
+        btnNext = document.getElementById('pvNext');
 
-  const projectTiles = [...document.querySelectorAll('.tile')];
+  // IMPORTANT FIX: only tiles inside #grid (Work) can open viewer
+  const projectTiles = [...document.querySelectorAll('#grid .tile')];
   const projects = projectTiles.map(t => ({ base:t.dataset.project, title:t.dataset.title||'', desc:t.dataset.desc||'' }));
 
-  let projectIdx = 0, list = [], idx = 0, topIsA = true;
+  let list = [], idx = 0, topIsA = true;
   const cache = new Map();
+
+  function updateArrows(){
+    const multi = (list.length > 1);
+    btnPrev.style.display = multi ? '' : 'none';
+    btnNext.style.display = multi ? '' : 'none';
+    btnPrev.disabled = !multi;
+    btnNext.disabled = !multi;
+  }
 
   function show(src){
     const top   = topIsA ? imgA : imgB;
     const under = topIsA ? imgB : imgA;
+
     under.onload = () => {
       top.classList.remove('is-top');
       under.classList.add('is-top');
@@ -617,24 +616,24 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
     if (!list.length) return;
     idx = (i + list.length) % list.length;
     show(list[idx]);
-    titleEl.textContent = viewer.dataset.title || "";
-    descEl.textContent  = viewer.dataset.desc  || "";
   }
 
   const nextImg = () => setIdx(idx+1);
   const prevImg = () => setIdx(idx-1);
 
+  btnNext?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
+  btnPrev?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
+
   async function buildList(base){
     if (cache.has(base)) return cache.get(base);
 
-    // Prefer webp first
     const exts = ['.webp','.jpg','.jpeg','.png'];
     const tryList = [];
 
     // base.ext
     exts.forEach(ext => tryList.push(`${base}${ext}`));
 
-    // 1..15 only (light)
+    // 1..15 (light)
     for(let i=1;i<=15;i++){
       const p2 = String(i).padStart(2,'0');
       exts.forEach(ext=>{
@@ -643,7 +642,7 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
       });
     }
 
-    // common variants (you have -sh and -clay)
+    // common variants
     exts.forEach(ext=>{
       tryList.push(`${base}-sh${ext}`);
       tryList.push(`${base}-clay${ext}`);
@@ -659,30 +658,29 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
     }));
 
     const found=(await Promise.all(checks)).filter(Boolean);
-
-    // WebP fallback by default
     const finalList = found.length ? found : [`${base}.webp`];
 
     cache.set(base, finalList);
     return finalList;
   }
 
-  async function openProject(pIdx){
-    projectIdx = (pIdx + projects.length) % projects.length;
-    const p = projects[projectIdx];
-
+  async function openProject(i){
+    const p = projects[i];
     viewer.dataset.title = p.title;
     viewer.dataset.desc  = p.desc;
+
+    titleEl.textContent = p.title || '';
+    descEl.textContent  = p.desc  || '';
 
     list = await buildList(p.base);
     idx = 0;
 
     imgA.classList.remove('is-top'); imgB.classList.remove('is-top');
     const currentTop = topIsA ? imgA : imgB;
-
     currentTop.src = list[0];
     currentTop.classList.add('is-top');
-    setIdx(0);
+
+    updateArrows();
   }
 
   function openPV(){
@@ -712,8 +710,10 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   document.addEventListener('keydown',e=>{
     if(!viewer.classList.contains('show'))return;
     if(e.key==='Escape') closePV();
-    if(e.key==='ArrowDown'||e.key==='PageDown'||e.key==='ArrowRight') nextImg();
-    if(e.key==='ArrowUp'||e.key==='PageUp'||e.key==='ArrowLeft') prevImg();
+    if(e.key==='ArrowRight') nextImg();
+    if(e.key==='ArrowLeft')  prevImg();
+    if(e.key==='ArrowDown'||e.key==='PageDown') nextImg();
+    if(e.key==='ArrowUp'||e.key==='PageUp') prevImg();
   });
 })();
 
@@ -742,7 +742,6 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
 /* ===== Hide header on scroll ===== */
 let lastScrollY = 0;
 const headerEl = document.querySelector('header');
-
 function updateHeader(){
   const y = window.pageYOffset || document.documentElement.scrollTop;
   headerEl.style.transform = (y > lastScrollY && y > 100) ? 'translateY(-100%)' : 'translateY(0)';
