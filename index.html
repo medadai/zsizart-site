@@ -12,6 +12,13 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/og-cover.jpg">
   <meta name="theme-color" content="#0b0d0d">
+
+  <!-- Twitter (optional) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZSIZART — Visualization Studio">
+  <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
+  <meta name="twitter:image" content="assets/og-cover.jpg">
+
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -28,12 +35,16 @@
   }
   </script>
 
+  <!-- Preload small wins -->
+  <link rel="preload" as="image" href="assets/logo.png">
+  <link rel="preload" as="image" href="assets/og-cover.jpg">
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 
-  <!-- Lenis Smooth Scrolling -->
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+  <!-- Lenis Smooth Scrolling (defer) -->
+  <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
 
   <style>
   :root{
@@ -56,7 +67,7 @@
 
   *{box-sizing:border-box}
 
-  /* إخفاء الـ caret عالموقع كله، وظهوره في حقول الإدخال فقط */
+  /* hide caret globally, show in inputs */
   *{ caret-color:transparent }
   input,textarea,select{ caret-color:auto }
 
@@ -72,7 +83,8 @@
     overflow-x:hidden;
     -webkit-tap-highlight-color: transparent;
   }
-  img{display:block;max-width:100%;loading:lazy;decoding:async}
+
+  img{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
@@ -131,6 +143,7 @@
   .chip input{accent-color:#1a68ff}
   .search-input{flex:1;min-width:220px;padding:10px 12px;border:1px solid #2a3140;border-radius:10px;background:#0c0e12;color:#e9edf0}
   .filter-actions{margin-left:auto;display:flex;gap:10px}
+  .hint{margin-top:10px;color:#9fb3c8;font-size:13px}
 
   /* ===== Section headings row ===== */
   .section-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
@@ -143,7 +156,7 @@
 
   .tile{
     position:relative;overflow:hidden;background:transparent;cursor:pointer;border:none;border-radius:0;box-shadow:none;
-    --mx:-1000px; --my:-1000px; --r:0px; /* clay circle defaults */
+    --mx:-1000px; --my:-1000px; --r:0px;
   }
 
   /* Label */
@@ -163,19 +176,18 @@
   @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
 
   /* Clay overlay (masked by circle) */
-.tile .img-clay {
-  -webkit-mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
-          mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
-  /* ... باقي الخصائص ... */
-}
-
+  .tile .img-clay{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity .25s ease;
+    -webkit-mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
+            mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
+    pointer-events:none;
+  }
   .tile:hover .img-clay{opacity:1}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
-  .about{display:grid;grid-template-columns:320px 1fr;gap:28px}
-  @media(max-width:860px){.about{grid-template-columns:1fr}}
+  .about{display:grid;grid-template-columns:1fr;gap:18px}
   .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
-  .me{aspect-ratio:1/1;border-radius:50%;border:6px solid #0b0d0d;outline:1px solid #1a1f27}
 
   form{display:grid;gap:10px}
   input,textarea,button,select{font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px}
@@ -194,7 +206,6 @@
   @keyframes pvIn{from{transform:translateY(-40px);opacity:.9}to{transform:translateY(0);opacity:1}}
   .pv__info{position:absolute;left:0;right:0;bottom:0;padding:22px 28px;font-size:15px;line-height:1.5;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.7);transform:translateY(100%);opacity:0;transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease)}
   .pv.show .pv__info{transform:translateY(0);opacity:1}
-  .pv__nav{display:none!important}
   .pv__close{
     position:absolute; top:14px; left:14px;
     width:40px; height:40px; border-radius:10px;
@@ -205,17 +216,12 @@
   }
   .pv__close:hover{background:rgba(0,0,0,.6)}
 
-  /* Small-screen header fix */
-  @media (max-width: 768px){
-    .brand .wordmark{ font-size:14px }
-  }
-
   /* ===== Scroll-scrub helpers (About) ===== */
   .scrub{--p:0;--dx:0px;--dy:24px;opacity:calc(.2 + .8*var(--p));transform:translate3d(calc((1 - var(--p)) * var(--dx)),calc((1 - var(--p)) * var(--dy)),0) scale(calc(.96 + .04*var(--p)));transition:none!important;will-change:transform,opacity}
   .scrub-left{--dx:-120px;--dy:0px}.scrub-right{--dx:120px;--dy:0px}
   @media (prefers-reduced-motion:reduce){.scrub{opacity:1!important;transform:none!important;transition:none!important;will-change:auto!important}}
 
-  /* ===== Back-to-Top (animated to logo) ===== */
+  /* ===== Back-to-Top ===== */
   .top-btn{
     position:fixed; right:22px; bottom:22px; z-index:120;
     display:flex; align-items:center; gap:8px;
@@ -225,7 +231,7 @@
     box-shadow:0 8px 30px rgba(0,0,0,.35);
     color:#cfe2ff; font-weight:700; cursor:pointer;
     opacity:0; transform:translateY(10px) scale(.98);
-    transition:opacity .25s ease, transform .25s ease, background .25s ease, box-shadow .25s ease;
+    transition:opacity .25s ease, transform .25s ease, box-shadow .25s ease;
     pointer-events:none;
   }
   .top-btn.show{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
@@ -243,7 +249,7 @@
   @keyframes spinIn{ 0%{ transform:scale(.6) rotate(-90deg); opacity:.2 } 100%{ transform:scale(1) rotate(0deg); opacity:1 } }
   @media (prefers-reduced-motion:reduce){ .top-btn,.top-btn *{ transition:none !important; animation:none !important } }
 
-  /* ===== Why section polish (added) ===== */
+  /* ===== Why section polish ===== */
   #why { margin-top: 26px; }
   #why h2 { font-size: 28px; margin-bottom: 12px; font-weight: 800; }
   .proof-row{ display:flex; flex-wrap:wrap; gap:10px; margin: 6px 0 18px; }
@@ -256,29 +262,35 @@
   .feature p{ margin:0 0 10px; color:#9fb3c8; font-size:14px; }
   .feature ul{ margin:0; padding-left:18px; color:#cfe2ff; }
   .feature li{ margin:6px 0; }
+
+  /* ===== Reveal classes (was missing) ===== */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.show{opacity:1; transform:none}
+  .reveal.hide-up{opacity:0; transform:translateY(-16px)}
+  .reveal.hide-down{opacity:0; transform:translateY(16px)}
   </style>
 </head>
+
 <body>
 <header>
   <div class="wrap header-layout">
     <div class="brand">
-      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo">
+      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo" width="30" height="30" loading="eager" decoding="async">
       <span class="wordmark">ZSIZART</span>
     </div>
     <div class="actions">
-      <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bars"></span></button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><span class="bars"></span></button>
     </div>
   </div>
 </header>
 
 <div class="overlay" id="overlay"></div>
-<aside class="menu-panel" id="menuPanel">
+<aside class="menu-panel" id="menuPanel" aria-label="Site menu">
   <a href="#work">Work</a>
   <a href="#services">Services</a>
   <a href="#why">Why us</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
-  <a href="#quote">Get a Quote</a>
 </aside>
 
 <main class="wrap">
@@ -287,7 +299,7 @@
     <p class="parallax hero-parallax">Cinematic architectural CGI for architecture & design brands</p>
     <div class="actions">
       <a class="btn primary" href="#services">Our Services</a>
-      <a class="btn" href="#quote">Get a Quote</a>
+      <a class="btn" href="#contact">Contact</a>
     </div>
   </section>
 
@@ -324,43 +336,86 @@
       <h2>Work</h2>
       <button class="inline-btn" id="filterToggle" type="button">Search & Filter</button>
     </div>
+
     <div class="grid" id="grid">
+      <!--
+        IMPORTANT:
+        For best speed, export extra sizes:
+        assets/work-01-640.jpg  (640w)
+        assets/work-01-960.jpg  (960w)
+        assets/work-01-1280.jpg (1280w)
+        And keep the original as the largest.
+      -->
+
       <div class="tile" data-project="assets/work-01" data-title="Como Gardens Project" data-desc="Como Gardens Project — modern villas surrounded by greenery." data-tags="exterior">
         <span class="label">EXTERIOR</span>
-        <img class="img-main" src="assets/work-01.jpg" alt="Como Gardens Project">
+        <img class="img-main"
+             src="assets/work-01.jpg"
+             srcset="assets/work-01-640.jpg 640w, assets/work-01-960.jpg 960w, assets/work-01-1280.jpg 1280w, assets/work-01.jpg 1600w"
+             sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw"
+             width="1600" height="900"
+             loading="eager" fetchpriority="high" decoding="async"
+             alt="Como Gardens Project">
       </div>
+
       <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
         <span class="label">EXTERIOR</span>
-        <img class="img-main" src="assets/work-02.jpg" alt="Hillside Serenity">
+        <img class="img-main"
+             src="assets/work-02.jpg"
+             srcset="assets/work-02-640.jpg 640w, assets/work-02-960.jpg 960w, assets/work-02-1280.jpg 1280w, assets/work-02.jpg 1600w"
+             sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw"
+             width="1600" height="900"
+             loading="lazy" decoding="async"
+             alt="Hillside Serenity">
       </div>
+
       <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
         <span class="label">INTERIOR</span>
-        <img class="img-main" src="assets/work-03.jpg" alt="Retro Home Sweet">
+        <img class="img-main"
+             src="assets/work-03.jpg"
+             srcset="assets/work-03-640.jpg 640w, assets/work-03-960.jpg 960w, assets/work-03-1280.jpg 1280w, assets/work-03.jpg 1600w"
+             sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw"
+             width="1600" height="900"
+             loading="lazy" decoding="async"
+             alt="Retro Home Sweet">
       </div>
-      <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+
+      <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition." data-tags="interior">
         <span class="label">INTERIOR</span>
-        <img class="img-main" src="assets/work-04.jpg" alt="Serene Lines">
+        <img class="img-main"
+             src="assets/work-04.jpg"
+             srcset="assets/work-04-640.jpg 640w, assets/work-04-960.jpg 960w, assets/work-04-1280.jpg 1280w, assets/work-04.jpg 1600w"
+             sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw"
+             width="1600" height="900"
+             loading="lazy" decoding="async"
+             alt="Serene Lines">
       </div>
-      <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+
+      <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living." data-tags="interior">
         <span class="label">INTERIOR</span>
-        <img class="img-main" src="assets/work-05.jpg" alt="Modern Haven">
+        <img class="img-main"
+             src="assets/work-05.jpg"
+             srcset="assets/work-05-640.jpg 640w, assets/work-05-960.jpg 960w, assets/work-05-1280.jpg 1280w, assets/work-05.jpg 1600w"
+             sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw"
+             width="1600" height="900"
+             loading="lazy" decoding="async"
+             alt="Modern Haven">
       </div>
     </div>
   </section>
 
-  <!-- About (scrub in) -->
+  <!-- About (NO personal photo) -->
   <section id="about">
     <h2>About</h2>
     <div class="about">
-      <img class="me scrub scrub-left" src="assets/me.jpg" alt="Mahmoud Refaey" />
       <div class="card scrub scrub-right">
-        <p><strong>ZSIZART</strong> is an independent visualization studio led by Mahmoud Refaey. We specialize in crafting <em>cinematic architectural imagery</em> and animation — blending composition, light, and material realism to create work that feels immersive and emotionally engaging.</p>
-        <p>We partner with architects, developers, and design brands worldwide, supporting them from concept through to polished marketing assets. Our focus: clarity, reliability, and visuals that inspire confidence in every project.</p>
+        <p><strong>ZSIZART</strong> is a boutique visualization studio specializing in <em>cinematic architectural imagery</em> and animation. We blend composition, lighting, and material realism to create visuals that feel immersive and market-ready.</p>
+        <p>We collaborate with architects, developers, and design brands worldwide—supporting projects from concept to polished marketing assets. Our focus is reliability, clarity, and delivering consistent quality at production speed.</p>
       </div>
     </div>
   </section>
 
-  <!-- Courses (placeholder) -->
+  <!-- Courses -->
   <section id="courses">
     <h2>Courses</h2>
     <div class="card">Coming soon…</div>
@@ -379,34 +434,12 @@
       <p id="status" style="margin-top:8px;color:#9ec2ff"></p>
     </div>
   </section>
-
-  <!-- Get a Quote -->
-  <section id="quote" style="margin-top:26px">
-    <h2>Get a Quote</h2>
-    <div class="card">
-      <form id="quote-form">
-        <input type="text" name="q_name" placeholder="Full Name" required>
-        <input type="email" name="q_email" placeholder="Business Email" required>
-        <select name="q_service" required>
-          <option value="" disabled selected>Service type…</option>
-          <option>Interior CGI</option>
-          <option>Exterior CGI</option>
-          <option>Animation</option>
-          <option>Product CGI</option>
-        </select>
-        <input type="text" name="q_budget" placeholder="Budget range (USD)">
-        <textarea name="q_brief" placeholder="Brief / links / deadlines" required></textarea>
-        <button type="submit">Request Quote</button>
-      </form>
-      <p id="qstatus" style="margin-top:8px;color:#9ec2ff"></p>
-    </div>
-  </section>
 </main>
 
 <footer>© 2025 ZSIZART. All rights reserved.</footer>
 
 <!-- Project Viewer -->
-<div class="pv" id="pv" aria-hidden="true">
+<div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
   <div class="pv__content">
     <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
     <div class="pv__image">
@@ -420,18 +453,21 @@
   </div>
 </div>
 
-<!-- Back-to-Top (animated to logo) -->
+<!-- Back-to-Top -->
 <button id="topBtn" class="top-btn" aria-label="Back to top">
   <span class="top-glyph" aria-hidden="true">↑</span>
   <span class="top-text">Top</span>
 </button>
 
-<script>
+<!-- Main JS (defer to avoid blocking) -->
+<script defer>
 /* ===== Lenis ===== */
 let lenis;
 function initLenis(){
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
+  if (!window.Lenis) return;
+
   lenis = new Lenis({
     duration:1.2,
     easing:(t)=>Math.min(1,1.001 - Math.pow(2, -10*t)),
@@ -439,9 +475,9 @@ function initLenis(){
     gestureDirection:'vertical',
     smooth:true, mouseMultiplier:1, smoothTouch:false, touchMultiplier:2, infinite:false,
   });
+
   function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
-  lenis.on('scroll', ({scroll}) => document.documentElement.style.setProperty('--scroll-y', scroll));
 }
 window.addEventListener('load', initLenis);
 
@@ -450,9 +486,13 @@ const body=document.body,
       menuBtn=document.getElementById('menuBtn'),
       overlay=document.getElementById('overlay'),
       menuPanel=document.getElementById('menuPanel');
-function openMenu(){body.classList.add('menu-open')}
-function closeMenu(){body.classList.remove('menu-open')}
-menuBtn.onclick=openMenu; overlay.onclick=closeMenu; menuPanel.addEventListener('click',e=>{ if(e.target.tagName==='A') closeMenu(); });
+
+function openMenu(){ body.classList.add('menu-open'); menuBtn?.setAttribute('aria-expanded','true'); }
+function closeMenu(){ body.classList.remove('menu-open'); menuBtn?.setAttribute('aria-expanded','false'); }
+
+menuBtn?.addEventListener('click', openMenu);
+overlay?.addEventListener('click', closeMenu);
+menuPanel?.addEventListener('click',e=>{ if(e.target.tagName==='A') closeMenu(); });
 
 /* ===== Filter Panel ===== */
 const filterToggle=document.getElementById('filterToggle');
@@ -466,55 +506,78 @@ const qInput=document.getElementById('q');
 const chkInt=document.getElementById('tagInterior');
 const chkExt=document.getElementById('tagExterior');
 const tiles=[...document.querySelectorAll('#grid .tile')];
+
 function applyFilters(){
   const q=(qInput?.value||'').trim().toLowerCase();
   const wantInt=!!chkInt?.checked, wantExt=!!chkExt?.checked;
+
   tiles.forEach(tile=>{
     const name=(tile.dataset.title||'').toLowerCase();
     const tags=(tile.dataset.tags||'').toLowerCase();
     const matchText = q ? name.includes(q) : true;
     let matchCat = true;
-    if (wantInt || wantExt){ matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior')); }
+
+    if (wantInt || wantExt){
+      matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior'));
+    }
     tile.style.display = (matchText && matchCat) ? '' : 'none';
   });
 }
-function resetFilters(){ if(!qInput) return; qInput.value=''; if(chkInt) chkInt.checked=false; if(chkExt) chkExt.checked=false; tiles.forEach(t=>t.style.display='') }
+
+function resetFilters(){
+  if(!qInput) return;
+  qInput.value='';
+  if(chkInt) chkInt.checked=false;
+  if(chkExt) chkExt.checked=false;
+  tiles.forEach(t=>t.style.display='');
+}
+
 applyBtn?.addEventListener('click',applyFilters);
 resetBtn?.addEventListener('click',resetFilters);
 qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
 /* ===== Clay hover circle ===== */
 (function(){
-  const supportsMask = CSS && (CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') || CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))'));
+  const supportsMask = window.CSS && (
+    CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') ||
+    CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))')
+  );
   if(!supportsMask) return;
+
   const exts = ['.jpg','.png','.webp'];
   const RADIUS = 80;
   const tiles = [...document.querySelectorAll('#grid .tile')];
+
   tiles.forEach(tile=>{
     const base = tile.dataset.project || '';
     if(!base) return;
+
     const cand = exts.map(ext=>`${base}-clay${ext}`);
-    const imgClay = new Image(); imgClay.className = 'img-clay'; imgClay.loading = 'lazy'; imgClay.decoding = 'async';
+    const imgClay = new Image();
+    imgClay.className = 'img-clay';
+    imgClay.loading = 'lazy';
+    imgClay.decoding = 'async';
+
     (function tryNext(i=0){
       if(i>=cand.length) return;
       imgClay.onload = ()=>{ tile.appendChild(imgClay); bind(); };
       imgClay.onerror = ()=> tryNext(i+1);
       imgClay.src = cand[i];
     })();
+
     function bind(){
       tile.addEventListener('pointerenter', ()=>{ tile.style.setProperty('--r', RADIUS+'px'); });
       tile.addEventListener('pointerleave', ()=>{ tile.style.setProperty('--r','0px'); tile.style.setProperty('--mx','-1000px'); tile.style.setProperty('--my','-1000px'); });
-      tile.addEventListener('pointermove', (e)=>{ const rect=tile.getBoundingClientRect(); tile.style.setProperty('--mx',(e.clientX-rect.left)+'px'); tile.style.setProperty('--my',(e.clientY-rect.top)+'px'); }, {passive:true});
-      // Touch
-      let touchActive=false;
-      tile.addEventListener('touchstart', (e)=>{ const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect(); tile.style.setProperty('--r', RADIUS+'px'); tile.style.setProperty('--mx',(t.clientX-rect.left)+'px'); tile.style.setProperty('--my',(t.clientY-rect.top)+'px'); touchActive=true; }, {passive:true});
-      tile.addEventListener('touchmove', (e)=>{ if(!touchActive) return; const t=e.changedTouches[0]; const rect=tile.getBoundingClientRect(); tile.style.setProperty('--mx',(t.clientX-rect.left)+'px'); tile.style.setProperty('--my',(t.clientY-rect.top)+'px'); }, {passive:true});
-      tile.addEventListener('touchend', ()=>{ touchActive=false; tile.style.setProperty('--r','0px'); }, {passive:true});
+      tile.addEventListener('pointermove', (e)=>{
+        const rect=tile.getBoundingClientRect();
+        tile.style.setProperty('--mx',(e.clientX-rect.left)+'px');
+        tile.style.setProperty('--my',(e.clientY-rect.top)+'px');
+      }, {passive:true});
     }
   });
 })();
 
-/* ===== Project Viewer ===== */
+/* ===== Project Viewer (lighter buildList + cache) ===== */
 (function(){
   const viewer  = document.getElementById('pv'),
         imgA    = document.getElementById('pvImageA'),
@@ -527,13 +590,20 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   const projects = projectTiles.map(t => ({ base:t.dataset.project, title:t.dataset.title||'', desc:t.dataset.desc||'' }));
 
   let projectIdx = 0, list = [], idx = 0, topIsA = true;
+  const cache = new Map();
 
   function show(src){
     const top   = topIsA ? imgA : imgB;
     const under = topIsA ? imgB : imgA;
-    under.onload = () => { top.classList.remove('is-top'); under.classList.add('is-top'); topIsA = !topIsA; under.onload = null; };
+    under.onload = () => {
+      top.classList.remove('is-top');
+      under.classList.add('is-top');
+      topIsA = !topIsA;
+      under.onload = null;
+    };
     under.src = src;
   }
+
   function setIdx(i){
     if (!list.length) return;
     idx = (i + list.length) % list.length;
@@ -541,19 +611,21 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
     titleEl.textContent = viewer.dataset.title || "";
     descEl.textContent  = viewer.dataset.desc  || "";
   }
+
   const nextImg = () => setIdx(idx+1);
   const prevImg = () => setIdx(idx-1);
 
-  // === التعديل: قائمة صور تلقائية تشمل .jpeg وأرقام بصفر/بدون صفر + لاحقات شائعة
   async function buildList(base){
+    if (cache.has(base)) return cache.get(base);
+
     const exts = ['.jpg','.jpeg','.png','.webp'];
     const tryList = [];
 
-    // الصورة الرئيسية أولًا
+    // base.ext
     exts.forEach(ext => tryList.push(`${base}${ext}`));
 
-    // أرقام -01..-50 وبلا صفر 1..50
-    for(let i=1;i<=50;i++){
+    // 1..15 only (lighter than 50)
+    for(let i=1;i<=15;i++){
       const p2 = String(i).padStart(2,'0');
       exts.forEach(ext=>{
         tryList.push(`${base}-${p2}${ext}`);
@@ -561,52 +633,61 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
       });
     }
 
-    // لاحقات شائعة
-    const suffixes = ['-clay','-sh','-alt','-extra'];
-    suffixes.forEach(s=> exts.forEach(ext=> tryList.push(`${base}${s}${ext}`)));
-
-    // تحقّق الموجود فعليًا
     const checks = tryList.map(src=>new Promise(res=>{
       const im=new Image();
       im.onload = ()=>res(src);
       im.onerror= ()=>res(null);
       im.src = src;
     }));
-    const found=(await Promise.all(checks)).filter(Boolean);
 
-    return found.length ? found : [`${base}.jpg`];
+    const found=(await Promise.all(checks)).filter(Boolean);
+    const finalList = found.length ? found : [`${base}.jpg`];
+
+    cache.set(base, finalList);
+    return finalList;
   }
 
   async function openProject(pIdx){
     projectIdx = (pIdx + projects.length) % projects.length;
     const p = projects[projectIdx];
+
     viewer.dataset.title = p.title;
     viewer.dataset.desc  = p.desc;
+
     list = await buildList(p.base);
     idx = 0;
+
     imgA.classList.remove('is-top'); imgB.classList.remove('is-top');
     const currentTop = topIsA ? imgA : imgB;
+
     currentTop.src = list[0];
     currentTop.classList.add('is-top');
     setIdx(0);
   }
 
-  function openPV(){ 
-    viewer.classList.add('show'); 
-    viewer.setAttribute('aria-hidden','false'); 
+  function openPV(){
+    viewer.classList.add('show');
+    viewer.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
     if (lenis) lenis.stop();
   }
-  function closePV(){ 
-    viewer.classList.remove('show'); 
-    viewer.setAttribute('aria-hidden','true'); 
+
+  function closePV(){
+    viewer.classList.remove('show');
+    viewer.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
     if (lenis) lenis.start();
   }
 
-  projectTiles.forEach((tile,i)=>{ tile.addEventListener('click', async ()=>{ projectIdx = i; await openProject(projectIdx); openPV(); }); });
+  projectTiles.forEach((tile,i)=>{
+    tile.addEventListener('click', async ()=>{
+      await openProject(i);
+      openPV();
+    });
+  });
+
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
-  btnClose.addEventListener('click', closePV);
+  btnClose?.addEventListener('click', closePV);
 
   document.addEventListener('keydown',e=>{
     if(!viewer.classList.contains('show'))return;
@@ -614,137 +695,43 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
     if(e.key==='ArrowDown'||e.key==='PageDown'||e.key==='ArrowRight') nextImg();
     if(e.key==='ArrowUp'||e.key==='PageUp'||e.key==='ArrowLeft') prevImg();
   });
-
-  viewer.addEventListener('touchmove', (e)=>{ if(viewer.classList.contains('show')) e.preventDefault(); }, {passive:false});
-
-  let accum = 0; const STEP = 1200; let imgLock = false;
-  viewer.addEventListener('wheel', (e) => {
-    if (!viewer.classList.contains('show')) return; 
-    e.preventDefault();
-    const dy = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    accum += dy; if (imgLock) return;
-    if (accum >= STEP) { nextImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 400); }
-    else if (accum <= -STEP) { prevImg(); accum = 0; imgLock = true; setTimeout(()=>imgLock=false, 400); }
-  }, { passive: false });
-
-  let tStartX = 0, tStartY = 0, tActive = false, swipeLocked = false;
-  const SWIPE_MIN = 40, SWIPE_MAX_ANGLE = 0.577;
-  viewer.addEventListener('touchstart', (e)=>{
-    if (!viewer.classList.contains('show')) return;
-    const t = e.changedTouches[0];
-    tStartX = t.clientX; tStartY = t.clientY; tActive = true; swipeLocked = false;
-  }, {passive:true});
-  viewer.addEventListener('touchmove', (e)=>{
-    if (!tActive) return;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - tStartX, dy = t.clientY - tStartY;
-    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) e.preventDefault();
-  }, {passive:false});
-  viewer.addEventListener('touchend', (e)=>{
-    if (!tActive || swipeLocked) return; tActive = false;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - tStartX, dy = t.clientY - tStartY;
-    const absDx = Math.abs(dx), absDy = Math.abs(dy);
-    const verticalEnough = absDy >= SWIPE_MIN && (absDx / (absDy || 1)) <= SWIPE_MAX_ANGLE;
-    if (verticalEnough){
-      swipeLocked = true;
-      if (dy < 0) nextImg(); else prevImg();
-      setTimeout(()=>{ swipeLocked = false; }, 300);
-    }
-  }, {passive:true});
 })();
 
-/* ===== Reveal on scroll (auto add .reveal) + scrub (About) ===== */
+/* ===== Reveal on scroll ===== */
 (function(){
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
   const autoTargets = ['.hero h2','.hero p','section h2','.grid .tile','#contact .card'];
-  autoTargets.forEach(sel=>{ document.querySelectorAll(sel).forEach(el=>{ if(!el.classList.contains('reveal')) el.classList.add('reveal'); }); });
-  document.querySelectorAll('.grid').forEach(grid=>{ const its=[...grid.querySelectorAll('.tile.reveal')]; its.forEach((t,i)=> t.classList.add(`del-${(i%4)+1}`)); });
-
-  const io = new IntersectionObserver((entries, obs)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const p = Math.min(1, entry.intersectionRatio * 1.5);
-        entry.target.style.setProperty('--progress', p);
-        entry.target.classList.add('show');
-        if (entry.intersectionRatio > 0.8) obs.unobserve(entry.target);
-      }
+  autoTargets.forEach(sel=>{
+    document.querySelectorAll(sel).forEach(el=>{
+      if(!el.classList.contains('reveal')) el.classList.add('reveal');
     });
-  },{root:null,rootMargin:'0px 0px -10% 0px',threshold:[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]});
-  document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+  });
 
-  const scrubEls = [...document.querySelectorAll('.scrub')];
-  if(scrubEls.length){
-    let ticking = false;
-    function updateScrub(){
-      const vh = window.innerHeight, start = vh * 0.90, end = vh * 0.25;
-      scrubEls.forEach(el=>{
-        const r = el.getBoundingClientRect(), center = r.top + r.height/2;
-        let p = (start - center) / (start - end); p = Math.max(0, Math.min(1, p)); p = Math.pow(p, 0.85);
-        el.style.setProperty('--p', p.toFixed(3));
-      });
-      ticking = false;
-    }
-    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(updateScrub); } }
-    if (lenis) lenis.on('scroll', onScroll); else window.addEventListener('scroll', onScroll, { passive:true });
-    window.addEventListener('resize', updateScrub, { passive:true });
-    updateScrub();
-  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('show');
+      else entry.target.classList.remove('show');
+    });
+  },{threshold:0.15});
+
+  document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 })();
 
 /* ===== Hide header on scroll ===== */
 let lastScrollY = 0;
 const headerEl = document.querySelector('header');
+
 function updateHeader(){
   const y = window.pageYOffset || document.documentElement.scrollTop;
   headerEl.style.transform = (y > lastScrollY && y > 100) ? 'translateY(-100%)' : 'translateY(0)';
   lastScrollY = y;
 }
-if (lenis) lenis.on('scroll', updateHeader);
-else {
-  let ticking=false;
-  window.addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(()=>{ updateHeader(); ticking=false; }); } }, {passive:true});
-}
 
-/* ===== Brand sheen every 10s (optional) ===== */
-function runSheen(){/* placeholder */ }
-window.addEventListener('load', runSheen);
-setInterval(runSheen, 10000);
-</script>
+window.addEventListener('scroll', () => requestAnimationFrame(updateHeader), {passive:true});
 
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
-  const EMAILJS_SERVICE_ID="service_m1dfwio";
-  const EMAILJS_TEMPLATE_ID="template_kuqk13r";
-  try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
-  const form = document.getElementById('contact-form');
-  const statusEl = document.getElementById('status');
-  form?.addEventListener('submit',function(e){
-    e.preventDefault();
-    emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
-      .then(()=>{statusEl.textContent='Message sent!';this.reset();})
-      .catch(()=>{statusEl.textContent='Failed, try again.';});
-  });
-
-  // Quote form handler
-  const qForm=document.getElementById('quote-form');
-  const qStatus=document.getElementById('qstatus');
-  qForm?.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(!window.emailjs){ qStatus.textContent='Please retry in a second…'; return; }
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      from_name: this.q_name.value,
-      reply_to: this.q_email.value,
-      message: `Service: ${this.q_service.value}\nBudget: ${this.q_budget.value}\nBrief: ${this.q_brief.value}`
-    }).then(()=>{ qStatus.textContent='Quote requested. We will reply shortly.'; this.reset(); })
-      .catch(()=>{ qStatus.textContent='Failed, try again.'; });
-  });
-
-/* ===== Back-to-Top logic (morph to logo) ===== */
+/* ===== Back-to-Top ===== */
 (function(){
   const btn = document.getElementById('topBtn');
   if(!btn) return;
@@ -760,14 +747,12 @@ setInterval(runSheen, 10000);
   btn.addEventListener('click', (e)=>{
     e.preventDefault();
     btn.classList.add('morph');
-    try{
-      window.scrollTo({ top:0, behavior:'smooth' });
-    }catch(_){
-      window.scrollTo(0,0);
-    }
+    window.scrollTo({ top:0, behavior:'smooth' });
+
     let reverted = false;
     const revert = ()=>{ if(reverted) return; reverted = true; btn.classList.remove('morph'); };
     setTimeout(revert, 1100);
+
     const onScrollTop = ()=>{
       if ((window.pageYOffset || document.documentElement.scrollTop) <= 2){
         revert();
@@ -779,26 +764,27 @@ setInterval(runSheen, 10000);
 })();
 </script>
 
-<!-- Reveal exit fallback -->
-<script>
-(function(){
-  if (!('IntersectionObserver' in window)) return;
-  const els = document.querySelectorAll('.reveal');
-  let lastY = window.scrollY;
-  const io = new IntersectionObserver((entries)=>{
-    const goingDown = window.scrollY >= lastY;
-    entries.forEach(entry=>{
-      const el = entry.target;
-      if (entry.isIntersecting){
-        el.classList.add('show'); el.classList.remove('hide-up','hide-down');
-      } else {
-        el.classList.remove('show'); el.classList.add(goingDown ? 'hide-up' : 'hide-down');
-      }
+<!-- EmailJS (defer) -->
+<script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script defer>
+  const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
+  const EMAILJS_SERVICE_ID="service_m1dfwio";
+  const EMAILJS_TEMPLATE_ID="template_kuqk13r";
+
+  window.addEventListener('load', ()=>{
+    try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
+
+    const form = document.getElementById('contact-form');
+    const statusEl = document.getElementById('status');
+
+    form?.addEventListener('submit',function(e){
+      e.preventDefault();
+      emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
+        .then(()=>{statusEl.textContent='Message sent!';this.reset();})
+        .catch(()=>{statusEl.textContent='Failed, try again.';});
     });
-    lastY = window.scrollY;
-  }, { threshold:[0,.1,.2,.4,.6,.8,1] });
-  els.forEach(el=> io.observe(el));
-})();
+  });
 </script>
+
 </body>
 </html>
