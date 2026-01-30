@@ -424,10 +424,14 @@
 <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
   <div class="pv__content">
     <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
-    <div class="pv__image">
-      <img id="pvImageA" class="pv__img is-top" alt="">
-      <img id="pvImageB" class="pv__img" alt="">
-    </div>
+   <div class="pv__image">
+  <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
+
+  <img id="pvImageA" class="pv__img is-top" alt="">
+  <img id="pvImageB" class="pv__img" alt="">
+
+  <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+</div>
     <aside class="pv__info">
       <h3 id="pvTitle"></h3>
       <p id="pvDesc"></p>
