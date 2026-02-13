@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" oncontextmenu="return false">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,12 +8,12 @@
 <link rel="icon" href="../assets/favicon.png">
 
 <style>
-
 :root{
   --bg:#0b0d0d;
   --ink:#e9edf0;
-  --radius:18px;
-  --shadow:0 12px 40px rgba(0,0,0,.35);
+  --muted:#9fb3c8;
+  --accent1:#ff7a18;
+  --accent2:#a855f7;
   --max:1160px;
 }
 
@@ -24,270 +23,280 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--ink);
-  font:16px/1.6 system-ui;
+  font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
   overflow-x:hidden;
   -webkit-tap-highlight-color: transparent;
 }
 
-img{
-  display:block;
-  max-width:100%;
-}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
 
-.wrap{
-  max-width:var(--max);
-  margin:auto;
-  padding:28px;
-}
+.wrap{max-width:var(--max);margin:auto;padding:28px}
 
-/* HEADER */
-
+/* ===== Header (same as home) ===== */
 header{
-  position:sticky;
-  top:0;
-  z-index:70;
+  position:sticky;top:0;z-index:70;
   background:rgba(5,7,9,.92);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid #111;
+  backdrop-filter:saturate(160%) blur(10px);
+  border-bottom:1px solid #0e1116;
+  box-shadow:0 8px 30px rgba(0,0,0,.35);
+  transition:transform .4s ease;
 }
+header .wrap{padding:10px 20px}
+.header-layout{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;user-select:none;cursor:default}
+.brand .logo{height:30px;width:auto}
+.brand .wordmark{font-weight:800;letter-spacing:.08em}
 
-.header-layout{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+/* Menu button */
+.menu-btn{
+  width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer
 }
-
-.brand{
-  display:flex;
-  gap:10px;
-  align-items:center;
+.menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
+  content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;
+  position:relative;transition:.25s
 }
+.menu-btn .bars::before{position:absolute;top:-6px}
+.menu-btn .bars::after{position:absolute;top:6px}
 
-.logo{
-  height:30px;
+/* Slide-in overlay / panel */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
+  opacity:0;pointer-events:none;transition:.25s;z-index:80
 }
-
-.wordmark{
-  font-weight:800;
-  letter-spacing:.08em;
+.menu-panel{
+  position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
+  background:rgba(0,0,0,.88);border-left:1px solid #1a1f27;
+  box-shadow:-20px 0 50px rgba(0,0,0,.4);
+  transform:translateX(100%);transition:.3s;z-index:90;
+  display:flex;flex-direction:column;padding:40px 28px
 }
+.menu-panel a{
+  font-size:20px;font-weight:700;color:#fff;margin:10px 0;transition:color .25s ease
+}
+.menu-panel a:hover{color:var(--accent1)}
+.menu-open .overlay{opacity:1;pointer-events:auto}
+.menu-open .menu-panel{transform:translateX(0)}
 
-/* TITLE */
-
+/* Page title */
 h1{
-  margin-top:10px;
-  margin-bottom:10px;
-  font-size:28px;
-  font-weight:700;
+  margin:18px 0 8px;
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+.sub{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:14px;
 }
 
-/* GRID */
-
+/* ===== Grid (no frames) ===== */
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:32px;
-  margin-top:20px;
+  margin-top:10px;
 }
-
 @media(max-width:768px){
-  .grid{
-    grid-template-columns:1fr;
-  }
+  .grid{grid-template-columns:1fr}
+  .wrap{padding:18px}
 }
 
-/* CARD */
-
+/* Each card holds two images but shows NO rectangle/background */
 .stack{
   position:relative;
-  border-radius:var(--radius);
+  border:none;
+  background:none;
+  box-shadow:none;
+  border-radius:0;
   overflow:hidden;
-  background:#0c0e12;
-  border:1px solid #1a1f27;
-  box-shadow:var(--shadow);
   cursor:pointer;
 }
 
-/* aspect ratio */
-
-.stack::before{
-  content:"";
-  display:block;
-  padding-top:70%;
-}
-
-/* IMAGE LAYERS */
-
+/* Make images natural (no aspect-ratio box) */
 .layer{
-  position:absolute;
-  inset:0;
+  position:relative;
 }
 
+/* Images: full visible, no crop, no background */
 .layer img{
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  background:none;
+  user-select:none;
+  pointer-events:none;
+}
+
+/* Compare */
+.img-render{opacity:1}
+.img-clay{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  object-fit:contain; /* FIXED — no crop */
-  background:#0c0e12;
+  object-fit:contain;
+  opacity:0;
   transition:opacity .45s cubic-bezier(.2,.75,.15,1);
 }
 
-/* compare */
-
-.img-render{
-  opacity:1;
-}
-
-.img-clay{
-  opacity:0;
-}
-
-/* hover desktop */
-
+/* Hover compare on desktop */
 @media(hover:hover){
-  .stack:hover .img-clay{
-    opacity:1;
-  }
+  .stack:hover .img-clay{opacity:1}
 }
 
-/* tap mobile */
+/* Tap compare (mobile) */
+.stack.is-compare .img-clay{opacity:1}
 
-.stack.is-compare .img-clay{
-  opacity:1;
-}
-
-/* scroll reveal */
-
+/* Scroll reveal (subtle) */
 .reveal{
   opacity:0;
-  transform:translateY(20px);
+  transform:translateY(16px);
   transition:opacity .7s ease, transform .7s ease;
 }
+.reveal.show{opacity:1;transform:none}
 
-.reveal.show{
-  opacity:1;
-  transform:none;
+@media (prefers-reduced-motion: reduce){
+  .reveal{transition:none !important}
+  .img-clay{transition:none !important}
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="wrap header-layout">
-
-<div class="brand">
-<img src="../assets/logo.png" class="logo">
-<span class="wordmark">ZSIZART</span>
-</div>
-
-</div>
+  <div class="wrap header-layout">
+    <div class="brand">
+      <img src="../assets/logo.png" alt="ZSIZART Logo" class="logo" width="30" height="30" loading="eager" decoding="async">
+      <span class="wordmark">ZSIZART</span>
+    </div>
+    <div class="actions">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><span class="bars"></span></button>
+    </div>
+  </div>
 </header>
 
+<div class="overlay" id="overlay"></div>
+<aside class="menu-panel" id="menuPanel" aria-label="Site menu">
+  <a href="../index.html#work">Work</a>
+  <a href="../index.html#services">Services</a>
+  <a href="../index.html#art">Art</a>
+  <a href="../index.html#about">About</a>
+  <a href="../index.html#contact">Contact</a>
+</aside>
+
 <main class="wrap">
+  <h1>3D Product Modeling</h1>
+  <p class="sub">Hover to preview — Tap to compare on mobile.</p>
 
-<h1>3D Product Modeling</h1>
+  <div class="grid">
 
-<div class="grid">
+    <div class="stack reveal" tabindex="0" aria-label="Model 01 (tap to compare)">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render01.webp" alt="Model 01 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay01.webp"   alt="Model 01 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<!-- 01 -->
-<div class="stack reveal">
-<div class="layer">
-<img class="img-render" src="../assets/modeling-render01.webp">
-<img class="img-clay"   src="../assets/modeling-clay01.webp">
-</div>
-</div>
+    <div class="stack reveal" tabindex="0" aria-label="Model 02 (tap to compare)">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render02.webp" alt="Model 02 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay02.webp"   alt="Model 02 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<!-- 02 -->
-<div class="stack reveal">
-<div class="layer">
-<img class="img-render" src="../assets/modeling-render02.webp">
-<img class="img-clay"   src="../assets/modeling-clay02.webp">
-</div>
-</div>
+    <div class="stack reveal" tabindex="0" aria-label="Model 03 (tap to compare)">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render03.webp" alt="Model 03 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay03.webp"   alt="Model 03 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<!-- 03 -->
-<div class="stack reveal">
-<div class="layer">
-<img class="img-render" src="../assets/modeling-render03.webp">
-<img class="img-clay"   src="../assets/modeling-clay03.webp">
-</div>
-</div>
+    <div class="stack reveal" tabindex="0" aria-label="Model 04 (tap to compare)">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render04.webp" alt="Model 04 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay04.webp"   alt="Model 04 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<!-- 04 -->
-<div class="stack reveal">
-<div class="layer">
-<img class="img-render" src="../assets/modeling-render04.webp">
-<img class="img-clay"   src="../assets/modeling-clay04.webp">
-</div>
-</div>
+    <div class="stack reveal" tabindex="0" aria-label="Model 05 (tap to compare)">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render05.webp" alt="Model 05 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay05.webp"   alt="Model 05 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<!-- 05 -->
-<div class="stack reveal">
-<div class="layer">
-<img class="img-render" src="../assets/modeling-render05.webp">
-<img class="img-clay"   src="../assets/modeling-clay05.webp">
-</div>
-</div>
+    <div class="stack reveal" tabindex="0" aria-label="Model 06 (tap to compare)">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render06.webp" alt="Model 06 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay06.webp"   alt="Model 06 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<!-- 06 -->
-<div class="stack reveal">
-<div class="layer">
-<img class="img-render" src="../assets/modeling-render06.webp">
-<img class="img-clay"   src="../assets/modeling-clay06.webp">
-</div>
-</div>
+    <div class="stack reveal" tabindex="0" aria-label="Model 07 (tap to compare)">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render07.webp" alt="Model 07 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay07.webp"   alt="Model 07 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<!-- 07 -->
-<div class="stack reveal">
-<div class="layer">
-<img class="img-render" src="../assets/modeling-render07.webp">
-<img class="img-clay"   src="../assets/modeling-clay07.webp">
-</div>
-</div>
+    <div class="stack reveal" tabindex="0" aria-label="Model 08 (tap to compare)">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render08.webp" alt="Model 08 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay08.webp"   alt="Model 08 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<!-- 08 -->
-<div class="stack reveal">
-<div class="layer">
-<img class="img-render" src="../assets/modeling-render08.webp">
-<img class="img-clay"   src="../assets/modeling-clay08.webp">
-</div>
-</div>
-
-</div>
-
+  </div>
 </main>
 
 <script>
+/* ===== Menu (same behavior as home) ===== */
+const body=document.body,
+      menuBtn=document.getElementById('menuBtn'),
+      overlay=document.getElementById('overlay'),
+      menuPanel=document.getElementById('menuPanel');
 
-/* scroll reveal */
+function openMenu(){ body.classList.add('menu-open'); menuBtn?.setAttribute('aria-expanded','true'); }
+function closeMenu(){ body.classList.remove('menu-open'); menuBtn?.setAttribute('aria-expanded','false'); }
 
-const items = document.querySelectorAll(".reveal");
+menuBtn?.addEventListener('click', ()=> {
+  if(body.classList.contains('menu-open')) closeMenu();
+  else openMenu();
+});
+overlay?.addEventListener('click', closeMenu);
+menuPanel?.addEventListener('click',e=>{ if(e.target.tagName==='A') closeMenu(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });
 
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
+/* ===== Scroll reveal ===== */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce){
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('show'));
+    return;
+  }
+  const items = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el=>io.observe(el));
+})();
+
+/* ===== Tap to compare (mobile) + keyboard ===== */
+document.querySelectorAll(".stack").forEach(card=>{
+  card.addEventListener("click",()=> card.classList.toggle("is-compare"));
+  card.addEventListener("keydown",(e)=>{
+    if(e.key==="Enter" || e.key===" "){
+      e.preventDefault();
+      card.classList.toggle("is-compare");
     }
   });
-},{
-  threshold:.15
 });
-
-items.forEach(el=>observer.observe(el));
-
-/* tap compare mobile */
-
-document.querySelectorAll(".stack").forEach(card=>{
-
-  card.addEventListener("click",()=>{
-    card.classList.toggle("is-compare");
-  });
-
-});
-
 </script>
 
 </body>
