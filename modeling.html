@@ -6,303 +6,307 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>ZSIZART — 3D Product Modeling</title>
-
 <link rel="icon" href="../assets/favicon.png">
 
 <style>
-
 :root{
---bg:#0b0d0d;
---ink:#e9edf0;
---accent:#ff7a18;
---radius:18px;
---shadow:0 12px 40px rgba(0,0,0,.35);
---max:1160px;
+  --bg:#0b0d0d;
+  --ink:#e9edf0;
+  --muted:#9fb3c8;
+  --radius:18px;
+  --shadow:0 12px 40px rgba(0,0,0,.35);
+  --max:1160px;
 }
 
 *{box-sizing:border-box}
 
 body{
-margin:0;
-background:var(--bg);
-color:var(--ink);
-font:16px/1.6 system-ui;
-overflow-x:hidden;
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:16px/1.6 system-ui;
+  overflow-x:hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
-img{
-display:block;
-max-width:100%;
-}
+img{display:block;max-width:100%}
 
 .wrap{
-max-width:var(--max);
-margin:auto;
-padding:28px;
+  max-width:var(--max);
+  margin:auto;
+  padding:28px;
 }
 
 /* HEADER */
-
 header{
-position:sticky;
-top:0;
-z-index:70;
-background:rgba(5,7,9,.92);
-backdrop-filter:blur(10px);
-border-bottom:1px solid #111;
+  position:sticky;
+  top:0;
+  z-index:70;
+  background:rgba(5,7,9,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid #111;
 }
+.header-layout{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{height:30px}
+.wordmark{font-weight:800;letter-spacing:.08em}
 
-.header-layout{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.brand{
-display:flex;
-gap:10px;
-align-items:center;
-}
-
-.logo{
-height:30px;
-}
-
-.wordmark{
-font-weight:800;
-letter-spacing:.08em;
+/* TITLE */
+h1{
+  margin-top:10px;
+  margin-bottom:10px;
+  font-size:28px;
+  font-weight:700;
 }
 
 /* GRID */
-
 .grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:32px;
-margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:32px;
+  margin-top:20px;
 }
-
 @media(max-width:768px){
-.grid{ grid-template-columns:1fr; }
+  .grid{grid-template-columns:1fr}
 }
 
-/* STACK CARD */
-
+/* CARD */
 .stack{
-position:relative;
-border-radius:var(--radius);
-overflow:hidden;
-background:#0c0e12;
-border:1px solid #1a1f27;
-box-shadow:var(--shadow);
-perspective:1200px; /* مهم للـ 3D */
-transform:translateZ(0);
+  position:relative;
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#0c0e12;
+  border:1px solid #1a1f27;
+  box-shadow:var(--shadow);
+  transform:translateZ(0);
+  cursor:pointer;
 }
 
+/* aspect ratio */
 .stack::before{
-content:"";
-display:block;
-padding-top:62%;
+  content:"";
+  display:block;
+  padding-top:62%;
 }
 
-/* ===== FLIP SETUP ===== */
-
-.flip{
-position:absolute;
-inset:0;
-transform-style:preserve-3d;
-will-change:transform;
+.layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
 }
 
-/* faces */
-.face{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-object-fit:cover;
-backface-visibility:hidden;
--webkit-backface-visibility:hidden;
-user-select:none;
-pointer-events:none;
+.layer img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  user-select:none;
+  pointer-events:none;
 }
 
-/* render front */
-.face--front{
-transform:rotateY(0deg);
+/* compare */
+.img-render{ opacity:1; }
+.img-clay{
+  opacity:0;
+  transition:opacity .45s cubic-bezier(.2,.75,.15,1);
 }
 
-/* clay back */
-.face--back{
-transform:rotateY(180deg);
+/* hover on desktop */
+@media(hover:hover){
+  .stack:hover .img-clay{ opacity:1; }
 }
 
-/* reveal fade */
+/* tap state (mobile + optional click) */
+.stack.is-compare .img-clay{ opacity:1; }
 
-.scrub{
-opacity:0;
-transform:translateY(20px);
-transition:opacity .6s ease, transform .6s ease;
+/* subtle label */
+.badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  z-index:5;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(6px);
+  font-size:12px;
+  color:#e9edf0;
+}
+.badge span{opacity:.85}
+.badge strong{opacity:1}
+
+/* on hover / compare we switch text */
+.badge .b-render{display:inline}
+.badge .b-clay{display:none}
+
+@media(hover:hover){
+  .stack:hover .badge .b-render{display:none}
+  .stack:hover .badge .b-clay{display:inline}
+}
+.stack.is-compare .badge .b-render{display:none}
+.stack.is-compare .badge .b-clay{display:inline}
+
+/* scroll reveal */
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:none;
 }
 
-.scrub.is-visible{
-opacity:1;
-transform:none;
+/* nice focus */
+.stack:focus-visible{
+  outline:2px solid rgba(255,122,24,.55);
+  outline-offset:4px;
 }
 
-/* title */
-
-h1{
-margin-top:10px;
-margin-bottom:10px;
-font-size:28px;
-font-weight:700;
-}
-
+/* reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .flip{ transform:none !important; }
-  .scrub{ transition:none !important; }
+  .reveal{transition:none !important}
+  .img-clay{transition:none !important}
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="wrap header-layout">
-
-<div class="brand">
-<img src="../assets/logo.png" class="logo" alt="ZSIZART logo">
-<span class="wordmark">ZSIZART</span>
-</div>
-
-</div>
+  <div class="wrap header-layout">
+    <div class="brand">
+      <img src="../assets/logo.png" class="logo" alt="ZSIZART logo">
+      <span class="wordmark">ZSIZART</span>
+    </div>
+  </div>
 </header>
 
 <main class="wrap">
+  <h1>3D Product Modeling</h1>
 
-<h1>3D Product Modeling</h1>
+  <div class="grid">
 
-<div class="grid">
+    <!-- 01 -->
+    <div class="stack reveal" tabindex="0" aria-label="Model 01 (tap to compare)">
+      <div class="badge"><span>VIEW:</span> <strong class="b-render">RENDER</strong><strong class="b-clay">CLAY</strong></div>
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render01.webp" alt="Model 01 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay01.webp"   alt="Model 01 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
 
-<div class="stack scrub">
-  <div class="flip">
-    <img class="face face--front" src="../assets/modeling-render01.webp" alt="Model 01 Render">
-    <img class="face face--back"  src="../assets/modeling-clay01.webp"   alt="Model 01 Clay">
+    <!-- 02 -->
+    <div class="stack reveal" tabindex="0" aria-label="Model 02 (tap to compare)">
+      <div class="badge"><span>VIEW:</span> <strong class="b-render">RENDER</strong><strong class="b-clay">CLAY</strong></div>
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render02.webp" alt="Model 02 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay02.webp"   alt="Model 02 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="stack reveal" tabindex="0" aria-label="Model 03 (tap to compare)">
+      <div class="badge"><span>VIEW:</span> <strong class="b-render">RENDER</strong><strong class="b-clay">CLAY</strong></div>
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render03.webp" alt="Model 03 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay03.webp"   alt="Model 03 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="stack reveal" tabindex="0" aria-label="Model 04 (tap to compare)">
+      <div class="badge"><span>VIEW:</span> <strong class="b-render">RENDER</strong><strong class="b-clay">CLAY</strong></div>
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render04.webp" alt="Model 04 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay04.webp"   alt="Model 04 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="stack reveal" tabindex="0" aria-label="Model 05 (tap to compare)">
+      <div class="badge"><span>VIEW:</span> <strong class="b-render">RENDER</strong><strong class="b-clay">CLAY</strong></div>
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render05.webp" alt="Model 05 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay05.webp"   alt="Model 05 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="stack reveal" tabindex="0" aria-label="Model 06 (tap to compare)">
+      <div class="badge"><span>VIEW:</span> <strong class="b-render">RENDER</strong><strong class="b-clay">CLAY</strong></div>
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render06.webp" alt="Model 06 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay06.webp"   alt="Model 06 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="stack reveal" tabindex="0" aria-label="Model 07 (tap to compare)">
+      <div class="badge"><span>VIEW:</span> <strong class="b-render">RENDER</strong><strong class="b-clay">CLAY</strong></div>
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render07.webp" alt="Model 07 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay07.webp"   alt="Model 07 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="stack reveal" tabindex="0" aria-label="Model 08 (tap to compare)">
+      <div class="badge"><span>VIEW:</span> <strong class="b-render">RENDER</strong><strong class="b-clay">CLAY</strong></div>
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render08.webp" alt="Model 08 Render" loading="lazy" decoding="async">
+        <img class="img-clay"   src="../assets/modeling-clay08.webp"   alt="Model 08 Clay"   loading="lazy" decoding="async">
+      </div>
+    </div>
+
   </div>
-</div>
-
-<div class="stack scrub">
-  <div class="flip">
-    <img class="face face--front" src="../assets/modeling-render02.webp" alt="Model 02 Render">
-    <img class="face face--back"  src="../assets/modeling-clay02.webp"   alt="Model 02 Clay">
-  </div>
-</div>
-
-<div class="stack scrub">
-  <div class="flip">
-    <img class="face face--front" src="../assets/modeling-render03.webp" alt="Model 03 Render">
-    <img class="face face--back"  src="../assets/modeling-clay03.webp"   alt="Model 03 Clay">
-  </div>
-</div>
-
-<div class="stack scrub">
-  <div class="flip">
-    <img class="face face--front" src="../assets/modeling-render04.webp" alt="Model 04 Render">
-    <img class="face face--back"  src="../assets/modeling-clay04.webp"   alt="Model 04 Clay">
-  </div>
-</div>
-
-<div class="stack scrub">
-  <div class="flip">
-    <img class="face face--front" src="../assets/modeling-render05.webp" alt="Model 05 Render">
-    <img class="face face--back"  src="../assets/modeling-clay05.webp"   alt="Model 05 Clay">
-  </div>
-</div>
-
-<div class="stack scrub">
-  <div class="flip">
-    <img class="face face--front" src="../assets/modeling-render06.webp" alt="Model 06 Render">
-    <img class="face face--back"  src="../assets/modeling-clay06.webp"   alt="Model 06 Clay">
-  </div>
-</div>
-
-<div class="stack scrub">
-  <div class="flip">
-    <img class="face face--front" src="../assets/modeling-render07.webp" alt="Model 07 Render">
-    <img class="face face--back"  src="../assets/modeling-clay07.webp"   alt="Model 07 Clay">
-  </div>
-</div>
-
-<div class="stack scrub">
-  <div class="flip">
-    <img class="face face--front" src="../assets/modeling-render08.webp" alt="Model 08 Render">
-    <img class="face face--back"  src="../assets/modeling-clay08.webp"   alt="Model 08 Clay">
-  </div>
-</div>
-
-</div>
-
 </main>
 
 <script>
-/* center flip scrub */
+/* Scroll Fade-in */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('show'));
+    return;
+  }
 
-const cards=[...document.querySelectorAll(".stack")];
+  const items = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.classList.add('show');
+    });
+  }, { threshold: 0.12 });
 
-const RANGE=0.40;     // bigger = smoother & longer
-const MAX_DEG=180;    // full flip
-const TILT=6;         // subtle extra 3D feel
+  items.forEach(el=>io.observe(el));
+})();
 
-function clamp(v,min,max){
-  return Math.max(min,Math.min(max,v));
-}
-function smoothstep(t){
-  return t*t*(3-2*t);
-}
+/* Tap to compare (mobile + also works on desktop click if you want) */
+(function(){
+  const stacks = document.querySelectorAll('.stack');
+  if(!stacks.length) return;
 
-function update(){
-  const vh=window.innerHeight || document.documentElement.clientHeight;
-  const center=vh*0.5;
+  stacks.forEach(card=>{
+    card.addEventListener('click', ()=>{
+      // toggle current
+      card.classList.toggle('is-compare');
+    });
 
-  cards.forEach(card=>{
-    const rect=card.getBoundingClientRect();
-    const cardCenter=rect.top + rect.height/2;
-    const dist=Math.abs(cardCenter-center)/vh;
-
-    let t = 1 - (dist / RANGE);
-    t = clamp(t,0,1);
-    t = smoothstep(t);
-
-    const flip = card.querySelector(".flip");
-    if(!flip) return;
-
-    const deg = MAX_DEG * t;
-
-    // tilt changes slightly depending on being above/below center
-    const tilt = (cardCenter < center ? -TILT : TILT) * (1 - t);
-
-    flip.style.transform = `rotateY(${deg}deg) rotateX(${tilt}deg)`;
-
-    if(t>0.05) card.classList.add("is-visible");
+    // keyboard (Enter / Space)
+    card.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        card.classList.toggle('is-compare');
+      }
+    });
   });
-}
-
-let raf=0;
-function requestTick(){
-  if(raf) return;
-  raf=requestAnimationFrame(()=>{
-    raf=0;
-    update();
-  });
-}
-
-window.addEventListener("scroll", requestTick, {passive:true});
-window.addEventListener("resize", requestTick);
-window.addEventListener("load", requestTick);
-
-update();
+})();
 </script>
 
 </body>
