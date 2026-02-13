@@ -59,9 +59,38 @@ h1{
   font-size:12px;
 }
 
+    header{
+    position:sticky;top:0;z-index:70;
+    background:rgba(5,7,9,.92);
+    backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid #0e1116;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+    transition:transform .4s ease;
+  }
+  header .wrap{padding:10px 20px}
+  .header-layout{display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:10px;user-select:none;cursor:default}
+  .brand .logo{height:30px;width:auto}
+  .brand .wordmark{font-weight:800;letter-spacing:.08em}
+
+  /* Menu button */
+  .menu-btn{width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
+  .menu-btn .bars::before{position:absolute;top:-6px}
+  .menu-btn .bars::after{position:absolute;top:6px}
+
+  /* Slide-in overlay / panel */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);background:rgba(0,0,0,.88);border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column;padding:40px 28px}
+  .menu-panel a{font-size:20px;font-weight:700;color:#fff;margin:10px 0;transition:color .25s ease}
+  .menu-panel a:hover{color:var(--accent1)}
+  .menu-open .overlay{opacity:1;pointer-events:auto}
+  .menu-open .menu-panel{transform:translateX(0)}
+
 </style>
 
 </head>
+
 <body>
 
 <div class="wrap">
@@ -146,5 +175,46 @@ h1{
 
 </div>
 
+  const body=document.body,
+menuBtn=document.getElementById('menuBtn'),
+overlay=document.getElementById('overlay'),
+menuPanel=document.getElementById('menuPanel');
+
+function openMenu(){ body.classList.add('menu-open'); }
+function closeMenu(){ body.classList.remove('menu-open'); }
+
+menuBtn?.addEventListener('click', openMenu);
+overlay?.addEventListener('click', closeMenu);
+menuPanel?.addEventListener('click',e=>{
+ if(e.target.tagName==='A') closeMenu();
+});
+
+
 </body>
+  <header>
+  <div class="wrap header-layout">
+    <div class="brand">
+      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo">
+      <span class="wordmark">ZSIZART</span>
+    </div>
+
+    <div class="actions">
+      <button class="menu-btn" id="menuBtn">
+        <span class="bars"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="menu-panel" id="menuPanel">
+  <a href="index.html#work">Work</a>
+  <a href="index.html#services">Services</a>
+  <a href="index.html#art">Art</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#contact">Contact</a>
+</aside>
+
 </html>
+
