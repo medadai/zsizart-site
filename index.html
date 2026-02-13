@@ -626,29 +626,65 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
 
   if(frames.length < 2) return;
 
-  // Preload
-  frames.forEach(src => { const im = new Image(); im.src = src; });
+// Preload
+frames.forEach(src => {
+  const im = new Image();
+  im.src = src;
+});
 
-  let idx = 0;
-  let timer = null;
+let idx = 0;
+let timer = null;
+let hoverDelay = null;
 
-  const start = ()=>{
-    if(timer) return;
+// start animation smoothly
+const start = ()=>{
+
+  if(timer || hoverDelay) return;
+
+  // small delay before starting (premium feel)
+  hoverDelay = setTimeout(()=>{
+
+    hoverDelay = null;
+
     timer = setInterval(()=>{
-      idx = (idx + 1) % frames.length;
-      img.src = frames[idx];
-    }, 420);
-  };
 
-  const stop = ()=>{
-    clearInterval(timer);
-    timer = null;
+      idx = (idx + 1) % frames.length;
+
+      // smooth image swap
+      img.style.opacity = "0";
+
+      setTimeout(()=>{
+        img.src = frames[idx];
+        img.style.opacity = "1";
+      }, 120);
+
+    }, 1000); // speed (1000 = smooth, 1200 = slower)
+
+  }, 250);
+
+};
+
+// stop animation smoothly
+const stop = ()=>{
+
+  clearTimeout(hoverDelay);
+  hoverDelay = null;
+
+  clearInterval(timer);
+  timer = null;
+
+  img.style.opacity = "0";
+
+  setTimeout(()=>{
     idx = 0;
     img.src = frames[0];
-  };
+    img.style.opacity = "1";
+  }, 120);
 
-  el.addEventListener('mouseenter', start);
-  el.addEventListener('mouseleave', stop);
+};
+
+el.addEventListener('mouseenter', start);
+el.addEventListener('mouseleave', stop);
 })();
 
 /* ===== Clay hover circle ===== */
