@@ -150,14 +150,17 @@
   .inline-btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#cfe2ff;font-weight:700;cursor:pointer}
 
   /* ===== Grid ===== */
+.grid{
+  display:grid;
+  gap:28px;
+  grid-template-columns:repeat(2,1fr);
+}
+
+@media(max-width:768px){
   .grid{
-    display:grid;
-    gap:28px;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:1fr;
   }
-  @media(max-width:768px){
-    .grid{grid-template-columns:1fr;}
-  }
+}
 
   .tile{
     position:relative;overflow:hidden;background:transparent;cursor:pointer;border:none;border-radius:0;box-shadow:none;
@@ -204,30 +207,6 @@
   button:hover{filter:brightness(1.06)}
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
-  /* ===== 3D Modeling (Home) ADDED ===== */
-  .modeling-home .section-row{margin-top:6px}
-  .modeling-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-  @media(max-width:768px){
-    .modeling-grid{grid-template-columns:1fr;}
-  }
-
-  /* Make thumbnails look like tiles but without affecting Work */
-  .modeling-tile{
-    padding:0;
-    border:none;
-    background:transparent;
-    border-radius:14px;
-    overflow:hidden;
-    box-shadow:none;
-  }
-  .modeling-tile .img-main{
-    width:100%;
-    height:auto;
-    display:block;
-  }
-
   /* ===== Project Viewer ===== */
   .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
   .pv.show{opacity:1;pointer-events:auto}
@@ -248,29 +227,39 @@
   }
   .pv__close:hover{background:rgba(0,0,0,.6)}
 
-  /* ===== Viewer Arrows ===== */
+  /* ===== Viewer Arrows (ADDED) ===== */
+/* ===== Viewer Arrows ===== */
+.pv__arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:64px;
+  height:64px;
+  font-size:44px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  background:rgba(0,0,0,.45);
+  color:#fff;
+  z-index:10;
+  backdrop-filter:blur(4px);
+  transition:.25s;
+}
+
+.pv__arrow:hover{
+  background:rgba(0,0,0,.7);
+}
+
+.pv__prev{ left:20px; }
+.pv__next{ right:20px; }
+
+@media(max-width:768px){
   .pv__arrow{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    width:64px;
-    height:64px;
-    font-size:44px;
-    border-radius:50%;
-    border:none;
-    cursor:pointer;
-    background:rgba(0,0,0,.45);
-    color:#fff;
-    z-index:10;
-    backdrop-filter:blur(4px);
-    transition:.25s;
+    width:48px;
+    height:48px;
+    font-size:34px;
   }
-  .pv__arrow:hover{background:rgba(0,0,0,.7);}
-  .pv__prev{ left:20px; }
-  .pv__next{ right:20px; }
-  @media(max-width:768px){
-    .pv__arrow{width:48px;height:48px;font-size:34px;}
-  }
+}
 
   /* ===== Back-to-Top ===== */
   .top-btn{
@@ -340,53 +329,29 @@
     </div>
   </section>
 
-  <!-- ===== 3D MODELING HOME (ADDED) ===== -->
-  <section id="modeling-home" class="modeling-home">
-    <div class="section-row">
-      <h2>3D Modeling</h2>
-    </div>
+  <!-- ===== 3D MODELING CTA (ADDED, Omega-style) ===== -->
+  <section id="modeling-cta">
+    <a class="modeling-link"
+       href="modeling.html"
+       aria-label="Open 3D Modeling Page"
+       data-frames="assets/thumb-modeling 01.webp|assets/thumb-modeling 02.webp|assets/thumb-modeling 03.webp|assets/thumb-modeling 04.webp|assets/thumb-modeling 05.webp|assets/thumb-modeling 06.webp">
+      <span class="modeling-badge">3D MODELING</span>
 
-    <!--
-      IMPORTANT:
-      Put your images in /assets with names EXACTLY like:
-      "thumb-modeling 01.webp", "thumb-modeling 02.webp", ...
-      If your server doesn't like spaces, rename to thumb-modeling-01.webp etc.
-    -->
-    <div class="grid modeling-grid" id="modelingThumbs">
-      <!-- Tile 1: cycles while hover -->
-      <button class="tile modeling-tile"
-              type="button"
-              data-frames="assets/thumb-modeling 01.webp|assets/thumb-modeling 02.webp|assets/thumb-modeling 03.webp|assets/thumb-modeling 04.webp"
-              aria-label="3D Modeling thumbs 01-04">
-        <img class="img-main" src="assets/thumb-modeling 01.webp" width="1600" height="900" loading="lazy" decoding="async" alt="3D Modeling 01">
-      </button>
+      <img class="modeling-img"
+           src="assets/thumb-modeling 01.webp"
+           width="1600"
+           height="900"
+           loading="lazy"
+           decoding="async"
+           alt="3D Modeling Preview">
 
-      <!-- Tile 2 -->
-      <button class="tile modeling-tile"
-              type="button"
-              data-frames="assets/thumb-modeling 05.webp|assets/thumb-modeling 06.webp|assets/thumb-modeling 07.webp|assets/thumb-modeling 08.webp"
-              aria-label="3D Modeling thumbs 05-08">
-        <img class="img-main" src="assets/thumb-modeling 05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="3D Modeling 05">
-      </button>
-
-      <!-- Tile 3 -->
-      <button class="tile modeling-tile"
-              type="button"
-              data-frames="assets/thumb-modeling 09.webp|assets/thumb-modeling 10.webp|assets/thumb-modeling 11.webp|assets/thumb-modeling 12.webp"
-              aria-label="3D Modeling thumbs 09-12">
-        <img class="img-main" src="assets/thumb-modeling 09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="3D Modeling 09">
-      </button>
-
-      <!-- Tile 4 -->
-      <button class="tile modeling-tile"
-              type="button"
-              data-frames="assets/thumb-modeling 13.webp|assets/thumb-modeling 14.webp|assets/thumb-modeling 15.webp|assets/thumb-modeling 16.webp"
-              aria-label="3D Modeling thumbs 13-16">
-        <img class="img-main" src="assets/thumb-modeling 13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="3D Modeling 13">
-      </button>
-    </div>
+      <div class="modeling-overlay">
+        <div class="modeling-title">3D Modeling</div>
+        <div class="modeling-sub">Hover to preview — Click to open the full gallery</div>
+      </div>
+    </a>
   </section>
-  <!-- ===== /3D MODELING HOME ===== -->
+  <!-- ===== /3D MODELING CTA ===== -->
 
   <!-- Filter Panel -->
   <section id="filters" class="filter-panel">
@@ -602,47 +567,44 @@ applyBtn?.addEventListener('click',applyFilters);
 resetBtn?.addEventListener('click',resetFilters);
 qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-/* ===== 3D Modeling hover flip (ADDED) ===== */
+/* ===== Omega-style hover slideshow (ADDED) ===== */
 (function(){
-  const modelingTiles = [...document.querySelectorAll('#modelingThumbs .modeling-tile[data-frames]')];
+  const el = document.querySelector('.modeling-link[data-frames]');
+  if(!el) return;
 
-  modelingTiles.forEach(tile=>{
-    const img = tile.querySelector('img');
-    const frames = (tile.dataset.frames || '')
-      .split('|')
-      .map(s => s.trim())
-      .filter(Boolean);
+  const img = el.querySelector('.modeling-img');
+  if(!img) return;
 
-    if(!img || frames.length < 2) return;
+  const frames = (el.dataset.frames || '')
+    .split('|')
+    .map(s => s.trim())
+    .filter(Boolean);
 
-    // Preload (light)
-    frames.forEach(src => { const im = new Image(); im.src = src; });
+  if(frames.length < 2) return;
 
-    let idx = 0;
-    let timer = null;
+  // Preload
+  frames.forEach(src => { const im = new Image(); im.src = src; });
 
-    const start = ()=>{
-      if(timer) return;
-      timer = setInterval(()=>{
-        idx = (idx + 1) % frames.length;
-        img.src = frames[idx];
-      }, 520); // speed
-    };
+  let idx = 0;
+  let timer = null;
 
-    const stop = ()=>{
-      clearInterval(timer);
-      timer = null;
-      idx = 0;
-      img.src = frames[0];
-    };
+  const start = ()=>{
+    if(timer) return;
+    timer = setInterval(()=>{
+      idx = (idx + 1) % frames.length;
+      img.src = frames[idx];
+    }, 420);
+  };
 
-    tile.addEventListener('mouseenter', start);
-    tile.addEventListener('mouseleave', stop);
+  const stop = ()=>{
+    clearInterval(timer);
+    timer = null;
+    idx = 0;
+    img.src = frames[0];
+  };
 
-    // Mobile touch support
-    tile.addEventListener('touchstart', ()=>{ start(); }, {passive:true});
-    tile.addEventListener('touchend', ()=>{ stop(); }, {passive:true});
-  });
+  el.addEventListener('mouseenter', start);
+  el.addEventListener('mouseleave', stop);
 })();
 
 /* ===== Clay hover circle ===== */
