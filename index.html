@@ -938,5 +938,25 @@ window.addEventListener('scroll', () => requestAnimationFrame(updateHeader), {pa
   });
 </script>
 
+<!-- Calendly Widget -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+<script>
+window.onload = function() {
+  Calendly.initBadgeWidget({
+    url: 'https://calendly.com/arc-mahmoud-refaey/30min',
+    text: 'Schedule a call',
+    color: '#ff7a18',
+    textColor: '#ffffff',
+    branding: false
+  });
+};
+</script>
+
+</body>
+</html>
+
 </body>
 </html>
