@@ -1,303 +1,269 @@
 <!DOCTYPE html>
 <html lang="en" oncontextmenu="return false">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZSIZART — 3D Modeling</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="icon" href="assets/favicon.png">
+<title>ZSIZART — 3D Product Modeling</title>
 
-  <style>
-    :root{
-      --accent1:#ff7a18;
-      --bg:#0b0d0d;
-      --ink:#e9edf0;
-      --muted:#9fb3c8;
-      --radius:18px;
-      --shadow:0 12px 40px rgba(0,0,0,.35);
-    }
+<link rel="icon" href="../assets/favicon.png">
 
-    *{box-sizing:border-box}
+<style>
 
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
-      overflow-x:hidden;
-      -webkit-tap-highlight-color: transparent;
-    }
+:root{
+--bg:#0b0d0d;
+--ink:#e9edf0;
+--accent:#ff7a18;
+--radius:18px;
+--shadow:0 12px 40px rgba(0,0,0,.35);
+--max:1160px;
+}
 
-    a{color:inherit;text-decoration:none}
-    img{display:block;max-width:100%}
+*{box-sizing:border-box}
 
-    .wrap{
-      max-width:1200px;
-      margin:auto;
-      padding:30px;
-    }
+body{
+margin:0;
+background:var(--bg);
+color:var(--ink);
+font:16px/1.6 system-ui;
+overflow-x:hidden;
+}
 
-    h1{
-      margin:18px 0 26px;
-      font-size:32px;
-      letter-spacing:.02em;
-    }
+img{
+display:block;
+max-width:100%;
+}
 
-    /* ===== Grid ===== */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:28px;
-    }
-    @media(max-width:768px){
-      .grid{ grid-template-columns:1fr; }
-      .wrap{ padding:18px; }
-    }
+.wrap{
+max-width:var(--max);
+margin:auto;
+padding:28px;
+}
 
-    /* ===== Card Stack (Render over Clay) ===== */
-    .stack{
-      position:relative;
-      border-radius:18px;
-      overflow:hidden;
-      background:#0c0e12;
-      border:1px solid #1a1f27;
-      box-shadow:var(--shadow);
-      min-height:240px;
-      transform:translateY(0);
-    }
+/* HEADER */
 
-    .card{
-      width:100%;
-      height:auto;
-      display:block;
-      border-radius:18px;
-    }
+header{
+position:sticky;
+top:0;
+z-index:70;
+background:rgba(5,7,9,.92);
+backdrop-filter:blur(10px);
+border-bottom:1px solid #111;
+}
 
-    /* Clay behind */
-    .card--back{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transform:translateY(10px) scale(1.02);
-      filter:saturate(.95) contrast(1.02);
-      z-index:1;
-      pointer-events:none;
-      user-select:none;
-    }
+.header-layout{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
 
-    /* Render on top */
-    .card--front{
-      position:relative;
-      z-index:2;
-      transform:translateY(0);
-      will-change:transform;
-      transition:
-        transform .9s cubic-bezier(.2,.75,.15,1),
-        box-shadow .9s cubic-bezier(.2,.75,.15,1);
-    }
+.brand{
+display:flex;
+gap:10px;
+align-items:center;
+}
 
-    /* Reveal clay on scroll */
-    .stack.is-revealed .card--front{
-      transform:translateY(-18%);
-      box-shadow:0 18px 60px rgba(0,0,0,.55);
-    }
+.logo{
+height:30px;
+}
 
-    /* Optional hover deepen */
-    @media(hover:hover){
-      .stack:hover .card--front{
-        transform:translateY(-22%);
-      }
-    }
+.wordmark{
+font-weight:800;
+letter-spacing:.08em;
+}
 
-    /* Reveal fade-in */
-    .reveal{
-      opacity:0;
-      transform:translateY(18px);
-      transition:opacity .7s ease, transform .7s ease;
-    }
-    .reveal.show{
-      opacity:1;
-      transform:none;
-    }
+/* GRID */
 
-    /* ===== Header (same style) ===== */
-    header{
-      position:sticky;top:0;z-index:70;
-      background:rgba(5,7,9,.92);
-      backdrop-filter:saturate(160%) blur(10px);
-      border-bottom:1px solid #0e1116;
-      box-shadow:0 8px 30px rgba(0,0,0,.35);
-      transition:transform .4s ease;
-    }
-    header .wrap{padding:10px 20px}
-    .header-layout{display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px;user-select:none;cursor:default}
-    .brand .logo{height:30px;width:auto}
-    .brand .wordmark{font-weight:800;letter-spacing:.08em}
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:32px;
+margin-top:20px;
+}
 
-    /* Menu button */
-    .menu-btn{
-      width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;
-      display:flex;align-items:center;justify-content:center;cursor:pointer
-    }
-    .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
-      content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;
-      position:relative;transition:.25s
-    }
-    .menu-btn .bars::before{position:absolute;top:-6px}
-    .menu-btn .bars::after{position:absolute;top:6px}
+@media(max-width:768px){
+.grid{
+grid-template-columns:1fr;
+}
+}
 
-    /* Slide-in overlay / panel */
-    .overlay{
-      position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
-      opacity:0;pointer-events:none;transition:.25s;z-index:80
-    }
-    .menu-panel{
-      position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
-      background:rgba(0,0,0,.88);border-left:1px solid #1a1f27;
-      box-shadow:-20px 0 50px rgba(0,0,0,.4);
-      transform:translateX(100%);transition:.3s;z-index:90;
-      display:flex;flex-direction:column;padding:40px 28px
-    }
-    .menu-panel a{
-      font-size:20px;font-weight:700;color:#fff;margin:10px 0;transition:color .25s ease
-    }
-    .menu-panel a:hover{color:var(--accent1)}
-    .menu-open .overlay{opacity:1;pointer-events:auto}
-    .menu-open .menu-panel{transform:translateX(0)}
+/* STACK CARD */
 
-    /* small page spacing under sticky header */
-    main.wrap{ padding-top:22px; }
-  </style>
+.stack{
+position:relative;
+border-radius:var(--radius);
+overflow:hidden;
+background:#0c0e12;
+border:1px solid #1a1f27;
+box-shadow:var(--shadow);
+}
+
+.stack::before{
+content:"";
+display:block;
+padding-top:62%;
+}
+
+/* IMAGES */
+
+.card{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.card--back{
+z-index:1;
+}
+
+.card--front{
+z-index:2;
+transform:translateY(0%);
+will-change:transform;
+}
+
+/* reveal fade */
+
+.scrub{
+opacity:0;
+transform:translateY(20px);
+transition:.6s ease;
+}
+
+.scrub.is-visible{
+opacity:1;
+transform:none;
+}
+
+/* title */
+
+h1{
+margin-top:10px;
+margin-bottom:10px;
+font-size:28px;
+font-weight:700;
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- Header (top bar) -->
-  <header>
-    <div class="wrap header-layout">
-      <div class="brand">
-        <img src="assets/logo.png" alt="ZSIZART Logo" class="logo" width="30" height="30" loading="eager" decoding="async">
-        <span class="wordmark">ZSIZART</span>
-      </div>
+<header>
+<div class="wrap header-layout">
 
-      <div class="actions">
-        <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
-          <span class="bars"></span>
-        </button>
-      </div>
-    </div>
-  </header>
+<div class="brand">
+<img src="../assets/logo.png" class="logo">
+<span class="wordmark">ZSIZART</span>
+</div>
 
-  <div class="overlay" id="overlay"></div>
+</div>
+</header>
 
-  <aside class="menu-panel" id="menuPanel" aria-label="Site menu">
-    <a href="index.html#work">Work</a>
-    <a href="index.html#services">Services</a>
-    <a href="index.html#art">Art</a>
-    <a href="index.html#about">About</a>
-    <a href="index.html#contact">Contact</a>
-  </aside>
+<main class="wrap">
 
-  <!-- Page content -->
-  <main class="wrap">
-    <h1>3D Modeling</h1>
+<h1>3D Product Modeling</h1>
 
-    <div class="grid">
+<div class="grid">
 
-      <div class="stack reveal">
-        <img class="card card--front" src="assets/modeling-render01.webp" alt="Model 01 Render" loading="lazy" decoding="async">
-        <img class="card card--back"  src="assets/modeling-clay01.webp"   alt="Model 01 Clay"   loading="lazy" decoding="async">
-      </div>
+<div class="stack scrub">
+<img class="card card--back" src="../assets/modeling-clay01.webp">
+<img class="card card--front" src="../assets/modeling-render01.webp">
+</div>
 
-      <div class="stack reveal">
-        <img class="card card--front" src="assets/modeling-render02.webp" alt="Model 02 Render" loading="lazy" decoding="async">
-        <img class="card card--back"  src="assets/modeling-clay02.webp"   alt="Model 02 Clay"   loading="lazy" decoding="async">
-      </div>
+<div class="stack scrub">
+<img class="card card--back" src="../assets/modeling-clay02.webp">
+<img class="card card--front" src="../assets/modeling-render02.webp">
+</div>
 
-      <div class="stack reveal">
-        <img class="card card--front" src="assets/modeling-render03.webp" alt="Model 03 Render" loading="lazy" decoding="async">
-        <img class="card card--back"  src="assets/modeling-clay03.webp"   alt="Model 03 Clay"   loading="lazy" decoding="async">
-      </div>
+<div class="stack scrub">
+<img class="card card--back" src="../assets/modeling-clay03.webp">
+<img class="card card--front" src="../assets/modeling-render03.webp">
+</div>
 
-      <div class="stack reveal">
-        <img class="card card--front" src="assets/modeling-render04.webp" alt="Model 04 Render" loading="lazy" decoding="async">
-        <img class="card card--back"  src="assets/modeling-clay04.webp"   alt="Model 04 Clay"   loading="lazy" decoding="async">
-      </div>
+<div class="stack scrub">
+<img class="card card--back" src="../assets/modeling-clay04.webp">
+<img class="card card--front" src="../assets/modeling-render04.webp">
+</div>
 
-      <div class="stack reveal">
-        <img class="card card--front" src="assets/modeling-render05.webp" alt="Model 05 Render" loading="lazy" decoding="async">
-        <img class="card card--back"  src="assets/modeling-clay05.webp"   alt="Model 05 Clay"   loading="lazy" decoding="async">
-      </div>
+<div class="stack scrub">
+<img class="card card--back" src="../assets/modeling-clay05.webp">
+<img class="card card--front" src="../assets/modeling-render05.webp">
+</div>
 
-      <div class="stack reveal">
-        <img class="card card--front" src="assets/modeling-render06.webp" alt="Model 06 Render" loading="lazy" decoding="async">
-        <img class="card card--back"  src="assets/modeling-clay06.webp"   alt="Model 06 Clay"   loading="lazy" decoding="async">
-      </div>
+<div class="stack scrub">
+<img class="card card--back" src="../assets/modeling-clay06.webp">
+<img class="card card--front" src="../assets/modeling-render06.webp">
+</div>
 
-      <div class="stack reveal">
-        <img class="card card--front" src="assets/modeling-render07.webp" alt="Model 07 Render" loading="lazy" decoding="async">
-        <img class="card card--back"  src="assets/modeling-clay07.webp"   alt="Model 07 Clay"   loading="lazy" decoding="async">
-      </div>
+<div class="stack scrub">
+<img class="card card--back" src="../assets/modeling-clay07.webp">
+<img class="card card--front" src="../assets/modeling-render07.webp">
+</div>
 
-      <div class="stack reveal">
-        <img class="card card--front" src="assets/modeling-render08.webp" alt="Model 08 Render" loading="lazy" decoding="async">
-        <img class="card card--back"  src="assets/modeling-clay08.webp"   alt="Model 08 Clay"   loading="lazy" decoding="async">
-      </div>
+<div class="stack scrub">
+<img class="card card--back" src="../assets/modeling-clay08.webp">
+<img class="card card--front" src="../assets/modeling-render08.webp">
+</div>
 
-    </div>
-  </main>
+</div>
 
-  <script>
-    /* ===== Menu ===== */
-    const body = document.body;
-    const menuBtn = document.getElementById('menuBtn');
-    const overlay = document.getElementById('overlay');
-    const menuPanel = document.getElementById('menuPanel');
+</main>
 
-    function openMenu(){
-      body.classList.add('menu-open');
-      menuBtn?.setAttribute('aria-expanded','true');
-    }
-    function closeMenu(){
-      body.classList.remove('menu-open');
-      menuBtn?.setAttribute('aria-expanded','false');
-    }
+<script>
 
-    menuBtn?.addEventListener('click', openMenu);
-    overlay?.addEventListener('click', closeMenu);
-    menuPanel?.addEventListener('click', (e)=>{
-      if(e.target.tagName === 'A') closeMenu();
-    });
+/* center reveal scrub */
 
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape') closeMenu();
-    });
+const cards=[...document.querySelectorAll(".stack")]
 
-    /* ===== Reveal clay behind render on scroll ===== */
-    (function(){
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) return;
+const RANGE=0.38
+const MAX=0.24
 
-      const stacks = document.querySelectorAll('.stack.reveal');
-      if(!stacks.length) return;
+function clamp(v,min,max){
+return Math.max(min,Math.min(max,v))
+}
 
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-          if(entry.isIntersecting){
-            entry.target.classList.add('show');
-            entry.target.classList.add('is-revealed');
-          }else{
-            entry.target.classList.remove('is-revealed');
-          }
-        });
-      }, { threshold: 0.25 });
+function update(){
 
-      stacks.forEach(el=> io.observe(el));
-    })();
-  </script>
+const vh=window.innerHeight
+const center=vh*0.5
+
+cards.forEach(card=>{
+
+const rect=card.getBoundingClientRect()
+
+const cardCenter=rect.top+rect.height/2
+
+const dist=Math.abs(cardCenter-center)/vh
+
+let t=1-(dist/RANGE)
+
+t=clamp(t,0,1)
+
+t=t*t*(3-2*t)
+
+const front=card.querySelector(".card--front")
+
+front.style.transform=
+`translateY(${(-MAX*t)*100}%)`
+
+if(t>0.05)
+card.classList.add("is-visible")
+
+})
+
+}
+
+window.addEventListener("scroll",()=>requestAnimationFrame(update))
+window.addEventListener("resize",update)
+window.addEventListener("load",update)
+
+update()
+
+</script>
 
 </body>
 </html>
