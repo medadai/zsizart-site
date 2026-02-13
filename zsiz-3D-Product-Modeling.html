@@ -42,11 +42,39 @@ header{
   box-shadow:0 8px 30px rgba(0,0,0,.35);
   transition:transform .4s ease;
 }
-header .wrap{padding:10px 20px}
-.header-layout{display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:10px;user-select:none;cursor:default}
-.brand .logo{height:30px;width:auto}
-.brand .wordmark{font-weight:800;letter-spacing:.08em}
+/* ===== Bigger Header ===== */
+
+header .wrap{
+  padding:20px 32px;   /* كان 10px 20px */
+}
+
+.header-layout{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;            /* كان 10px */
+  user-select:none;
+  cursor:default;
+}
+
+/* Bigger logo */
+.brand .logo{
+  height:46px;         /* كان 30px */
+  width:auto;
+}
+
+/* Bigger text */
+.brand .wordmark{
+  font-weight:800;
+  letter-spacing:.08em;
+  font-size:20px;      /* جديد */
+}
+
 
 /* Menu button */
 .menu-btn{
@@ -317,4 +345,3 @@ window.onload = function() {
 
 </body>
 </html>
-
