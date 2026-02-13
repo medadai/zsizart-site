@@ -83,9 +83,7 @@ margin-top:20px;
 }
 
 @media(max-width:768px){
-.grid{
-grid-template-columns:1fr;
-}
+.grid{ grid-template-columns:1fr; }
 }
 
 /* STACK CARD */
@@ -97,6 +95,8 @@ overflow:hidden;
 background:#0c0e12;
 border:1px solid #1a1f27;
 box-shadow:var(--shadow);
+perspective:1200px; /* مهم للـ 3D */
+transform:translateZ(0);
 }
 
 .stack::before{
@@ -105,24 +105,36 @@ display:block;
 padding-top:62%;
 }
 
-/* IMAGES */
+/* ===== FLIP SETUP ===== */
 
-.card{
+.flip{
+position:absolute;
+inset:0;
+transform-style:preserve-3d;
+will-change:transform;
+}
+
+/* faces */
+.face{
 position:absolute;
 inset:0;
 width:100%;
 height:100%;
 object-fit:cover;
+backface-visibility:hidden;
+-webkit-backface-visibility:hidden;
+user-select:none;
+pointer-events:none;
 }
 
-.card--back{
-z-index:1;
+/* render front */
+.face--front{
+transform:rotateY(0deg);
 }
 
-.card--front{
-z-index:2;
-transform:translateY(0%);
-will-change:transform;
+/* clay back */
+.face--back{
+transform:rotateY(180deg);
 }
 
 /* reveal fade */
@@ -130,7 +142,7 @@ will-change:transform;
 .scrub{
 opacity:0;
 transform:translateY(20px);
-transition:.6s ease;
+transition:opacity .6s ease, transform .6s ease;
 }
 
 .scrub.is-visible{
@@ -147,6 +159,11 @@ font-size:28px;
 font-weight:700;
 }
 
+@media (prefers-reduced-motion: reduce){
+  .flip{ transform:none !important; }
+  .scrub{ transition:none !important; }
+}
+
 </style>
 </head>
 
@@ -156,7 +173,7 @@ font-weight:700;
 <div class="wrap header-layout">
 
 <div class="brand">
-<img src="../assets/logo.png" class="logo">
+<img src="../assets/logo.png" class="logo" alt="ZSIZART logo">
 <span class="wordmark">ZSIZART</span>
 </div>
 
@@ -170,43 +187,59 @@ font-weight:700;
 <div class="grid">
 
 <div class="stack scrub">
-<img class="card card--back" src="../assets/modeling-clay01.webp">
-<img class="card card--front" src="../assets/modeling-render01.webp">
+  <div class="flip">
+    <img class="face face--front" src="../assets/modeling-render01.webp" alt="Model 01 Render">
+    <img class="face face--back"  src="../assets/modeling-clay01.webp"   alt="Model 01 Clay">
+  </div>
 </div>
 
 <div class="stack scrub">
-<img class="card card--back" src="../assets/modeling-clay02.webp">
-<img class="card card--front" src="../assets/modeling-render02.webp">
+  <div class="flip">
+    <img class="face face--front" src="../assets/modeling-render02.webp" alt="Model 02 Render">
+    <img class="face face--back"  src="../assets/modeling-clay02.webp"   alt="Model 02 Clay">
+  </div>
 </div>
 
 <div class="stack scrub">
-<img class="card card--back" src="../assets/modeling-clay03.webp">
-<img class="card card--front" src="../assets/modeling-render03.webp">
+  <div class="flip">
+    <img class="face face--front" src="../assets/modeling-render03.webp" alt="Model 03 Render">
+    <img class="face face--back"  src="../assets/modeling-clay03.webp"   alt="Model 03 Clay">
+  </div>
 </div>
 
 <div class="stack scrub">
-<img class="card card--back" src="../assets/modeling-clay04.webp">
-<img class="card card--front" src="../assets/modeling-render04.webp">
+  <div class="flip">
+    <img class="face face--front" src="../assets/modeling-render04.webp" alt="Model 04 Render">
+    <img class="face face--back"  src="../assets/modeling-clay04.webp"   alt="Model 04 Clay">
+  </div>
 </div>
 
 <div class="stack scrub">
-<img class="card card--back" src="../assets/modeling-clay05.webp">
-<img class="card card--front" src="../assets/modeling-render05.webp">
+  <div class="flip">
+    <img class="face face--front" src="../assets/modeling-render05.webp" alt="Model 05 Render">
+    <img class="face face--back"  src="../assets/modeling-clay05.webp"   alt="Model 05 Clay">
+  </div>
 </div>
 
 <div class="stack scrub">
-<img class="card card--back" src="../assets/modeling-clay06.webp">
-<img class="card card--front" src="../assets/modeling-render06.webp">
+  <div class="flip">
+    <img class="face face--front" src="../assets/modeling-render06.webp" alt="Model 06 Render">
+    <img class="face face--back"  src="../assets/modeling-clay06.webp"   alt="Model 06 Clay">
+  </div>
 </div>
 
 <div class="stack scrub">
-<img class="card card--back" src="../assets/modeling-clay07.webp">
-<img class="card card--front" src="../assets/modeling-render07.webp">
+  <div class="flip">
+    <img class="face face--front" src="../assets/modeling-render07.webp" alt="Model 07 Render">
+    <img class="face face--back"  src="../assets/modeling-clay07.webp"   alt="Model 07 Clay">
+  </div>
 </div>
 
 <div class="stack scrub">
-<img class="card card--back" src="../assets/modeling-clay08.webp">
-<img class="card card--front" src="../assets/modeling-render08.webp">
+  <div class="flip">
+    <img class="face face--front" src="../assets/modeling-render08.webp" alt="Model 08 Render">
+    <img class="face face--back"  src="../assets/modeling-clay08.webp"   alt="Model 08 Clay">
+  </div>
 </div>
 
 </div>
@@ -214,55 +247,62 @@ font-weight:700;
 </main>
 
 <script>
+/* center flip scrub */
 
-/* center reveal scrub */
+const cards=[...document.querySelectorAll(".stack")];
 
-const cards=[...document.querySelectorAll(".stack")]
-
-const RANGE=0.38
-const MAX=0.24
+const RANGE=0.40;     // bigger = smoother & longer
+const MAX_DEG=180;    // full flip
+const TILT=6;         // subtle extra 3D feel
 
 function clamp(v,min,max){
-return Math.max(min,Math.min(max,v))
+  return Math.max(min,Math.min(max,v));
+}
+function smoothstep(t){
+  return t*t*(3-2*t);
 }
 
 function update(){
+  const vh=window.innerHeight || document.documentElement.clientHeight;
+  const center=vh*0.5;
 
-const vh=window.innerHeight
-const center=vh*0.5
+  cards.forEach(card=>{
+    const rect=card.getBoundingClientRect();
+    const cardCenter=rect.top + rect.height/2;
+    const dist=Math.abs(cardCenter-center)/vh;
 
-cards.forEach(card=>{
+    let t = 1 - (dist / RANGE);
+    t = clamp(t,0,1);
+    t = smoothstep(t);
 
-const rect=card.getBoundingClientRect()
+    const flip = card.querySelector(".flip");
+    if(!flip) return;
 
-const cardCenter=rect.top+rect.height/2
+    const deg = MAX_DEG * t;
 
-const dist=Math.abs(cardCenter-center)/vh
+    // tilt changes slightly depending on being above/below center
+    const tilt = (cardCenter < center ? -TILT : TILT) * (1 - t);
 
-let t=1-(dist/RANGE)
+    flip.style.transform = `rotateY(${deg}deg) rotateX(${tilt}deg)`;
 
-t=clamp(t,0,1)
-
-t=t*t*(3-2*t)
-
-const front=card.querySelector(".card--front")
-
-front.style.transform=
-`translateY(${(-MAX*t)*100}%)`
-
-if(t>0.05)
-card.classList.add("is-visible")
-
-})
-
+    if(t>0.05) card.classList.add("is-visible");
+  });
 }
 
-window.addEventListener("scroll",()=>requestAnimationFrame(update))
-window.addEventListener("resize",update)
-window.addEventListener("load",update)
+let raf=0;
+function requestTick(){
+  if(raf) return;
+  raf=requestAnimationFrame(()=>{
+    raf=0;
+    update();
+  });
+}
 
-update()
+window.addEventListener("scroll", requestTick, {passive:true});
+window.addEventListener("resize", requestTick);
+window.addEventListener("load", requestTick);
 
+update();
 </script>
 
 </body>
