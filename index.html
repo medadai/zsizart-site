@@ -619,7 +619,7 @@ applyBtn?.addEventListener('click',applyFilters);
 resetBtn?.addEventListener('click',resetFilters);
 qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-/* ===== Smooth hover slideshow (continues from last frame) ===== */
+/* ===== Hover step (one image per hover) ===== */
 (function(){
 
   const el = document.querySelector('.modeling-link[data-frames]');
@@ -635,60 +635,36 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
 
   if(frames.length < 2) return;
 
-// Preload
-frames.forEach(src => { const im = new Image(); im.src = src; });
+  // Preload
+  frames.forEach(src => { const im = new Image(); im.src = src; });
 
-let idx = 0;
-let timer = null;
+  // ابدأ من الصورة الحالية فعلاً
+  let idx = Math.max(0, frames.indexOf(img.getAttribute('src')));
 
-const SPEED = 950; // 900-1200 حسب مزاجك
+  let ready = true; // يمنع تريجر مرتين بسرعة
 
-function swapTo(src){
-
-  if(img.dataset.current === src) return;
-
-  const next = new Image();
-
-  next.onload = ()=>{
+  function swapTo(src){
+    if(img.getAttribute('src') === src) { ready = true; return; }
 
     img.classList.add('is-swapping');
-
     setTimeout(()=>{
       img.src = src;
-      img.dataset.current = src;
       img.classList.remove('is-swapping');
-    }, 100);
-
-  };
-
-  next.src = src;
-
-}
-
-
-const start = ()=>{
-  if(timer) return;
-
-  // لو دي أول مرة ولسه مفيش current خليه يبدأ من أول فريم
-  if(!img.dataset.current){
-    swapTo(frames[idx]);
+      ready = true;
+    }, 120);
   }
 
-  timer = setInterval(()=>{
-    idx = (idx + 1) % frames.length;
+  el.addEventListener('mouseenter', ()=>{
+    if(!ready) return;
+    ready = false;
+
+    idx = (idx + 1) % frames.length; // خطوة واحدة بس
     swapTo(frames[idx]);
-  }, SPEED);
-};
+  });
 
-const stop = ()=>{
-  clearInterval(timer);
-  timer = null;
-  // مهم: ما نغيرش idx ولا نرجّع لصورة أولى
-};
-
-el.addEventListener('mouseenter', start);
-el.addEventListener('mouseleave', stop);
+  // مهم: مفيش mouseleave reset — تفضل على آخر صورة
 })();
+
 
 /* ===== Clay hover circle ===== */
 (function(){
