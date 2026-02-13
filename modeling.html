@@ -1,220 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZSIZART — 3D Modeling</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/favicon.png">
 
-<title>ZSIZART — 3D Modeling</title>
+  <style>
+    :root{
+      --accent1:#ff7a18;
+      --bg:#0b0d0d;
+      --ink:#e9edf0;
+      --muted:#9fb3c8;
+      --radius:18px;
+    }
 
-<link rel="icon" href="assets/favicon.png">
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
+      overflow-x:hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-<style>
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
 
-body{
-  margin:0;
-  background:#0b0d0d;
-  color:#fff;
-  font-family:system-ui;
-}
+    .wrap{
+      max-width:1200px;
+      margin:auto;
+      padding:30px;
+    }
 
-.wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:30px;
-}
+    h1{
+      margin:18px 0 26px;
+      font-size:32px;
+      letter-spacing:.02em;
+    }
 
-h1{
-  margin-bottom:30px;
-}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:28px;
+    }
+    @media(max-width:768px){
+      .grid{ grid-template-columns:1fr; }
+      .wrap{ padding:18px; }
+    }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:28px;
-}
+    .tile{ position:relative; }
+    .tile img{
+      width:100%;
+      height:auto;
+      border-radius:0;
+    }
 
-@media(max-width:768px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-}
-
-.tile{
-  position:relative;
-  cursor:pointer;
-}
-
-.tile img{
-  width:100%;
-  display:block;
-}
-
-.label{
-  position:absolute;
-  top:12px;
-  left:12px;
-  background:#000;
-  padding:6px 12px;
-  font-size:12px;
-}
-
+    /* ===== Header (same style) ===== */
     header{
-    position:sticky;top:0;z-index:70;
-    background:rgba(5,7,9,.92);
-    backdrop-filter:saturate(160%) blur(10px);
-    border-bottom:1px solid #0e1116;
-    box-shadow:0 8px 30px rgba(0,0,0,.35);
-    transition:transform .4s ease;
-  }
-  header .wrap{padding:10px 20px}
-  .header-layout{display:flex;align-items:center;justify-content:space-between}
-  .brand{display:flex;align-items:center;gap:10px;user-select:none;cursor:default}
-  .brand .logo{height:30px;width:auto}
-  .brand .wordmark{font-weight:800;letter-spacing:.08em}
+      position:sticky;top:0;z-index:70;
+      background:rgba(5,7,9,.92);
+      backdrop-filter:saturate(160%) blur(10px);
+      border-bottom:1px solid #0e1116;
+      box-shadow:0 8px 30px rgba(0,0,0,.35);
+      transition:transform .4s ease;
+    }
+    header .wrap{padding:10px 20px}
+    .header-layout{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;user-select:none;cursor:default}
+    .brand .logo{height:30px;width:auto}
+    .brand .wordmark{font-weight:800;letter-spacing:.08em}
 
-  /* Menu button */
-  .menu-btn{width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;display:flex;align-items:center;justify-content:center;cursor:pointer}
-  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
-  .menu-btn .bars::before{position:absolute;top:-6px}
-  .menu-btn .bars::after{position:absolute;top:6px}
+    /* Menu button */
+    .menu-btn{
+      width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;
+      display:flex;align-items:center;justify-content:center;cursor:pointer
+    }
+    .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
+      content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;
+      position:relative;transition:.25s
+    }
+    .menu-btn .bars::before{position:absolute;top:-6px}
+    .menu-btn .bars::after{position:absolute;top:6px}
 
-  /* Slide-in overlay / panel */
-  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
-  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);background:rgba(0,0,0,.88);border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column;padding:40px 28px}
-  .menu-panel a{font-size:20px;font-weight:700;color:#fff;margin:10px 0;transition:color .25s ease}
-  .menu-panel a:hover{color:var(--accent1)}
-  .menu-open .overlay{opacity:1;pointer-events:auto}
-  .menu-open .menu-panel{transform:translateX(0)}
+    /* Slide-in overlay / panel */
+    .overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
+      opacity:0;pointer-events:none;transition:.25s;z-index:80
+    }
+    .menu-panel{
+      position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
+      background:rgba(0,0,0,.88);border-left:1px solid #1a1f27;
+      box-shadow:-20px 0 50px rgba(0,0,0,.4);
+      transform:translateX(100%);transition:.3s;z-index:90;
+      display:flex;flex-direction:column;padding:40px 28px
+    }
+    .menu-panel a{
+      font-size:20px;font-weight:700;color:#fff;margin:10px 0;transition:color .25s ease
+    }
+    .menu-panel a:hover{color:var(--accent1)}
+    .menu-open .overlay{opacity:1;pointer-events:auto}
+    .menu-open .menu-panel{transform:translateX(0)}
 
-</style>
-
+    /* small page spacing under sticky header */
+    main.wrap{ padding-top:22px; }
+  </style>
 </head>
 
 <body>
 
-<div class="wrap">
+  <!-- Header (top bar) -->
+  <header>
+    <div class="wrap header-layout">
+      <div class="brand">
+        <img src="assets/logo.png" alt="ZSIZART Logo" class="logo" width="30" height="30" loading="eager" decoding="async">
+        <span class="wordmark">ZSIZART</span>
+      </div>
 
-<h1>3D Modeling</h1>
+      <div class="actions">
+        <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+          <span class="bars"></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-<div class="grid">
+  <div class="overlay" id="overlay"></div>
 
-<!-- MODEL 01 -->
-<div class="tile">
-<img src="assets/modeling-render01.webp">
-</div>
+  <aside class="menu-panel" id="menuPanel" aria-label="Site menu">
+    <a href="index.html#work">Work</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#art">Art</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </aside>
 
-<div class="tile">
-<img src="assets/modeling-clay01.webp">
-</div>
+  <!-- Page content -->
+  <main class="wrap">
+    <h1>3D Modeling</h1>
 
-<!-- MODEL 02 -->
-<div class="tile">
-<img src="assets/modeling-render02.webp">
-</div>
+    <div class="grid">
+      <div class="tile"><img src="modeling-render01.jpg" alt="Modeling 01 Render" loading="lazy" decoding="async"></div>
+      <div class="tile"><img src="modeling-clay01.jpg"   alt="Modeling 01 Clay"   loading="lazy" decoding="async"></div>
 
-<div class="tile">
-<img src="assets/modeling-clay02.webp">
-</div>
+      <div class="tile"><img src="modeling-render02.jpg" alt="Modeling 02 Render" loading="lazy" decoding="async"></div>
+      <div class="tile"><img src="modeling-clay02.jpg"   alt="Modeling 02 Clay"   loading="lazy" decoding="async"></div>
 
-<!-- MODEL 03 -->
-<div class="tile">
-<img src="assets/modeling-render03.webp">
-</div>
+      <div class="tile"><img src="modeling-render03.jpg" alt="Modeling 03 Render" loading="lazy" decoding="async"></div>
+      <div class="tile"><img src="modeling-clay03.jpg"   alt="Modeling 03 Clay"   loading="lazy" decoding="async"></div>
 
-<div class="tile">
-<img src="assets/modeling-clay03.webp">
-</div>
+      <div class="tile"><img src="modeling-render04.jpg" alt="Modeling 04 Render" loading="lazy" decoding="async"></div>
+      <div class="tile"><img src="modeling-clay04.jpg"   alt="Modeling 04 Clay"   loading="lazy" decoding="async"></div>
 
-<!-- MODEL 04 -->
-<div class="tile">
-<img src="assets/modeling-render04.webp">
-</div>
+      <div class="tile"><img src="modeling-render05.jpg" alt="Modeling 05 Render" loading="lazy" decoding="async"></div>
+      <div class="tile"><img src="modeling-clay05.jpg"   alt="Modeling 05 Clay"   loading="lazy" decoding="async"></div>
 
-<div class="tile">
-<img src="assets/modeling-clay04.webp">
-</div>
+      <div class="tile"><img src="modeling-render06.jpg" alt="Modeling 06 Render" loading="lazy" decoding="async"></div>
+      <div class="tile"><img src="modeling-clay06.jpg"   alt="Modeling 06 Clay"   loading="lazy" decoding="async"></div>
 
-<!-- MODEL 05 -->
-<div class="tile">
-<img src="assets/modeling-render05.webp">
-</div>
+      <div class="tile"><img src="modeling-render07.jpg" alt="Modeling 07 Render" loading="lazy" decoding="async"></div>
+      <div class="tile"><img src="modeling-clay07.jpg"   alt="Modeling 07 Clay"   loading="lazy" decoding="async"></div>
 
-<div class="tile">
-<img src="assets/modeling-clay05.webp">
-</div>
+      <div class="tile"><img src="modeling-render08.jpg" alt="Modeling 08 Render" loading="lazy" decoding="async"></div>
+      <div class="tile"><img src="modeling-clay08.jpg"   alt="Modeling 08 Clay"   loading="lazy" decoding="async"></div>
+    </div>
+  </main>
 
-<!-- MODEL 06 -->
-<div class="tile">
-<img src="assets/modeling-render06.webp">
-</div>
+  <!-- Menu JS (must be inside script) -->
+  <script>
+    const body = document.body;
+    const menuBtn = document.getElementById('menuBtn');
+    const overlay = document.getElementById('overlay');
+    const menuPanel = document.getElementById('menuPanel');
 
-<div class="tile">
-<img src="assets/modeling-clay06.webp">
-</div>
+    function openMenu(){
+      body.classList.add('menu-open');
+      menuBtn?.setAttribute('aria-expanded','true');
+    }
+    function closeMenu(){
+      body.classList.remove('menu-open');
+      menuBtn?.setAttribute('aria-expanded','false');
+    }
 
-<!-- MODEL 07 -->
-<div class="tile">
-<img src="assets/modeling-render07.webp">
-</div>
+    menuBtn?.addEventListener('click', openMenu);
+    overlay?.addEventListener('click', closeMenu);
+    menuPanel?.addEventListener('click', (e)=>{
+      if(e.target.tagName === 'A') closeMenu();
+    });
 
-<div class="tile">
-<img src="assets/modeling-clay07.webp">
-</div>
-
-<!-- MODEL 08 -->
-<div class="tile">
-<img src="assets/modeling-render08.webp">
-</div>
-
-<div class="tile">
-<img src="assets/modeling-clay08.webp">
-</div>
-
-</div>
-
-</div>
-
-  const body=document.body,
-menuBtn=document.getElementById('menuBtn'),
-overlay=document.getElementById('overlay'),
-menuPanel=document.getElementById('menuPanel');
-
-function openMenu(){ body.classList.add('menu-open'); }
-function closeMenu(){ body.classList.remove('menu-open'); }
-
-menuBtn?.addEventListener('click', openMenu);
-overlay?.addEventListener('click', closeMenu);
-menuPanel?.addEventListener('click',e=>{
- if(e.target.tagName==='A') closeMenu();
-});
-
+    // Optional: close on ESC
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') closeMenu();
+    });
+  </script>
 
 </body>
-  <header>
-  <div class="wrap header-layout">
-    <div class="brand">
-      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo">
-      <span class="wordmark">ZSIZART</span>
-    </div>
-
-    <div class="actions">
-      <button class="menu-btn" id="menuBtn">
-        <span class="bars"></span>
-      </button>
-    </div>
-  </div>
-</header>
-
-<div class="overlay" id="overlay"></div>
-
-<aside class="menu-panel" id="menuPanel">
-  <a href="index.html#work">Work</a>
-  <a href="index.html#services">Services</a>
-  <a href="index.html#art">Art</a>
-  <a href="index.html#about">About</a>
-  <a href="index.html#contact">Contact</a>
-</aside>
-
 </html>
-
