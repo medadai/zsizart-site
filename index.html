@@ -644,15 +644,27 @@ let timer = null;
 const SPEED = 950; // 900-1200 حسب مزاجك
 
 function swapTo(src){
+
   if(img.dataset.current === src) return;
 
-  img.classList.add('is-swapping');
-  setTimeout(()=>{
-    img.src = src;
-    img.dataset.current = src;
-    img.classList.remove('is-swapping');
-  }, 120);
+  const next = new Image();
+
+  next.onload = ()=>{
+
+    img.classList.add('is-swapping');
+
+    setTimeout(()=>{
+      img.src = src;
+      img.dataset.current = src;
+      img.classList.remove('is-swapping');
+    }, 100);
+
+  };
+
+  next.src = src;
+
 }
+
 
 const start = ()=>{
   if(timer) return;
