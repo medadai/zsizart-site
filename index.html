@@ -293,15 +293,23 @@
     background:#0c0e12;
     box-shadow:0 12px 40px rgba(0,0,0,.35);
   }
-  .modeling-img{
-    width:100%;
-    height:auto;
-    display:block;
-    object-fit:cover;
-    filter:grayscale(100%) saturate(0.7) contrast(1.05);
-    transform:scale(1.01);
-    transition:transform .6s ease, filter .35s ease;
-  }
+.modeling-img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+  filter:grayscale(100%) saturate(0.7) contrast(1.05);
+  transform:scale(1.01);
+  transition:
+    opacity .25s ease,
+    transform .6s ease,
+    filter .35s ease;
+}
+
+.modeling-img.is-swapping{
+  opacity:.65;
+}
+
   .modeling-link:hover .modeling-img{
     filter:none;
     transform:scale(1.04);
@@ -611,8 +619,9 @@ applyBtn?.addEventListener('click',applyFilters);
 resetBtn?.addEventListener('click',resetFilters);
 qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-/* ===== Omega-style hover slideshow for Modeling CTA (ADDED) ===== */
+/* ===== Smooth hover slideshow (continues from last frame) ===== */
 (function(){
+
   const el = document.querySelector('.modeling-link[data-frames]');
   if(!el) return;
 
@@ -627,60 +636,42 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   if(frames.length < 2) return;
 
 // Preload
-frames.forEach(src => {
-  const im = new Image();
-  im.src = src;
-});
+frames.forEach(src => { const im = new Image(); im.src = src; });
 
 let idx = 0;
 let timer = null;
-let hoverDelay = null;
 
-// start animation smoothly
+const SPEED = 950; // 900-1200 حسب مزاجك
+
+function swapTo(src){
+  if(img.dataset.current === src) return;
+
+  img.classList.add('is-swapping');
+  setTimeout(()=>{
+    img.src = src;
+    img.dataset.current = src;
+    img.classList.remove('is-swapping');
+  }, 120);
+}
+
 const start = ()=>{
+  if(timer) return;
 
-  if(timer || hoverDelay) return;
+  // لو دي أول مرة ولسه مفيش current خليه يبدأ من أول فريم
+  if(!img.dataset.current){
+    swapTo(frames[idx]);
+  }
 
-  // small delay before starting (premium feel)
-  hoverDelay = setTimeout(()=>{
-
-    hoverDelay = null;
-
-    timer = setInterval(()=>{
-
-      idx = (idx + 1) % frames.length;
-
-      // smooth image swap
-      img.style.opacity = "0";
-
-      setTimeout(()=>{
-        img.src = frames[idx];
-        img.style.opacity = "1";
-      }, 120);
-
-    }, 1000); // speed (1000 = smooth, 1200 = slower)
-
-  }, 250);
-
+  timer = setInterval(()=>{
+    idx = (idx + 1) % frames.length;
+    swapTo(frames[idx]);
+  }, SPEED);
 };
 
-// stop animation smoothly
 const stop = ()=>{
-
-  clearTimeout(hoverDelay);
-  hoverDelay = null;
-
   clearInterval(timer);
   timer = null;
-
-  img.style.opacity = "0";
-
-  setTimeout(()=>{
-    idx = 0;
-    img.src = frames[0];
-    img.style.opacity = "1";
-  }, 120);
-
+  // مهم: ما نغيرش idx ولا نرجّع لصورة أولى
 };
 
 el.addEventListener('mouseenter', start);
