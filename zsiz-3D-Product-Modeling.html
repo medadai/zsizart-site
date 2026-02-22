@@ -69,34 +69,33 @@ main{
   scroll-snap-type:y mandatory;
 }
 
-/* ===== Ultra Tight Layout + Smooth Fade ===== */
+/* ===== Vertical Lift + Fade Effect ===== */
 .project-row{
-  min-height:100vh;
+  height:100vh;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:10px;                /* أقل مسافة أفقية */
+  gap:12px;
+  padding:0 2vw;
   align-items:center;
-  padding:2px 1.5vw;       /* أقل مسافة رأسية */
   scroll-snap-align:start;
 
-  opacity:.35;
-  transform:scale(.985);
+  opacity:0;
+  transform:translateY(80px);
   transition:
-    opacity 1.3s cubic-bezier(.25,.1,.25,1),
-    transform 1.3s cubic-bezier(.25,.1,.25,1);
+    opacity .9s cubic-bezier(.22,.61,.36,1),
+    transform .9s cubic-bezier(.22,.61,.36,1);
   will-change:opacity,transform;
 }
 
 .project-row.in-view{
   opacity:1;
-  transform:scale(1);
+  transform:translateY(0);
 }
 
 @media(max-width:900px){
   .project-row{
     grid-template-columns:1fr;
-    gap:8px;
-    padding:2px 3vw;
+    gap:10px;
   }
 }
 
@@ -113,7 +112,7 @@ main{
 
 .layer img{
   width:100%;
-  max-height:97vh;   /* أكبر ممكن بدون قطع */
+  max-height:97vh;
   object-fit:contain;
   user-select:none;
   pointer-events:none;
@@ -224,7 +223,9 @@ const observer = new IntersectionObserver(entries=>{
       entry.target.classList.remove("in-view");
     }
   });
-},{ threshold:0.65 });
+},{
+  threshold:0.55
+});
 
 sections.forEach(section=>observer.observe(section));
 
