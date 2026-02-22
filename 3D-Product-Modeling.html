@@ -11,8 +11,6 @@
 :root{
   --bg:#0b0d0d;
   --ink:#e9edf0;
-  --accent1:#ff7a18;
-  --accent2:#a855f7;
   --max:1500px;
 }
 
@@ -32,19 +30,17 @@ a{color:inherit;text-decoration:none}
 
 /* ===== Header ===== */
 header{
-  position:sticky;top:0;z-index:70;
+  position:sticky;top:0;z-index:50;
   background:rgba(5,7,9,.92);
   backdrop-filter:blur(10px);
   border-bottom:1px solid #0e1116;
 }
-
 header .wrap{
   padding:20px 32px;
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
-
 .brand{display:flex;align-items:center;gap:14px}
 .brand .logo{height:46px}
 .brand .wordmark{font-weight:800;letter-spacing:.08em;font-size:20px}
@@ -65,12 +61,12 @@ header .wrap{
 
 .overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.4);
-  opacity:0;pointer-events:none;transition:.3s;z-index:80
+  opacity:0;pointer-events:none;transition:.3s;z-index:60
 }
 .menu-panel{
   position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
   background:#0b0d0d;border-left:1px solid #1a1f27;
-  transform:translateX(100%);transition:.35s;z-index:90;
+  transform:translateX(100%);transition:.35s;z-index:70;
   display:flex;flex-direction:column;padding:60px 28px
 }
 .menu-panel a{
@@ -79,38 +75,44 @@ header .wrap{
 .menu-open .overlay{opacity:1;pointer-events:auto}
 .menu-open .menu-panel{transform:translateX(0)}
 
-/* ===== Smooth Section Replacement ===== */
+/* ===== Section Replacement Animation ===== */
 .project-row{
-  min-height:90vh;
+  position:relative;
+  min-height:100vh;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:18px;
-  padding:60px 3vw;
+  gap:20px;
+  padding:80px 3vw;
   align-items:center;
 
   opacity:0;
-  transform:translateY(80px);
+  transform:translateY(140px);
   transition:
-    opacity .9s cubic-bezier(.16,.8,.25,1),
-    transform .9s cubic-bezier(.16,.8,.25,1);
-  will-change:opacity,transform;
+    transform 1s cubic-bezier(.22,.7,.2,1),
+    opacity .9s ease;
+  will-change:transform,opacity;
+  z-index:1;
 }
 
 .project-row.in-view{
   opacity:1;
   transform:translateY(0);
+  z-index:2;
 }
 
 .project-row.out-view{
   opacity:0;
-  transform:translateY(-60px);
+  transform:translateY(-120px);
+  transition:
+    transform .8s cubic-bezier(.4,0,.2,1),
+    opacity .6s ease;
 }
 
 @media(max-width:900px){
   .project-row{
     grid-template-columns:1fr;
-    min-height:80vh;
-    padding:40px 4vw;
+    min-height:90vh;
+    padding:50px 5vw;
   }
 }
 
@@ -119,7 +121,7 @@ header .wrap{
 .layer{position:relative}
 .layer img{
   width:100%;
-  height:75vh;
+  height:80vh;
   object-fit:contain;
 }
 .img-clay{
@@ -157,63 +159,47 @@ header .wrap{
 <main class="wrap">
 
 <section class="project-row">
-  <div class="stack">
-    <div class="layer">
-      <img src="../assets/modeling-render01.webp">
-      <img class="img-clay" src="../assets/modeling-clay01.webp">
-    </div>
-  </div>
-  <div class="stack">
-    <div class="layer">
-      <img src="../assets/modeling-render02.webp">
-      <img class="img-clay" src="../assets/modeling-clay02.webp">
-    </div>
-  </div>
+  <div class="stack"><div class="layer">
+    <img src="../assets/modeling-render01.webp">
+    <img class="img-clay" src="../assets/modeling-clay01.webp">
+  </div></div>
+  <div class="stack"><div class="layer">
+    <img src="../assets/modeling-render02.webp">
+    <img class="img-clay" src="../assets/modeling-clay02.webp">
+  </div></div>
 </section>
 
 <section class="project-row">
-  <div class="stack">
-    <div class="layer">
-      <img src="../assets/modeling-render03.webp">
-      <img class="img-clay" src="../assets/modeling-clay03.webp">
-    </div>
-  </div>
-  <div class="stack">
-    <div class="layer">
-      <img src="../assets/modeling-render04.webp">
-      <img class="img-clay" src="../assets/modeling-clay04.webp">
-    </div>
-  </div>
+  <div class="stack"><div class="layer">
+    <img src="../assets/modeling-render03.webp">
+    <img class="img-clay" src="../assets/modeling-clay03.webp">
+  </div></div>
+  <div class="stack"><div class="layer">
+    <img src="../assets/modeling-render04.webp">
+    <img class="img-clay" src="../assets/modeling-clay04.webp">
+  </div></div>
 </section>
 
 <section class="project-row">
-  <div class="stack">
-    <div class="layer">
-      <img src="../assets/modeling-render05.webp">
-      <img class="img-clay" src="../assets/modeling-clay05.webp">
-    </div>
-  </div>
-  <div class="stack">
-    <div class="layer">
-      <img src="../assets/modeling-render06.webp">
-      <img class="img-clay" src="../assets/modeling-clay06.webp">
-    </div>
-  </div>
+  <div class="stack"><div class="layer">
+    <img src="../assets/modeling-render05.webp">
+    <img class="img-clay" src="../assets/modeling-clay05.webp">
+  </div></div>
+  <div class="stack"><div class="layer">
+    <img src="../assets/modeling-render06.webp">
+    <img class="img-clay" src="../assets/modeling-clay06.webp">
+  </div></div>
 </section>
 
 <section class="project-row">
-  <div class="stack">
-    <div class="layer">
-      <img src="../assets/modeling-render07.webp">
-      <img class="img-clay" src="../assets/modeling-clay07.webp">
-    </div>
-  </div>
-  <div class="stack">
-    <div class="layer">
-      <img src="../assets/modeling-render08.webp">
-      <img class="img-clay" src="../assets/modeling-clay08.webp">
-    </div>
-  </div>
+  <div class="stack"><div class="layer">
+    <img src="../assets/modeling-render07.webp">
+    <img class="img-clay" src="../assets/modeling-clay07.webp">
+  </div></div>
+  <div class="stack"><div class="layer">
+    <img src="../assets/modeling-render08.webp">
+    <img class="img-clay" src="../assets/modeling-clay08.webp">
+  </div></div>
 </section>
 
 </main>
@@ -226,7 +212,7 @@ overlay=document.getElementById('overlay');
 menuBtn.addEventListener('click',()=>body.classList.toggle('menu-open'));
 overlay.addEventListener('click',()=>body.classList.remove('menu-open'));
 
-/* ===== Smooth Fade Scroll ===== */
+/* ===== Replacement Scroll Effect ===== */
 const sections=document.querySelectorAll(".project-row");
 
 const observer=new IntersectionObserver(entries=>{
@@ -234,7 +220,7 @@ const observer=new IntersectionObserver(entries=>{
     if(entry.isIntersecting){
       entry.target.classList.add("in-view");
       entry.target.classList.remove("out-view");
-    }else{
+    } else {
       if(entry.boundingClientRect.top < 0){
         entry.target.classList.add("out-view");
       }
@@ -242,8 +228,8 @@ const observer=new IntersectionObserver(entries=>{
     }
   });
 },{
-  threshold:0.15,
-  rootMargin:"-10% 0px -10% 0px"
+  threshold:0.25,
+  rootMargin:"-20% 0px -20% 0px"
 });
 
 sections.forEach(section=>observer.observe(section));
