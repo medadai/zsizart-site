@@ -206,8 +206,6 @@ main{
   </div>
 </section>
 
-<!-- باقي السكاشن كما هي -->
-
 </main>
 
 <script>
@@ -244,6 +242,21 @@ document.querySelectorAll(".stack").forEach(card=>{
     card.classList.toggle("is-compare");
   });
 });
+</script>
+
+<!-- ===== Calendly Widget ===== -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+window.onload = function() {
+  Calendly.initBadgeWidget({
+    url: 'https://calendly.com/zsizart/30min',
+    text: 'Schedule a call',
+    color: '#ff7a18',
+    textColor: '#ffffff',
+    branding: false
+  });
+};
 </script>
 
 </body>
