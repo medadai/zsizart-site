@@ -1,3 +1,3 @@
 RewriteEngine On
 
-RewriteRule ^3D-Product-Modeling/?$ zsiz-3D-Product-Modeling.html [L]
+RewriteRule ^3D-Product-Modeling/?$ 3D-Product-Modeling.html [L]
