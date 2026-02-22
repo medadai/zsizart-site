@@ -79,43 +79,38 @@ header .wrap{
 .menu-open .overlay{opacity:1;pointer-events:auto}
 .menu-open .menu-panel{transform:translateX(0)}
 
-/* ===== Scroll Snap ===== */
-html{scroll-snap-type:y proximity}
-
-/* ===== Section Replacement Animation ===== */
+/* ===== Smooth Section Replacement ===== */
 .project-row{
-  min-height:85vh;
+  min-height:90vh;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:16px;
-  padding:40px 3vw;
+  gap:18px;
+  padding:60px 3vw;
   align-items:center;
-  scroll-snap-align:start;
 
   opacity:0;
-  transform:translateY(120px) scale(.98);
+  transform:translateY(80px);
   transition:
-    opacity .8s cubic-bezier(.22,.7,.2,1),
-    transform .8s cubic-bezier(.22,.7,.2,1);
+    opacity .9s cubic-bezier(.16,.8,.25,1),
+    transform .9s cubic-bezier(.16,.8,.25,1);
+  will-change:opacity,transform;
 }
 
 .project-row.in-view{
   opacity:1;
-  transform:translateY(0) scale(1);
+  transform:translateY(0);
 }
 
 .project-row.out-view{
-  opacity:.15;
-  transform:translateY(-80px) scale(.98);
-  transition:
-    opacity .6s ease,
-    transform .6s ease;
+  opacity:0;
+  transform:translateY(-60px);
 }
 
 @media(max-width:900px){
   .project-row{
     grid-template-columns:1fr;
     min-height:80vh;
+    padding:40px 4vw;
   }
 }
 
@@ -191,17 +186,17 @@ html{scroll-snap-type:y proximity}
   </div>
 </section>
 
-  <section class="project-row">
+<section class="project-row">
   <div class="stack">
     <div class="layer">
-      <img src="../assets/modeling-render05.webp" loading="lazy">
-      <img class="img-clay" src="../assets/modeling-clay05.webp" loading="lazy">
+      <img src="../assets/modeling-render05.webp">
+      <img class="img-clay" src="../assets/modeling-clay05.webp">
     </div>
   </div>
   <div class="stack">
     <div class="layer">
-      <img src="../assets/modeling-render06.webp" loading="lazy">
-      <img class="img-clay" src="../assets/modeling-clay06.webp" loading="lazy">
+      <img src="../assets/modeling-render06.webp">
+      <img class="img-clay" src="../assets/modeling-clay06.webp">
     </div>
   </div>
 </section>
@@ -209,30 +204,29 @@ html{scroll-snap-type:y proximity}
 <section class="project-row">
   <div class="stack">
     <div class="layer">
-      <img src="../assets/modeling-render07.webp" loading="lazy">
-      <img class="img-clay" src="../assets/modeling-clay07.webp" loading="lazy">
+      <img src="../assets/modeling-render07.webp">
+      <img class="img-clay" src="../assets/modeling-clay07.webp">
     </div>
   </div>
   <div class="stack">
     <div class="layer">
-      <img src="../assets/modeling-render08.webp" loading="lazy">
-      <img class="img-clay" src="../assets/modeling-clay08.webp" loading="lazy">
+      <img src="../assets/modeling-render08.webp">
+      <img class="img-clay" src="../assets/modeling-clay08.webp">
     </div>
   </div>
 </section>
+
 </main>
 
 <script>
-/* ===== Menu ===== */
 const body=document.body,
 menuBtn=document.getElementById('menuBtn'),
-overlay=document.getElementById('overlay'),
-menuPanel=document.getElementById('menuPanel');
+overlay=document.getElementById('overlay');
 
 menuBtn.addEventListener('click',()=>body.classList.toggle('menu-open'));
 overlay.addEventListener('click',()=>body.classList.remove('menu-open'));
 
-/* ===== Scroll Replacement Effect ===== */
+/* ===== Smooth Fade Scroll ===== */
 const sections=document.querySelectorAll(".project-row");
 
 const observer=new IntersectionObserver(entries=>{
@@ -247,11 +241,13 @@ const observer=new IntersectionObserver(entries=>{
       entry.target.classList.remove("in-view");
     }
   });
-},{threshold:0.35});
+},{
+  threshold:0.15,
+  rootMargin:"-10% 0px -10% 0px"
+});
 
 sections.forEach(section=>observer.observe(section));
 
-/* ===== Tap Compare ===== */
 document.querySelectorAll(".stack").forEach(card=>{
   card.addEventListener("click",()=>{
     card.classList.toggle("is-compare");
@@ -259,7 +255,6 @@ document.querySelectorAll(".stack").forEach(card=>{
 });
 </script>
 
-<!-- ===== Calendly ===== -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
@@ -277,4 +272,3 @@ window.addEventListener('load', () => {
 
 </body>
 </html>
-
