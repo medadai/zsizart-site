@@ -11,7 +11,6 @@
 :root{
   --bg:#0b0d0d;
   --ink:#e9edf0;
-  --muted:#9fb3c8;
   --accent1:#ff7a18;
   --accent2:#a855f7;
   --max:1500px;
@@ -25,212 +24,224 @@ body{
   color:var(--ink);
   font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
   overflow-x:hidden;
-  -webkit-tap-highlight-color: transparent;
 }
 
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-
 .wrap{max-width:var(--max);margin:auto;padding:10px}
 
 /* ===== Header ===== */
 header{
   position:sticky;top:0;z-index:70;
   background:rgba(5,7,9,.92);
-  backdrop-filter:saturate(160%) blur(10px);
+  backdrop-filter:blur(10px);
   border-bottom:1px solid #0e1116;
-  box-shadow:0 8px 30px rgba(0,0,0,.35);
 }
 
-header .wrap{padding:18px 32px}
-
-.header-layout{
+header .wrap{
+  padding:20px 32px;
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
+.brand{display:flex;align-items:center;gap:14px}
+.brand .logo{height:46px}
+.brand .wordmark{font-weight:800;letter-spacing:.08em;font-size:20px}
 
-.brand .logo{height:48px}
-
-.brand .wordmark{
-  font-weight:800;
-  letter-spacing:.08em;
-  font-size:20px;
+/* ===== Menu ===== */
+.menu-btn{
+  width:44px;height:34px;border:none;background:transparent;
+  display:flex;align-items:center;justify-content:center;cursor:pointer
 }
+.menu-btn .bars,
+.menu-btn .bars::before,
+.menu-btn .bars::after{
+  content:"";display:block;width:20px;height:2.5px;background:#cfe2ff;border-radius:2px;
+  position:relative;transition:.25s
+}
+.menu-btn .bars::before{position:absolute;top:-7px}
+.menu-btn .bars::after{position:absolute;top:7px}
+
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.4);
+  opacity:0;pointer-events:none;transition:.3s;z-index:80
+}
+.menu-panel{
+  position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
+  background:#0b0d0d;border-left:1px solid #1a1f27;
+  transform:translateX(100%);transition:.35s;z-index:90;
+  display:flex;flex-direction:column;padding:60px 28px
+}
+.menu-panel a{
+  font-size:20px;font-weight:700;color:#fff;margin:14px 0;
+}
+.menu-open .overlay{opacity:1;pointer-events:auto}
+.menu-open .menu-panel{transform:translateX(0)}
 
 /* ===== Scroll Snap ===== */
-main{
-  scroll-snap-type:y mandatory;
-}
+html{scroll-snap-type:y proximity}
 
-/* ===== Ultra Tight Layout + Smooth Fade ===== */
+/* ===== Section Replacement Animation ===== */
 .project-row{
-  min-height:100vh;
+  min-height:85vh;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:10px;                /* أقل مسافة أفقية */
+  gap:16px;
+  padding:40px 3vw;
   align-items:center;
-  padding:2px 1.5vw;       /* أقل مسافة رأسية */
   scroll-snap-align:start;
 
-  opacity:.35;
-  transform:scale(.985);
+  opacity:0;
+  transform:translateY(120px) scale(.98);
   transition:
-    opacity 1.3s cubic-bezier(.25,.1,.25,1),
-    transform 1.3s cubic-bezier(.25,.1,.25,1);
-  will-change:opacity,transform;
+    opacity .8s cubic-bezier(.22,.7,.2,1),
+    transform .8s cubic-bezier(.22,.7,.2,1);
 }
 
 .project-row.in-view{
   opacity:1;
-  transform:scale(1);
+  transform:translateY(0) scale(1);
+}
+
+.project-row.out-view{
+  opacity:.15;
+  transform:translateY(-80px) scale(.98);
+  transition:
+    opacity .6s ease,
+    transform .6s ease;
 }
 
 @media(max-width:900px){
   .project-row{
     grid-template-columns:1fr;
-    gap:8px;
-    padding:2px 3vw;
+    min-height:80vh;
   }
 }
 
 /* ===== Image Compare ===== */
-.stack{
-  position:relative;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
+.stack{position:relative;cursor:pointer}
 .layer{position:relative}
-
 .layer img{
   width:100%;
-  max-height:97vh;   /* أكبر ممكن بدون قطع */
+  height:75vh;
   object-fit:contain;
-  user-select:none;
-  pointer-events:none;
 }
-
-.img-render{opacity:1}
-
 .img-clay{
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   opacity:0;
-  transition:opacity .5s cubic-bezier(.22,.61,.36,1);
+  transition:opacity .4s ease;
 }
-
-@media(hover:hover){
-  .stack:hover .img-clay{opacity:1}
-}
-
+.stack:hover .img-clay{opacity:1}
 .stack.is-compare .img-clay{opacity:1}
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="wrap header-layout">
+  <div class="wrap">
     <div class="brand">
       <img src="../assets/logo.png" alt="ZSIZART Logo" class="logo">
       <span class="wordmark">ZSIZART</span>
     </div>
+    <button class="menu-btn" id="menuBtn"><span class="bars"></span></button>
   </div>
 </header>
 
+<div class="overlay" id="overlay"></div>
+<aside class="menu-panel" id="menuPanel">
+  <a href="/work">Work</a>
+  <a href="/services">Services</a>
+  <a href="/art">Art</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+</aside>
+
 <main class="wrap">
-  <h1>3D Product Modeling</h1>
-  <p class="sub">Clay to Render — hover to compare.</p>
 
-  <section class="project-row">
-    <div class="stack">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render01.webp" loading="lazy">
-        <img class="img-clay" src="../assets/modeling-clay01.webp" loading="lazy">
-      </div>
+<section class="project-row">
+  <div class="stack">
+    <div class="layer">
+      <img src="../assets/modeling-render01.webp">
+      <img class="img-clay" src="../assets/modeling-clay01.webp">
     </div>
-    <div class="stack">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render02.webp" loading="lazy">
-        <img class="img-clay" src="../assets/modeling-clay02.webp" loading="lazy">
-      </div>
+  </div>
+  <div class="stack">
+    <div class="layer">
+      <img src="../assets/modeling-render02.webp">
+      <img class="img-clay" src="../assets/modeling-clay02.webp">
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="project-row">
-    <div class="stack">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render03.webp" loading="lazy">
-        <img class="img-clay" src="../assets/modeling-clay03.webp" loading="lazy">
-      </div>
+<section class="project-row">
+  <div class="stack">
+    <div class="layer">
+      <img src="../assets/modeling-render03.webp">
+      <img class="img-clay" src="../assets/modeling-clay03.webp">
     </div>
-    <div class="stack">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render04.webp" loading="lazy">
-        <img class="img-clay" src="../assets/modeling-clay04.webp" loading="lazy">
-      </div>
+  </div>
+  <div class="stack">
+    <div class="layer">
+      <img src="../assets/modeling-render04.webp">
+      <img class="img-clay" src="../assets/modeling-clay04.webp">
     </div>
-  </section>
-
-  <section class="project-row">
-    <div class="stack">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render05.webp" loading="lazy">
-        <img class="img-clay" src="../assets/modeling-clay05.webp" loading="lazy">
-      </div>
-    </div>
-    <div class="stack">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render06.webp" loading="lazy">
-        <img class="img-clay" src="../assets/modeling-clay06.webp" loading="lazy">
-      </div>
-    </div>
-  </section>
-
-  <section class="project-row">
-    <div class="stack">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render07.webp" loading="lazy">
-        <img class="img-clay" src="../assets/modeling-clay07.webp" loading="lazy">
-      </div>
-    </div>
-    <div class="stack">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render08.webp" loading="lazy">
-        <img class="img-clay" src="../assets/modeling-clay08.webp" loading="lazy">
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
 </main>
 
 <script>
-const sections = document.querySelectorAll(".project-row");
+/* ===== Menu ===== */
+const body=document.body,
+menuBtn=document.getElementById('menuBtn'),
+overlay=document.getElementById('overlay'),
+menuPanel=document.getElementById('menuPanel');
 
-const observer = new IntersectionObserver(entries=>{
+menuBtn.addEventListener('click',()=>body.classList.toggle('menu-open'));
+overlay.addEventListener('click',()=>body.classList.remove('menu-open'));
+
+/* ===== Scroll Replacement Effect ===== */
+const sections=document.querySelectorAll(".project-row");
+
+const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
       entry.target.classList.add("in-view");
-    } else {
+      entry.target.classList.remove("out-view");
+    }else{
+      if(entry.boundingClientRect.top < 0){
+        entry.target.classList.add("out-view");
+      }
       entry.target.classList.remove("in-view");
     }
   });
-},{ threshold:0.65 });
+},{threshold:0.35});
 
 sections.forEach(section=>observer.observe(section));
 
+/* ===== Tap Compare ===== */
 document.querySelectorAll(".stack").forEach(card=>{
   card.addEventListener("click",()=>{
     card.classList.toggle("is-compare");
+  });
+});
+</script>
+
+<!-- ===== Calendly ===== -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+window.addEventListener('load', () => {
+  if (!window.Calendly) return;
+  Calendly.initBadgeWidget({
+    url: 'https://calendly.com/arc-mahmoud-refaey/30min',
+    text: 'Schedule a call',
+    color: '#ff7a18',
+    textColor: '#ffffff',
+    branding: false
   });
 });
 </script>
