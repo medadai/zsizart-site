@@ -14,7 +14,7 @@
   --muted:#9fb3c8;
   --accent1:#ff7a18;
   --accent2:#a855f7;
-  --max:1400px;
+  --max:1500px;
 }
 
 *{box-sizing:border-box}
@@ -31,7 +31,7 @@ body{
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 
-.wrap{max-width:var(--max);margin:auto;padding:20px}
+.wrap{max-width:var(--max);margin:auto;padding:10px}
 
 /* ===== Header ===== */
 header{
@@ -42,7 +42,7 @@ header{
   box-shadow:0 8px 30px rgba(0,0,0,.35);
 }
 
-header .wrap{padding:20px 32px}
+header .wrap{padding:18px 32px}
 
 .header-layout{
   display:flex;
@@ -57,6 +57,7 @@ header .wrap{padding:20px 32px}
 }
 
 .brand .logo{height:48px}
+
 .brand .wordmark{
   font-weight:800;
   letter-spacing:.08em;
@@ -68,20 +69,22 @@ main{
   scroll-snap-type:y mandatory;
 }
 
-/* ===== Fullscreen Rows (Bigger + Tighter) ===== */
+/* ===== Ultra Tight Layout + Smooth Fade ===== */
 .project-row{
   min-height:100vh;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:16px;                 /* أقل مسافة أفقية */
+  gap:10px;                /* أقل مسافة أفقية */
   align-items:center;
-  padding:6px 2vw;          /* أقل مسافة رأسية */
+  padding:2px 1.5vw;       /* أقل مسافة رأسية */
   scroll-snap-align:start;
 
-  opacity:.25;
-  transform:scale(.98);
-  transition:opacity .8s cubic-bezier(.22,.61,.36,1),
-             transform .8s cubic-bezier(.22,.61,.36,1);
+  opacity:.35;
+  transform:scale(.985);
+  transition:
+    opacity 1.3s cubic-bezier(.25,.1,.25,1),
+    transform 1.3s cubic-bezier(.25,.1,.25,1);
+  will-change:opacity,transform;
 }
 
 .project-row.in-view{
@@ -92,8 +95,8 @@ main{
 @media(max-width:900px){
   .project-row{
     grid-template-columns:1fr;
-    gap:14px;
-    padding:4px 4vw;
+    gap:8px;
+    padding:2px 3vw;
   }
 }
 
@@ -110,7 +113,7 @@ main{
 
 .layer img{
   width:100%;
-  max-height:96vh;      /* أكبر ارتفاع ممكن بدون قطع */
+  max-height:97vh;   /* أكبر ممكن بدون قطع */
   object-fit:contain;
   user-select:none;
   pointer-events:none;
@@ -122,7 +125,7 @@ main{
   position:absolute;
   inset:0;
   opacity:0;
-  transition:opacity .45s cubic-bezier(.2,.75,.15,1);
+  transition:opacity .5s cubic-bezier(.22,.61,.36,1);
 }
 
 @media(hover:hover){
@@ -211,7 +214,6 @@ main{
 </main>
 
 <script>
-/* Smooth Section Fade */
 const sections = document.querySelectorAll(".project-row");
 
 const observer = new IntersectionObserver(entries=>{
@@ -222,11 +224,10 @@ const observer = new IntersectionObserver(entries=>{
       entry.target.classList.remove("in-view");
     }
   });
-},{ threshold:0.6 });
+},{ threshold:0.65 });
 
 sections.forEach(section=>observer.observe(section));
 
-/* Tap Compare */
 document.querySelectorAll(".stack").forEach(card=>{
   card.addEventListener("click",()=>{
     card.classList.toggle("is-compare");
