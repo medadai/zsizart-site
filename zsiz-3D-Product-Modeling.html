@@ -33,19 +33,16 @@ a{color:inherit;text-decoration:none}
 
 .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-/* ===== Header (unchanged) ===== */
+/* ===== Header ===== */
 header{
   position:sticky;top:0;z-index:70;
   background:rgba(5,7,9,.92);
   backdrop-filter:saturate(160%) blur(10px);
   border-bottom:1px solid #0e1116;
   box-shadow:0 8px 30px rgba(0,0,0,.35);
-  transition:transform .4s ease;
 }
 
-header .wrap{
-  padding:20px 32px;
-}
+header .wrap{padding:20px 32px}
 
 .header-layout{
   display:flex;
@@ -57,67 +54,64 @@ header .wrap{
   display:flex;
   align-items:center;
   gap:14px;
-  user-select:none;
-  cursor:default;
 }
 
-.brand .logo{
-  height:46px;
-  width:auto;
-}
-
+.brand .logo{height:46px}
 .brand .wordmark{
   font-weight:800;
   letter-spacing:.08em;
   font-size:20px;
 }
 
-/* ===== UPDATED LAYOUT ===== */
-
-/* Enable vertical snap */
+/* ===== Scroll Snap ===== */
 main{
   scroll-snap-type:y mandatory;
 }
 
-/* Replace old grid behavior */
-.grid{
-  display:block;
-}
-
-/* Each pair fullscreen */
+/* ===== Fullscreen Rows ===== */
 .project-row{
   min-height:100vh;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:60px;
+  gap:40px;
   align-items:center;
-  padding:60px 6vw;
+  padding:20px 4vw;
   scroll-snap-align:start;
+
+  opacity:.25;
+  transform:scale(.96);
+  transition:opacity .8s cubic-bezier(.22,.61,.36,1),
+             transform .8s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
+}
+
+.project-row.in-view{
+  opacity:1;
+  transform:scale(1);
 }
 
 @media(max-width:900px){
   .project-row{
     grid-template-columns:1fr;
+    gap:28px;
+    padding:10px 5vw;
   }
 }
 
-/* ===== Image compare (unchanged) ===== */
-
+/* ===== Image Compare ===== */
 .stack{
   position:relative;
-  border:none;
-  background:none;
-  box-shadow:none;
-  border-radius:0;
-  overflow:hidden;
   cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.layer{position:relative;}
+.layer{position:relative}
 
 .layer img{
   width:100%;
-  height:auto;
+  max-height:88vh;
   object-fit:contain;
   user-select:none;
   pointer-events:none;
@@ -128,9 +122,6 @@ main{
 .img-clay{
   position:absolute;
   inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
   opacity:0;
   transition:opacity .45s cubic-bezier(.2,.75,.15,1);
 }
@@ -140,14 +131,6 @@ main{
 }
 
 .stack.is-compare .img-clay{opacity:1}
-
-/* Reveal (unchanged) */
-.reveal{
-  opacity:0;
-  transform:translateY(16px);
-  transition:opacity .7s ease, transform .7s ease;
-}
-.reveal.show{opacity:1;transform:none}
 </style>
 </head>
 
@@ -166,86 +149,89 @@ main{
   <h1>3D Product Modeling</h1>
   <p class="sub">Clay to Render — hover to compare.</p>
 
-  <div class="grid">
+  <section class="project-row">
+    <div class="stack">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render01.webp" loading="lazy">
+        <img class="img-clay" src="../assets/modeling-clay01.webp" loading="lazy">
+      </div>
+    </div>
+    <div class="stack">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render02.webp" loading="lazy">
+        <img class="img-clay" src="../assets/modeling-clay02.webp" loading="lazy">
+      </div>
+    </div>
+  </section>
 
-    <!-- Row 1 -->
-    <section class="project-row">
-      <div class="stack reveal">
-        <div class="layer">
-          <img class="img-render" src="../assets/modeling-render01.webp" loading="lazy">
-          <img class="img-clay" src="../assets/modeling-clay01.webp" loading="lazy">
-        </div>
+  <section class="project-row">
+    <div class="stack">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render03.webp" loading="lazy">
+        <img class="img-clay" src="../assets/modeling-clay03.webp" loading="lazy">
       </div>
-      <div class="stack reveal">
-        <div class="layer">
-          <img class="img-render" src="../assets/modeling-render02.webp" loading="lazy">
-          <img class="img-clay" src="../assets/modeling-clay02.webp" loading="lazy">
-        </div>
+    </div>
+    <div class="stack">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render04.webp" loading="lazy">
+        <img class="img-clay" src="../assets/modeling-clay04.webp" loading="lazy">
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Row 2 -->
-    <section class="project-row">
-      <div class="stack reveal">
-        <div class="layer">
-          <img class="img-render" src="../assets/modeling-render03.webp" loading="lazy">
-          <img class="img-clay" src="../assets/modeling-clay03.webp" loading="lazy">
-        </div>
+  <section class="project-row">
+    <div class="stack">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render05.webp" loading="lazy">
+        <img class="img-clay" src="../assets/modeling-clay05.webp" loading="lazy">
       </div>
-      <div class="stack reveal">
-        <div class="layer">
-          <img class="img-render" src="../assets/modeling-render04.webp" loading="lazy">
-          <img class="img-clay" src="../assets/modeling-clay04.webp" loading="lazy">
-        </div>
+    </div>
+    <div class="stack">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render06.webp" loading="lazy">
+        <img class="img-clay" src="../assets/modeling-clay06.webp" loading="lazy">
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Row 3 -->
-    <section class="project-row">
-      <div class="stack reveal">
-        <div class="layer">
-          <img class="img-render" src="../assets/modeling-render05.webp" loading="lazy">
-          <img class="img-clay" src="../assets/modeling-clay05.webp" loading="lazy">
-        </div>
+  <section class="project-row">
+    <div class="stack">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render07.webp" loading="lazy">
+        <img class="img-clay" src="../assets/modeling-clay07.webp" loading="lazy">
       </div>
-      <div class="stack reveal">
-        <div class="layer">
-          <img class="img-render" src="../assets/modeling-render06.webp" loading="lazy">
-          <img class="img-clay" src="../assets/modeling-clay06.webp" loading="lazy">
-        </div>
+    </div>
+    <div class="stack">
+      <div class="layer">
+        <img class="img-render" src="../assets/modeling-render08.webp" loading="lazy">
+        <img class="img-clay" src="../assets/modeling-clay08.webp" loading="lazy">
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Row 4 -->
-    <section class="project-row">
-      <div class="stack reveal">
-        <div class="layer">
-          <img class="img-render" src="../assets/modeling-render07.webp" loading="lazy">
-          <img class="img-clay" src="../assets/modeling-clay07.webp" loading="lazy">
-        </div>
-      </div>
-      <div class="stack reveal">
-        <div class="layer">
-          <img class="img-render" src="../assets/modeling-render08.webp" loading="lazy">
-          <img class="img-clay" src="../assets/modeling-clay08.webp" loading="lazy">
-        </div>
-      </div>
-    </section>
-
-  </div>
 </main>
 
 <script>
-const io = new IntersectionObserver(entries=>{
+/* Smooth section fade */
+const sections = document.querySelectorAll(".project-row");
+
+const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
-    if(entry.isIntersecting) entry.target.classList.add("show");
+    if(entry.isIntersecting){
+      entry.target.classList.add("in-view");
+    } else {
+      entry.target.classList.remove("in-view");
+    }
   });
-},{threshold:0.12});
+},{ threshold:0.55 });
 
-document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+sections.forEach(section=>observer.observe(section));
 
+/* Tap compare */
 document.querySelectorAll(".stack").forEach(card=>{
-  card.addEventListener("click",()=> card.classList.toggle("is-compare"));
+  card.addEventListener("click",()=>{
+    card.classList.toggle("is-compare");
+  });
 });
 </script>
 
