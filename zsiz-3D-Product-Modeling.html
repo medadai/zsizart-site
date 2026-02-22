@@ -64,26 +64,27 @@ header .wrap{padding:18px 32px}
   font-size:20px;
 }
 
-/* ===== Scroll Snap ===== */
+/* ===== Scroll Behavior (lighter) ===== */
 main{
-  scroll-snap-type:y mandatory;
+  scroll-snap-type:y proximity;
 }
 
-/* ===== Vertical Lift + Fade Effect ===== */
+/* ===== Softer + Faster Section Transition ===== */
 .project-row{
-  height:100vh;
+  min-height:85vh;
+  height:auto;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:12px;
-  padding:0 2vw;
+  padding:20px 2vw;
   align-items:center;
   scroll-snap-align:start;
 
   opacity:0;
-  transform:translateY(80px);
+  transform:translateY(60px);
   transition:
-    opacity .9s cubic-bezier(.22,.61,.36,1),
-    transform .9s cubic-bezier(.22,.61,.36,1);
+    opacity .7s ease,
+    transform .7s ease;
   will-change:opacity,transform;
 }
 
@@ -96,6 +97,7 @@ main{
   .project-row{
     grid-template-columns:1fr;
     gap:10px;
+    min-height:80vh;
   }
 }
 
@@ -112,7 +114,7 @@ main{
 
 .layer img{
   width:100%;
-  max-height:97vh;
+  max-height:85vh;
   object-fit:contain;
   user-select:none;
   pointer-events:none;
@@ -124,7 +126,7 @@ main{
   position:absolute;
   inset:0;
   opacity:0;
-  transition:opacity .5s cubic-bezier(.22,.61,.36,1);
+  transition:opacity .4s ease;
 }
 
 @media(hover:hover){
@@ -224,7 +226,7 @@ const observer = new IntersectionObserver(entries=>{
     }
   });
 },{
-  threshold:0.55
+  threshold:0.35
 });
 
 sections.forEach(section=>observer.observe(section));
