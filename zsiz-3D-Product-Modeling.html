@@ -33,7 +33,7 @@ a{color:inherit;text-decoration:none}
 
 .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-/* ===== Header (same as home) ===== */
+/* ===== Header (unchanged) ===== */
 header{
   position:sticky;top:0;z-index:70;
   background:rgba(5,7,9,.92);
@@ -42,10 +42,9 @@ header{
   box-shadow:0 8px 30px rgba(0,0,0,.35);
   transition:transform .4s ease;
 }
-/* ===== Bigger Header ===== */
 
 header .wrap{
-  padding:20px 32px;   /* كان 10px 20px */
+  padding:20px 32px;
 }
 
 .header-layout{
@@ -57,82 +56,53 @@ header .wrap{
 .brand{
   display:flex;
   align-items:center;
-  gap:14px;            /* كان 10px */
+  gap:14px;
   user-select:none;
   cursor:default;
 }
 
-/* Bigger logo */
 .brand .logo{
-  height:46px;         /* كان 30px */
+  height:46px;
   width:auto;
 }
 
-/* Bigger text */
 .brand .wordmark{
   font-weight:800;
   letter-spacing:.08em;
-  font-size:20px;      /* جديد */
+  font-size:20px;
 }
 
+/* ===== UPDATED LAYOUT ===== */
 
-/* Menu button */
-.menu-btn{
-  width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;
-  display:flex;align-items:center;justify-content:center;cursor:pointer
-}
-.menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
-  content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;
-  position:relative;transition:.25s
-}
-.menu-btn .bars::before{position:absolute;top:-6px}
-.menu-btn .bars::after{position:absolute;top:6px}
-
-/* Slide-in overlay / panel */
-.overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
-  opacity:0;pointer-events:none;transition:.25s;z-index:80
-}
-.menu-panel{
-  position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
-  background:rgba(0,0,0,.88);border-left:1px solid #1a1f27;
-  box-shadow:-20px 0 50px rgba(0,0,0,.4);
-  transform:translateX(100%);transition:.3s;z-index:90;
-  display:flex;flex-direction:column;padding:40px 28px
-}
-.menu-panel a{
-  font-size:20px;font-weight:700;color:#fff;margin:10px 0;transition:color .25s ease
-}
-.menu-panel a:hover{color:var(--accent1)}
-.menu-open .overlay{opacity:1;pointer-events:auto}
-.menu-open .menu-panel{transform:translateX(0)}
-
-/* Page title */
-h1{
-  margin:18px 0 8px;
-  font-size:30px;
-  font-weight:800;
-  letter-spacing:.02em;
-}
-.sub{
-  margin:0 0 18px;
-  color:var(--muted);
-  font-size:14px;
+/* Enable vertical snap */
+main{
+  scroll-snap-type:y mandatory;
 }
 
-/* ===== Grid (no frames) ===== */
+/* Replace old grid behavior */
 .grid{
+  display:block;
+}
+
+/* Each pair fullscreen */
+.project-row{
+  min-height:100vh;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:32px;
-  margin-top:10px;
-}
-@media(max-width:768px){
-  .grid{grid-template-columns:1fr}
-  .wrap{padding:18px}
+  gap:60px;
+  align-items:center;
+  padding:60px 6vw;
+  scroll-snap-align:start;
 }
 
-/* Each card holds two images but shows NO rectangle/background */
+@media(max-width:900px){
+  .project-row{
+    grid-template-columns:1fr;
+  }
+}
+
+/* ===== Image compare (unchanged) ===== */
+
 .stack{
   position:relative;
   border:none;
@@ -143,23 +113,18 @@ h1{
   cursor:pointer;
 }
 
-/* Make images natural (no aspect-ratio box) */
-.layer{
-  position:relative;
-}
+.layer{position:relative;}
 
-/* Images: full visible, no crop, no background */
 .layer img{
   width:100%;
   height:auto;
   object-fit:contain;
-  background:none;
   user-select:none;
   pointer-events:none;
 }
 
-/* Compare */
 .img-render{opacity:1}
+
 .img-clay{
   position:absolute;
   inset:0;
@@ -170,26 +135,19 @@ h1{
   transition:opacity .45s cubic-bezier(.2,.75,.15,1);
 }
 
-/* Hover compare on desktop */
 @media(hover:hover){
   .stack:hover .img-clay{opacity:1}
 }
 
-/* Tap compare (mobile) */
 .stack.is-compare .img-clay{opacity:1}
 
-/* Scroll reveal (subtle) */
+/* Reveal (unchanged) */
 .reveal{
   opacity:0;
   transform:translateY(16px);
   transition:opacity .7s ease, transform .7s ease;
 }
 .reveal.show{opacity:1;transform:none}
-
-@media (prefers-reduced-motion: reduce){
-  .reveal{transition:none !important}
-  .img-clay{transition:none !important}
-}
 </style>
 </head>
 
@@ -198,151 +156,98 @@ h1{
 <header>
   <div class="wrap header-layout">
     <div class="brand">
-      <img src="../assets/logo.png" alt="ZSIZART Logo" class="logo" width="30" height="30" loading="eager" decoding="async">
+      <img src="../assets/logo.png" alt="ZSIZART Logo" class="logo">
       <span class="wordmark">ZSIZART</span>
-    </div>
-    <div class="actions">
-      <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><span class="bars"></span></button>
     </div>
   </div>
 </header>
 
-<div class="overlay" id="overlay"></div>
-<aside class="menu-panel" id="menuPanel" aria-label="Site menu">
-  <a href="../index.html#work">Work</a>
-  <a href="../index.html#services">Services</a>
-  <a href="../index.html#art">Art</a>
-  <a href="../index.html#about">About</a>
-  <a href="../index.html#contact">Contact</a>
-</aside>
-
 <main class="wrap">
   <h1>3D Product Modeling</h1>
-  <p class="sub">Hover to preview — Tap to compare on mobile.</p>
+  <p class="sub">Clay to Render — hover to compare.</p>
 
   <div class="grid">
 
-    <div class="stack reveal" tabindex="0" aria-label="Model 01 (tap to compare)">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render01.webp" alt="Model 01 Render" loading="lazy" decoding="async">
-        <img class="img-clay"   src="../assets/modeling-clay01.webp"   alt="Model 01 Clay"   loading="lazy" decoding="async">
+    <!-- Row 1 -->
+    <section class="project-row">
+      <div class="stack reveal">
+        <div class="layer">
+          <img class="img-render" src="../assets/modeling-render01.webp" loading="lazy">
+          <img class="img-clay" src="../assets/modeling-clay01.webp" loading="lazy">
+        </div>
       </div>
-    </div>
+      <div class="stack reveal">
+        <div class="layer">
+          <img class="img-render" src="../assets/modeling-render02.webp" loading="lazy">
+          <img class="img-clay" src="../assets/modeling-clay02.webp" loading="lazy">
+        </div>
+      </div>
+    </section>
 
-    <div class="stack reveal" tabindex="0" aria-label="Model 02 (tap to compare)">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render02.webp" alt="Model 02 Render" loading="lazy" decoding="async">
-        <img class="img-clay"   src="../assets/modeling-clay02.webp"   alt="Model 02 Clay"   loading="lazy" decoding="async">
+    <!-- Row 2 -->
+    <section class="project-row">
+      <div class="stack reveal">
+        <div class="layer">
+          <img class="img-render" src="../assets/modeling-render03.webp" loading="lazy">
+          <img class="img-clay" src="../assets/modeling-clay03.webp" loading="lazy">
+        </div>
       </div>
-    </div>
+      <div class="stack reveal">
+        <div class="layer">
+          <img class="img-render" src="../assets/modeling-render04.webp" loading="lazy">
+          <img class="img-clay" src="../assets/modeling-clay04.webp" loading="lazy">
+        </div>
+      </div>
+    </section>
 
-    <div class="stack reveal" tabindex="0" aria-label="Model 03 (tap to compare)">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render03.webp" alt="Model 03 Render" loading="lazy" decoding="async">
-        <img class="img-clay"   src="../assets/modeling-clay03.webp"   alt="Model 03 Clay"   loading="lazy" decoding="async">
+    <!-- Row 3 -->
+    <section class="project-row">
+      <div class="stack reveal">
+        <div class="layer">
+          <img class="img-render" src="../assets/modeling-render05.webp" loading="lazy">
+          <img class="img-clay" src="../assets/modeling-clay05.webp" loading="lazy">
+        </div>
       </div>
-    </div>
+      <div class="stack reveal">
+        <div class="layer">
+          <img class="img-render" src="../assets/modeling-render06.webp" loading="lazy">
+          <img class="img-clay" src="../assets/modeling-clay06.webp" loading="lazy">
+        </div>
+      </div>
+    </section>
 
-    <div class="stack reveal" tabindex="0" aria-label="Model 04 (tap to compare)">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render04.webp" alt="Model 04 Render" loading="lazy" decoding="async">
-        <img class="img-clay"   src="../assets/modeling-clay04.webp"   alt="Model 04 Clay"   loading="lazy" decoding="async">
+    <!-- Row 4 -->
+    <section class="project-row">
+      <div class="stack reveal">
+        <div class="layer">
+          <img class="img-render" src="../assets/modeling-render07.webp" loading="lazy">
+          <img class="img-clay" src="../assets/modeling-clay07.webp" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="stack reveal" tabindex="0" aria-label="Model 05 (tap to compare)">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render05.webp" alt="Model 05 Render" loading="lazy" decoding="async">
-        <img class="img-clay"   src="../assets/modeling-clay05.webp"   alt="Model 05 Clay"   loading="lazy" decoding="async">
+      <div class="stack reveal">
+        <div class="layer">
+          <img class="img-render" src="../assets/modeling-render08.webp" loading="lazy">
+          <img class="img-clay" src="../assets/modeling-clay08.webp" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="stack reveal" tabindex="0" aria-label="Model 06 (tap to compare)">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render06.webp" alt="Model 06 Render" loading="lazy" decoding="async">
-        <img class="img-clay"   src="../assets/modeling-clay06.webp"   alt="Model 06 Clay"   loading="lazy" decoding="async">
-      </div>
-    </div>
-
-    <div class="stack reveal" tabindex="0" aria-label="Model 07 (tap to compare)">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render07.webp" alt="Model 07 Render" loading="lazy" decoding="async">
-        <img class="img-clay"   src="../assets/modeling-clay07.webp"   alt="Model 07 Clay"   loading="lazy" decoding="async">
-      </div>
-    </div>
-
-    <div class="stack reveal" tabindex="0" aria-label="Model 08 (tap to compare)">
-      <div class="layer">
-        <img class="img-render" src="../assets/modeling-render08.webp" alt="Model 08 Render" loading="lazy" decoding="async">
-        <img class="img-clay"   src="../assets/modeling-clay08.webp"   alt="Model 08 Clay"   loading="lazy" decoding="async">
-      </div>
-    </div>
+    </section>
 
   </div>
 </main>
 
 <script>
-/* ===== Menu (same behavior as home) ===== */
-const body=document.body,
-      menuBtn=document.getElementById('menuBtn'),
-      overlay=document.getElementById('overlay'),
-      menuPanel=document.getElementById('menuPanel');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add("show");
+  });
+},{threshold:0.12});
 
-function openMenu(){ body.classList.add('menu-open'); menuBtn?.setAttribute('aria-expanded','true'); }
-function closeMenu(){ body.classList.remove('menu-open'); menuBtn?.setAttribute('aria-expanded','false'); }
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 
-menuBtn?.addEventListener('click', ()=> {
-  if(body.classList.contains('menu-open')) closeMenu();
-  else openMenu();
-});
-overlay?.addEventListener('click', closeMenu);
-menuPanel?.addEventListener('click',e=>{ if(e.target.tagName==='A') closeMenu(); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });
-
-/* ===== Scroll reveal ===== */
-(function(){
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce){
-    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('show'));
-    return;
-  }
-  const items = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting) entry.target.classList.add('show');
-    });
-  }, { threshold: 0.12 });
-  items.forEach(el=>io.observe(el));
-})();
-
-/* ===== Tap to compare (mobile) + keyboard ===== */
 document.querySelectorAll(".stack").forEach(card=>{
   card.addEventListener("click",()=> card.classList.toggle("is-compare"));
-  card.addEventListener("keydown",(e)=>{
-    if(e.key==="Enter" || e.key===" "){
-      e.preventDefault();
-      card.classList.toggle("is-compare");
-    }
-  });
 });
-</script>
-<!-- Calendly Widget -->
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-
-<script>
-window.onload = function() {
-  Calendly.initBadgeWidget({
-    url: 'https://calendly.com/zsizart/30min',
-    text: 'Schedule a call',
-    color: '#ff7a18',
-    textColor: '#ffffff',
-    branding: false
-  });
-};
 </script>
 
 </body>
 </html>
-
