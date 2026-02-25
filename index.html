@@ -43,8 +43,8 @@
             --foreground: #000000;
             --accent: #ff7a18;
             --accent-dark: #e06300;
-            --gray-light: #f5f5f5;
-            --gray-dark: #e0e0e0;
+            --gray-light: #f8f8f8;
+            --gray-dark: #eaeaea;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
@@ -129,11 +129,12 @@
             border-radius: 4px;
             transition: var(--transition);
             background: var(--gray-light);
+            aspect-ratio: 16/9;
         }
         
         .project-card img {
             width: 100%;
-            height: 300px;
+            height: 100%;
             object-fit: cover;
             transition: var(--transition);
         }
@@ -204,7 +205,7 @@
             max-height:90vh;
             width:auto;
             height:auto;
-            object-fit:contain;
+            object-fit: contain;
             opacity:0;
             transition:opacity .5s ease;
             will-change:opacity,transform;
@@ -388,11 +389,12 @@
             overflow: hidden;
             border-radius: 4px;
             transition: var(--transition);
+            aspect-ratio: 16/9;
         }
         
         .modeling-cta img {
             width: 100%;
-            height: 400px;
+            height: 100%;
             object-fit: cover;
             transition: var(--transition);
         }
@@ -420,6 +422,31 @@
         
         .modeling-cta:hover .modeling-overlay {
             opacity: 1;
+        }
+        
+        /* Navigation Links with Underline Effect */
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            padding: 0.5rem 0;
+            text-decoration: none;
+            color: var(--foreground);
+            font-weight: 500;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
         }
         
         /* Responsive */
@@ -457,11 +484,13 @@
     
     <!-- Navigation Menu -->
     <nav class="nav-menu" id="navMenu">
-        <a href="#work">Projects</a>
-        <a href="#modeling-cta">3D Modeling</a>
-        <a href="#about">Studio</a>
-        <a href="#courses">Courses</a>
-        <a href="#contact">Contact</a>
+        <a href="#work" class="nav-link">Projects</a>
+        <a href="#modeling-cta" class="nav-link">3D Modeling</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#about" class="nav-link">Studio</a>
+        <a href="#courses" class="nav-link">Courses</a>
+        <a href="#career" class="nav-link">Career</a>
+        <a href="#contact" class="nav-link">Contact</a>
     </nav>
     
     <!-- Hero Section -->
@@ -471,7 +500,7 @@
             <div class="hero-content fade-in">
                 <h1>ZSIZART Studio</h1>
                 <p>Premium Architectural Visualization & CGI</p>
-                <div class="flex gap-4">
+                <div class="flex gap-4 mt-8">
                     <a href="#work" class="btn">View Work</a>
                     <a href="#contact" class="btn btn-outline">Request Proposal</a>
                 </div>
