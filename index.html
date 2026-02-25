@@ -25,7 +25,7 @@
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- LIBRARIES -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -40,9 +40,9 @@
     <style>
         :root {
             --background: #0a0a0a;
-            --foreground: #f5f5f5;
-            --accent: #ff6b35;
-            --accent-dark: #e55a2b;
+            --foreground: #f0f0f0;
+            --accent: #ff7a18;
+            --accent-dark: #e06300;
             --gray-light: #2a2a2a;
             --gray-dark: #1a1a1a;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -63,31 +63,26 @@
             line-height: 1.6;
         }
         
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-        }
-        
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
         
         .section-padding {
-            padding: 8rem 0;
+            padding: 6rem 0;
         }
         
         .btn {
             display: inline-block;
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 1.8rem;
             background: var(--accent);
             color: white;
             border: none;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: var(--transition);
             cursor: pointer;
             position: relative;
@@ -97,23 +92,12 @@
         .btn:hover {
             background: var(--accent-dark);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.2);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-        }
-        
-        .btn-outline:hover {
-            background: var(--accent);
-            color: white;
+            box-shadow: 0 10px 20px rgba(255, 122, 24, 0.2);
         }
         
         .section-title {
-            font-size: 3.5rem;
-            margin-bottom: 5rem;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
             position: relative;
             display: inline-block;
         }
@@ -121,23 +105,24 @@
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -15px;
+            bottom: -10px;
             left: 0;
-            width: 60px;
-            height: 3px;
+            width: 50px;
+            height: 2px;
             background: var(--accent);
         }
         
         .project-card {
             position: relative;
             overflow: hidden;
-            border-radius: 8px;
+            border-radius: 4px;
             transition: var(--transition);
+            background: var(--gray-dark);
         }
         
         .project-card img {
             width: 100%;
-            height: 100%;
+            height: 300px;
             object-fit: cover;
             transition: var(--transition);
         }
@@ -151,9 +136,9 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            padding: 2rem;
-            transform: translateY(30px);
+            background: rgba(0,0,0,0.8);
+            padding: 1.5rem;
+            transform: translateY(10px);
             opacity: 0;
             transition: var(--transition);
         }
@@ -165,31 +150,16 @@
         
         .service-card {
             background: var(--gray-dark);
-            padding: 2.5rem;
-            border-radius: 8px;
+            padding: 2rem;
+            border-radius: 4px;
             transition: var(--transition);
             border: 1px solid var(--gray-light);
+            height: 100%;
         }
         
         .service-card:hover {
-            transform: translateY(-10px);
             border-color: var(--accent);
-        }
-        
-        .service-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .service-icon i {
-            width: 30px;
-            height: 30px;
+            transform: translateY(-5px);
         }
         
         .fade-in {
@@ -291,7 +261,7 @@
         }
         
         .nav-menu a {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin: 1rem 0;
             text-decoration: none;
             color: var(--foreground);
@@ -347,7 +317,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+            background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
             z-index: -1;
         }
         
@@ -356,15 +326,17 @@
         }
         
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             line-height: 1.1;
             margin-bottom: 1.5rem;
+            font-weight: 700;
         }
         
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
             color: #ccc;
+            max-width: 500px;
         }
         
         /* Footer */
@@ -401,7 +373,7 @@
         /* Responsive */
         @media (max-width: 768px) {
             .section-title {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             
             .hero h1 {
@@ -409,7 +381,7 @@
             }
             
             .nav-menu a {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .service-card {
@@ -444,11 +416,11 @@
         <div class="absolute inset-0 bg-[url('assets/hero-bg.jpg')] bg-cover bg-center bg-no-repeat"></div>
         <div class="container">
             <div class="hero-content fade-in">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6">Architectural Visualization Studio</h1>
-                <p class="text-xl mb-8 max-w-2xl">Creating cinematic architectural imagery and animation for global projects</p>
+                <h1>ZSIZART Studio</h1>
+                <p>Premium Architectural Visualization & CGI</p>
                 <div class="flex gap-4">
-                    <a href="#work" class="btn">View Projects</a>
-                    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+                    <a href="#work" class="btn">View Work</a>
+                    <a href="#contact" class="btn">Request Proposal</a>
                 </div>
             </div>
         </div>
@@ -457,45 +429,55 @@
     <!-- Work Section -->
     <section id="work" class="section-padding">
         <div class="container">
-            <h2 class="section-title">Featured Work</h2>
+            <h2 class="section-title">Work</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Project 1 -->
-                <div class="project-card fade-in">
+                <div class="project-card fade-in cursor-pointer" data-project="assets/work-01" data-title="Verde Crest Villas" data-desc="Luxury Residential Development — Concept & Visualization.">
                     <img src="assets/work-01.webp" alt="Verde Crest Villas">
                     <div class="project-overlay">
-                        <h3 class="text-2xl font-bold mb-2">Verde Crest Villas</h3>
-                        <p class="mb-4">Luxury Residential Development — Concept & Visualization</p>
-                        <span class="text-sm uppercase tracking-widest text-accent">Exterior</span>
+                        <h3 class="text-xl font-bold mb-2">Verde Crest Villas</h3>
+                        <p class="mb-3 text-sm">Luxury Residential Development — Concept & Visualization.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Exterior</span>
                     </div>
                 </div>
                 
                 <!-- Project 2 -->
-                <div class="project-card fade-in">
+                <div class="project-card fade-in cursor-pointer" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape.">
                     <img src="assets/work-02.webp" alt="Hillside Serenity">
                     <div class="project-overlay">
-                        <h3 class="text-2xl font-bold mb-2">Hillside Serenity</h3>
-                        <p class="mb-4">A modern retreat in nature blending architecture and landscape</p>
-                        <span class="text-sm uppercase tracking-widest text-accent">Exterior</span>
+                        <h3 class="text-xl font-bold mb-2">Hillside Serenity</h3>
+                        <p class="mb-3 text-sm">A modern retreat in nature blending architecture and landscape.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Exterior</span>
                     </div>
                 </div>
                 
                 <!-- Project 3 -->
-                <div class="project-card fade-in">
+                <div class="project-card fade-in cursor-pointer" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living.">
                     <img src="assets/work-03.webp" alt="Retro Home Sweet">
                     <div class="project-overlay">
-                        <h3 class="text-2xl font-bold mb-2">Retro Home Sweet</h3>
-                        <p class="mb-4">Interior CGI capturing warmth of retro modern living</p>
-                        <span class="text-sm uppercase tracking-widest text-accent">Interior</span>
+                        <h3 class="text-xl font-bold mb-2">Retro Home Sweet</h3>
+                        <p class="mb-3 text-sm">Interior CGI capturing warmth of retro modern living.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Interior</span>
                     </div>
                 </div>
                 
                 <!-- Project 4 -->
-                <div class="project-card fade-in">
+                <div class="project-card fade-in cursor-pointer" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition.">
                     <img src="assets/work-04.webp" alt="Serene Lines">
                     <div class="project-overlay">
-                        <h3 class="text-2xl font-bold mb-2">Serene Lines</h3>
-                        <p class="mb-4">Interior CGI focused on light, material and calm composition</p>
-                        <span class="text-sm uppercase tracking-widest text-accent">Interior</span>
+                        <h3 class="text-xl font-bold mb-2">Serene Lines</h3>
+                        <p class="mb-3 text-sm">Interior CGI focused on light, material and calm composition.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Interior</span>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card fade-in cursor-pointer" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living.">
+                    <img src="assets/work-05.webp" alt="Modern Haven">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Modern Haven</h3>
+                        <p class="mb-3 text-sm">Interior CGI capturing warmth of modern living.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Interior</span>
                     </div>
                 </div>
             </div>
@@ -505,42 +487,30 @@
     <!-- Services Section -->
     <section id="services" class="section-padding bg-gray-dark">
         <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <h2 class="section-title">Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Service 1 -->
                 <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <i data-lucide="home" class="text-white w-8 h-8"></i>
-                    </div>
                     <h3 class="text-xl font-bold mb-3">Interior Visualization</h3>
-                    <p class="text-gray-300">Photoreal interiors focused on mood, materials, and storytelling</p>
+                    <p class="text-gray-300">Photoreal interiors focused on mood, materials, and storytelling.</p>
                 </div>
                 
                 <!-- Service 2 -->
                 <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <i data-lucide="building" class="text-white w-8 h-8"></i>
-                    </div>
                     <h3 class="text-xl font-bold mb-3">Exterior Visualization</h3>
-                    <p class="text-gray-300">Compelling exteriors with dramatic atmosphere and context</p>
+                    <p class="text-gray-300">Compelling exteriors with dramatic atmosphere and context.</p>
                 </div>
                 
                 <!-- Service 3 -->
                 <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <i data-lucide="film" class="text-white w-8 h-8"></i>
-                    </div>
                     <h3 class="text-xl font-bold mb-3">Animation</h3>
-                    <p class="text-gray-300">Cinematic walkthroughs and product films that move audiences</p>
+                    <p class="text-gray-300">Cinematic walkthroughs and product films that move audiences.</p>
                 </div>
                 
                 <!-- Service 4 -->
                 <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <i data-lucide="package" class="text-white w-8 h-8"></i>
-                    </div>
                     <h3 class="text-xl font-bold mb-3">Product Visualization</h3>
-                    <p class="text-gray-300">High-end product shots for furniture and design marketing</p>
+                    <p class="text-gray-300">High-end product shots for furniture and design marketing.</p>
                 </div>
             </div>
         </div>
@@ -549,31 +519,36 @@
     <!-- About Section -->
     <section id="about" class="section-padding">
         <div class="container">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="fade-in">
-                    <h2 class="section-title">About Us</h2>
-                    <p class="text-xl mb-6">ZSIZART Studio is a visualization practice focused on delivering refined, production-ready architectural imagery and animation for global projects.</p>
-                    <p class="text-xl mb-6">We collaborate with architects, developers, and design teams to create high-end visuals that support marketing, investor presentations, and project launches.</p>
-                    <p class="text-xl">We collaborate with architects, developers, and design brands worldwide—supporting projects from concept to polished marketing assets. Our focus is reliability, clarity, and delivering consistent quality at production speed.</p>
-                </div>
-                <div class="fade-in">
-                    <img src="assets/about-image.jpg" alt="About ZSIZART" class="rounded-lg shadow-2xl">
-                </div>
+            <h2 class="section-title">About</h2>
+            <div class="fade-in">
+                <p class="text-xl mb-6"><strong>ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production-ready architectural imagery and animation for global projects.</p>
+                <p class="text-xl mb-6">We collaborate with architects, developers, and design teams to create high-end visuals that support marketing, investor presentations, and project launches.</p>
+                <p class="text-xl">We collaborate with architects, developers, and design brands worldwide—supporting projects from concept to polished marketing assets. Our focus is reliability, clarity, and delivering consistent quality at production speed.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Courses Section -->
+    <section id="courses" class="section-padding bg-gray-dark">
+        <div class="container">
+            <h2 class="section-title">Courses</h2>
+            <div class="fade-in">
+                <p class="text-xl">Educational content currently in development.</p>
             </div>
         </div>
     </section>
     
     <!-- Contact Section -->
-    <section id="contact" class="section-padding bg-gray-dark">
+    <section id="contact" class="section-padding">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
+            <h2 class="section-title">Contact</h2>
             <div class="max-w-2xl mx-auto">
                 <form id="contact-form" class="fade-in">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <input type="text" name="from_name" placeholder="Your Name" class="bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent" required>
                         <input type="email" name="reply_to" placeholder="Your Email" class="bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent" required>
                     </div>
-                    <textarea name="message" placeholder="Your Message" rows="6" class="w-full bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent mb-6" required></textarea>
+                    <textarea name="message" placeholder="Your Message" rows="5" class="w-full bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent mb-6" required></textarea>
                     <button type="submit" class="btn w-full">Send Message</button>
                     <p id="status" class="mt-4 text-center text-accent"></p>
                 </form>
@@ -669,28 +644,12 @@
             const btnNext  = document.getElementById('pvNext');
             
             // Project data
-            const projects = [
-                {
-                    base: 'assets/work-01',
-                    title: 'Verde Crest Villas',
-                    desc: 'Luxury Residential Development — Concept & Visualization.'
-                },
-                {
-                    base: 'assets/work-02',
-                    title: 'Hillside Serenity',
-                    desc: 'A modern retreat in nature blending architecture and landscape.'
-                },
-                {
-                    base: 'assets/work-03',
-                    title: 'Retro Home Sweet',
-                    desc: 'Interior CGI capturing warmth of retro modern living.'
-                },
-                {
-                    base: 'assets/work-04',
-                    title: 'Serene Lines',
-                    desc: 'Interior CGI focused on light, material and calm composition.'
-                }
-            ];
+            const projectCards = document.querySelectorAll('.project-card');
+            const projects = Array.from(projectCards).map(card => ({
+                base: card.dataset.project,
+                title: card.dataset.title,
+                desc: card.dataset.desc
+            }));
             
             let list = [], idx = 0, topIsA = true;
             const cache = new Map();
@@ -790,7 +749,7 @@
             }
             
             // Open viewer when clicking on project cards
-            document.querySelectorAll('.project-card').forEach((card, i) => {
+            projectCards.forEach((card, i) => {
                 card.addEventListener('click', async () => {
                     await openProject(i);
                     openPV();
