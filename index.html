@@ -1,1234 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>ZSIZART Studio — Architectural Visualization & CGI</title>
-
-  <!-- SEO / SOCIAL -->
-  <meta name="description" content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects." />
-  <link rel="canonical" href="https://zsizart.com/" />
-  <meta property="og:title" content="ZSIZART — Visualization Studio" />
-  <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/og-cover.jpg" />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ZSIZART — Visualization Studio" />
-  <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI." />
-  <meta name="twitter:image" content="assets/og-cover.jpg" />
-
-  <!-- FAVICON -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png" />
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-
-  <!-- FONTS -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- LIBRARIES -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- EmailJS + Calendly (keep) -->
-  <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-  <script defer src="https://assets.calendly.com/assets/external/widget.js"></script>
-
-  <style>
-    :root{
-      --background:#ffffff;
-      --foreground:#000000;
-      --muted:#333;
-      --accent:#ff7a18;
-      --accent-dark:#e06300;
-      --gray-light:#f8f8f8;
-      --gray-dark:#eaeaea;
-      --transition:all .4s cubic-bezier(.16,1,.3,1);
-
-      --pv-dur:.55s;
-      --pv-ease:cubic-bezier(.16,1,.3,1);
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      background:var(--background);
-      color:var(--foreground);
-      font-family:'Inter',sans-serif;
-      scroll-behavior:smooth;
-      overflow-x:hidden;
-      line-height:1.6;
-    }
-    .container{max-width:1200px;margin:0 auto;padding:0 2rem}
-    .section-padding{padding:6rem 0}
-    .btn{
-      display:inline-block;
-      padding:.85rem 1.8rem;
-      background:var(--accent);
-      color:#fff;
-      border:none;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      font-size:.8rem;
-      transition:var(--transition);
-      cursor:pointer;
-      position:relative;
-      overflow:hidden;
-      border-radius:10px;
-    }
-    .btn:hover{background:var(--accent-dark);transform:translateY(-2px);box-shadow:0 10px 20px rgba(255,122,24,.2)}
-    .btn-outline{background:transparent;border:1px solid var(--foreground);color:var(--foreground)}
-    .btn-outline:hover{background:var(--foreground);color:var(--background)}
-    .section-title{
-      font-size:2.5rem;
-      margin-bottom:3rem;
-      position:relative;
-      display:inline-block;
-      font-weight:800;
-      letter-spacing:-.02em;
-    }
-    .section-title::after{
-      content:'';
-      position:absolute;
-      bottom:-10px;left:0;
-      width:50px;height:2px;
-      background:var(--accent);
-    }
-
-    /* Fade in */
-    .fade-in{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
-    .fade-in.appear{opacity:1;transform:translateY(0)}
-
-    /* Navigation */
-    .nav-menu{
-      position:fixed;top:0;left:0;height:100vh;width:100%;
-      background:var(--background);
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      z-index:100;opacity:0;visibility:hidden;transition:var(--transition)
-    }
-    .nav-menu.active{opacity:1;visibility:visible}
-    .nav-menu a{
-      font-size:2rem;margin:1rem 0;text-decoration:none;color:var(--foreground);
-      position:relative;padding:.5rem 0;font-weight:700;
-    }
-    .nav-menu a::after{
-      content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition)
-    }
-    .nav-menu a:hover::after{width:100%}
-
-    /* Header */
-    header{
-      position:fixed;top:0;left:0;width:100%;
-      padding:1.25rem 0;
-      z-index:90;
-      transition:var(--transition)
-    }
-    header.scrolled{
-      background:rgba(255,255,255,.92);
-      backdrop-filter:blur(12px);
-      padding:.85rem 0;
-      box-shadow:0 5px 20px rgba(0,0,0,.05)
-    }
-    .nav-link{position:relative;display:inline-block;padding:.5rem 0;text-decoration:none;color:var(--foreground);font-weight:700}
-    .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition)}
-    .nav-link:hover::after{width:100%}
-
-    /* Hero */
-    .hero{height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
-    .hero::before{
-      content:'';position:absolute;top:0;left:0;width:100%;height:100%;
-      background:linear-gradient(to right, rgba(255,255,255,.88), rgba(255,255,255,.55));
-      z-index:1;
-    }
-    .hero-bg{
-      position:absolute;inset:0;
-      background:url('assets/hero-bg.jpg') center/cover no-repeat;
-      z-index:0;
-      filter:saturate(1.05) contrast(1.02);
-    }
-    .hero-content{max-width:760px;position:relative;z-index:2}
-    .hero h1{font-size:3.6rem;line-height:1.05;margin-bottom:1rem;font-weight:900;letter-spacing:-.04em}
-    .hero p{font-size:1.18rem;margin-bottom:1.8rem;color:var(--muted);max-width:560px}
-
-    /* Projects grid */
-    .project-card{
-      position:relative;overflow:hidden;border-radius:16px;transition:var(--transition);
-      background:var(--gray-light);aspect-ratio:16/9;border:1px solid var(--gray-dark);
-    }
-    .project-card img{width:100%;height:100%;object-fit:cover;transition:var(--transition)}
-    .project-card:hover img{transform:scale(1.05)}
-    .project-overlay{
-      position:absolute;left:0;right:0;bottom:0;
-      background:rgba(255,255,255,.92);
-      padding:1.2rem 1.2rem 1.1rem;
-      transform:translateY(10px);opacity:0;
-      transition:var(--transition);
-    }
-    .project-card:hover .project-overlay{transform:translateY(0);opacity:1}
-
-    /* Services */
-    .services-wrap{background:var(--gray-light)}
-    .service-card{
-      background:#fff;
-      padding:1.6rem;
-      border-radius:16px;
-      transition:var(--transition);
-      border:1px solid var(--gray-dark);
-      height:100%;
-      box-shadow:0 8px 30px rgba(0,0,0,.04);
-    }
-    .service-card:hover{border-color:rgba(255,122,24,.5);transform:translateY(-4px)}
-    .service-thumb{
-      width:100%;
-      aspect-ratio:16/10;
-      border-radius:14px;
-      overflow:hidden;
-      background:var(--gray-light);
-      border:1px solid var(--gray-dark);
-      margin-bottom:1rem;
-    }
-    .service-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .tag{
-      display:inline-flex;align-items:center;gap:.35rem;
-      font-size:.72rem;
-      padding:.28rem .55rem;
-      border-radius:999px;
-      border:1px solid rgba(0,0,0,.12);
-      background:#fff;
-      color:#111;
-      margin:.18rem .18rem 0 0;
-      white-space:nowrap;
-    }
-
-    /* Modeling CTA */
-    .modeling-cta{
-      position:relative;overflow:hidden;border-radius:18px;transition:var(--transition);aspect-ratio:16/9;border:1px solid var(--gray-dark);
-    }
-    .modeling-cta img{width:100%;height:100%;object-fit:cover;transition:var(--transition)}
-    .modeling-cta:hover img{transform:scale(1.05)}
-    .modeling-overlay{
-      position:absolute;inset:0;
-      background:rgba(0,0,0,.62);
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      text-align:center;padding:2rem;opacity:0;transition:var(--transition)
-    }
-    .modeling-cta:hover .modeling-overlay{opacity:1}
-
-    /* Footer */
-    footer{background:var(--gray-light);padding:4rem 0 2rem;text-align:center}
-    .social-links{display:flex;justify-content:center;gap:1.2rem;margin:2rem 0}
-    .social-links a{
-      display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:999px;
-      background:var(--gray-dark);color:var(--foreground);transition:var(--transition)
-    }
-    .social-links a:hover{background:var(--accent);transform:translateY(-4px);color:#fff}
-
-    /* ==================== Project Viewer ==================== */
-    .pv{
-      position:fixed;inset:0;z-index:200;background:#000;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      opacity:0;pointer-events:none;
-      transition:opacity var(--pv-dur) var(--pv-ease);
-    }
-    .pv.show{opacity:1;pointer-events:auto}
-    .pv__content{position:relative;width:100%;height:100%}
-    .pv__image{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-    .pv__img{
-      position:absolute;max-width:90vw;max-height:78vh;width:auto;height:auto;object-fit:contain;
-      opacity:0;transition:opacity .5s ease;will-change:opacity,transform;
-    }
-    .pv__img.is-top{opacity:1;animation:pvIn var(--pv-dur) var(--pv-ease)}
-    @keyframes pvIn{from{transform:translateY(-40px);opacity:.9}to{transform:translateY(0);opacity:1}}
-    .pv__info{
-      position:absolute;left:0;right:0;bottom:110px;
-      padding:18px 22px;font-size:15px;line-height:1.5;color:#fff;
-      text-shadow:0 2px 6px rgba(0,0,0,.7);
-      transform:translateY(100%);opacity:0;
-      transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
-    }
-    .pv.show .pv__info{transform:translateY(0);opacity:1}
-    .pv__close{
-      position:absolute;top:14px;left:14px;
-      width:44px;height:44px;border-radius:12px;
-      background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);color:#fff;
-      font-size:28px;line-height:1;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      box-shadow:0 6px 20px rgba(0,0,0,.35);z-index:15;
-    }
-    .pv__close:hover{background:rgba(0,0,0,.6)}
-    .pv__arrow{
-      position:absolute;top:50%;transform:translateY(-50%);
-      width:64px;height:64px;font-size:44px;border-radius:50%;
-      border:none;cursor:pointer;background:rgba(0,0,0,.45);
-      color:#fff;z-index:10;backdrop-filter:blur(4px);
-      transition:.25s;
-    }
-    .pv__arrow:hover{background:rgba(0,0,0,.72)}
-    .pv__prev{left:20px}
-    .pv__next{right:20px}
-    @media(max-width:768px){
-      .pv__arrow{width:48px;height:48px;font-size:34px}
-      .pv__img{max-height:72vh}
-      .pv__info{bottom:130px}
-    }
-
-    /* ======= Project Rail (under viewer) ======= */
-    .pv__rail{
-      position:absolute;left:0;right:0;bottom:0;
-      padding:16px 14px 18px;
-      background:linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,.28), rgba(0,0,0,0));
-      z-index:12;
-    }
-    .rail{
-      display:flex;
-      gap:12px;
-      overflow:auto;
-      scrollbar-width:thin;
-      padding:10px 8px 14px;
-      scroll-snap-type:x mandatory;
-      -webkit-overflow-scrolling:touch;
-    }
-    .rail::-webkit-scrollbar{height:8px}
-    .rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:999px}
-    .rail-item{
-      flex:0 0 auto;
-      width:170px;
-      height:96px;
-      border-radius:14px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
-      cursor:pointer;
-      scroll-snap-align:start;
-      position:relative;
-      transform:translateZ(0);
-    }
-    .rail-item img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;transition:.25s}
-    .rail-item:hover img{opacity:1;transform:scale(1.03)}
-    .rail-item.active{outline:2px solid rgba(255,122,24,.9);outline-offset:2px}
-    .rail-label{
-      position:absolute;left:10px;right:10px;bottom:8px;
-      font-size:12px;font-weight:700;line-height:1.2;color:#fff;
-      text-shadow:0 2px 8px rgba(0,0,0,.65);
-      overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
-    }
-
-    /* ==================== Booking Multi-step Popup ==================== */
-    .pop{
-      position:fixed;inset:0;z-index:220;
-      display:flex;align-items:center;justify-content:center;
-      background:rgba(0,0,0,.6);
-      opacity:0;pointer-events:none;
-      transition:opacity .35s ease;
-      padding:20px;
-    }
-    .pop.show{opacity:1;pointer-events:auto}
-    .pop__card{
-      width:min(780px, 96vw);
-      background:#0b0b0b;
-      color:#fff;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:22px;
-      box-shadow:0 30px 90px rgba(0,0,0,.55);
-      overflow:hidden;
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-    }
-    .pop__side{
-      padding:28px 26px;
-      background:radial-gradient(1200px 600px at 10% 20%, rgba(255,122,24,.28), transparent 60%),
-                 radial-gradient(900px 500px at 80% 90%, rgba(255,255,255,.12), transparent 55%),
-                 #0b0b0b;
-      border-right:1px solid rgba(255,255,255,.10);
-      display:flex;flex-direction:column;gap:14px;
-    }
-    .pop__side h3{font-size:22px;font-weight:900;letter-spacing:-.02em}
-    .pop__side p{color:rgba(255,255,255,.78);font-size:14px;line-height:1.55}
-    .pop__side .mini{
-      margin-top:auto;
-      font-size:12px;
-      color:rgba(255,255,255,.6);
-      border-top:1px solid rgba(255,255,255,.10);
-      padding-top:14px;
-    }
-    .pop__main{
-      padding:22px 22px 18px;
-      display:flex;flex-direction:column;
-      gap:14px;
-      background:#0f0f10;
-    }
-    .pop__top{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-    }
-    .pop__close{
-      width:40px;height:40px;border-radius:12px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      color:#fff;font-size:22px;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-    }
-    .pop__close:hover{background:rgba(255,255,255,.10)}
-    .stepper{display:flex;gap:7px;flex-wrap:wrap}
-    .dot{
-      width:10px;height:10px;border-radius:999px;
-      background:rgba(255,255,255,.18);
-      border:1px solid rgba(255,255,255,.18);
-    }
-    .dot.active{background:var(--accent);border-color:rgba(255,122,24,.9)}
-    .step{
-      display:none;
-      flex-direction:column;
-      gap:10px;
-      padding:10px 0 4px;
-      min-height:220px;
-    }
-    .step.active{display:flex}
-    .step label{font-size:13px;font-weight:800;color:rgba(255,255,255,.92)}
-    .field{
-      width:100%;
-      padding:14px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.04);
-      color:#fff;
-      outline:none;
-      font-size:14px;
-    }
-    .field:focus{border-color:rgba(255,122,24,.7);box-shadow:0 0 0 4px rgba(255,122,24,.12)}
-    .pop__actions{
-      margin-top:auto;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.10);
-    }
-    .btn2{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:12px 14px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
-      color:#fff;font-weight:900;font-size:12px;
-      text-transform:uppercase;letter-spacing:1px;
-      cursor:pointer;
-      transition:var(--transition);
-      user-select:none;
-      min-width:120px;
-    }
-    .btn2:hover{background:rgba(255,255,255,.10);transform:translateY(-1px)}
-    .btn2.primary{
-      background:var(--accent);
-      border-color:rgba(255,122,24,.9);
-    }
-    .btn2.primary:hover{background:var(--accent-dark)}
-    .btn2[disabled]{opacity:.45;pointer-events:none}
-    .pop__status{font-size:12px;color:rgba(255,255,255,.72);min-height:18px}
-    @media(max-width:900px){
-      .pop__card{grid-template-columns:1fr}
-      .pop__side{border-right:none;border-bottom:1px solid rgba(255,255,255,.10)}
-    }
-
-    /* Responsive */
-    @media(max-width:768px){
-      .section-title{font-size:2rem}
-      .hero h1{font-size:2.55rem}
-      .nav-menu a{font-size:1.8rem}
-      .container{padding:0 1.2rem}
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Header -->
-  <header id="header">
-    <div class="container flex justify-between items-center">
-      <div class="logo">
-        <img src="assets/logo.png" alt="ZSIZART Logo" class="h-8" />
-      </div>
-      <div class="flex items-center gap-3">
-        <button id="openBookingTop" class="btn hidden md:inline-flex">Book a Call</button>
-        <div class="menu-toggle cursor-pointer">
-          <i data-lucide="menu" class="text-black w-8 h-8"></i>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Navigation Menu -->
-  <nav class="nav-menu" id="navMenu">
-    <a href="#work" class="nav-link">Projects</a>
-    <a href="#services" class="nav-link">Services</a>
-    <a href="#modeling-cta" class="nav-link">3D Modeling</a>
-    <a href="#about" class="nav-link">Studio</a>
-    <a href="#courses" class="nav-link">Courses</a>
-    <a href="#career" class="nav-link">Career</a>
-    <a href="#contact" class="nav-link">Contact</a>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="hero relative">
-    <div class="hero-bg" aria-hidden="true"></div>
-    <div class="container">
-      <div class="hero-content fade-in">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-black/10 bg-white/70 text-[12px] font-bold">
-          <span class="w-2 h-2 rounded-full" style="background:var(--accent)"></span>
-          Production-ready CGI for architecture & products
-        </div>
-        <h1 class="mt-5">ZSIZART Studio</h1>
-        <p>Premium Architectural Visualization & CGI — photoreal stills, animation, and product imagery with consistent delivery.</p>
-        <div class="flex flex-wrap gap-4 mt-8">
-          <a href="#work" class="btn">View Work</a>
-          <button id="openBookingHero" class="btn btn-outline">Request Proposal</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Section (images placeholders in assets/SERVICES/) -->
-  <section id="services" class="section-padding services-wrap">
-    <div class="container">
-      <h2 class="section-title">Services</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Exterior Rendering -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-exterior-rendering.webp" alt="Exterior Rendering" />
-          </div>
-          <h3 class="text-xl font-black mb-2">Exterior Rendering</h3>
-          <p class="text-gray-700 mb-3">High-impact exteriors with atmosphere, context, and lighting that sells the vision.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">Exterior Walkthroughs</span>
-            <span class="tag">Architectural Animations</span>
-            <span class="tag">Architectural Walkthroughs</span>
-          </div>
-        </article>
-
-        <!-- Hospitality Rendering -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-hospitality-rendering.webp" alt="Hospitality Rendering" />
-          </div>
-          <h3 class="text-xl font-black mb-2">Hospitality Rendering</h3>
-          <p class="text-gray-700 mb-3">Hospitality visuals with material accuracy, brand tone, and spatial clarity.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">Bathrooms</span>
-            <span class="tag">Bedrooms</span>
-            <span class="tag">Commercial</span>
-            <span class="tag">Design Drawings</span>
-            <span class="tag">Furniture Modeling</span>
-          </div>
-        </article>
-
-        <!-- Furniture Rendering -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-furniture-rendering.webp" alt="Furniture Rendering" />
-          </div>
-          <h3 class="text-xl font-black mb-2">Furniture Rendering</h3>
-          <p class="text-gray-700 mb-3">Clean, premium furniture imagery optimized for ecommerce and brand marketing.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">3D Sculpting</span>
-            <span class="tag">High-Poly Modeling</span>
-            <span class="tag">Low-Poly Modeling</span>
-          </div>
-        </article>
-
-        <!-- Custom 3D Modeling -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-custom-3d-modeling.webp" alt="Custom 3D Modeling" />
-          </div>
-          <h3 class="text-xl font-black mb-2">Custom 3D Modeling</h3>
-          <p class="text-gray-700 mb-3">Accurate modeling pipelines built for reusability across scenes and deliverables.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">High-Poly Modeling</span>
-            <span class="tag">Low-Poly Modeling</span>
-            <span class="tag">AR Modeling</span>
-            <span class="tag">3D Sculpting</span>
-            <span class="tag">Furniture Modeling</span>
-          </div>
-        </article>
-
-        <!-- Commercial Rendering -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-commercial-rendering.webp" alt="Commercial Rendering" />
-          </div>
-          <h3 class="text-xl font-black mb-2">Commercial Rendering</h3>
-          <p class="text-gray-700 mb-3">Commercial visuals that communicate scale, function, and investor-ready intent.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">Commercial</span>
-            <span class="tag">Residential</span>
-            <span class="tag">Institutional</span>
-            <span class="tag">Event Booths</span>
-            <span class="tag">Exterior Walkthroughs</span>
-          </div>
-        </article>
-
-        <!-- Interior Rendering -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-interior-rendering.webp" alt="Interior Rendering" />
-          </div>
-          <h3 class="text-xl font-black mb-2">Interior Rendering</h3>
-          <p class="text-gray-700 mb-3">Interiors built around mood, believable light, and material storytelling.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">Kitchens</span>
-            <span class="tag">Bathrooms</span>
-            <span class="tag">Living Rooms</span>
-            <span class="tag">Bedrooms</span>
-            <span class="tag">Commercial</span>
-          </div>
-        </article>
-
-        <!-- Product Rendering -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-product-rendering.webp" alt="Product Rendering" />
-          </div>
-          <h3 class="text-xl font-black mb-2">Product Rendering</h3>
-          <p class="text-gray-700 mb-3">Product imagery for brands: silos, lifestyle, and scalable scene systems.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">Furniture Lifestyles</span>
-            <span class="tag">Furniture Silos</span>
-            <span class="tag">3D Scenes Library</span>
-            <span class="tag">Product Lifestyles</span>
-            <span class="tag">Product Silos</span>
-          </div>
-        </article>
-
-        <!-- AI Animations -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-ai-animations.webp" alt="AI Animations" />
-          </div>
-          <h3 class="text-xl font-black mb-2">AI Animations</h3>
-          <p class="text-gray-700 mb-3">Fast-motion content: walkthroughs, product motion, and virtual tours.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">Architectural Animations</span>
-            <span class="tag">Architectural Walkthroughs</span>
-            <span class="tag">Virtual Tours</span>
-            <span class="tag">Furniture Animations</span>
-            <span class="tag">Product Animations</span>
-          </div>
-        </article>
-
-        <!-- Landscape Rendering -->
-        <article class="service-card fade-in">
-          <div class="service-thumb">
-            <img src="assets/SERVICES/services-landscape-rendering.webp" alt="Landscape Rendering" />
-          </div>
-          <h3 class="text-xl font-black mb-2">Landscape Rendering</h3>
-          <p class="text-gray-700 mb-3">Site and landscape visuals that clarify context and planning decisions.</p>
-          <div class="flex flex-wrap">
-            <span class="tag">Site Plan Rendering</span>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Work Section -->
-  <section id="work" class="section-padding">
-    <div class="container">
-      <h2 class="section-title">Projects</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Project 1 -->
-        <div class="project-card fade-in cursor-pointer"
-             data-project="assets/work-01"
-             data-title="Verde Crest Villas"
-             data-desc="Luxury Residential Development — Concept & Visualization."
-             data-cover="assets/work-01.webp">
-          <img src="assets/work-01.webp" alt="Verde Crest Villas" />
-          <div class="project-overlay">
-            <h3 class="text-xl font-black mb-2">Verde Crest Villas</h3>
-            <p class="mb-3 text-sm">Luxury Residential Development — Concept & Visualization.</p>
-            <span class="text-xs uppercase tracking-widest" style="color:var(--accent)">Exterior</span>
-          </div>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="project-card fade-in cursor-pointer"
-             data-project="assets/work-02"
-             data-title="Hillside Serenity"
-             data-desc="A modern retreat in nature blending architecture and landscape."
-             data-cover="assets/work-02.webp">
-          <img src="assets/work-02.webp" alt="Hillside Serenity" />
-          <div class="project-overlay">
-            <h3 class="text-xl font-black mb-2">Hillside Serenity</h3>
-            <p class="mb-3 text-sm">A modern retreat in nature blending architecture and landscape.</p>
-            <span class="text-xs uppercase tracking-widest" style="color:var(--accent)">Exterior</span>
-          </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="project-card fade-in cursor-pointer"
-             data-project="assets/work-03"
-             data-title="Retro Home Sweet"
-             data-desc="Interior CGI capturing warmth of retro modern living."
-             data-cover="assets/work-03.webp">
-          <img src="assets/work-03.webp" alt="Retro Home Sweet" />
-          <div class="project-overlay">
-            <h3 class="text-xl font-black mb-2">Retro Home Sweet</h3>
-            <p class="mb-3 text-sm">Interior CGI capturing warmth of retro modern living.</p>
-            <span class="text-xs uppercase tracking-widest" style="color:var(--accent)">Interior</span>
-          </div>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="project-card fade-in cursor-pointer"
-             data-project="assets/work-04"
-             data-title="Serene Lines"
-             data-desc="Interior CGI focused on light, material and calm composition."
-             data-cover="assets/work-04.webp">
-          <img src="assets/work-04.webp" alt="Serene Lines" />
-          <div class="project-overlay">
-            <h3 class="text-xl font-black mb-2">Serene Lines</h3>
-            <p class="mb-3 text-sm">Interior CGI focused on light, material and calm composition.</p>
-            <span class="text-xs uppercase tracking-widest" style="color:var(--accent)">Interior</span>
-          </div>
-        </div>
-
-        <!-- Project 5 -->
-        <div class="project-card fade-in cursor-pointer"
-             data-project="assets/work-05"
-             data-title="Modern Haven"
-             data-desc="Interior CGI capturing warmth of modern living."
-             data-cover="assets/work-05.webp">
-          <img src="assets/work-05.webp" alt="Modern Haven" />
-          <div class="project-overlay">
-            <h3 class="text-xl font-black mb-2">Modern Haven</h3>
-            <p class="mb-3 text-sm">Interior CGI capturing warmth of modern living.</p>
-            <span class="text-xs uppercase tracking-widest" style="color:var(--accent)">Interior</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3D Modeling CTA -->
-  <section id="modeling-cta" class="section-padding">
-    <div class="container">
-      <div class="modeling-cta fade-in">
-        <img src="assets/modeling-preview.jpg" alt="3D Modeling" />
-        <div class="modeling-overlay">
-          <h3 class="text-2xl font-black mb-4 text-white">3D Product Modeling</h3>
-          <p class="mb-6 max-w-md text-white/80">High-quality 3D modeling services for architectural visualization and product design</p>
-          <a href="3D-Product-Modeling" class="btn">Explore Services</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Studio Section -->
-  <section id="about" class="section-padding">
-    <div class="container">
-      <h2 class="section-title">Studio</h2>
-      <div class="fade-in">
-        <p class="text-xl mb-6"><strong>ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production-ready architectural imagery and animation for global projects.</p>
-        <p class="text-xl mb-6">We collaborate with architects, developers, and design teams to create high-end visuals that support marketing, investor presentations, and project launches.</p>
-        <p class="text-xl">We support projects from concept to polished marketing assets. Our focus is reliability, clarity, and consistent quality at production speed.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Courses Section -->
-  <section id="courses" class="section-padding services-wrap">
-    <div class="container">
-      <h2 class="section-title">Courses</h2>
-      <div class="fade-in">
-        <p class="text-xl">Educational content currently in development.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Career Section -->
-  <section id="career" class="section-padding">
-    <div class="container">
-      <h2 class="section-title">Career</h2>
-      <div class="fade-in">
-        <p class="text-xl mb-6">Join our team of talented artists and designers. We're always looking for passionate individuals to push the boundaries of architectural visualization.</p>
-        <p class="text-xl">Send your portfolio and CV to careers@zsizart.com</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="section-padding">
-    <div class="container">
-      <h2 class="section-title">Contact</h2>
-      <div class="max-w-2xl mx-auto">
-        <form id="contact-form" class="fade-in">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <input type="text" name="from_name" placeholder="Your Name" class="bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none" style="border-color:#d1d5db; outline-color:transparent" required />
-            <input type="email" name="reply_to" placeholder="Your Email" class="bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none" style="border-color:#d1d5db; outline-color:transparent" required />
-          </div>
-          <textarea name="message" placeholder="Your Message" rows="5" class="w-full bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none mb-6" style="border-color:#d1d5db; outline-color:transparent" required></textarea>
-          <button type="submit" class="btn w-full">Send Message</button>
-          <p id="status" class="mt-4 text-center" style="color:var(--accent)"></p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="logo mb-6">
-        <img src="assets/logo.png" alt="ZSIZART Logo" class="h-8 mx-auto" />
-      </div>
-      <div class="social-links">
-        <a href="#"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-        <a href="#"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-        <a href="#"><i data-lucide="behance" class="w-5 h-5"></i></a>
-        <a href="#"><i data-lucide="vimeo" class="w-5 h-5"></i></a>
-      </div>
-      <p class="text-gray-600">© 2026 ZSIZART Studio — Architectural Visualization & CGI</p>
-    </div>
-  </footer>
-
-  <!-- Project Viewer -->
-  <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
-    <div class="pv__content">
-      <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
-
-      <div class="pv__image">
-        <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
-        <img id="pvImageA" class="pv__img is-top" alt="" />
-        <img id="pvImageB" class="pv__img" alt="" />
-        <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
-      </div>
-
-      <aside class="pv__info">
-        <h3 id="pvTitle" class="text-xl font-black"></h3>
-        <p id="pvDesc" class="mt-1 text-white/80"></p>
-      </aside>
-
-      <!-- Rail -->
-      <div class="pv__rail">
-        <div class="rail" id="pvRail" aria-label="Other projects"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Booking Multi-step Popup -->
-  <div class="pop" id="bookingPop" aria-hidden="true" role="dialog" aria-label="Booking form">
-    <div class="pop__card">
-      <div class="pop__side">
-        <h3>Request a Proposal</h3>
-        <p>Answer a few quick questions. You’ll get a reply with timeline, scope, and next steps.</p>
-        <p class="mini">You can still use the contact form below for general messages.</p>
-      </div>
-
-      <div class="pop__main">
-        <div class="pop__top">
-          <div class="stepper" id="popDots" aria-label="Progress">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </div>
-          <button class="pop__close" id="closeBooking" aria-label="Close">&times;</button>
-        </div>
-
-        <form id="bookingForm" novalidate>
-          <!-- Step 1 -->
-          <div class="step active" data-step="0">
-            <label for="bfName">Name *</label>
-            <input class="field" id="bfName" name="Name" type="text" placeholder="E.g. John" required />
-          </div>
-
-          <!-- Step 2 -->
-          <div class="step" data-step="1">
-            <label for="bfEmail">Email *</label>
-            <input class="field" id="bfEmail" name="Email" type="email" placeholder="E.g. contact@gmail.com" required />
-          </div>
-
-          <!-- Step 3 -->
-          <div class="step" data-step="2">
-            <label for="bfNumber">What is your phone number? *</label>
-            <input class="field" id="bfNumber" name="Number" type="tel" placeholder="E.g. 123456789" required />
-          </div>
-
-          <!-- Step 4 -->
-          <div class="step" data-step="3">
-            <label for="bfCompany">What is your company name? *</label>
-            <input class="field" id="bfCompany" name="Company" type="text" placeholder="E.g. Company name" required />
-          </div>
-
-          <!-- Step 5 -->
-          <div class="step" data-step="4">
-            <label for="bfWebsite">What is your company website? *</label>
-            <input class="field" id="bfWebsite" name="Website-Name" type="url" placeholder="E.g. Company Website" required />
-          </div>
-
-          <div class="pop__actions">
-            <div class="pop__status" id="bookingStatus"></div>
-            <div class="flex items-center gap-2">
-              <button type="button" class="btn2" id="bfBack" style="display:none">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                Back
-              </button>
-              <button type="button" class="btn2 primary" id="bfNext">
-                Next
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Icons
-    lucide.createIcons();
-
-    // Menu Toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.getElementById('navMenu');
-    menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-      link.addEventListener('click', () => navMenu.classList.remove('active'));
-    });
-
-    // Header scroll effect
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 100);
-    });
-
-    // Fade in animation
-    const fadeElements = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('appear'); });
-    }, { threshold: 0.12 });
-    fadeElements.forEach(el => observer.observe(el));
-
-    // ==================== Project Viewer + Rail ====================
-    (() => {
-      const viewer   = document.getElementById('pv');
-      const imgA     = document.getElementById('pvImageA');
-      const imgB     = document.getElementById('pvImageB');
-      const titleEl  = document.getElementById('pvTitle');
-      const descEl   = document.getElementById('pvDesc');
-      const btnClose = document.getElementById('pvClose');
-      const btnPrev  = document.getElementById('pvPrev');
-      const btnNext  = document.getElementById('pvNext');
-      const railEl   = document.getElementById('pvRail');
-
-      const projectCards = document.querySelectorAll('.project-card');
-      const projects = Array.from(projectCards).map((card, i) => ({
-        idx: i,
-        base: card.dataset.project,
-        title: card.dataset.title,
-        desc: card.dataset.desc,
-        cover: card.dataset.cover || `${card.dataset.project}.webp`
-      }));
-
-      let list = [], idx = 0, topIsA = true;
-      const cache = new Map();
-
-      // Rail auto-scroll state
-      let railRAF = null;
-      let railSpeed = 0.7; // px/frame
-      let railPaused = false;
-
-      function updateArrows(){
-        const multi = (list.length > 1);
-        btnPrev.style.display = multi ? '' : 'none';
-        btnNext.style.display = multi ? '' : 'none';
-      }
-
-      function show(src){
-        const top   = topIsA ? imgA : imgB;
-        const under = topIsA ? imgB : imgA;
-
-        under.onload = () => {
-          top.classList.remove('is-top');
-          under.classList.add('is-top');
-          topIsA = !topIsA;
-          under.onload = null;
-        };
-        under.src = src;
-      }
-
-      function setIdx(i){
-        if (!list.length) return;
-        idx = (i + list.length) % list.length;
-        show(list[idx]);
-      }
-      const nextImg = () => setIdx(idx + 1);
-      const prevImg = () => setIdx(idx - 1);
-
-      btnNext?.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); nextImg(); });
-      btnPrev?.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); prevImg(); });
-
-      async function buildList(base){
-        if (cache.has(base)) return cache.get(base);
-
-        const exts = ['.webp','.jpg','.jpeg','.png'];
-        const tryList = [];
-
-        exts.forEach(ext => tryList.push(`${base}${ext}`));
-        for(let i=1;i<=15;i++){
-          const p2 = String(i).padStart(2,'0');
-          exts.forEach(ext => {
-            tryList.push(`${base}-${p2}${ext}`);
-            tryList.push(`${base}-${i}${ext}`);
-          });
-        }
-        exts.forEach(ext => {
-          tryList.push(`${base}-clay${ext}`);
-          tryList.push(`${base}-alt${ext}`);
-          tryList.push(`${base}-sh${ext}`);
-          tryList.push(`${base}-extra${ext}`);
-        });
-
-        const checks = tryList.map(src => new Promise(res => {
-          const im = new Image();
-          im.onload = () => res(src);
-          im.onerror = () => res(null);
-          im.src = src;
-        }));
-
-        const found = (await Promise.all(checks)).filter(Boolean);
-        const finalList = found.length ? found : [`${base}.webp`];
-
-        cache.set(base, finalList);
-        return finalList;
-      }
-
-      function openPV(){
-        viewer.classList.add('show');
-        viewer.setAttribute('aria-hidden','false');
-        document.body.style.overflow='hidden';
-        startRail();
-      }
-      function closePV(){
-        viewer.classList.remove('show');
-        viewer.setAttribute('aria-hidden','true');
-        document.body.style.overflow='';
-        stopRail();
-      }
-
-      function renderRail(activeProjectIndex){
-        railEl.innerHTML = '';
-
-        projects.forEach(p => {
-          const item = document.createElement('button');
-          item.type = 'button';
-          item.className = 'rail-item' + (p.idx === activeProjectIndex ? ' active' : '');
-          item.setAttribute('aria-label', p.title);
-
-          const im = document.createElement('img');
-          im.src = p.cover;
-          im.alt = p.title;
-
-          const label = document.createElement('div');
-          label.className = 'rail-label';
-          label.textContent = p.title;
-
-          item.appendChild(im);
-          item.appendChild(label);
-
-          item.addEventListener('mouseenter', () => railPaused = true);
-          item.addEventListener('mouseleave', () => railPaused = false);
-
-          item.addEventListener('click', async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            await openProject(p.idx);
-          });
-
-          railEl.appendChild(item);
-        });
-
-        // Pause rail when hovering the rail area too
-        railEl.addEventListener('mouseenter', () => railPaused = true);
-        railEl.addEventListener('mouseleave', () => railPaused = false);
-
-        // Reset scroll start
-        railEl.scrollLeft = 0;
-      }
-
-      function startRail(){
-        if (railRAF) return;
-        const tick = () => {
-          if (!viewer.classList.contains('show')) { railRAF = null; return; }
-
-          if (!railPaused) {
-            const max = railEl.scrollWidth - railEl.clientWidth;
-            if (max > 4) {
-              railEl.scrollLeft += railSpeed;
-              if (railEl.scrollLeft >= max - 1) railEl.scrollLeft = 0;
-            }
-          }
-          railRAF = requestAnimationFrame(tick);
-        };
-        railRAF = requestAnimationFrame(tick);
-      }
-      function stopRail(){
-        if (railRAF) cancelAnimationFrame(railRAF);
-        railRAF = null;
-        railPaused = false;
-      }
-
-      async function openProject(i){
-        const p = projects[i];
-        titleEl.textContent = p.title;
-        descEl.textContent = p.desc;
-
-        list = await buildList(p.base);
-        idx = 0;
-
-        imgA.classList.remove('is-top');
-        imgB.classList.remove('is-top');
-        const currentTop = topIsA ? imgA : imgB;
-        currentTop.src = list[0];
-        currentTop.classList.add('is-top');
-
-        updateArrows();
-        renderRail(i);
-      }
-
-      projectCards.forEach((card, i) => {
-        card.addEventListener('click', async () => {
-          await openProject(i);
-          openPV();
-        });
-      });
-
-      viewer.addEventListener('click', e => { if (e.target === viewer) closePV(); });
-      btnClose?.addEventListener('click', closePV);
-
-      document.addEventListener('keydown', e => {
-        if (!viewer.classList.contains('show')) return;
-        if (e.key === 'Escape') closePV();
-        if (e.key === 'ArrowRight') nextImg();
-        if (e.key === 'ArrowLeft') prevImg();
-        if (e.key === 'ArrowDown' || e.key === 'PageDown') nextImg();
-        if (e.key === 'ArrowUp' || e.key === 'PageUp') prevImg();
-      });
-    })();
-
-    // ==================== Booking Multi-step Popup ====================
-    (() => {
-      const pop = document.getElementById('bookingPop');
-      const openHero = document.getElementById('openBookingHero');
-      const openTop = document.getElementById('openBookingTop');
-      const closeBtn = document.getElementById('closeBooking');
-
-      const form = document.getElementById('bookingForm');
-      const steps = Array.from(form.querySelectorAll('.step'));
-      const dots = Array.from(document.getElementById('popDots').querySelectorAll('.dot'));
-      const back = document.getElementById('bfBack');
-      const next = document.getElementById('bfNext');
-      const status = document.getElementById('bookingStatus');
-
-      let s = 0;
-
-      function openPop(){
-        pop.classList.add('show');
-        pop.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
-        status.textContent = '';
-        setStep(0);
-      }
-      function closePop(){
-        pop.classList.remove('show');
-        pop.setAttribute('aria-hidden','true');
-        document.body.style.overflow = '';
-      }
-
-      function setStep(n){
-        s = Math.max(0, Math.min(steps.length - 1, n));
-        steps.forEach((el, i) => el.classList.toggle('active', i === s));
-        dots.forEach((d, i) => d.classList.toggle('active', i === s));
-        back.style.display = s === 0 ? 'none' : '';
-        next.innerHTML = (s === steps.length - 1)
-          ? 'Submit <i data-lucide="check" class="w-4 h-4"></i>'
-          : 'Next <i data-lucide="arrow-right" class="w-4 h-4"></i>';
-        lucide.createIcons();
-        const field = steps[s].querySelector('input,textarea,select');
-        if (field) field.focus();
-      }
-
-      function validateStep(){
-        const field = steps[s].querySelector('input,textarea,select');
-        if (!field) return true;
-        if (field.checkValidity()) return true;
-        field.reportValidity();
-        return false;
-      }
-
-      async function submit(){
-        // Put your endpoint or EmailJS here.
-        // For now: show payload in console and success message.
-        const fd = new FormData(form);
-        const payload = Object.fromEntries(fd.entries());
-        console.log('Booking payload:', payload);
-
-        status.textContent = 'Sent. We will reply shortly.';
-        next.disabled = true;
-        back.disabled = true;
-
-        setTimeout(() => {
-          next.disabled = false;
-          back.disabled = false;
-          closePop();
-        }, 900);
-      }
-
-      openHero?.addEventListener('click', openPop);
-      openTop?.addEventListener('click', openPop);
-      closeBtn?.addEventListener('click', closePop);
-
-      pop.addEventListener('click', (e) => { if (e.target === pop) closePop(); });
-      document.addEventListener('keydown', (e) => { if (pop.classList.contains('show') && e.key === 'Escape') closePop(); });
-
-      back.addEventListener('click', () => setStep(s - 1));
-      next.addEventListener('click', async () => {
-        status.textContent = '';
-        if (!validateStep()) return;
-
-        if (s === steps.length - 1) {
-          await submit();
-          return;
-        }
-        setStep(s + 1);
-      });
-    })();
-
-    // ==================== EmailJS (Contact Form) ====================
-    (() => {
-      const PUBLIC_KEY = "JdZK05NoMso2b9lHe";
-      const SERVICE_ID = "service_m1dfwio";
-      const TEMPLATE_ID = "template_kuqk13r";
-
-      const form   = document.getElementById('contact-form');
-      const status = document.getElementById('status');
-      if(!form) return;
-
-      window.addEventListener('load', () => { try { emailjs.init(PUBLIC_KEY); } catch(e) {} });
-
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
-          .then(() => {
-            status.textContent = 'Message sent successfully!';
-            form.reset();
-          })
-          .catch(() => {
-            status.textContent = 'Failed to send message. Please try again.';
-          });
-      });
-    })();
-  </script>
-</body>
-</html>
+<section class="pieces">
+
+<div class="container">
+
+<h2 class="pieces-title">Our pieces</h2>
+
+
+<div class="pieces-grid">
+
+
+<!-- item -->
+<div class="piece">
+
+<div class="piece-img">
+
+<img src="assets/pieces/grind.webp">
+
+</div>
+
+<div class="piece-meta">
+
+<div>
+
+<div class="piece-name">Grind</div>
+
+<div class="piece-type">CHAIR</div>
+
+</div>
+
+<div class="piece-price">$400</div>
+
+</div>
+
+</div>
+
+
+<!-- item -->
+<div class="piece">
+
+<div class="piece-img">
+
+<img src="assets/pieces/areo.webp">
+
+</div>
+
+<div class="piece-meta">
+
+<div>
+
+<div class="piece-name">Areo</div>
+
+<div class="piece-type">ARMCHAIR</div>
+
+</div>
+
+<div class="piece-price">$330</div>
+
+</div>
+
+</div>
+
+
+<!-- item -->
+<div class="piece">
+
+<div class="piece-img">
+
+<img src="assets/pieces/andy.webp">
+
+</div>
+
+<div class="piece-meta">
+
+<div>
+
+<div class="piece-name">Andy</div>
+
+<div class="piece-type">CHAIR</div>
+
+</div>
+
+<div class="piece-price">$160</div>
+
+</div>
+
+</div>
+
+
+<!-- item -->
+<div class="piece">
+
+<div class="piece-img">
+
+<img src="assets/pieces/pink.webp">
+
+</div>
+
+<div class="piece-meta">
+
+<div>
+
+<div class="piece-name">Loop</div>
+
+<div class="piece-type">CHAIR</div>
+
+</div>
+
+<div class="piece-price">$290</div>
+
+</div>
+
+</div>
+
+
+<!-- item -->
+<div class="piece">
+
+<div class="piece-img">
+
+<img src="assets/pieces/blue.webp">
+
+</div>
+
+<div class="piece-meta">
+
+<div>
+
+<div class="piece-name">Mono</div>
+
+<div class="piece-type">CHAIR</div>
+
+</div>
+
+<div class="piece-price">$180</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
