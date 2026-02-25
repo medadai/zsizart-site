@@ -2,10 +2,10 @@
 <html lang="en" oncontextmenu="return false">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZSIZART Studio — Architectural Visualization & CGI</title>
 
-  <!-- SEO / Social -->
+  <!-- ====================== SEO ====================== -->
   <link rel="canonical" href="https://zsizart.com/">
   <meta name="robots" content="index, follow">
   <meta name="description" content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
@@ -19,7 +19,6 @@
   <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
   <meta name="twitter:image" content="assets/og-cover.jpg">
 
-  <!-- JSON‑LD (Organization) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -36,71 +35,70 @@
   }
   </script>
 
-  <!-- Preload images -->
+  <!-- ====================== PRE‑LOADS & FAVICONS ====================== -->
   <link rel="preload" as="image" href="assets/logo.png">
   <link rel="preload" as="image" href="assets/og-cover.jpg">
-
-  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 
-  <!-- Tailwind CDN -->
+  <!-- ====================== FONTS & EXTERNAL LIBS ====================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Framer Motion & Lucide -->
   <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Lenis (smooth scroll) – defer -->
   <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
+  <!-- ====================== CUSTOM CSS (مدمج) ====================== -->
   <style>
-    /* -------------------------------------------------
-       CSS الأصلي (الفلترة، عارض‑المشاريع، زرّ‑الأعلى، CTA …)
-       ------------------------------------------------- */
+    /* ---- المتغيّرات البسيطة (من التصميم الجديد) ---- */
     :root{
-      --bg:#0b0d0d;
-      --card:#141414;
-      --ink:#e9edf0;
-      --muted:#9fb3c8;
-      --accent1:#ff7a18;
-      --accent2:#a855f7;
-      --radius:18px;
-      --shadow:0 12px 40px rgba(0,0,0,.35);
-      --max:1160px;
-
-      /* Motion */
-      --pv-dur:.45s;
-      --pv-ease:cubic-bezier(.4,.14,.3,1);
-      --rev-dur:.7s;
-      --rev-ease:cubic-bezier(.2,.65,.15,1);
+      --background:#fbfbf9;
+      --foreground:#111111;
+    }
+    body{
+      background-color:var(--background);
+      color:var(--foreground);
+      font-family:'Inter',sans-serif;
+      scroll-behavior:smooth;
+      margin:0;
+      overflow-x:hidden;
+    }
+    .mix-blend-difference{mix-blend-mode:difference}
+    ::-webkit-scrollbar{width:0;background:transparent}
+    .aspect-4-3{aspect-ratio:4/3}
+    .project-grid-item:nth-child(even){margin-top:4rem}
+    @media(min-width:768px){
+      .project-grid-item:nth-child(even){margin-top:8rem}
     }
 
+    /* ---- المتغيّرات الأصلية (لتصميم الموقع بالكامل) ---- */
+    :root{
+      --bg:#0b0d0d; --card:#141414; --ink:#e9edf0; --muted:#9fb3c8;
+      --accent1:#ff7a18; --accent2:#a855f7; --radius:18px; --shadow:0 12px 40px rgba(0,0,0,.35);
+      --max:1160px; --pv-dur:.45s; --pv-ease:cubic-bezier(.4,.14,.3,1);
+      --rev-dur:.7s; --rev-ease:cubic-bezier(.2,.65,.15,1);
+    }
     *{box-sizing:border-box}
-    *{caret-color:transparent}
-    input,textarea,select{caret-color:auto}
     html{scroll-behavior:smooth}
     html.lenis,html.lenis body{height:auto}
     .lenis.lenis-smooth{scroll-behavior:unset}
     body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
+      margin:0; background:var(--bg); color:var(--ink);
       font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
-      overflow-x:hidden;
-      -webkit-tap-highlight-color:transparent;
+      overflow-x:hidden; -webkit-tap-highlight-color:transparent;
     }
     img{display:block;max-width:100%}
     a{color:inherit;text-decoration:none}
     .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-    /* ---- Header (kept) ---- */
+    /* ---- الهيدر (من النسخة الأصلية) ---- */
     header{
       position:sticky;top:0;z-index:70;
-      background:rgba(5,7,9,.92);
-      backdrop-filter:saturate(160%) blur(10px);
-      border-bottom:1px solid #0e1116;
-      box-shadow:0 8px 30px rgba(0,0,0,.35);
+      background:rgba(5,7,9,.92);backdrop-filter:saturate(160%) blur(10px);
+      border-bottom:1px solid #0e1116;box-shadow:0 8px 30px rgba(0,0,0,.35);
       transition:transform .4s ease;
     }
     header .wrap{padding:20px 32px}
@@ -121,25 +119,22 @@
     .menu-open .menu-btn .bars{background:transparent}
     .menu-open .menu-btn .bars::before,.menu-open .menu-btn .bars::after{opacity:0}
     .menu-open .menu-btn::after{
-      content:"";display:block;width:24px;height:24px;background:url('assets/logo.png') center/contain no-repeat;
+      content:"";display:block;width:24px;height:24px;
+      background:url('assets/logo.png') center/contain no-repeat;
       animation:popIn var(--rev-dur) var(--rev-ease);
     }
     @keyframes popIn{from{transform:scale(.6);opacity:.2}to{transform:scale(1);opacity:1}}
 
-    /* ---- HERO (Tailwind already styles, but keep gradient text) ---- */
-    .hero h2{
-      font-size:42px;margin:0 0 12px;font-weight:700;
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-      will-change:transform;
-    }
+    /* ---- الـ hero (من النسخة الأصلية) ---- */
+    .hero{padding:0 0 8px;position:relative;overflow:hidden}
+    .hero h2{font-size:42px;margin:0 0 12px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;will-change:transform}
     .hero p{margin:0;color:var(--muted);font-size:18px;will-change:transform}
     .hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:var(--ink);font-weight:600;cursor:pointer}
     .btn.primary{background:linear-gradient(135deg,var(--accent1),var(--accent2));border-color:transparent;color:#fff}
     .btn.primary:hover{filter:brightness(1.06)}
 
-    /* ---- FILTER PANEL (from original) ---- */
+    /* ---- لوحة الفلترة ---- */
     .filter-panel{position:sticky;top:64px;z-index:60;margin:18px 0 0;background:rgba(0,0,0,.55);border:1px solid #1a1f27;border-radius:14px;padding:14px;display:none}
     .filter-panel.show{display:block}
     .filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
@@ -149,7 +144,7 @@
     .filter-actions{margin-left:auto;display:flex;gap:10px}
     .hint{margin-top:10px;color:#9fb3c8;font-size:13px}
 
-    /* ---- GRID & TILES (used for work section) ---- */
+    /* ---- شبكة الـ work ---- */
     .grid{
       display:grid;
       gap:18px;
@@ -178,7 +173,7 @@
     }
     .tile:hover .img-clay{opacity:1}
 
-    /* ---- CARD (services, about, contact) ---- */
+    /* ---- البطاقات (services, about, contact) ---- */
     .card{
       background:var(--card);
       border:1px solid #1a1f27;
@@ -187,11 +182,15 @@
     }
     .card h3{font-size:1.25rem;font-weight:600;margin-bottom:.5rem}
     .card p{color:#9fb3c8;font-size:.95rem}
+    .section-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .inline-btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#cfe2ff;font-weight:700;cursor:pointer}
 
-    /* ---- 3D‑MODEL CTA (kept) ---- */
+    /* ---- CTA النمذجة الـ 3D ---- */
     #modeling-cta{margin:18px 0 0}
     .modeling-link{
-      position:relative;display:block;overflow:hidden;border-radius:18px;border:1px solid #1a1f27;background:#0c0e12;box-shadow:0 12px 40px rgba(0,0,0,.35);
+      position:relative;display:block;overflow:hidden;
+      border-radius:18px;border:1px solid #1a1f27;background:#0c0e12;
+      box-shadow:0 12px 40px rgba(0,0,0,.35);
     }
     .modeling-img{
       width:100%;height:auto;display:block;object-fit:cover;
@@ -205,27 +204,23 @@
       position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
       background:linear-gradient(to top,rgba(0,0,0,.65),rgba(0,0,0,.08) 60%);
     }
-    .modeling-text{text-align:center}
     .modeling-title{font-size:28px;font-weight:800;margin-bottom:12px;text-shadow:0 2px 10px rgba(0,0,0,.55)}
     .modeling-btn{
       display:inline-block;padding:10px 18px;
-      border:1px solid rgba(255,255,255,.85);
-      border-radius:12px;font-weight:800;
-      background:rgba(0,0,0,.35);backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,.85);border-radius:12px;
+      font-weight:800;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);
       transition:.25s;
     }
-    .modeling-link:hover .modeling-btn{
-      background:#fff;color:#000;border-color:#fff;
-    }
+    .modeling-link:hover .modeling-btn{background:#fff;color:#000;border-color:#fff}
 
-    /* ---- PROJECT VIEWER ---- */
+    /* ---- عارض الـ project (original) ---- */
     .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
     .pv.show{opacity:1;pointer-events:auto}
     .pv__content{position:relative;width:100%;height:100%}
     .pv__image{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
     .pv__img{
       position:absolute;inset:0;width:100vw;height:100vh;object-fit:contain;opacity:0;
-      transition:opacity .5s ease;will-change:opacity,transform;
+      transition:opacity .5s ease;will-change:opacity,transform
     }
     .pv__img.is-top{opacity:1;animation:pvIn var(--pv-dur) var(--pv-ease)}
     @keyframes pvIn{from{transform:translateY(-40px);opacity:.9}to{transform:translateY(0);opacity:1}}
@@ -237,25 +232,21 @@
     .pv.show .pv__info{transform:translateY(0);opacity:1}
     .pv__close{
       position:absolute;top:14px;left:14px;width:40px;height:40px;border-radius:10px;
-      background:rgba(0,0,0,.45);border:1px solid #1a1f27;color:#fff;font-size:26px;line-height:1;
-      cursor:pointer;display:flex;align-items:center;justify-content:center;
-      box-shadow:0 6px 20px rgba(0,0,0,.35);z-index:15;
+      background:rgba(0,0,0,.45);border:1px solid #1a1f27;color:#fff;font-size:26px;line-height:1;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.35);z-index:15;
     }
     .pv__close:hover{background:rgba(0,0,0,.6)}
     .pv__arrow{
       position:absolute;top:50%;transform:translateY(-50%);
-      width:64px;height:64px;font-size:44px;border-radius:50%;border:none;
-      cursor:pointer;background:rgba(0,0,0,.45);color:#fff;z-index:10;
-      backdrop-filter:blur(4px);transition:.25s;
+      width:64px;height:64px;font-size:44px;border-radius:50%;border:none;cursor:pointer;
+      background:rgba(0,0,0,.45);color:#fff;z-index:10;backdrop-filter:blur(4px);transition:.25s;
     }
     .pv__arrow:hover{background:rgba(0,0,0,.7)}
     .pv__prev{left:20px}
     .pv__next{right:20px}
-    @media(max-width:768px){
-      .pv__arrow{width:48px;height:48px;font-size:34px}
-    }
+    @media(max-width:768px){.pv__arrow{width:48px;height:48px;font-size:34px}}
 
-    /* ---- BACK‑TO‑TOP ---- */
+    /* ---- زرّ “Back to Top” ---- */
     .top-btn{
       position:fixed;right:22px;bottom:22px;z-index:120;
       display:flex;align-items:center;gap:8px;
@@ -273,7 +264,7 @@
     .top-text{font-size:16px}
     .top-btn.morph{
       padding:10px;border-radius:50%;width:48px;height:48px;
-      justify-content:center;gap:0
+      justify-content:center;gap:0;
     }
     .top-btn.morph .top-text{width:0;opacity:0;transform:scale(.8);transition:.2s ease}
     .top-btn.morph .top-glyph{
@@ -284,7 +275,7 @@
     @keyframes spinIn{0%{transform:scale(.6) rotate(-90deg);opacity:.2}100%{transform:scale(1) rotate(0deg);opacity:1}}
     @media (prefers-reduced-motion:reduce){.top-btn,.top-btn *{transition:none !important;animation:none !important}}
 
-    /* ---- REVEAL ON SCROLL ---- */
+    /* ---- كلاس الـ reveal للإنيميشن عند السحب ---- */
     .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
     .reveal.show{opacity:1;transform:none}
     .reveal.hide-up{opacity:0;transform:translateY(-16px)}
@@ -294,48 +285,51 @@
 
 <body>
   <!-- ====================== HEADER ====================== -->
-  <header>
-    <div class="wrap header-layout">
-      <div class="brand">
-        <img src="assets/logo.png" alt="ZSIZART Logo" class="logo" width="30" height="30" loading="eager" decoding="async">
-        <span class="wordmark">ZSIZART</span>
-      </div>
-      <div class="actions">
-        <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><span class="bars"></span></button>
-      </div>
+  <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white px-6 md:px-12 py-8 flex justify-between items-center pointer-events-none">
+    <div class="flex items-center gap-3 pointer-events-auto brand">
+      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo h-6 w-auto invert">
+      <span class="wordmark font-semibold tracking-widest text-sm uppercase">ZSIZART</span>
     </div>
+    <button id="menu-toggle" class="menu-btn pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors">
+      <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
   </header>
 
-  <!-- ====================== OVERLAY & MENU ====================== -->
-  <div class="overlay" id="overlay"></div>
-  <aside class="menu-panel" id="menuPanel" aria-label="Site menu">
-    <a href="/work">Work</a>
-    <a href="/services">Services</a>
-    <a href="/art">Art</a>
-    <a href="/about">About</a>
-    <a href="/contact">Contact</a>
-  </aside>
+  <!-- ====================== OVERLAY MENU ====================== -->
+  <div id="menu-overlay" class="overlay hidden flex-col justify-center px-12">
+    <button id="menu-close" class="absolute top-8 right-6 md:right-12 w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+    <nav class="flex flex-col gap-6 md:gap-10 text-4xl md:text-7xl font-light tracking-tighter">
+      <a href="#work" class="menu-link hover:translate-x-4 transition-transform duration-500">Work</a>
+      <a href="#services" class="menu-link hover:translate-x-4 transition-transform duration-500">Services</a>
+      <a href="#about" class="menu-link hover:translate-x-4 transition-transform duration-500">About</a>
+      <a href="#contact" class="menu-link hover:translate-x-4 transition-transform duration-500">Contact</a>
+    </nav>
+  </div>
 
   <!-- ====================== MAIN CONTENT ====================== -->
   <main class="wrap">
 
     <!-- HERO -->
-    <section class="hero pt-32 pb-16">
-      <h2 class="parallax hero-parallax">ZSIZART Studio</h2>
-      <p class="parallax hero-parallax">Premium Architectural Visualization &amp; CGI</p>
-      <div class="actions">
-        <a class="btn primary" href="#work">View Work</a>
-        <a class="btn" href="#contact">Request Proposal</a>
+    <section class="hero min-h-screen flex flex-col justify-end px-6 md:px-12 pb-24 md:pb-32 pt-32">
+      <div class="max-w-5xl opacity-0 translate-y-10 transition-all duration-1000" id="hero-content">
+        <h2 class="text-5xl md:text-[8vw] leading-[1.05] tracking-tighter font-medium mb-6">ZSIZART Studio</h2>
+        <p class="text-xl md:text-3xl text-neutral-500 font-light tracking-tight max-w-2xl mb-16">Premium Architectural Visualization &amp; CGI</p>
+        <div class="flex flex-wrap gap-6 text-sm font-medium tracking-wide uppercase">
+          <a href="#work" class="border-b border-black pb-1 hover:text-neutral-500 hover:border-neutral-500 transition-colors">View Work</a>
+          <a href="#contact" class="border-b border-black pb-1 hover:text-neutral-500 hover:border-neutral-500 transition-colors">Request Proposal</a>
+        </div>
       </div>
     </section>
 
-    <!-- FILTER PANEL (hidden, toggled by button) -->
+    <!-- FILTER PANEL (original) -->
     <section id="filters" class="filter-panel">
       <form id="filterForm" onsubmit="return false;">
         <div class="filter-row">
           <input class="search-input" type="search" id="q" placeholder="Search projects by name…" />
-          <label class="chip"><input type="checkbox" id="tagInterior"> INTERIOR</label>
-          <label class="chip"><input type="checkbox" id="tagExterior"> EXTERIOR</label>
+          <label class="chip"><input type="checkbox" id="tagInterior" /> INTERIOR</label>
+          <label class="chip"><input type="checkbox" id="tagExterior" /> EXTERIOR</label>
           <div class="filter-actions">
             <button type="button" class="btn" id="resetBtn">Reset</button>
             <button type="button" class="btn primary" id="applyBtn">Apply</button>
@@ -345,63 +339,67 @@
       </form>
     </section>
 
-    <!-- ====================== WORK ====================== -->
-    <section id="work" class="pt-24 pb-24">
-      <div class="section-row mb-8 flex items-center justify-between">
-        <h2 class="text-4xl md:text-5xl font-medium">Work</h2>
+    <!-- WORK -->
+    <section id="work" class="px-6 md:px-12 py-24 md:py-40 border-t border-neutral-200">
+      <div class="section-row mb-16 md:mb-24 gap-8">
+        <h2 class="text-4xl md:text-6xl tracking-tighter font-medium">Work</h2>
         <button class="inline-btn" id="filterToggle" type="button">Search &amp; Filter</button>
       </div>
 
       <div class="grid" id="grid">
         <!-- Project 1 -->
-        <div class="tile" data-project="assets/work-01" data-title="Verde Crest Villas"
+        <div class="project-grid-item tile group cursor-pointer opacity-0 translate-y-10 transition-all duration-1000"
+             data-project="assets/work-01"
+             data-title="Verde Crest Villas"
              data-desc="Luxury Residential Development — Concept &amp; Visualization."
              data-tags="exterior">
           <span class="label">EXTERIOR</span>
-          <img class="img-main" src="assets/work-01.webp" width="1600" height="900"
-               loading="eager" fetchpriority="high" decoding="async"
-               alt="Luxury Residential Architectural Visualization">
+          <img class="img-main" src="assets/work-01.webp" alt="Verde Crest Villas" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async">
         </div>
 
         <!-- Project 2 -->
-        <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity"
+        <div class="project-grid-item tile group cursor-pointer opacity-0 translate-y-10 transition-all duration-1000"
+             data-project="assets/work-02"
+             data-title="Hillside Serenity"
              data-desc="A modern retreat in nature blending architecture and landscape."
              data-tags="exterior">
           <span class="label">EXTERIOR</span>
-          <img class="img-main" src="assets/work-02.webp" width="1600" height="900"
-               loading="lazy" decoding="async" alt="Hillside Serenity">
+          <img class="img-main" src="assets/work-02.webp" alt="Hillside Serenity" width="1600" height="900" loading="lazy" decoding="async">
         </div>
 
         <!-- Project 3 -->
-        <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet"
+        <div class="project-grid-item tile group cursor-pointer opacity-0 translate-y-10 transition-all duration-1000"
+             data-project="assets/work-03"
+             data-title="Retro Home Sweet"
              data-desc="Interior CGI capturing warmth of retro modern living."
              data-tags="interior">
           <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-03.webp" width="1600" height="900"
-               loading="lazy" decoding="async" alt="Retro Home Sweet">
+          <img class="img-main" src="assets/work-03.webp" alt="Retro Home Sweet" width="1600" height="900" loading="lazy" decoding="async">
         </div>
 
         <!-- Project 4 -->
-        <div class="tile" data-project="assets/work-04" data-title="Serene Lines"
+        <div class="project-grid-item tile group cursor-pointer opacity-0 translate-y-10 transition-all duration-1000"
+             data-project="assets/work-04"
+             data-title="Serene Lines"
              data-desc="Interior CGI focused on light, material and calm composition."
              data-tags="interior">
           <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-04.webp" width="1600" height="900"
-               loading="lazy" decoding="async" alt="Serene Lines">
+          <img class="img-main" src="assets/work-04.webp" alt="Serene Lines" width="1600" height="900" loading="lazy" decoding="async">
         </div>
 
         <!-- Project 5 -->
-        <div class="tile" data-project="assets/work-05" data-title="Modern Haven"
+        <div class="project-grid-item tile group cursor-pointer opacity-0 translate-y-10 transition-all duration-1000"
+             data-project="assets/work-05"
+             data-title="Modern Haven"
              data-desc="Interior CGI capturing warmth of modern living."
              data-tags="interior">
           <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-05.webp" width="1600" height="900"
-               loading="lazy" decoding="async" alt="Modern Haven">
+          <img class="img-main" src="assets/work-05.webp" alt="Modern Haven" width="1600" height="900" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
 
-    <!-- ====================== 3D MODELING CTA ====================== -->
+    <!-- 3D Modeling CTA (from new design) -->
     <section id="modeling-cta">
       <a class="modeling-link"
          href="3D-Product-Modeling"
@@ -410,10 +408,11 @@
         <img class="modeling-img"
              src="assets/zsiz-modeling-thumb01.webp"
              width="1600" height="900"
-             loading="lazy" decoding="async"
+             loading="lazy"
+             decoding="async"
              alt="3D Modeling Preview">
         <div class="modeling-overlay">
-          <div class="modeling-text">
+          <div class="modeling-text text-center">
             <div class="modeling-title">3D Modeling</div>
             <div class="modeling-btn">SEE MORE</div>
           </div>
@@ -421,38 +420,51 @@
       </a>
     </section>
 
-    <!-- ====================== SERVICES ====================== -->
-    <section id="services" class="pt-24 pb-24 bg-[#111111] text-[#fbfbf9]">
-      <h2 class="text-4xl md:text-5xl font-medium mb-12">Services</h2>
-      <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:18px">
-        <article class="card"><h3>Interior Visualization</h3><p>Photoreal interiors focused on mood, materials, and storytelling.</p></article>
-        <article class="card"><h3>Exterior Visualization</h3><p>Compelling exteriors with dramatic atmosphere and context.</p></article>
-        <article class="card"><h3>Animation</h3><p>Cinematic walkthroughs and product films that move audiences.</p></article>
-        <article class="card"><h3>Product Visualization</h3><p>High‑end product shots for furniture and design marketing.</p></article>
+    <!-- SERVICES -->
+    <section id="services" class="px-6 md:px-12 py-24 md:py-40 bg-[#111111] text-[#fbfbf9]">
+      <h2 class="text-4xl md:text-6xl tracking-tighter font-medium mb-16 md:mb-24">Services</h2>
+      <div class="grid" style="grid-template-columns:repeat(1,1fr); gap:12px">
+        <article class="card border-t border-white/20 pt-8 opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
+          <h3 class="text-xl font-medium mb-4">Interior Visualization</h3>
+          <p class="text-neutral-400 font-light leading-relaxed">Photoreal interiors focused on mood, materials, and storytelling.</p>
+        </article>
+        <article class="card border-t border-white/20 pt-8 opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
+          <h3 class="text-xl font-medium mb-4">Exterior Visualization</h3>
+          <p class="text-neutral-400 font-light leading-relaxed">Compelling exteriors with dramatic atmosphere and context.</p>
+        </article>
+        <article class="card border-t border-white/20 pt-8 opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
+          <h3 class="text-xl font-medium mb-4">Animation</h3>
+          <p class="text-neutral-400 font-light leading-relaxed">Cinematic walkthroughs and product films that move audiences.</p>
+        </article>
+        <article class="card border-t border-white/20 pt-8 opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
+          <h3 class="text-xl font-medium mb-4">Product Visualization</h3>
+          <p class="text-neutral-400 font-light leading-relaxed">High‑end product shots for furniture and design marketing.</p>
+        </article>
       </div>
     </section>
 
-    <!-- ====================== ABOUT ====================== -->
-    <section id="about" class="pt-24 pb-24 bg-[#f0f0ee]">
-      <h2 class="text-4xl md:text-5xl font-medium mb-12">About</h2>
-      <div class="about">
-        <div class="card scrub scrub-right">
-          <p><strong>ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production‑ready architectural imagery and animation for global projects.</p>
-          <p>We collaborate with architects, developers, and design teams to create high‑end visuals that support marketing, investor presentations, and project launches.</p>
-          <p>We collaborate with architects, developers, and design brands worldwide—supporting projects from concept to polished marketing assets. Our focus is reliability, clarity, and delivering consistent quality at production speed.</p>
+    <!-- ABOUT -->
+    <section id="about" class="px-6 md:px-12 py-24 md:py-40 bg-[#f0f0ee]">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-12">
+        <div class="opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
+          <h2 class="text-4xl md:text-6xl tracking-tighter font-medium mb-12">About</h2>
+          <div class="space-y-8 text-xl md:text-2xl font-light leading-relaxed text-neutral-600 max-w-xl">
+            <p><strong class="text-black font-medium">ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production‑ready architectural imagery and animation for global projects.</p>
+            <p>We collaborate with architects, developers, and design teams to create high‑end visuals that support marketing, investor presentations, and project launches.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ====================== CONTACT ====================== -->
-    <section id="contact" class="pt-24 pb-24">
-      <h2 class="text-4xl md:text-5xl font-medium mb-12">Contact</h2>
-      <div class="card">
-        <form id="contact-form">
-          <input type="text" name="from_name" placeholder="Your Name" required>
-          <input type="email" name="reply_to" placeholder="Your Email" required>
-          <textarea name="message" placeholder="Your Message…" required></textarea>
-          <button type="submit" class="btn primary w-full">Send Message</button>
+    <!-- CONTACT -->
+    <section id="contact" class="px-6 md:px-12 py-24 md:py-40">
+      <div class="max-w-3xl mx-auto text-center opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
+        <h2 class="text-4xl md:text-6xl tracking-tighter font-medium mb-16">Contact</h2>
+        <form id="contact-form" class="flex flex-col gap-12" onsubmit="event.preventDefault()">
+          <input type="text" name="from_name" placeholder="Your Name" class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder:text-neutral-400 focus:outline-none focus:border-black transition-colors" required>
+          <input type="email" name="reply_to" placeholder="Your Email" class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder:text-neutral-400 focus:outline-none focus:border-black transition-colors" required>
+          <textarea name="message" placeholder="Your Message…" rows="4" class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder:text-neutral-400 focus:outline-none focus:border-black transition-colors resize-none" required></textarea>
+          <button type="submit" class="self-center bg-black text-white px-12 py-5 rounded-full text-sm font-medium tracking-widest uppercase hover:bg-neutral-800 transition-colors">Send Message</button>
         </form>
         <p id="status" class="mt-2 text-[#9ec2ff]"></p>
       </div>
@@ -460,25 +472,28 @@
 
   </main>
 
-  <!-- ====================== FOOTER ====================== -->
+  <!-- FOOTER -->
   <footer class="px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-neutral-200 text-sm text-neutral-500 tracking-wide">
     <p>© 2026 ZSIZART Studio — Architectural Visualization &amp; CGI</p>
-    <button onclick="window.scrollTo({top:0, behavior:'smooth'})"
-            class="flex items-center gap-2 hover:text-black transition-colors uppercase font-medium tracking-widest">
+    <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="flex items-center gap-2 hover:text-black transition-colors uppercase font-medium tracking-widest">
       <i data-lucide="arrow-up" class="w-4 h-4"></i> Top
     </button>
   </footer>
 
-  <!-- ====================== PROJECT VIEWER (modal) ====================== -->
+  <!-- PROJECT VIEWER (original) -->
   <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
     <div class="pv__content">
       <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
+
       <div class="pv__image">
         <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
+
         <img id="pvImageA" class="pv__img is-top" alt="">
         <img id="pvImageB" class="pv__img" alt="">
+
         <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
       </div>
+
       <aside class="pv__info">
         <h3 id="pvTitle"></h3>
         <p id="pvDesc"></p>
@@ -486,279 +501,382 @@
     </div>
   </div>
 
-  <!-- ====================== BACK‑TO‑TOP BUTTON ====================== -->
+  <!-- BACK‑TO‑TOP BUTTON -->
   <button id="topBtn" class="top-btn" aria-label="Back to top">
     <span class="top-glyph" aria-hidden="true">↑</span>
     <span class="top-text">Top</span>
   </button>
 
-  <!-- ====================== SCRIPTS ====================== -->
+  <!-- ====================== JAVASCRIPT ====================== -->
   <script>
-    /* ----------- LENIS (smooth scroll) ----------- */
+    /* ---------- Lucide icons ---------- */
+    lucide.createIcons();
+
+    /* ---------- MENU (hamburger) ---------- */
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose  = document.getElementById('menu-close');
+    const menuOverlay= document.getElementById('menu-overlay');
+    const menuLinks  = document.querySelectorAll('.menu-link');
+
+    menuToggle.addEventListener('click', () => {
+        menuOverlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        document.body.classList.add('menu-open');
+    });
+    const closeMenu = () => {
+        menuOverlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.body.classList.remove('menu-open');
+    };
+    menuClose.addEventListener('click', closeMenu);
+    menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+    /* ---------- HERO entrance animation ---------- */
+    window.addEventListener('load', () => {
+        document.getElementById('hero-content').classList.remove('opacity-0','translate-y-10');
+    });
+
+    /* ---------- Lenis smooth scrolling ---------- */
     let lenis;
     function initLenis(){
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return;
-      if (!window.Lenis) return;
-      lenis = new Lenis({
-        duration:1.2,
-        easing:(t)=>Math.min(1,1.001-Math.pow(2,-10*t)),
-        direction:'vertical',
-        gestureDirection:'vertical',
-        smooth:true,
-        mouseMultiplier:1,
-        smoothTouch:false,
-        touchMultiplier:2,
-        infinite:false,
-      });
-      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) return;
+        if (!window.Lenis) return;
+        lenis = new Lenis({
+            duration:1.2,
+            easing:(t)=>Math.min(1,1.001-Math.pow(2,-10*t)),
+            direction:'vertical',
+            gestureDirection:'vertical',
+            smooth:true,
+            mouseMultiplier:1,
+            smoothTouch:false,
+            touchMultiplier:2,
+            infinite:false,
+        });
+        function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
     }
     window.addEventListener('load', initLenis);
 
-    /* ----------- MENU (hamburger) ----------- */
-    const body=document.body,
-          menuBtn=document.getElementById('menuBtn'),
-          overlay=document.getElementById('overlay'),
-          menuPanel=document.getElementById('menuPanel');
-
-    function openMenu(){ body.classList.add('menu-open'); menuBtn?.setAttribute('aria-expanded','true'); }
-    function closeMenu(){ body.classList.remove('menu-open'); menuBtn?.setAttribute('aria-expanded','false'); }
-
-    menuBtn?.addEventListener('click', openMenu);
-    overlay?.addEventListener('click', closeMenu);
-    menuPanel?.addEventListener('click', e=>{ if(e.target.tagName==='A') closeMenu(); });
-
-    /* ----------- FILTER PANEL ----------- */
-    const filterToggle=document.getElementById('filterToggle');
-    const filterPanel=document.getElementById('filters');
+    /* ---------- FILTER PANEL ---------- */
+    const filterToggle = document.getElementById('filterToggle');
+    const filterPanel  = document.getElementById('filters');
     filterToggle?.addEventListener('click',()=>filterPanel.classList.toggle('show'));
 
-    const applyBtn=document.getElementById('applyBtn');
-    const resetBtn=document.getElementById('resetBtn');
-    const qInput=document.getElementById('q');
-    const chkInt=document.getElementById('tagInterior');
-    const chkExt=document.getElementById('tagExterior');
-    const tiles=[...document.querySelectorAll('#grid .tile')];
+    const applyBtn = document.getElementById('applyBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const qInput   = document.getElementById('q');
+    const chkInt   = document.getElementById('tagInterior');
+    const chkExt   = document.getElementById('tagExterior');
+    const tiles    = [...document.querySelectorAll('#grid .tile')];
 
     function applyFilters(){
-      const q=(qInput?.value||'').trim().toLowerCase();
-      const wantInt=!!chkInt?.checked, wantExt=!!chkExt?.checked;
-      tiles.forEach(tile=>{
-        const name=(tile.dataset.title||'').toLowerCase();
-        const tags=(tile.dataset.tags||'').toLowerCase();
-        const matchText = q ? name.includes(q) : true;
-        let matchCat = true;
-        if (wantInt||wantExt){
-          matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior'));
-        }
-        tile.style.display = (matchText && matchCat) ? '' : 'none';
-      });
+        const q = (qInput?.value||'').trim().toLowerCase();
+        const wantInt = !!chkInt?.checked;
+        const wantExt = !!chkExt?.checked;
+        tiles.forEach(tile=>{
+            const name = (tile.dataset.title||'').toLowerCase();
+            const tags = (tile.dataset.tags||'').toLowerCase();
+            const matchText = q ? name.includes(q) : true;
+            let matchCat = true;
+            if (wantInt || wantExt){
+                matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior'));
+            }
+            tile.style.display = (matchText && matchCat) ? '' : 'none';
+        });
     }
     function resetFilters(){
-      if(!qInput) return;
-      qInput.value='';
-      if(chkInt) chkInt.checked=false;
-      if(chkExt) chkExt.checked=false;
-      tiles.forEach(t=>t.style.display='');
+        if(qInput) qInput.value = '';
+        if(chkInt) chkInt.checked = false;
+        if(chkExt) chkExt.checked = false;
+        tiles.forEach(t=>t.style.display = '');
     }
-    applyBtn?.addEventListener('click',applyFilters);
-    resetBtn?.addEventListener('click',resetFilters);
-    qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
+    applyBtn?.addEventListener('click', applyFilters);
+    resetBtn?.addEventListener('click', resetFilters);
+    qInput?.addEventListener('keydown', e=>{ if(e.key === 'Enter'){ e.preventDefault(); applyFilters(); }});
 
-    /* ----------- 3D‑MODEL CTA (hover swap) ----------- */
+    /* ---------- 3D Modeling CTA hover swap ---------- */
     (function(){
-      const el=document.querySelector('.modeling-link[data-frames]');
-      if(!el) return;
-      const img=el.querySelector('.modeling-img');
-      if(!img) return;
-      const frames=(el.dataset.frames||'')
-        .split('|')
-        .map(s=>s.trim())
-        .filter(Boolean);
-      if(frames.length<2) return;
-      frames.forEach(src=>{ const im=new Image(); im.src=src; });
-      let idx=Math.max(0,frames.indexOf(img.getAttribute('src')));
-      let ready=true;
-      function swapTo(src){
-        if(img.getAttribute('src')===src){ ready=true; return; }
-        img.classList.add('is-swapping');
-        setTimeout(()=>{ img.src=src; img.classList.remove('is-swapping'); ready=true; },120);
-      }
-      el.addEventListener('mouseenter',()=>{
-        if(!ready) return;
-        ready=false;
-        idx=(idx+1)%frames.length;   // خطوة واحدة فقط
-        swapTo(frames[idx]);
-      });
-    })();
-
-    /* ----------- PROJECT VIEWER ----------- */
-    (function(){
-      const viewer=document.getElementById('pv'),
-            imgA=document.getElementById('pvImageA'),
-            imgB=document.getElementById('pvImageB'),
-            titleEl=document.getElementById('pvTitle'),
-            descEl=document.getElementById('pvDesc'),
-            btnClose=document.getElementById('pvClose'),
-            btnPrev=document.getElementById('pvPrev'),
-            btnNext=document.getElementById('pvNext');
-
-      const projectTiles=[...document.querySelectorAll('#grid .tile')];
-      const projects=projectTiles.map(t=>({
-        base:t.dataset.project,
-        title:t.dataset.title||'',
-        desc:t.dataset.desc||'',
-        tags:t.dataset.tags||''
-      }));
-
-      let list=[], idx=0, topIsA=true;
-      const cache=new Map();
-
-      function updateArrows(){
-        const multi=(list.length>1);
-        btnPrev.style.display=multi?'':'none';
-        btnNext.style.display=multi?'':'none';
-        btnPrev.disabled=!multi;
-        btnNext.disabled=!multi;
-      }
-
-      function show(src){
-        const top=topIsA?imgA:imgB;
-        const under=topIsA?imgB:imgA;
-        under.onload=()=>{ top.classList.remove('is-top'); under.classList.add('is-top'); topIsA=!topIsA; };
-        under.src=src;
-      }
-
-      function setIdx(i){
-        if(!list.length) return;
-        idx=(i+list.length)%list.length;
-        show(list[idx]);
-      }
-      const nextImg=()=>setIdx(idx+1);
-      const prevImg=()=>setIdx(idx-1);
-      btnNext?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();nextImg();});
-      btnPrev?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();prevImg();});
-
-      async function buildList(base){
-        if(cache.has(base)) return cache.get(base);
-        const exts=['.webp','.jpg','.jpeg','.png'];
-        const attempts=[];
-        // base + ext
-        exts.forEach(ext=>attempts.push(`${base}${ext}`));
-        // numbered series (01‑15)
-        for(let i=1;i<=15;i++){
-          const padded=i<10?`0${i}`:`${i}`;
-          exts.forEach(ext=>{attempts.push(`${base}-${padded}${ext}`);attempts.push(`${base}-${i}${ext}`);});
+        const el = document.querySelector('.modeling-link[data-frames]');
+        if(!el) return;
+        const img = el.querySelector('.modeling-img');
+        if(!img) return;
+        const frames = (el.dataset.frames||'')
+            .split('|')
+            .map(s=>s.trim())
+            .filter(Boolean);
+        if(frames.length < 2) return;
+        frames.forEach(src=>{ const im = new Image(); im.src = src; });
+        let idx = Math.max(0, frames.indexOf(img.getAttribute('src')));
+        let ready = true;
+        function swapTo(src){
+            if(img.getAttribute('src')===src){ ready = true; return; }
+            img.classList.add('is-swapping');
+            setTimeout(()=>{ img.src = src; img.classList.remove('is-swapping'); ready = true; },120);
         }
-        // common suffixes
-        const suffixes=['-sh','-clay','-alt','-extra'];
-        suffixes.forEach(suf=>exts.forEach(ext=>attempts.push(`${base}${suf}${ext}`)));
-        const checks=attempts.map(src=>new Promise(res=>{
-          const im=new Image();
-          im.onload=()=>res(src);
-          im.onerror=()=>res(null);
-          im.src=src;
-        }));
-        const found=(await Promise.all(checks)).filter(Boolean);
-        const final=found.length?found:[`${base}.webp`];
-        cache.set(base,final);
-        return final;
-      }
-
-      async function openProject(i){
-        const p=projects[i];
-        titleEl.textContent=p.title;
-        descEl.textContent=p.desc;
-        list=await buildList(p.base);
-        idx=0;
-        imgA.classList.remove('is-top'); imgB.classList.remove('is-top');
-        const currentTop=topIsA?imgA:imgB;
-        currentTop.src=list[0];
-        currentTop.classList.add('is-top');
-        updateArrows();
-      }
-
-      function openPV(){ viewer.classList.add('show'); viewer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(lenis) lenis.stop(); }
-      function closePV(){ viewer.classList.remove('show'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lenis) lenis.start(); }
-
-      projectTiles.forEach((tile,i)=>{ tile.addEventListener('click',async()=>{ await openProject(i); openPV(); }); });
-
-      viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
-      btnClose?.addEventListener('click',closePV);
-      document.addEventListener('keydown',e=>{
-        if(!viewer.classList.contains('show'))return;
-        if(e.key==='Escape') closePV();
-        if(e.key==='ArrowRight') nextImg();
-        if(e.key==='ArrowLeft') prevImg();
-        if(e.key==='PageDown' || e.key==='ArrowDown') nextImg();
-        if(e.key==='PageUp'   || e.key==='ArrowUp')   prevImg();
-      });
+        el.addEventListener('mouseenter', ()=>{
+            if(!ready) return;
+            ready = false;
+            idx = (idx + 1) % frames.length;
+            swapTo(frames[idx]);
+        });
     })();
 
-    /* ----------- REVEAL ON SCROLL ----------- */
+    /* ---------- Clay hover effect (masked circle) ---------- */
     (function(){
-      const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(reduced) return;
-      const autoTargets=['.hero h2','.hero p','section h2','.grid .tile','#contact .card'];
-      autoTargets.forEach(sel=>{ document.querySelectorAll(sel).forEach(el=>{ if(!el.classList.contains('reveal')) el.classList.add('reveal'); }); });
-      const io=new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('show'); else entry.target.classList.remove('show'); }); },{threshold:0.15});
-      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+        const supportsMask = window.CSS && (
+            CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') ||
+            CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))')
+        );
+        if(!supportsMask) return;
+        const RADIUS = 80;
+        const tiles = document.querySelectorAll('#grid .tile');
+        tiles.forEach(tile=>{
+            const base = tile.dataset.project;
+            if(!base) return;
+            const exts = ['.webp','.jpg','.png'];
+            const imgClay = new Image();
+            imgClay.className = 'img-clay';
+            imgClay.loading = 'lazy';
+            imgClay.decoding = 'async';
+
+            (function tryNext(i=0){
+                if(i>=exts.length) return;
+                imgClay.onload = ()=>{ tile.appendChild(imgClay); bind(); };
+                imgClay.onerror = ()=>tryNext(i+1);
+                imgClay.src = `${base}-clay${exts[i]}`;
+            })();
+
+            function bind(){
+                tile.addEventListener('pointerenter',()=>{ tile.style.setProperty('--r',RADIUS+'px'); });
+                tile.addEventListener('pointerleave',()=>{ tile.style.setProperty('--r','0px'); tile.style.setProperty('--mx','-1000px'); tile.style.setProperty('--my','-1000px'); });
+                tile.addEventListener('pointermove', e=>{
+                    const rect = tile.getBoundingClientRect();
+                    tile.style.setProperty('--mx',(e.clientX-rect.left)+'px');
+                    tile.style.setProperty('--my',(e.clientY-rect.top)+'px');
+                }, {passive:true});
+            }
+        });
     })();
 
-    /* ----------- HEADER HIDE ON SCROLL ----------- */
-    let lastScrollY=0;
-    const headerEl=document.querySelector('header');
+    /* ---------- PROJECT VIEWER ----------
+       (same logic as the original version) */
+    (function(){
+        const viewer = document.getElementById('pv');
+        const imgA   = document.getElementById('pvImageA');
+        const imgB   = document.getElementById('pvImageB');
+        const titleEl= document.getElementById('pvTitle');
+        const descEl = document.getElementById('pvDesc');
+        const btnClose= document.getElementById('pvClose');
+        const btnPrev = document.getElementById('pvPrev');
+        const btnNext = document.getElementById('pvNext');
+
+        const projectTiles = [...document.querySelectorAll('#grid .tile')];
+        const projects = projectTiles.map(t=>({
+            base: t.dataset.project,
+            title: t.dataset.title||'',
+            desc: t.dataset.desc||'',
+            tags: t.dataset.tags||''
+        }));
+
+        let list = [], idx = 0, topIsA = true;
+        const cache = new Map();
+
+        function updateArrows(){
+            const multi = (list.length > 1);
+            btnPrev.style.display = multi ? '' : 'none';
+            btnNext.style.display = multi ? '' : 'none';
+            btnPrev.disabled = !multi;
+            btnNext.disabled = !multi;
+        }
+
+        function show(src){
+            const top   = topIsA ? imgA : imgB;
+            const under = topIsA ? imgB : imgA;
+            under.onload = () => {
+                top.classList.remove('is-top');
+                under.classList.add('is-top');
+                topIsA = !topIsA;
+                under.onload = null;
+            };
+            under.src = src;
+        }
+
+        function setIdx(i){
+            if(!list.length) return;
+            idx = (i + list.length) % list.length;
+            show(list[idx]);
+        }
+
+        const nextImg = () => setIdx(idx+1);
+        const prevImg = () => setIdx(idx-1);
+
+        btnNext?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
+        btnPrev?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
+
+        async function buildList(base){
+            if(cache.has(base)) return cache.get(base);
+            const exts = ['.webp','.jpg','.jpeg','.png'];
+            const attempts = [];
+
+            // base + ext
+            exts.forEach(ext=>attempts.push(`${base}${ext}`));
+
+            // numbered series 01‑15
+            for(let i=1;i<=15;i++){
+                const pad = i<10?`0${i}`:`${i}`;
+                exts.forEach(ext=>{
+                    attempts.push(`${base}-${pad}${ext}`);
+                    attempts.push(`${base}-${i}${ext}`);
+                });
+            }
+
+            // common suffixes
+            const suffixes = ['-sh','-clay','-alt','-extra'];
+            suffixes.forEach(suf=>exts.forEach(ext=>attempts.push(`${base}${suf}${ext}`)));
+
+            const checks = attempts.map(src=>new Promise(res=>{
+                const im = new Image();
+                im.onload = ()=>res(src);
+                im.onerror = ()=>res(null);
+                im.src = src;
+            }));
+            const found = (await Promise.all(checks)).filter(Boolean);
+            const finalList = found.length ? found : [`${base}.webp`];
+            cache.set(base, finalList);
+            return finalList;
+        }
+
+        async function openProject(i){
+            const p = projects[i];
+            titleEl.textContent = p.title;
+            descEl.textContent  = p.desc;
+
+            list = await buildList(p.base);
+            idx = 0;
+
+            imgA.classList.remove('is-top');
+            imgB.classList.remove('is-top');
+            const currentTop = topIsA ? imgA : imgB;
+            currentTop.src = list[0];
+            currentTop.classList.add('is-top');
+
+            updateArrows();
+        }
+
+        async function openPV(){
+            viewer.classList.add('show');
+            viewer.setAttribute('aria-hidden','false');
+            document.body.style.overflow='hidden';
+            if(lenis) lenis.stop();
+        }
+
+        function closePV(){
+            viewer.classList.remove('show');
+            viewer.setAttribute('aria-hidden','true');
+            document.body.style.overflow='';
+            if(lenis) lenis.start();
+        }
+
+        projectTiles.forEach((tile,i)=>{
+            tile.addEventListener('click', async ()=>{
+                await openProject(i);
+                openPV();
+            });
+        });
+
+        viewer.addEventListener('click', e=>{ if(e.target===viewer) closePV(); });
+        btnClose?.addEventListener('click', closePV);
+
+        document.addEventListener('keydown', e=>{
+            if(!viewer.classList.contains('show')) return;
+            if(e.key==='Escape') closePV();
+            if(e.key==='ArrowRight') nextImg();
+            if(e.key==='ArrowLeft')  prevImg();
+            if(e.key==='PageDown' || e.key==='ArrowDown') nextImg();
+            if(e.key==='PageUp'   || e.key==='ArrowUp')   prevImg();
+        });
+    })();
+
+    /* ---------- REVEAL ON SCROLL (IntersectionObserver) ---------- */
+    (function(){
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if(reduced) return;
+        const autoTargets = ['.hero h2','.hero p','section h2','.grid .tile','#contact .card'];
+        autoTargets.forEach(sel=>{
+            document.querySelectorAll(sel).forEach(el=>{
+                if(!el.classList.contains('reveal')) el.classList.add('reveal');
+            });
+        });
+        const io = new IntersectionObserver((entries)=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting) entry.target.classList.add('show');
+                else entry.target.classList.remove('show');
+            });
+        },{threshold:0.15});
+        document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    })();
+
+    /* ---------- Hide header on scroll ---------- */
+    let lastScrollY = 0;
+    const headerEl = document.querySelector('header');
     function updateHeader(){
-      const y=window.pageYOffset||document.documentElement.scrollTop;
-      headerEl.style.transform=(y>lastScrollY && y>100)?'translateY(-100%)':'translateY(0)';
-      lastScrollY=y;
+        const y = window.pageYOffset || document.documentElement.scrollTop;
+        headerEl.style.transform = (y > lastScrollY && y > 100) ? 'translateY(-100%)' : 'translateY(0)';
+        lastScrollY = y;
     }
     window.addEventListener('scroll',()=>requestAnimationFrame(updateHeader),{passive:true});
 
-    /* ----------- BACK‑TO‑TOP BUTTON ----------- */
+    /* ---------- Back‑to‑Top button ---------- */
     (function(){
-      const btn=document.getElementById('topBtn');
-      if(!btn) return;
-      function toggle(){ const y=window.pageYOffset||document.documentElement.scrollTop; if(y>600) btn.classList.add('show'); else btn.classList.remove('show'); }
-      window.addEventListener('scroll',toggle,{passive:true});
-      window.addEventListener('load',toggle);
-      btn.addEventListener('click',e=>{ e.preventDefault(); btn.classList.add('morph'); window.scrollTo({top:0,behavior:'smooth'}); setTimeout(()=>btn.classList.remove('morph'),1100); });
+        const btn = document.getElementById('topBtn');
+        if(!btn) return;
+        function toggle(){
+            const y = window.pageYOffset || document.documentElement.scrollTop;
+            if(y > 600) btn.classList.add('show');
+            else btn.classList.remove('show');
+        }
+        window.addEventListener('scroll', toggle, {passive:true});
+        window.addEventListener('load', toggle);
+        btn.addEventListener('click', e=>{
+            e.preventDefault();
+            btn.classList.add('morph');
+            window.scrollTo({top:0, behavior:'smooth'});
+            setTimeout(()=>btn.classList.remove('morph'),1100);
+        });
     })();
 
-    /* ----------- EMAILJS (contact form) ----------- */
-    const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
-    const EMAILJS_SERVICE_ID="service_m1dfwio";
-    const EMAILJS_TEMPLATE_ID="template_kuqk13r";
+    /* ---------- EmailJS (Contact form) ---------- */
+    const EMAILJS_PUBLIC_KEY = "JdZK05NoMso2b9lHe";
+    const EMAILJS_SERVICE_ID = "service_m1dfwio";
+    const EMAILJS_TEMPLATE_ID = "template_kuqk13r";
 
-    window.addEventListener('load',()=>{
-      try{ emailjs.init(EMAILJS_PUBLIC_KEY); }catch(e){}
-      const form=document.getElementById('contact-form');
-      const status=document.getElementById('status');
-      form?.addEventListener('submit',function(e){
-        e.preventDefault();
-        emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
-          .then(()=>{ status.textContent='Message sent!'; this.reset(); })
-          .catch(()=>{ status.textContent='Failed, try again.'; });
-      });
+    window.addEventListener('load', ()=>{
+        try{ emailjs.init(EMAILJS_PUBLIC_KEY); }catch(e){}
+        const form   = document.getElementById('contact-form');
+        const status = document.getElementById('status');
+        form?.addEventListener('submit', function(e){
+            e.preventDefault();
+            emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+                .then(()=>{ status.textContent = 'Message sent!'; this.reset(); })
+                .catch(()=>{ status.textContent = 'Failed, try again.'; });
+        });
     });
 
-    /* ----------- CALENDLY BADGE ----------- */
+    /* ---------- Calendly badge ---------- */
     window.addEventListener('load',()=>{
-      if(!window.Calendly) return;
-      Calendly.initBadgeWidget({
-        url:'https://calendly.com/arc-mahmoud-refaey/30min',
-        text:'Schedule a call',
-        color:'#ff7a18',
-        textColor:'#ffffff',
-        branding:false
-      });
+        if(!window.Calendly) return;
+        Calendly.initBadgeWidget({
+            url:'https://calendly.com/arc-mahmoud-refaey/30min',
+            text:'Schedule a call',
+            color:'#ff7a18',
+            textColor:'#ffffff',
+            branding:false
+        });
     });
   </script>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <!-- Calendly widget CSS & script -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
