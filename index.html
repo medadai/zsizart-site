@@ -1,207 +1,531 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF‑8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZSIZART Studio — Architectural Visualization & CGI</title>
-    <meta name="description" content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
+
+    <!-- SEO / Social -->
+    <meta name="description"
+          content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
+    <link rel="canonical" href="https://zsizart.com/">
+    <meta property="og:title" content="ZSIZART — Visualization Studio">
+    <meta property="og:description"
+          content="Cinematic architectural imagery, animation, and product CGI.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/og-cover.jpg">
+    <meta name="theme-color" content="#0b0d0d">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ZSIZART — Visualization Studio">
+    <meta name="twitter:description"
+          content="Cinematic architectural imagery, animation, and product CGI.">
+    <meta name="twitter:image" content="assets/og-cover.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Tailwind + Motion + Lucide -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- EmailJS & Calendly -->
+    <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script defer src="https://assets.calendly.com/assets/external/widget.js"></script>
+
     <style>
-        :root {
-            --background: #fbfbf9;
-            --foreground: #111111;
+        :root{
+            --background:#fbfbf9;
+            --foreground:#111111;
         }
-        body {
-            background-color: var(--background);
-            color: var(--foreground);
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            margin: 0;
-            overflow-x: hidden;
+        body{
+            background:var(--background);
+            color:var(--foreground);
+            font-family:'Inter',sans-serif;
+            scroll-behavior:smooth;
+            overflow-x:hidden;
         }
-        .mix-blend-difference { mix-blend-mode: difference; }
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
-        .aspect-4-3 { aspect-ratio: 4 / 3; }
-        .project-grid-item:nth-child(even) { margin-top: 4rem; }
-        @media (min-width: 768px) {
-            .project-grid-item:nth-child(even) { margin-top: 8rem; }
+        .scroll-reveal{
+            opacity:0;
+            transform:translateY(2.5rem);
+            transition:opacity .6s ease,transform .6s ease;
+        }
+        .scroll-reveal.show{
+            opacity:1;
+            transform:none;
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white px-6 md:px-12 py-8 flex justify-between items-center pointer-events-none">
-        <div class="flex items-center gap-3 pointer-events-auto">
-            <img src="assets/logo.png" alt="Logo" class="h-6 w-auto invert">
-            <span class="font-semibold tracking-widest text-sm uppercase">ZSIZART</span>
-        </div>
-        <button id="menu-toggle" class="pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors">
-            <i data-lucide="menu" class="w-5 h-5"></i>
-        </button>
-    </header>
+<body class="relative">
 
-    <!-- Overlay Menu -->
-    <div id="menu-overlay" class="fixed inset-0 z-[60] bg-[#111111] text-[#fbfbf9] hidden flex-col justify-center px-12">
-        <button id="menu-close" class="absolute top-8 right-6 md:right-12 w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
-            <i data-lucide="x" class="w-6 h-6"></i>
-        </button>
-        <nav class="flex flex-col gap-6 md:gap-10 text-4xl md:text-7xl font-light tracking-tighter">
-            <a href="#work" class="menu-link hover:translate-x-4 transition-transform duration-500">Work</a>
-            <a href="#services" class="menu-link hover:translate-x-4 transition-transform duration-500">Services</a>
-            <a href="#about" class="menu-link hover:translate-x-4 transition-transform duration-500">About</a>
-            <a href="#contact" class="menu-link hover:translate-x-4 transition-transform duration-500">Contact</a>
-        </nav>
+<!-- ==================== Header ==================== -->
+<header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white px-6 md:px-12 py-8 flex justify-between items-center pointer-events-none">
+    <div class="flex items-center gap-3 pointer-events-auto">
+        <img src="assets/logo.png" alt="Logo" class="h-6 w-auto invert">
+        <span class="font-semibold tracking-widest text-sm uppercase">ZSIZART</span>
     </div>
+    <button id="menu-toggle"
+            class="pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
+</header>
 
-    <main>
-        <!-- Hero -->
-        <section class="min-h-screen flex flex-col justify-end px-6 md:px-12 pb-24 md:pb-32 pt-32">
-            <div class="max-w-5xl opacity-0 translate-y-10 transition-all duration-1000" id="hero-content">
-                <h2 class="text-5xl md:text-[8vw] leading-[1.05] tracking-tighter font-medium mb-6">ZSIZART Studio</h2>
-                <p class="text-xl md:text-3xl text-neutral-500 font-light tracking-tight max-w-2xl mb-16">Premium Architectural Visualization & CGI</p>
-                <div class="flex flex-wrap gap-6 text-sm font-medium tracking-wide uppercase">
-                    <a href="#work" class="border-b border-black pb-1 hover:text-neutral-500 hover:border-neutral-500 transition-colors">View Work</a>
-                    <a href="#contact" class="border-b border-black pb-1 hover:text-neutral-500 hover:border-neutral-500 transition-colors">Request Proposal</a>
+<!-- ==================== Overlay Menu ==================== -->
+<div id="menu-overlay"
+     class="fixed inset-0 z-[60] bg-[#111111] text-[#fbfbf9] hidden flex-col justify-center px-12">
+    <button id="menu-close"
+            class="absolute top-8 right-6 md:right-12 w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+        <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+    <nav class="flex flex-col gap-6 md:gap-10 text-4xl md:text-7xl font-light tracking-tighter">
+        <a href="#work"      class="menu-link hover:translate-x-4 transition-transform duration-500">Work</a>
+        <a href="#services"  class="menu-link hover:translate-x-4 transition-transform duration-500">Services</a>
+        <a href="#modeling-cta" class="menu-link hover:translate-x-4 transition-transform duration-500">3D Modeling</a>
+        <a href="#about"    class="menu-link hover:translate-x-4 transition-transform duration-500">About</a>
+        <a href="#contact"  class="menu-link hover:translate-x-4 transition-transform duration-500">Contact</a>
+    </nav>
+</div>
+
+<!-- ==================== Main Content ==================== -->
+<main class="pt-32 pb-24 md:pb-32 px-6 md:px-12">
+
+    <!-- ==================== Hero ==================== -->
+    <section class="flex flex-col justify-end min-h-screen pb-24 md:pb-32">
+        <div id="hero-content"
+             class="max-w-5xl opacity-0 translate-y-10 transition-all duration-1000">
+            <h2 class="text-5xl md:text-[8vw] leading-[1.05] tracking-tighter font-medium mb-6">
+                ZSIZART Studio
+            </h2>
+            <p class="text-xl md:text-3xl text-neutral-500 font-light tracking-tight max-w-2xl mb-16">
+                Premium Architectural Visualization &amp; CGI
+            </p>
+            <div class="flex flex-wrap gap-6 text-sm font-medium tracking-wide uppercase">
+                <a href="#work"
+                   class="border-b border-black pb-1 hover:text-neutral-500 hover:border-neutral-500 transition-colors">
+                    View Work
+                </a>
+                <a href="#contact"
+                   class="border-b border-black pb-1 hover:text-neutral-500 hover:border-neutral-500 transition-colors">
+                    Request Proposal
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== Filter Panel (Overlay) ==================== -->
+    <section id="filters"
+             class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center px-6">
+        <div class="bg-[#111111] text-[#fbfbf9] p-8 rounded-lg w-full max-w-xl">
+            <form id="filterForm" class="flex flex-col gap-4">
+                <div class="flex flex-wrap gap-2 items-center">
+                    <input type="search"
+                           id="q"
+                           placeholder="Search projects…"
+                           class="flex-1 px-3 py-2 bg-[#0c0e12] border border-[#2a3140] rounded text-sm">
+                    <label class="flex items-center gap-1 text-sm"><input type="checkbox"
+                                                                        id="tagInterior"
+                                                                        class="mr-1 accent-indigo-500">INTERIOR</label>
+                    <label class="flex items-center gap-1 text-sm"><input type="checkbox"
+                                                                        id="tagExterior"
+                                                                        class="mr-1 accent-indigo-500">EXTERIOR</label>
                 </div>
-            </div>
-        </section>
+                <div class="flex justify-end gap-4">
+                    <button type="button"
+                            id="resetBtn"
+                            class="border border-[#2a3140] px-4 py-2 rounded hover:bg-white/10 text-sm">
+                        Reset
+                    </button>
+                    <button type="button"
+                            id="applyBtn"
+                            class="bg-gradient-to-r from-[#ff7a18] to-[#a855f7] text-white px-4 py-2 rounded text-sm hover:brightness-110">
+                        Apply
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-        <!-- Work -->
-        <section id="work" class="px-6 md:px-12 py-24 md:py-40 border-t border-neutral-200">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
-                <h2 class="text-4xl md:text-6xl tracking-tighter font-medium">Work</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-8 md:gap-y-32">
-                <!-- Project 1 -->
-                <div class="project-grid-item group cursor-pointer opacity-0 translate-y-10 transition-all duration-1000" data-project-idx="0">
-                    <div class="overflow-hidden mb-6 bg-neutral-100 aspect-4-3">
-                        <img src="assets/work-01.webp" alt="Verde Crest Villas" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+    <!-- ==================== Work ==================== -->
+    <section id="work" class="py-24 md:py-40 border-t border-neutral-200">
+        <div class="flex justify-between items-end mb-16 md:mb-24">
+            <h2 class="text-4xl md:text-6xl font-medium">Work</h2>
+            <button id="filterToggle"
+                    class="border-b border-black pb-1 text-sm uppercase tracking-widest hover:text-neutral-500 hover:border-neutral-500 transition-colors">
+                Search &amp; Filter
+            </button>
+        </div>
+
+        <div id="grid"
+             class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-8 md:gap-y-32">
+            <!-- ----- Tile 1 ----- -->
+            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+                 data-project="assets/work-01"
+                 data-title="Verde Crest Villas"
+                 data-desc="Luxury Residential Development — Concept &amp; Visualization."
+                 data-tags="exterior">
+                <img src="assets/work-01.webp"
+                     alt="Verde Crest Villas"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="p-4 flex justify-between items-start">
+                    <div>
+                        <h3 class="text-2xl font-medium mb-2">Verde Crest Villas</h3>
+                        <p class="text-neutral-500 font-light">Luxury Residential Development — Concept &amp; Visualization.</p>
                     </div>
-                    <div class="flex justify-between items-start gap-4">
-                        <div>
-                            <h3 class="text-2xl font-medium tracking-tight mb-2">Verde Crest Villas</h3>
-                            <p class="text-neutral-500 font-light leading-relaxed max-w-sm">Luxury Residential Development — Concept & Visualization.</p>
-                        </div>
-                        <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">EXTERIOR</span>
-                    </div>
+                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">EXTERIOR</span>
                 </div>
-                <!-- Project 2 -->
-                <div class="project-grid-item group cursor-pointer opacity-0 translate-y-10 transition-all duration-1000" data-project-idx="1">
-                    <div class="overflow-hidden mb-6 bg-neutral-100 aspect-4-3">
-                        <img src="assets/work-02.webp" alt="Hillside Serenity" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+            </div>
+
+            <!-- ----- Tile 2 ----- -->
+            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+                 data-project="assets/work-02"
+                 data-title="Hillside Serenity"
+                 data-desc="A modern retreat in nature blending architecture and landscape."
+                 data-tags="exterior">
+                <img src="assets/work-02.webp"
+                     alt="Hillside Serenity"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="p-4 flex justify-between items-start">
+                    <div>
+                        <h3 class="text-2xl font-medium mb-2">Hillside Serenity</h3>
+                        <p class="text-neutral-500 font-light">A modern retreat in nature blending architecture and landscape.</p>
                     </div>
-                    <div class="flex justify-between items-start gap-4">
-                        <div>
-                            <h3 class="text-2xl font-medium tracking-tight mb-2">Hillside Serenity</h3>
-                            <p class="text-neutral-500 font-light leading-relaxed max-w-sm">A modern retreat in nature blending architecture and landscape.</p>
-                        </div>
-                        <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">EXTERIOR</span>
+                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">EXTERIOR</span>
+                </div>
+            </div>
+
+            <!-- ----- Tile 3 ----- -->
+            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+                 data-project="assets/work-03"
+                 data-title="Retro Home Sweet"
+                 data-desc="Interior CGI capturing warmth of retro modern living."
+                 data-tags="interior">
+                <img src="assets/work-03.webp"
+                     alt="Retro Home Sweet"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="p-4 flex justify-between items-start">
+                    <div>
+                        <h3 class="text-2xl font-medium mb-2">Retro Home Sweet</h3>
+                        <p class="text-neutral-500 font-light">Interior CGI capturing warmth of retro modern living.</p>
+                    </div>
+                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">INTERIOR</span>
+                </div>
+            </div>
+
+            <!-- ----- Tile 4 ----- -->
+            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+                 data-project="assets/work-04"
+                 data-title="Serene Lines"
+                 data-desc="Interior CGI focused on light, material and calm composition."
+                 data-tags="interior">
+                <img src="assets/work-04.webp"
+                     alt="Serene Lines"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="p-4 flex justify-between items-start">
+                    <div>
+                        <h3 class="text-2xl font-medium mb-2">Serene Lines</h3>
+                        <p class="text-neutral-500 font-light">Interior CGI focused on light, material and calm composition.</p>
+                    </div>
+                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">INTERIOR</span>
+                </div>
+            </div>
+
+            <!-- ----- Tile 5 ----- -->
+            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+                 data-project="assets/work-05"
+                 data-title="Modern Haven"
+                 data-desc="Interior CGI capturing warmth of modern living."
+                 data-tags="interior">
+                <img src="assets/work-05.webp"
+                     alt="Modern Haven"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="p-4 flex justify-between items-start">
+                    <div>
+                        <h3 class="text-2xl font-medium mb-2">Modern Haven</h3>
+                        <p class="text-neutral-500 font-light">Interior CGI capturing warmth of modern living.</p>
+                    </div>
+                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">INTERIOR</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== Services ==================== -->
+    <section id="services"
+             class="px-6 md:px-12 py-24 md:py-40 bg-[#111111] text-[#fbfbf9]">
+        <h2 class="text-4xl md:text-6xl font-medium mb-16 md:mb-24 text-center">Services</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+            <div class="border-t border-white/20 pt-8 scroll-reveal">
+                <h3 class="text-xl font-medium mb-4">Interior Visualization</h3>
+                <p class="text-neutral-400 font-light">Photoreal interiors focused on mood, materials, and storytelling.</p>
+            </div>
+            <div class="border-t border-white/20 pt-8 scroll-reveal">
+                <h3 class="text-xl font-medium mb-4">Exterior Visualization</h3>
+                <p class="text-neutral-400 font-light">Compelling exteriors with dramatic atmosphere and context.</p>
+            </div>
+            <div class="border-t border-white/20 pt-8 scroll-reveal">
+                <h3 class="text-xl font-medium mb-4">Animation</h3>
+                <p class="text-neutral-400 font-light">Cinematic walkthroughs and product films that move audiences.</p>
+            </div>
+            <div class="border-t border-white/20 pt-8 scroll-reveal">
+                <h3 class="text-xl font-medium mb-4">Product Visualization</h3>
+                <p class="text-neutral-400 font-light">High‑end product shots for furniture and design marketing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3D Modeling CTA ==================== -->
+    <section id="modeling-cta" class="py-24 md:py-40">
+        <a href="3D-Product-Modeling"
+           class="modeling-link relative block overflow-hidden rounded-xl border border-[#1a1f27] bg-[#0c0e12] shadow-xl"
+           data-frames="assets/zsiz-modeling-thumb01.webp|assets/zsiz-modeling-thumb02.webp|assets/zsiz-modeling-thumb03.webp|assets/zsiz-modeling-thumb04.webp|assets/zsiz-modeling-thumb05.webp">
+            <img src="assets/zsiz-modeling-thumb01.webp"
+                 alt="3D Modeling Preview"
+                 class="w-full h-auto object-cover transition-transform duration-500">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/65 to-transparent">
+                <div class="text-center text-white">
+                    <h3 class="text-2xl font-bold mb-2">3D Modeling</h3>
+                    <div class="inline-block px-4 py-2 border border-white/85 rounded-lg bg-black/35 backdrop-blur-sm font-bold hover:bg-white hover:text-black transition">
+                        SEE MORE
                     </div>
                 </div>
             </div>
-        </section>
+        </a>
+    </section>
 
-        <!-- Services -->
-        <section id="services" class="px-6 md:px-12 py-24 md:py-40 bg-[#111111] text-[#fbfbf9]">
-            <h2 class="text-4xl md:text-6xl tracking-tighter font-medium mb-16 md:mb-24">Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
-                <div class="border-t border-white/20 pt-8 opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
-                    <h3 class="text-xl font-medium mb-4">Interior Visualization</h3>
-                    <p class="text-neutral-400 font-light leading-relaxed">Photoreal interiors focused on mood, materials, and storytelling.</p>
-                </div>
-                <div class="border-t border-white/20 pt-8 opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
-                    <h3 class="text-xl font-medium mb-4">Exterior Visualization</h3>
-                    <p class="text-neutral-400 font-light leading-relaxed">Compelling exteriors with dramatic atmosphere and context.</p>
-                </div>
-                <div class="border-t border-white/20 pt-8 opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
-                    <h3 class="text-xl font-medium mb-4">Animation</h3>
-                    <p class="text-neutral-400 font-light leading-relaxed">Cinematic walkthroughs and product films that move audiences.</p>
-                </div>
-                <div class="border-t border-white/20 pt-8 opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
-                    <h3 class="text-xl font-medium mb-4">Product Visualization</h3>
-                    <p class="text-neutral-400 font-light leading-relaxed">High-end product shots for furniture and design marketing.</p>
-                </div>
-            </div>
-        </section>
+    <!-- ==================== About ==================== -->
+    <section id="about"
+             class="px-6 md:px-12 py-24 md:py-40 bg-[#f0f0ee]">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl md:text-6xl font-medium mb-12">About</h2>
+            <p class="text-xl md:text-2xl font-light leading-relaxed text-neutral-600 mb-8"><strong class="text-black font-medium">ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production‑ready architectural imagery and animation for global projects.</p>
+            <p class="text-xl md:text-2xl font-light leading-relaxed text-neutral-600 mb-8">We collaborate with architects, developers, and design teams to create high‑end visuals that support marketing, investor presentations, and project launches.</p>
+        </div>
+    </section>
 
-        <!-- About -->
-        <section id="about" class="px-6 md:px-12 py-24 md:py-40 bg-[#f0f0ee]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-12">
-                <div class="opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
-                    <h2 class="text-4xl md:text-6xl tracking-tighter font-medium mb-12">About</h2>
-                    <div class="space-y-8 text-xl md:text-2xl font-light leading-relaxed text-neutral-600 max-w-xl">
-                        <p><strong class="text-black font-medium">ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production-ready architectural imagery and animation for global projects.</p>
-                        <p>We collaborate with architects, developers, and design teams to create high-end visuals that support marketing, investor presentations, and project launches.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- ==================== Courses ==================== -->
+    <section id="courses"
+             class="px-6 md:px-12 py-24 md:py-40">
+        <h2 class="text-4xl md:text-6xl font-medium mb-12">Courses</h2>
+        <p class="text-xl md:text-2xl font-light text-neutral-600">Educational content currently in development.</p>
+    </section>
 
-        <!-- Contact -->
-        <section id="contact" class="px-6 md:px-12 py-24 md:py-40">
-            <div class="max-w-3xl mx-auto text-center opacity-0 translate-y-10 transition-all duration-1000 scroll-reveal">
-                <h2 class="text-4xl md:text-6xl tracking-tighter font-medium mb-16">Contact</h2>
-                <form class="flex flex-col gap-12" onsubmit="event.preventDefault()">
-                    <input type="text" placeholder="Your Name" class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder:text-neutral-400 focus:outline-none focus:border-black transition-colors">
-                    <input type="email" placeholder="Your Email" class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder:text-neutral-400 focus:outline-none focus:border-black transition-colors">
-                    <textarea placeholder="Your Message…" rows="4" class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder:text-neutral-400 focus:outline-none focus:border-black transition-colors resize-none"></textarea>
-                    <button type="submit" class="self-center bg-black text-white px-12 py-5 rounded-full text-sm font-medium tracking-widest uppercase hover:bg-neutral-800 transition-colors">Send Message</button>
-                </form>
-            </div>
-        </section>
-    </main>
+    <!-- ==================== Contact ==================== -->
+    <section id="contact"
+             class="px-6 md:px-12 py-24 md:py-40">
+        <div class="max-w-3xl mx-auto text-center scroll-reveal">
+            <h2 class="text-4xl md:text-6xl font-medium mb-16">Contact</h2>
+            <form id="contact-form"
+                  class="flex flex-col gap-12">
+                <input type="text"
+                       name="from_name"
+                       placeholder="Your Name"
+                       required
+                       class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors">
+                <input type="email"
+                       name="reply_to"
+                       placeholder="Your Email"
+                       required
+                       class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors">
+                <textarea name="message"
+                          placeholder="Your Message…"
+                          rows="4"
+                          required
+                          class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors resize-none"></textarea>
+                <button type="submit"
+                        class="self-center bg-black text-white px-12 py-5 rounded-full text-sm font-medium tracking-widest uppercase hover:bg-neutral-800 transition-colors">
+                    Send Message
+                </button>
+                <p id="status" class="mt-4 text-indigo-400"></p>
+            </form>
+        </div>
+    </section>
 
-    <footer class="px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-neutral-200 text-sm text-neutral-500 tracking-wide">
-        <p>© 2026 ZSIZART Studio — Architectural Visualization & CGI</p>
-        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="flex items-center gap-2 hover:text-black transition-colors uppercase font-medium tracking-widest">
-            <i data-lucide="arrow-up" class="w-4 h-4"></i> Top
-        </button>
-    </footer>
+</main>
 
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+<!-- ==================== Footer ==================== -->
+<footer class="px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-neutral-200 text-sm text-neutral-500">
+    <p>© 2026 ZSIZART Studio — Architectural Visualization &amp; CGI</p>
+    <button onclick="window.scrollTo({top:0, behavior:'smooth'});"
+            class="flex items-center gap-2 uppercase font-medium tracking-widest hover:text-black transition-colors">
+        <i data-lucide="arrow-up" class="w-4 h-4"></i> Top
+    </button>
+</footer>
 
-        // Menu Toggle
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuClose = document.getElementById('menu-close');
-        const menuOverlay = document.getElementById('menu-overlay');
-        const menuLinks = document.querySelectorAll('.menu-link');
+<!-- ==================== Back‑to‑Top button (Tailwind) ==================== -->
+<button id="topBtn"
+        class="hidden fixed right-6 bottom-6 flex items-center gap-2 bg-black/80 text-white px-4 py-2 rounded-full hover:bg-black/90 transition-all"
+        aria-label="Back to top">
+    <i data-lucide="arrow-up" class="w-5 h-5"></i> Top
+</button>
 
-        menuToggle.addEventListener('click', () => {
-            menuOverlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        });
+<!-- ==================== Scripts ==================== -->
+<script>
+/* ---------- Lucide ---------- */
+lucide.createIcons();
 
-        const closeMenu = () => {
-            menuOverlay.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        };
+/* ---------- Overlay Menu ---------- */
+const menuToggle   = document.getElementById('menu-toggle');
+const menuClose    = document.getElementById('menu-close');
+const menuOverlay  = document.getElementById('menu-overlay');
 
-        menuClose.addEventListener('click', closeMenu);
-        menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+menuToggle.addEventListener('click', () => {
+    menuOverlay.classList.remove('hidden');
+    menuOverlay.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+});
+menuClose.addEventListener('click', closeMenu);
+function closeMenu(){
+    menuOverlay.classList.add('hidden');
+    menuOverlay.classList.remove('flex');
+    document.body.style.overflow = '';
+}
 
-        // Entrance Animations
-        window.addEventListener('load', () => {
-            document.getElementById('hero-content').classList.remove('opacity-0', 'translate-y-10');
-        });
+/* ---------- Hero entrance ---------- */
+window.addEventListener('load', () => {
+    const hero = document.getElementById('hero-content');
+    hero?.classList.remove('opacity-0','translate-y-10');
+});
 
-        // Intersection Observer for Scroll Reveals
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.remove('opacity-0', 'translate-y-10');
-                }
-            });
-        }, observerOptions);
+/* ---------- Scroll Reveal ---------- */
+const reveals = document.querySelectorAll('.scroll-reveal');
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+},{threshold:0.15});
+reveals.forEach(el => revealObserver.observe(el));
 
-        document.querySelectorAll('.project-grid-item, .scroll-reveal').forEach(el => observer.observe(el));
-    </script>
+/* ---------- Filter panel ---------- */
+const filterToggle = document.getElementById('filterToggle');
+const filterOverlay = document.getElementById('filters');
+filterToggle?.addEventListener('click', () => {
+    filterOverlay.classList.toggle('hidden');
+    filterOverlay.classList.toggle('flex');
+});
+filterOverlay?.addEventListener('click', e => {
+    if(e.target===filterOverlay) {
+        filterOverlay.classList.add('hidden');
+        filterOverlay.classList.remove('flex');
+    }
+});
+const applyBtn = document.getElementById('applyBtn');
+const resetBtn = document.getElementById('resetBtn');
+const qInput   = document.getElementById('q');
+const chkInt   = document.getElementById('tagInterior');
+const chkExt   = document.getElementById('tagExterior');
+const workTiles = document.querySelectorAll('#grid .group');
+
+function applyFilters(){
+    const q = qInput?.value?.trim().toLowerCase() || '';
+    const wantInt = chkInt?.checked;
+    const wantExt = chkExt?.checked;
+    workTiles.forEach(tile=>{
+        const title = (tile.dataset.title||'').toLowerCase();
+        const tags  = (tile.dataset.tags||'').toLowerCase();
+        const textMatch = q ? title.includes(q) : true;
+        let tagMatch = true;
+        if(wantInt||wantExt){
+            tagMatch = (wantInt && tags.includes('interior')) ||
+                       (wantExt && tags.includes('exterior'));
+        }
+        tile.style.display = (textMatch && tagMatch) ? '' : 'none';
+    });
+}
+function resetFilters(){
+    if(qInput) qInput.value = '';
+    if(chkInt) chkInt.checked = false;
+    if(chkExt) chkExt.checked = false;
+    workTiles.forEach(t=>t.style.display='');
+}
+applyBtn?.addEventListener('click', applyFilters);
+resetBtn?.addEventListener('click', resetFilters);
+qInput?.addEventListener('keydown', e => {
+    if(e.key==='Enter'){
+        e.preventDefault();
+        applyFilters();
+    }
+});
+
+/* ---------- 3D Modeling hover swap ---------- */
+(function(){
+    const link = document.querySelector('.modeling-link[data-frames]');
+    if(!link) return;
+    const img = link.querySelector('img');
+    const frames = (link.dataset.frames||'')
+        .split('|')
+        .map(s=>s.trim())
+        .filter(Boolean);
+    frames.forEach(src=>{ const i=new Image(); i.src=src; });
+
+    let idx = Math.max(0, frames.indexOf(img.getAttribute('src')));
+    let ready = true;
+    function swapTo(src){
+        if(img.getAttribute('src')===src){ ready = true; return; }
+        img.classList.add('opacity-50');
+        setTimeout(()=>{ img.src = src; img.classList.remove('opacity-50'); ready = true; },120);
+    }
+    link.addEventListener('mouseenter',()=>{
+        if(!ready) return;
+        ready = false;
+        idx = (idx+1)%frames.length;
+        swapTo(frames[idx]);
+    });
+})();
+
+/* ---------- Back‑to‑Top button ---------- */
+const topBtn = document.getElementById('topBtn');
+window.addEventListener('scroll',()=>{
+    if(window.scrollY>600) topBtn?.classList.remove('hidden');
+    else topBtn?.classList.add('hidden');
+});
+topBtn?.addEventListener('click',e=>{
+    e.preventDefault();
+    window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* ---------- EmailJS ---------- */
+(function(){
+    const PUBLIC_KEY = "JdZK05NoMso2b9lHe";
+    const SERVICE_ID = "service_m1dfwio";
+    const TEMPLATE_ID = "template_kuqk13r";
+
+    const form   = document.getElementById('contact-form');
+    const status = document.getElementById('status');
+
+    if(!form) return;
+    window.addEventListener('load',()=>{ try{ emailjs.init(PUBLIC_KEY) }catch(e){} });
+
+    form.addEventListener('submit',function(e){
+        e.preventDefault();
+        emailjs.sendForm(SERVICE_ID,TEMPLATE_ID,this)
+            .then(()=>{ status.textContent='Message sent!'; this.reset(); })
+            .catch(()=>{ status.textContent='Failed, try again.'; });
+    });
+})();
+
+/* ---------- Calendly badge ---------- */
+(function(){
+    if(!window.Calendly) return;
+    Calendly.initBadgeWidget({
+        url: 'https://calendly.com/arc-mahmoud-refaey/30min',
+        text: 'Schedule a call',
+        color: '#ff7a18',
+        textColor: '#ffffff',
+        branding: false
+    });
+})();
+</script>
+
 </body>
 </html>
