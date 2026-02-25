@@ -1,848 +1,1126 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ZSIZART Studio — Architectural CGI & Brand Direction</title>
-  <meta name="description" content="ZSIZART is a creative studio working on real estate and hospitality projects. Architectural imagery and film, with brand and direction shaping how projects are presented." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZSIZART Studio — Architectural Visualization & CGI</title>
+    
+    <!-- SEO / SOCIAL -->
+    <meta name="description" content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
+    <link rel="canonical" href="https://zsizart.com/">
+    <meta property="og:title" content="ZSIZART — Visualization Studio">
+    <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/og-cover.jpg">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ZSIZART — Visualization Studio">
+    <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
+    <meta name="twitter:image" content="assets/og-cover.jpg">
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- LIBRARIES -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- EmailJS + Calendly -->
+    <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script defer src="https://assets.calendly.com/assets/external/widget.js"></script>
+    
+    <style>
+        :root {
+            --background: #ffffff;
+            --foreground: #000000;
+            --accent: #ff7a18;
+            --accent-dark: #e06300;
+            --gray-light: #f8f8f8;
+            --gray-dark: #eaeaea;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+            /* Viewer */
+            --pv-dur: .6s;
+            --pv-ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-  <style>
-    :root{
-      --bg:#ffffff;
-      --fg:#0a0a0a;
-      --muted:rgba(10,10,10,.62);
-      --line:rgba(10,10,10,.12);
-      --soft:rgba(10,10,10,.06);
-      --ease:cubic-bezier(.16,1,.3,1);
-      --radius:14px;
-      --max:1180px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:var(--fg);
-      letter-spacing:-.01em;
-      overflow-x:hidden;
-    }
-    a{color:inherit;text-decoration:none}
-    button{font:inherit}
-    .container{max-width:var(--max);margin:0 auto;padding:0 28px}
-    .topbar{
-      position:fixed;left:0;right:0;top:0;z-index:50;
-      background:rgba(255,255,255,.86);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid transparent;
-      transition:border-color .3s var(--ease), background .3s var(--ease);
-    }
-    .topbar.is-scrolled{border-bottom-color:var(--line);background:rgba(255,255,255,.92)}
-    .topbar__inner{height:72px;display:flex;align-items:center;justify-content:space-between}
-    .brand{
-      display:flex;align-items:center;gap:12px;
-      font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px;
-    }
-    .brand__mark{
-      width:28px;height:28px;border-radius:9px;
-      border:1px solid var(--line);
-      display:grid;place-items:center;
-      font-size:11px;
-    }
-    .navlinks{display:flex;gap:18px;align-items:center}
-    .navlinks a{
-      font-size:12px;letter-spacing:.08em;text-transform:uppercase;
-      color:var(--muted);
-      padding:10px 8px;border-radius:10px;
-      transition:background .25s var(--ease), color .25s var(--ease);
-    }
-    .navlinks a:hover{background:var(--soft);color:var(--fg)}
-    .menuBtn{
-      display:flex;align-items:center;gap:10px;
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:999px;
-      padding:10px 14px;
-      cursor:pointer;
-      transition:transform .2s var(--ease), background .25s var(--ease);
-    }
-    .menuBtn:active{transform:scale(.98)}
-    .menuBtn__dot{
-      width:8px;height:8px;border-radius:99px;background:var(--fg);
-      box-shadow:0 0 0 4px rgba(10,10,10,.08);
-    }
-    .menuBtn__label{
-      font-size:12px;letter-spacing:.08em;text-transform:uppercase;
-    }
+        /* Better focus visibility */
+        :focus-visible{
+            outline: 2px solid rgba(255, 122, 24, .8);
+            outline-offset: 3px;
+            border-radius: 10px;
+        }
 
-    /* Menu overlay */
-    .overlay{
-      position:fixed;inset:0;z-index:80;
-      background:rgba(255,255,255,.96);
-      backdrop-filter:blur(10px);
-      opacity:0;pointer-events:none;
-      transition:opacity .35s var(--ease);
-    }
-    .overlay.is-open{opacity:1;pointer-events:auto}
-    .overlay__inner{
-      height:100%;
-      display:grid;
-      grid-template-rows:auto 1fr auto;
-      padding:22px 0;
-    }
-    .overlay__top{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 28px;
-    }
-    .overlay__close{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:999px;
-      padding:10px 14px;
-      cursor:pointer;
-    }
-    .overlay__nav{
-      display:flex;align-items:center;justify-content:center;
-    }
-    .overlay__nav ul{
-      list-style:none;margin:0;padding:0;
-      display:flex;flex-direction:column;gap:16px;
-      width:min(520px, 92vw);
-    }
-    .overlay__nav a{
-      display:flex;align-items:center;justify-content:space-between;
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px 18px;
-      font-size:14px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      background:#fff;
-      transition:transform .25s var(--ease), background .25s var(--ease);
-    }
-    .overlay__nav a:hover{transform:translateY(-2px);background:rgba(255,255,255,.7)}
-    .overlay__nav span{color:var(--muted);font-size:12px;letter-spacing:.12em}
-    .overlay__bottom{
-      padding:0 28px;
-      display:flex;align-items:center;justify-content:space-between;
-      color:var(--muted);
-      font-size:12px;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-    }
+        /* Reduce motion */
+        @media (prefers-reduced-motion: reduce){
+            *{ animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+            .fade-in{ opacity: 1 !important; transform: none !important; }
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .section-padding { padding: 6rem 0; }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 122, 24, 0.2);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--foreground);
+            color: var(--foreground);
+        }
+        .btn-outline:hover { background: var(--foreground); color: var(--background); }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
 
-    /* Hero */
-    .hero{
-      padding-top:96px;
-      min-height:82vh;
-      display:flex;
-      align-items:flex-start;
-    }
-    .hero__grid{
-      width:100%;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:56px;
-      padding:64px 0 44px;
-      border-bottom:1px solid var(--line);
-    }
-    .hero__kicker{
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--muted);
-      margin-bottom:18px;
-    }
-    .hero__title{
-      font-size:56px;
-      line-height:1.02;
-      font-weight:600;
-      margin:0 0 16px;
-      letter-spacing:.22em; /* spaced feel */
-      text-transform:uppercase;
-    }
-    .hero__title small{
-      display:block;
-      font-size:18px;
-      letter-spacing:.12em;
-      color:var(--muted);
-      margin-top:14px;
-      text-transform:none;
-    }
-    .hero__copy{
-      font-size:15px;
-      line-height:1.75;
-      color:var(--muted);
-      margin:0;
-      max-width:54ch;
-    }
-    .hero__ctaRow{
-      margin-top:26px;
-      display:flex;gap:10px;flex-wrap:wrap;
-    }
-    .btn{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:999px;
-      padding:12px 16px;
-      font-size:12px;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      cursor:pointer;
-      transition:background .25s var(--ease), transform .2s var(--ease);
-    }
-    .btn:hover{background:var(--soft)}
-    .btn:active{transform:scale(.98)}
-    .btn--primary{
-      background:var(--fg);
-      color:#fff;
-      border-color:var(--fg);
-    }
-    .btn--primary:hover{background:#111}
+        /* Original project-card kept (for viewer compatibility) */
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            transition: var(--transition);
+            background: var(--gray-light);
+            aspect-ratio: 16/9;
+        }
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .project-card:hover img { transform: scale(1.05); }
+        .project-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.9);
+            padding: 1.5rem;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .project-card:hover .project-overlay { transform: translateY(0); opacity: 1; }
+        
+        .service-card {
+            background: var(--gray-light);
+            padding: 2rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            border: 1px solid var(--gray-dark);
+            height: 100%;
+        }
+        .service-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.appear { opacity: 1; transform: translateY(0); }
 
-    .hero__aside{
-      padding-top:8px;
-      display:flex;flex-direction:column;gap:18px;
-    }
-    .heroCard{
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-      background:#fff;
-    }
-    .heroCard h3{
-      margin:0 0 8px;
-      font-size:12px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:var(--muted);
-      font-weight:600;
-    }
-    .heroCard p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+        /* ==================== Project Viewer (Original) ==================== */
+        .pv{
+            position:fixed; inset:0; z-index:200; background:#000;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            opacity:0; pointer-events:none;
+            transition:opacity var(--pv-dur) var(--pv-ease);
+        }
+        .pv.show{opacity:1; pointer-events:auto}
+        .pv__content{position:relative; width:100%; height:100%}
+        .pv__image{
+            position:absolute; inset:0;
+            display:flex; align-items:center; justify-content:center;
+        }
+        .pv__img{
+            position:absolute;
+            inset:auto;
+            max-width:90vw;
+            max-height:90vh;
+            width:auto;
+            height:auto;
+            object-fit: contain;
+            opacity:0;
+            transition:opacity .5s ease;
+            will-change:opacity,transform;
+        }
+        .pv__img.is-top{
+            opacity:1;
+            animation:pvIn var(--pv-dur) var(--pv-ease);
+        }
+        @keyframes pvIn{
+            from{transform:translateY(-40px);opacity:.9}
+            to  {transform:translateY(0);opacity:1}
+        }
+        .pv__info{
+            position:absolute; left:0; right:0; bottom:0;
+            padding:22px 28px; font-size:15px; line-height:1.5;
+            color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.7);
+            transform:translateY(100%); opacity:0;
+            transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
+        }
+        .pv.show .pv__info{transform:translateY(0); opacity:1}
+        .pv__close{
+            position:absolute; top:14px; left:14px;
+            width:40px; height:40px; border-radius:10px;
+            background:rgba(0,0,0,.45); border:1px solid #1a1f27; color:#fff;
+            font-size:26px; line-height:1; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:15;
+        }
+        .pv__close:hover{background:rgba(0,0,0,.6)}
+        .pv__arrow{
+            position:absolute; top:50%; transform:translateY(-50%);
+            width:64px; height:64px; font-size:44px; border-radius:50%;
+            border:none; cursor:pointer; background:rgba(0,0,0,.45);
+            color:#fff; z-index:10; backdrop-filter:blur(4px);
+            transition:.25s;
+        }
+        .pv__arrow:hover{background:rgba(0,0,0,.7)}
+        .pv__prev{left:20px}
+        .pv__next{right:20px}
+        @media(max-width:768px){
+            .pv__arrow{width:48px;height:48px;font-size:34px}
+        }
+        
+        /* Navigation */
+        .nav-menu {
+            position: fixed; top: 0; left: 0;
+            height: 100vh; width: 100%;
+            background: var(--background);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 100;
+            opacity: 0; visibility: hidden;
+            transition: var(--transition);
+        }
+        .nav-menu.active { opacity: 1; visibility: visible; }
+        .nav-menu a {
+            font-size: 2rem; margin: 1rem 0;
+            text-decoration: none; color: var(--foreground);
+            position: relative; padding: 0.5rem 0;
+        }
+        .nav-menu a::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 2px; background: var(--accent);
+            transition: var(--transition);
+        }
+        .nav-menu a:hover::after { width: 100%; }
+        
+        /* Header */
+        header {
+            position: fixed; top: 0; left: 0;
+            width: 100%; padding: 1.5rem 0;
+            z-index: 90; transition: var(--transition);
+        }
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex; align-items: center;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0.82), rgba(255,255,255,0.62));
+            z-index: -1;
+        }
+        .hero-content { max-width: 720px; }
+        .hero h1 {
+            font-size: 3.5rem; line-height: 1.1;
+            margin-bottom: 1.5rem; font-weight: 700;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #333; max-width: 520px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--gray-light);
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+        .social-links {
+            display: flex; justify-content: center;
+            gap: 1.5rem; margin: 2rem 0;
+        }
+        .social-links a {
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--gray-dark);
+            color: var(--foreground);
+            transition: var(--transition);
+        }
+        .social-links a:hover { background: var(--accent); transform: translateY(-5px); }
 
-    /* Section */
-    .section{padding:56px 0}
-    .sectionHead{
-      display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
-      padding:10px 0 18px;
-    }
-    .sectionTitle{
-      font-size:14px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--fg);
-      margin:0;
-    }
-    .sectionActions{
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-      color:var(--muted);
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-    .seg{
-      display:inline-flex;
-      border:1px solid var(--line);
-      border-radius:999px;
-      overflow:hidden;
-      background:#fff;
-    }
-    .seg button{
-      border:0;background:transparent;
-      padding:10px 14px;
-      cursor:pointer;
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:var(--muted);
-    }
-    .seg button.is-active{background:var(--fg);color:#fff}
-    .mutedLink{
-      border:1px solid var(--line);
-      border-radius:999px;
-      padding:10px 14px;
-      background:#fff;
-      transition:background .25s var(--ease);
-    }
-    .mutedLink:hover{background:var(--soft)}
+        /* Modeling CTA */
+        .modeling-cta {
+            position: relative; overflow: hidden; border-radius: 4px;
+            transition: var(--transition);
+            aspect-ratio: 16/9;
+        }
+        .modeling-cta img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .modeling-cta:hover img { transform: scale(1.05); }
+        .modeling-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; padding: 2rem;
+            opacity: 0; transition: var(--transition);
+        }
+        .modeling-cta:hover .modeling-overlay { opacity: 1; }
+        
+        /* Navigation Links with Underline Effect */
+        .nav-link {
+            position: relative; display: inline-block;
+            padding: 0.5rem 0;
+            text-decoration: none;
+            color: var(--foreground);
+            font-weight: 500;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        .nav-link:hover::after { width: 100%; }
 
-    /* Projects grid/list */
-    .work{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:14px;
-    }
-    .workItem{
-      grid-column: span 6;
-      border-radius:18px;
-      overflow:hidden;
-      position:relative;
-      border:1px solid var(--line);
-      background:#f7f7f7;
-      min-height:340px;
-      cursor:pointer;
-      transform:translateZ(0);
-      transition:transform .25s var(--ease);
-    }
-    .workItem:hover{transform:translateY(-3px)}
-    .workItem img{
-      width:100%;height:100%;object-fit:cover;display:block;
-      filter:saturate(1.02) contrast(1.02);
-      transform:scale(1.02);
-      transition:transform .6s var(--ease);
-    }
-    .workItem:hover img{transform:scale(1.06)}
-    .workMeta{
-      position:absolute;left:16px;right:16px;bottom:16px;
-      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
-      color:#fff;
-      text-shadow:0 10px 26px rgba(0,0,0,.45);
-    }
-    .workMeta__left b{
-      display:block;
-      font-size:14px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      font-weight:600;
-      margin-bottom:6px;
-    }
-    .workMeta__left span{
-      display:block;
-      font-size:12px;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      opacity:.92;
-    }
-    .workMeta__tag{
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      border:1px solid rgba(255,255,255,.35);
-      padding:8px 10px;
-      border-radius:999px;
-      backdrop-filter: blur(8px);
-      background:rgba(0,0,0,.22);
-      white-space:nowrap;
-    }
-    .workItem::after{
-      content:"";
-      position:absolute;inset:0;
-      background:linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0) 62%);
-      pointer-events:none;
-    }
+        /* ==================== ZSIZART Improved Projects (Different, Better) ==================== */
+        .workbar{
+            display:flex; align-items:center; justify-content:space-between; gap:14px;
+            margin: 10px 0 18px;
+            flex-wrap:wrap;
+        }
+        .chips{
+            display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+        }
+        .chip{
+            border:1px solid var(--gray-dark);
+            background:#fff;
+            padding:10px 12px;
+            border-radius:999px;
+            font-size:12px;
+            letter-spacing:.12em;
+            text-transform:uppercase;
+            cursor:pointer;
+            transition: var(--transition);
+            color:#222;
+        }
+        .chip:hover{ border-color: rgba(255,122,24,.6); }
+        .chip.is-active{
+            background: var(--foreground);
+            color:#fff;
+            border-color: var(--foreground);
+        }
+        .viewtog{
+            display:flex; gap:10px; align-items:center;
+        }
+        .tog{
+            border:1px solid var(--gray-dark);
+            background:#fff;
+            padding:10px 12px;
+            border-radius:999px;
+            font-size:12px;
+            letter-spacing:.12em;
+            text-transform:uppercase;
+            cursor:pointer;
+            transition: var(--transition);
+            color:#222;
+        }
+        .tog.is-active{
+            background: var(--accent);
+            border-color: var(--accent);
+            color:#fff;
+        }
+        .searchWrap{
+            display:flex; align-items:center; gap:10px;
+            border:1px solid var(--gray-dark);
+            background:#fff;
+            padding:10px 12px;
+            border-radius:999px;
+        }
+        .searchWrap input{
+            border:none; outline:none;
+            font-size:13px;
+            width: 220px;
+        }
+        .searchWrap svg{ width:16px; height:16px; color:#444; }
 
-    /* List view */
-    .work.is-list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .work.is-list .workItem{
-      min-height:auto;
-      display:grid;
-      grid-template-columns: 180px 1fr;
-      align-items:stretch;
-    }
-    .work.is-list .workItem img{height:100%;min-height:120px}
-    .work.is-list .workItem::after{display:none}
-    .work.is-list .workMeta{
-      position:static;
-      padding:14px 16px;
-      color:var(--fg);
-      text-shadow:none;
-      display:flex;align-items:center;justify-content:space-between;
-    }
-    .work.is-list .workMeta__left b{margin:0 0 6px;color:var(--fg)}
-    .work.is-list .workMeta__left span{color:var(--muted)}
-    .work.is-list .workMeta__tag{
-      color:var(--muted);
-      background:transparent;
-      border-color:var(--line);
-      backdrop-filter:none;
-    }
+        /* Rail */
+        .projRail { position:relative; }
+        .rail{
+            display:flex;
+            gap:14px;
+            overflow-x:auto;
+            padding: 8px 56px 16px;
+            scroll-snap-type:x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .rail::-webkit-scrollbar{ display:none; }
+        .railCard{
+            flex: 0 0 auto;
+            width: 280px;
+            height: 380px;
+            border-radius: 14px;
+            overflow:hidden;
+            position:relative;
+            scroll-snap-align: start;
+            background:#0d1116;
+            border:1px solid rgba(0,0,0,.08);
+            box-shadow: 0 14px 40px rgba(0,0,0,.14);
+        }
+        .railCard img{
+            width:100%; height:100%;
+            object-fit:cover;
+            display:block;
+            transform: scale(1.02);
+            transition: transform .6s var(--pv-ease);
+            filter: saturate(1.02) contrast(1.02);
+        }
+        .railCard:hover img{ transform: scale(1.08); }
+        .railCard::after{
+            content:'';
+            position:absolute; inset:0;
+            background: linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0) 58%);
+            pointer-events:none;
+        }
+        .railMeta{
+            position:absolute;
+            left:16px; right:16px; bottom:14px;
+            z-index:2;
+            color:#fff;
+            text-shadow: 0 10px 30px rgba(0,0,0,.45);
+        }
+        .railMeta b{
+            display:block;
+            font-size:13px;
+            font-weight:700;
+            letter-spacing:.14em;
+            text-transform:uppercase;
+            margin-bottom:6px;
+        }
+        .railMeta span{
+            display:block;
+            font-size:12px;
+            letter-spacing:.10em;
+            text-transform:uppercase;
+            opacity:.92;
+        }
+        .railBtn{
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            width:46px; height:46px;
+            border-radius:14px;
+            border:1px solid rgba(0,0,0,.08);
+            background: rgba(255,255,255,.92);
+            backdrop-filter: blur(10px);
+            cursor:pointer;
+            z-index:5;
+            font-size:28px;
+            display:flex; align-items:center; justify-content:center;
+            transition: transform .2s var(--pv-ease), background .25s var(--pv-ease);
+        }
+        .railBtn:hover{ transform: translateY(-50%) scale(1.03); background:#fff; }
+        .railPrev{ left: 8px; }
+        .railNext{ right: 8px; }
 
-    /* News */
-    .newsCard{
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:26px 18px;
-      background:#fff;
-      display:flex;align-items:center;justify-content:space-between;gap:14px;
-    }
-    .newsCard h3{
-      margin:0;
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--muted);
-      font-weight:600;
-    }
-    .newsCard b{
-      display:block;
-      margin-top:10px;
-      font-size:28px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      font-weight:600;
-    }
+        /* Grid mode uses your original project-card */
+        .workGrid{
+            display:grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 2rem;
+        }
+        @media(min-width:768px){
+            .workGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
 
-    /* Footer */
-    footer{
-      padding:46px 0 34px;
-      border-top:1px solid var(--line);
-    }
-    .footerGrid{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap:22px;
-      align-items:start;
-    }
-    .footTitle{
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--muted);
-      margin:0 0 10px;
-      font-weight:600;
-    }
-    .footLinks{
-      display:flex;flex-direction:column;gap:10px;
-      font-size:12px;letter-spacing:.10em;text-transform:uppercase;
-      color:var(--muted);
-    }
-    .footLinks a:hover{color:var(--fg)}
-    .sub{
-      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
-    }
-    .sub input{
-      width:min(320px, 100%);
-      border:1px solid var(--line);
-      border-radius:999px;
-      padding:12px 14px;
-      outline:none;
-      font-size:13px;
-    }
-    .sub button{
-      border:1px solid var(--fg);
-      background:var(--fg);
-      color:#fff;
-      border-radius:999px;
-      padding:12px 14px;
-      cursor:pointer;
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-    .clocks{
-      display:flex;flex-direction:column;gap:12px;
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:var(--muted);
-    }
-    .clockRow{
-      display:flex;align-items:center;justify-content:space-between;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 14px;
-      background:#fff;
-    }
-    .fineprint{
-      margin-top:22px;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      font-size:12px;
-      letter-spacing:.08em;
-      color:var(--muted);
-      text-transform:uppercase;
-      flex-wrap:wrap;
-    }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title { font-size: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .nav-menu a { font-size: 1.8rem; }
+            .service-card { padding: 1.5rem; }
 
-    /* Modal viewer */
-    .modal{
-      position:fixed;inset:0;z-index:120;
-      background:rgba(0,0,0,.92);
-      opacity:0;pointer-events:none;
-      transition:opacity .35s var(--ease);
-      display:flex;align-items:center;justify-content:center;
-    }
-    .modal.is-open{opacity:1;pointer-events:auto}
-    .modal__inner{position:relative;width:min(1100px,92vw);height:min(86vh,780px)}
-    .modal__img{
-      width:100%;height:100%;
-      object-fit:contain;display:block;
-    }
-    .modal__close{
-      position:absolute;top:14px;left:14px;
-      width:44px;height:44px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(0,0,0,.35);
-      color:#fff;
-      font-size:28px;
-      cursor:pointer;
-      display:grid;place-items:center;
-    }
-    .modal__cap{
-      position:absolute;left:0;right:0;bottom:0;
-      padding:16px 18px;
-      color:#fff;
-      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
-      background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,0));
-    }
-    .modal__cap b{
-      display:block;
-      font-size:13px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      margin-bottom:6px;
-    }
-    .modal__cap span{
-      display:block;
-      font-size:12px;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      opacity:.9;
-    }
-
-    @media (max-width: 980px){
-      .hero__grid{grid-template-columns:1fr;gap:24px}
-      .hero__title{font-size:44px}
-      .workItem{grid-column:span 12}
-    }
-    @media (max-width: 640px){
-      .container{padding:0 16px}
-      .topbar__inner{height:66px}
-      .navlinks{display:none}
-      .hero__title{font-size:36px;letter-spacing:.18em}
-      .footerGrid{grid-template-columns:1fr;gap:16px}
-      .work.is-list .workItem{grid-template-columns: 1fr}
-      .work.is-list .workMeta{padding:14px 14px}
-    }
-  </style>
+            .rail{ padding: 8px 12px 16px; }
+            .railBtn{ display:none; }
+            .railCard{ width: 240px; height: 340px; }
+            .searchWrap input{ width: 160px; }
+        }
+    </style>
 </head>
-
 <body>
-
-  <!-- Topbar -->
-  <header class="topbar" id="topbar">
-    <div class="container topbar__inner">
-      <a class="brand" href="#">
-        <span class="brand__mark">Z</span>
-        <span>ZSIZART Studio</span>
-      </a>
-
-      <nav class="navlinks" aria-label="Primary">
-        <a href="#projects">Projects</a>
-        <a href="#studio">Studio</a>
-        <a href="#news">News</a>
-        <a href="#careers">Careers</a>
-        <a href="#contact">Get in touch</a>
-      </nav>
-
-      <button class="menuBtn" id="menuOpen" type="button" aria-label="Open menu">
-        <span class="menuBtn__dot" aria-hidden="true"></span>
-        <span class="menuBtn__label">Menu</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Menu Overlay -->
-  <div class="overlay" id="overlay" aria-hidden="true">
-    <div class="overlay__inner">
-      <div class="overlay__top">
-        <a class="brand" href="#">
-          <span class="brand__mark">Z</span>
-          <span>ZSIZART Studio</span>
-        </a>
-        <button class="overlay__close" id="menuClose" type="button" aria-label="Close menu">Close</button>
-      </div>
-
-      <nav class="overlay__nav" aria-label="Menu">
-        <ul>
-          <li><a href="#projects" class="overlayLink">Projects <span>01</span></a></li>
-          <li><a href="#studio" class="overlayLink">Studio <span>02</span></a></li>
-          <li><a href="#news" class="overlayLink">News <span>03</span></a></li>
-          <li><a href="#careers" class="overlayLink">Careers <span>04</span></a></li>
-          <li><a href="#contact" class="overlayLink">Get in touch <span>05</span></a></li>
-        </ul>
-      </nav>
-
-      <div class="overlay__bottom">
-        <span>©<span id="year"></span> ZSIZART Studio</span>
-        <span>Architectural CGI + Brand Direction</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hero -->
-  <main class="hero">
-    <div class="container">
-      <section class="hero__grid">
-        <div>
-          <div class="hero__kicker">A creative practice for place.</div>
-          <h1 class="hero__title">
-            A CREATIVE PRACTICE FOR PLACE.
-            <small>Architectural imagery & film, with brand and direction shaping how projects are presented and understood.</small>
-          </h1>
-          <p class="hero__copy">
-            ZSIZART is a creative studio working on real estate and hospitality projects. Our work is led by architectural imagery and film, with brand and direction shaping how projects are presented and understood.
-          </p>
-          <div class="hero__ctaRow">
-            <a class="btn btn--primary" href="#projects">View work</a>
-            <a class="btn" href="#contact">About us</a>
-          </div>
-        </div>
-
-        <aside class="hero__aside" id="studio">
-          <div class="heroCard">
-            <h3>Studio</h3>
-            <p>Visualization, film, and brand systems for architectural and development teams.</p>
-          </div>
-          <div class="heroCard">
-            <h3>Capabilities</h3>
-            <p>CGI • Film • Interior styling • Brand direction • Launch assets • Investor decks</p>
-          </div>
-          <div class="heroCard" id="careers">
-            <h3>Careers</h3>
-            <p>Send portfolio + CV to careers@zsizart.com</p>
-          </div>
-        </aside>
-      </section>
-
-      <!-- Featured work -->
-      <section class="section" id="projects">
-        <div class="sectionHead">
-          <h2 class="sectionTitle">Featured work</h2>
-          <div class="sectionActions">
-            <a class="mutedLink" href="#projects">View all projects</a>
-            <div class="seg" role="tablist" aria-label="View mode">
-              <button type="button" id="btnGrid" class="is-active" role="tab" aria-selected="true">Grid</button>
-              <button type="button" id="btnList" role="tab" aria-selected="false">Lists</button>
+    <!-- Header -->
+    <header id="header">
+        <div class="container flex justify-between items-center">
+            <div class="logo">
+                <img src="assets/logo.png" alt="ZSIZART Logo" class="h-8">
             </div>
-          </div>
-        </div>
-
-        <div class="work" id="work">
-          <!-- Replace images/titles with your assets -->
-          <article class="workItem" data-img="assets/work-01.webp" data-title="Parkside St" data-sub="CGI / Film">
-            <img src="assets/work-01.webp" alt="Project 01">
-            <div class="workMeta">
-              <div class="workMeta__left">
-                <b>Parkside St</b>
-                <span>CGI / Film</span>
-              </div>
-              <div class="workMeta__tag">Melbourne</div>
+            <div class="menu-toggle cursor-pointer" aria-label="Open menu" role="button" tabindex="0">
+                <i data-lucide="menu" class="text-black w-8 h-8"></i>
             </div>
-          </article>
-
-          <article class="workItem" data-img="assets/work-02.webp" data-title="Linden Grove" data-sub="CGI / Film">
-            <img src="assets/work-02.webp" alt="Project 02">
-            <div class="workMeta">
-              <div class="workMeta__left">
-                <b>Linden Grove</b>
-                <span>CGI / Film</span>
-              </div>
-              <div class="workMeta__tag">Sydney</div>
-            </div>
-          </article>
-
-          <article class="workItem" data-img="assets/work-03.webp" data-title="Cielo Collection" data-sub="CGI / Film">
-            <img src="assets/work-03.webp" alt="Project 03">
-            <div class="workMeta">
-              <div class="workMeta__left">
-                <b>Cielo Collection</b>
-                <span>CGI / Film</span>
-              </div>
-              <div class="workMeta__tag">Dubai</div>
-            </div>
-          </article>
-
-          <article class="workItem" data-img="assets/work-04.webp" data-title="Senso" data-sub="CGI / Interior Styling">
-            <img src="assets/work-04.webp" alt="Project 04">
-            <div class="workMeta">
-              <div class="workMeta__left">
-                <b>Senso</b>
-                <span>CGI / Interior Styling</span>
-              </div>
-              <div class="workMeta__tag">Berlin</div>
-            </div>
-          </article>
         </div>
-      </section>
-
-      <!-- Newsroom -->
-      <section class="section" id="news">
-        <div class="sectionHead">
-          <h2 class="sectionTitle">Newsroom</h2>
-          <div class="sectionActions">
-            <a class="mutedLink" href="#news">Read all articles</a>
-          </div>
+    </header>
+    
+    <!-- Navigation Menu -->
+    <nav class="nav-menu" id="navMenu" aria-label="Site navigation">
+        <a href="#work" class="nav-link">Projects</a>
+        <a href="#modeling-cta" class="nav-link">3D Modeling</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#about" class="nav-link">Studio</a>
+        <a href="#courses" class="nav-link">Courses</a>
+        <a href="#career" class="nav-link">Career</a>
+        <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero relative">
+        <div class="absolute inset-0 bg-[url('assets/hero-bg.jpg')] bg-cover bg-center bg-no-repeat" aria-hidden="true"></div>
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>ZSIZART Studio</h1>
+                <p>Premium Architectural Visualization & CGI</p>
+                <div class="flex gap-4 mt-8">
+                    <a href="#work" class="btn">View Work</a>
+                    <a href="#contact" class="btn btn-outline">Request Proposal</a>
+                </div>
+            </div>
         </div>
+    </section>
+    
+    <!-- Work Section (Improved + Different) -->
+    <section id="work" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
 
-        <div class="newsCard">
-          <div>
-            <h3>All articles</h3>
-            <b>COMING SOON</b>
-          </div>
-          <a class="mutedLink" href="#contact">Contact</a>
+            <!-- Controls: Search + Filter + View -->
+            <div class="workbar fade-in" role="region" aria-label="Projects controls">
+                <div class="searchWrap" aria-label="Search projects">
+                    <i data-lucide="search"></i>
+                    <input id="projSearch" type="search" placeholder="Search projects…" autocomplete="off">
+                </div>
+
+                <div class="chips" aria-label="Filter by type">
+                    <button class="chip is-active" type="button" data-filter="all">All</button>
+                    <button class="chip" type="button" data-filter="exterior">Exterior</button>
+                    <button class="chip" type="button" data-filter="interior">Interior</button>
+                </div>
+
+                <div class="viewtog" aria-label="View toggle">
+                    <button class="tog is-active" type="button" data-view="rail">Rail</button>
+                    <button class="tog" type="button" data-view="grid">Grid</button>
+                </div>
+            </div>
+
+            <!-- Rail view -->
+            <div class="projRail fade-in" id="railWrap">
+                <button class="railBtn railPrev" type="button" aria-label="Previous projects">‹</button>
+
+                <div class="rail" id="projectsRail" aria-label="Projects rail">
+                    <!-- Project 1 -->
+                    <div class="project-card railCard cursor-pointer"
+                         data-type="exterior"
+                         data-project="assets/work-01"
+                         data-title="Verde Crest Villas"
+                         data-desc="Luxury Residential Development — Concept & Visualization.">
+                        <img src="assets/work-01.webp" alt="Verde Crest Villas" loading="lazy" decoding="async">
+                        <div class="railMeta">
+                            <b>Verde Crest Villas</b>
+                            <span>Exterior</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="project-card railCard cursor-pointer"
+                         data-type="exterior"
+                         data-project="assets/work-02"
+                         data-title="Hillside Serenity"
+                         data-desc="A modern retreat in nature blending architecture and landscape.">
+                        <img src="assets/work-02.webp" alt="Hillside Serenity" loading="lazy" decoding="async">
+                        <div class="railMeta">
+                            <b>Hillside Serenity</b>
+                            <span>Exterior</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3 -->
+                    <div class="project-card railCard cursor-pointer"
+                         data-type="interior"
+                         data-project="assets/work-03"
+                         data-title="Retro Home Sweet"
+                         data-desc="Interior CGI capturing warmth of retro modern living.">
+                        <img src="assets/work-03.webp" alt="Retro Home Sweet" loading="lazy" decoding="async">
+                        <div class="railMeta">
+                            <b>Retro Home Sweet</b>
+                            <span>Interior</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 4 -->
+                    <div class="project-card railCard cursor-pointer"
+                         data-type="interior"
+                         data-project="assets/work-04"
+                         data-title="Serene Lines"
+                         data-desc="Interior CGI focused on light, material and calm composition.">
+                        <img src="assets/work-04.webp" alt="Serene Lines" loading="lazy" decoding="async">
+                        <div class="railMeta">
+                            <b>Serene Lines</b>
+                            <span>Interior</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 5 -->
+                    <div class="project-card railCard cursor-pointer"
+                         data-type="interior"
+                         data-project="assets/work-05"
+                         data-title="Modern Haven"
+                         data-desc="Interior CGI capturing warmth of modern living.">
+                        <img src="assets/work-05.webp" alt="Modern Haven" loading="lazy" decoding="async">
+                        <div class="railMeta">
+                            <b>Modern Haven</b>
+                            <span>Interior</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="railBtn railNext" type="button" aria-label="Next projects">›</button>
+            </div>
+
+            <!-- Grid view (same data, different layout) -->
+            <div class="workGrid fade-in hidden" id="gridWrap" aria-label="Projects grid">
+                <!-- Project 1 -->
+                <div class="project-card cursor-pointer"
+                     data-type="exterior"
+                     data-project="assets/work-01"
+                     data-title="Verde Crest Villas"
+                     data-desc="Luxury Residential Development — Concept & Visualization.">
+                    <img src="assets/work-01.webp" alt="Verde Crest Villas" loading="lazy" decoding="async">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Verde Crest Villas</h3>
+                        <p class="mb-3 text-sm">Luxury Residential Development — Concept & Visualization.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Exterior</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card cursor-pointer"
+                     data-type="exterior"
+                     data-project="assets/work-02"
+                     data-title="Hillside Serenity"
+                     data-desc="A modern retreat in nature blending architecture and landscape.">
+                    <img src="assets/work-02.webp" alt="Hillside Serenity" loading="lazy" decoding="async">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Hillside Serenity</h3>
+                        <p class="mb-3 text-sm">A modern retreat in nature blending architecture and landscape.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Exterior</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card cursor-pointer"
+                     data-type="interior"
+                     data-project="assets/work-03"
+                     data-title="Retro Home Sweet"
+                     data-desc="Interior CGI capturing warmth of retro modern living.">
+                    <img src="assets/work-03.webp" alt="Retro Home Sweet" loading="lazy" decoding="async">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Retro Home Sweet</h3>
+                        <p class="mb-3 text-sm">Interior CGI capturing warmth of retro modern living.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Interior</span>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card cursor-pointer"
+                     data-type="interior"
+                     data-project="assets/work-04"
+                     data-title="Serene Lines"
+                     data-desc="Interior CGI focused on light, material and calm composition.">
+                    <img src="assets/work-04.webp" alt="Serene Lines" loading="lazy" decoding="async">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Serene Lines</h3>
+                        <p class="mb-3 text-sm">Interior CGI focused on light, material and calm composition.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Interior</span>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card cursor-pointer"
+                     data-type="interior"
+                     data-project="assets/work-05"
+                     data-title="Modern Haven"
+                     data-desc="Interior CGI capturing warmth of modern living.">
+                    <img src="assets/work-05.webp" alt="Modern Haven" loading="lazy" decoding="async">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Modern Haven</h3>
+                        <p class="mb-3 text-sm">Interior CGI capturing warmth of modern living.</p>
+                        <span class="text-xs uppercase tracking-widest text-accent">Interior</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
-
-      <!-- Contact anchor -->
-      <div id="contact" style="height:1px"></div>
+    </section>
+    
+    <!-- 3D Modeling CTA -->
+    <section id="modeling-cta" class="section-padding">
+        <div class="container">
+            <div class="modeling-cta fade-in">
+                <img src="assets/modeling-preview.jpg" alt="3D Modeling" loading="lazy" decoding="async">
+                <div class="modeling-overlay">
+                    <h3 class="text-2xl font-bold mb-4">3D Product Modeling</h3>
+                    <p class="mb-6 max-w-md">High-quality 3D modeling services for architectural visualization and product design</p>
+                    <a href="3D-Product-Modeling" class="btn">Explore Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="section-padding bg-gray-light">
+        <div class="container">
+            <h2 class="section-title">Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="service-card fade-in">
+                    <h3 class="text-xl font-bold mb-3">Interior Visualization</h3>
+                    <p class="text-gray-700">Photoreal interiors focused on mood, materials, and storytelling.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <h3 class="text-xl font-bold mb-3">Exterior Visualization</h3>
+                    <p class="text-gray-700">Compelling exteriors with dramatic atmosphere and context.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <h3 class="text-xl font-bold mb-3">Animation</h3>
+                    <p class="text-gray-700">Cinematic walkthroughs and product films that move audiences.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <h3 class="text-xl font-bold mb-3">Product Visualization</h3>
+                    <p class="text-gray-700">High-end product shots for furniture and design marketing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Studio Section -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Studio</h2>
+            <div class="fade-in">
+                <p class="text-xl mb-6"><strong>ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production-ready architectural imagery and animation for global projects.</p>
+                <p class="text-xl mb-6">We collaborate with architects, developers, and design teams to create high-end visuals that support marketing, investor presentations, and project launches.</p>
+                <p class="text-xl">We collaborate with architects, developers, and design brands worldwide—supporting projects from concept to polished marketing assets. Our focus is reliability, clarity, and delivering consistent quality at production speed.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Courses Section -->
+    <section id="courses" class="section-padding bg-gray-light">
+        <div class="container">
+            <h2 class="section-title">Courses</h2>
+            <div class="fade-in">
+                <p class="text-xl">Educational content currently in development.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Career Section -->
+    <section id="career" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Career</h2>
+            <div class="fade-in">
+                <p class="text-xl mb-6">Join our team of talented artists and designers. We're always looking for passionate individuals to push the boundaries of architectural visualization.</p>
+                <p class="text-xl">If you're interested in joining ZSIZART Studio, please send your portfolio and CV to careers@zsizart.com</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="max-w-2xl mx-auto">
+                <form id="contact-form" class="fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <input type="text" name="from_name" placeholder="Your Name" class="bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none focus:border-accent" required>
+                        <input type="email" name="reply_to" placeholder="Your Email" class="bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none focus:border-accent" required>
+                    </div>
+                    <textarea name="message" placeholder="Your Message" rows="5" class="w-full bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none focus:border-accent mb-6" required></textarea>
+                    <button type="submit" class="btn w-full">Send Message</button>
+                    <p id="status" class="mt-4 text-center text-accent"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo mb-6">
+                <img src="assets/logo.png" alt="ZSIZART Logo" class="h-8 mx-auto">
+            </div>
+            <div class="social-links">
+                <a href="#"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="#"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                <a href="#"><i data-lucide="behance" class="w-5 h-5"></i></a>
+                <a href="#"><i data-lucide="vimeo" class="w-5 h-5"></i></a>
+            </div>
+            <p class="text-gray-600">© 2026 ZSIZART Studio — Architectural Visualization & CGI</p>
+        </div>
+    </footer>
+    
+    <!-- Project Viewer -->
+    <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
+        <div class="pv__content">
+            <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
+            <div class="pv__image">
+                <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
+                <img id="pvImageA" class="pv__img is-top" alt="">
+                <img id="pvImageB" class="pv__img" alt="">
+                <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+            </div>
+            <aside class="pv__info">
+                <h3 id="pvTitle"></h3>
+                <p id="pvDesc"></p>
+            </aside>
+        </div>
     </div>
-  </main>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footerGrid">
-        <div>
-          <p class="footTitle">ZSIZART Studio</p>
-          <div class="footLinks">
-            <a href="#" rel="noopener">Instagram</a>
-            <a href="#" rel="noopener">LinkedIn</a>
-          </div>
-        </div>
+        // Menu Toggle (click + keyboard)
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.getElementById('navMenu');
+        const toggleMenu = () => navMenu.classList.toggle('active');
 
-        <div>
-          <p class="footTitle">Keep in touch with us</p>
-          <form class="sub" id="subForm">
-            <input type="email" id="subEmail" placeholder="Email address" required>
-            <button type="submit">Subscribe</button>
-          </form>
-        </div>
+        menuToggle.addEventListener('click', toggleMenu);
+        menuToggle.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMenu(); } });
 
-        <div>
-          <p class="footTitle">Local time</p>
-          <div class="clocks">
-            <div class="clockRow"><span>Berlin</span><span id="tBerlin">--:--:--</span></div>
-            <div class="clockRow"><span>Dubai</span><span id="tDubai">--:--:--</span></div>
-          </div>
-        </div>
-      </div>
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('active'));
+        });
+        
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        }, { passive:true });
+        
+        // Fade in animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('appear'); });
+        }, { threshold: 0.1 });
+        fadeElements.forEach(el => observer.observe(el));
 
-      <div class="fineprint">
-        <span>©<span id="year2"></span> ZSIZART Studio</span>
-        <span>
-          <a href="#" style="text-decoration:underline;text-underline-offset:3px">Privacy policy</a>
-        </span>
-      </div>
-    </div>
-  </footer>
+        // Projects: Rail scroll buttons + drag
+        (() => {
+            const rail = document.getElementById('projectsRail');
+            const prev = document.querySelector('.railPrev');
+            const next = document.querySelector('.railNext');
+            if(!rail) return;
 
-  <!-- Modal -->
-  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Project preview">
-    <div class="modal__inner">
-      <button class="modal__close" id="modalClose" type="button" aria-label="Close">×</button>
-      <img class="modal__img" id="modalImg" alt="">
-      <div class="modal__cap">
-        <div>
-          <b id="modalTitle"></b>
-          <span id="modalSub"></span>
-        </div>
-        <span style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9">Preview</span>
-      </div>
-    </div>
-  </div>
+            const scrollByCard = (dir=1) => {
+                const card = rail.querySelector('.railCard');
+                if(!card) return;
+                const gap = parseFloat(getComputedStyle(rail).gap || 14);
+                rail.scrollBy({ left: dir * (card.getBoundingClientRect().width + gap), behavior: 'smooth' });
+            };
 
-  <script>
-    // year
-    const y = new Date().getFullYear();
-    document.getElementById("year").textContent = y;
-    document.getElementById("year2").textContent = y;
+            prev?.addEventListener('click', ()=>scrollByCard(-1));
+            next?.addEventListener('click', ()=>scrollByCard( 1));
 
-    // scroll header line
-    const topbar = document.getElementById("topbar");
-    const onScroll = () => topbar.classList.toggle("is-scrolled", window.scrollY > 10);
-    onScroll(); window.addEventListener("scroll", onScroll, {passive:true});
+            let isDown=false, startX=0, startLeft=0;
+            const down = (e)=>{
+                isDown=true;
+                startX = (e.touches ? e.touches[0].pageX : e.pageX);
+                startLeft = rail.scrollLeft;
+            };
+            const move = (e)=>{
+                if(!isDown) return;
+                const x = (e.touches ? e.touches[0].pageX : e.pageX);
+                const dx = x - startX;
+                rail.scrollLeft = startLeft - dx;
+            };
+            const up = ()=>{ isDown=false; };
 
-    // menu overlay
-    const overlay = document.getElementById("overlay");
-    const openBtn = document.getElementById("menuOpen");
-    const closeBtn = document.getElementById("menuClose");
-    const openMenu = () => { overlay.classList.add("is-open"); overlay.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; };
-    const closeMenu = () => { overlay.classList.remove("is-open"); overlay.setAttribute("aria-hidden","true"); document.body.style.overflow=""; };
-    openBtn.addEventListener("click", openMenu);
-    closeBtn.addEventListener("click", closeMenu);
-    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeMenu(); });
-    document.querySelectorAll(".overlayLink").forEach(a=>{
-      a.addEventListener("click", ()=>{ closeMenu(); });
-    });
-    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape" && overlay.classList.contains("is-open")) closeMenu(); });
+            rail.addEventListener('mousedown', down);
+            rail.addEventListener('mousemove', move);
+            window.addEventListener('mouseup', up);
 
-    // grid/list toggle
-    const work = document.getElementById("work");
-    const btnGrid = document.getElementById("btnGrid");
-    const btnList = document.getElementById("btnList");
-    const setMode = (mode)=>{
-      const isList = mode==="list";
-      work.classList.toggle("is-list", isList);
-      btnGrid.classList.toggle("is-active", !isList);
-      btnList.classList.toggle("is-active", isList);
-      btnGrid.setAttribute("aria-selected", String(!isList));
-      btnList.setAttribute("aria-selected", String(isList));
-    };
-    btnGrid.addEventListener("click", ()=>setMode("grid"));
-    btnList.addEventListener("click", ()=>setMode("list"));
+            rail.addEventListener('touchstart', down, {passive:true});
+            rail.addEventListener('touchmove', move, {passive:true});
+            rail.addEventListener('touchend', up);
+        })();
 
-    // modal preview
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modalImg");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalSub = document.getElementById("modalSub");
-    const modalClose = document.getElementById("modalClose");
+        // Projects: Search + Filter + View toggle (keeps your data, no NAM data)
+        (() => {
+            const search = document.getElementById('projSearch');
+            const chips = Array.from(document.querySelectorAll('.chip'));
+            const togs  = Array.from(document.querySelectorAll('.tog'));
+            const railWrap = document.getElementById('railWrap');
+            const gridWrap = document.getElementById('gridWrap');
 
-    const openModal = (img,title,sub)=>{
-      modalImg.src = img;
-      modalImg.alt = title || "Project";
-      modalTitle.textContent = title || "";
-      modalSub.textContent = sub || "";
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden","false");
-      document.body.style.overflow="hidden";
-    };
-    const closeModal = ()=>{
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden","true");
-      document.body.style.overflow="";
-    };
-    modalClose.addEventListener("click", closeModal);
-    modal.addEventListener("click",(e)=>{ if(e.target===modal) closeModal(); });
-    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape" && modal.classList.contains("is-open")) closeModal(); });
+            const allCards = Array.from(document.querySelectorAll('#railWrap .project-card, #gridWrap .project-card'));
 
-    document.querySelectorAll(".workItem").forEach(card=>{
-      card.addEventListener("click", ()=>{
-        openModal(card.dataset.img, card.dataset.title, card.dataset.sub);
-      });
-    });
+            let filter = 'all';
+            let query = '';
 
-    // clocks (Berlin + Dubai)
-    const fmt = (tz) => new Intl.DateTimeFormat("en-GB", {
-      timeZone: tz, hour:"2-digit", minute:"2-digit", second:"2-digit", hourCycle:"h23"
-    });
-    const berlin = fmt("Europe/Berlin");
-    const dubai  = fmt("Asia/Dubai");
-    const tBerlin = document.getElementById("tBerlin");
-    const tDubai  = document.getElementById("tDubai");
-    const tick = ()=>{
-      const now = new Date();
-      tBerlin.textContent = berlin.format(now);
-      tDubai.textContent  = dubai.format(now);
-    };
-    tick(); setInterval(tick, 1000);
+            const apply = () => {
+                const q = query.trim().toLowerCase();
+                allCards.forEach(card => {
+                    const type = (card.dataset.type || 'all').toLowerCase();
+                    const title = (card.dataset.title || '').toLowerCase();
+                    const desc  = (card.dataset.desc  || '').toLowerCase();
+                    const matchType = (filter === 'all') || (type === filter);
+                    const matchQuery = (!q) || title.includes(q) || desc.includes(q);
+                    card.style.display = (matchType && matchQuery) ? '' : 'none';
+                });
+            };
 
-    // subscribe (front-end only)
-    document.getElementById("subForm").addEventListener("submit",(e)=>{
-      e.preventDefault();
-      const email = document.getElementById("subEmail").value.trim();
-      if(!email) return;
-      // Replace with your backend endpoint / Mailchimp / EmailJS
-      document.getElementById("subEmail").value = "";
-    });
-  </script>
+            chips.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    chips.forEach(b=>b.classList.remove('is-active'));
+                    btn.classList.add('is-active');
+                    filter = btn.dataset.filter;
+                    apply();
+                });
+            });
+
+            search?.addEventListener('input', (e) => {
+                query = e.target.value || '';
+                apply();
+            });
+
+            togs.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    togs.forEach(b=>b.classList.remove('is-active'));
+                    btn.classList.add('is-active');
+                    const view = btn.dataset.view;
+                    if(view === 'grid'){
+                        railWrap.classList.add('hidden');
+                        gridWrap.classList.remove('hidden');
+                    }else{
+                        gridWrap.classList.add('hidden');
+                        railWrap.classList.remove('hidden');
+                    }
+                });
+            });
+
+            apply();
+        })();
+        
+        // Project Viewer (Original, works with both rail and grid because both use .project-card)
+        (() => {
+            const viewer   = document.getElementById('pv');
+            const imgA     = document.getElementById('pvImageA');
+            const imgB     = document.getElementById('pvImageB');
+            const titleEl  = document.getElementById('pvTitle');
+            const descEl   = document.getElementById('pvDesc');
+            const btnClose = document.getElementById('pvClose');
+            const btnPrev  = document.getElementById('pvPrev');
+            const btnNext  = document.getElementById('pvNext');
+            
+            const projectCards = document.querySelectorAll('.project-card');
+            const projects = Array.from(projectCards).map(card => ({
+                base: card.dataset.project,
+                title: card.dataset.title,
+                desc: card.dataset.desc
+            }));
+            
+            let list = [], idx = 0, topIsA = true;
+            const cache = new Map();
+            
+            function updateArrows(){
+                const multi = (list.length > 1);
+                btnPrev.style.display = multi ? '' : 'none';
+                btnNext.style.display = multi ? '' : 'none';
+            }
+            
+            function show(src){
+                const top   = topIsA ? imgA : imgB;
+                const under = topIsA ? imgB : imgA;
+                
+                under.onload = () => {
+                    top.classList.remove('is-top');
+                    under.classList.add('is-top');
+                    topIsA = !topIsA;
+                    under.onload = null;
+                };
+                under.src = src;
+            }
+            
+            function setIdx(i){
+                if (!list.length) return;
+                idx = (i + list.length) % list.length;
+                show(list[idx]);
+            }
+            const nextImg = () => setIdx(idx+1);
+            const prevImg = () => setIdx(idx-1);
+            btnNext?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
+            btnPrev?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
+            
+            async function buildList(base){
+                if (cache.has(base)) return cache.get(base);
+                
+                const exts = ['.webp','.jpg','.jpeg','.png'];
+                const tryList = [];
+                
+                exts.forEach(ext => tryList.push(`${base}${ext}`));
+                
+                for(let i=1;i<=15;i++){
+                    const p2 = String(i).padStart(2,'0');
+                    exts.forEach(ext=>{
+                        tryList.push(`${base}-${p2}${ext}`);
+                        tryList.push(`${base}-${i}${ext}`);
+                    });
+                }
+                
+                exts.forEach(ext=>{
+                    tryList.push(`${base}-clay${ext}`);
+                    tryList.push(`${base}-alt${ext}`);
+                    tryList.push(`${base}-sh${ext}`);
+                    tryList.push(`${base}-extra${ext}`);
+                });
+                
+                const checks = tryList.map(src=>new Promise(res=>{
+                    const im = new Image();
+                    im.onload = ()=>res(src);
+                    im.onerror= ()=>res(null);
+                    im.src = src;
+                }));
+                
+                const found = (await Promise.all(checks)).filter(Boolean);
+                const finalList = found.length ? found : [`${base}.webp`];
+                
+                cache.set(base, finalList);
+                return finalList;
+            }
+            
+            async function openProject(i){
+                const p = projects[i];
+                titleEl.textContent = p.title;
+                descEl.textContent   = p.desc;
+                list = await buildList(p.base);
+                idx = 0;
+                imgA.classList.remove('is-top');
+                imgB.classList.remove('is-top');
+                const currentTop = topIsA ? imgA : imgB;
+                currentTop.src = list[0];
+                currentTop.classList.add('is-top');
+                updateArrows();
+            }
+            
+            function openPV(){
+                viewer.classList.add('show');
+                viewer.setAttribute('aria-hidden','false');
+                document.body.style.overflow='hidden';
+            }
+            function closePV(){
+                viewer.classList.remove('show');
+                viewer.setAttribute('aria-hidden','true');
+                document.body.style.overflow='';
+            }
+            
+            projectCards.forEach((card, i) => {
+                card.addEventListener('click', async () => {
+                    if(card.style.display === 'none') return;
+                    await openProject(i);
+                    openPV();
+                });
+            });
+            
+            viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
+            btnClose?.addEventListener('click', closePV);
+            document.addEventListener('keydown',e=>{
+                if(!viewer.classList.contains('show'))return;
+                if(e.key==='Escape') closePV();
+                if(e.key==='ArrowRight') nextImg();
+                if(e.key==='ArrowLeft')  prevImg();
+                if(e.key==='ArrowDown'||e.key==='PageDown') nextImg();
+                if(e.key==='ArrowUp'||e.key==='PageUp') prevImg();
+            });
+        })();
+        
+        // EmailJS (your original IDs)
+        (() => {
+            const PUBLIC_KEY = "JdZK05NoMso2b9lHe";
+            const SERVICE_ID = "service_m1dfwio";
+            const TEMPLATE_ID = "template_kuqk13r";
+            
+            const form   = document.getElementById('contact-form');
+            const status = document.getElementById('status');
+            
+            if(!form) return;
+            window.addEventListener('load',()=>{ try{ emailjs.init(PUBLIC_KEY) }catch(e){} });
+            
+            form.addEventListener('submit',function(e){
+                e.preventDefault();
+                emailjs.sendForm(SERVICE_ID,TEMPLATE_ID,this)
+                    .then(()=>{ 
+                        status.textContent='Message sent successfully!';
+                        form.reset();
+                    })
+                    .catch(()=>{ status.textContent='Failed to send message. Please try again.'; });
+            });
+        })();
+    </script>
 </body>
 </html>
