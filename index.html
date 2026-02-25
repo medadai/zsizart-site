@@ -1,149 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZSIZART Studio — Architectural Visualization & CGI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZSIZART Studio — Architectural Visualization & CGI</title>
 
-    <!-- SEO / Social -->
-    <meta name="description"
-          content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
-    <link rel="canonical" href="https://zsizart.com/">
-    <meta property="og:title" content="ZSIZART — Visualization Studio">
-    <meta property="og:description"
-          content="Cinematic architectural imagery, animation, and product CGI.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="assets/og-cover.jpg">
-    <meta name="theme-color" content="#0b0d0d">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ZSIZART — Visualization Studio">
-    <meta name="twitter:description"
-          content="Cinematic architectural imagery, animation, and product CGI.">
-    <meta name="twitter:image" content="assets/og-cover.jpg">
+<!-- ==================== SEO / SOCIAL ==================== -->
+<meta name="description"
+      content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
+<link rel="canonical" href="https://zsizart.com/">
+<meta property="og:title" content="ZSIZART — Visualization Studio">
+<meta property="og:description"
+      content="Cinematic architectural imagery, animation, and product CGI.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-cover.jpg">
+<meta name="theme-color" content="#0b0d0d">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZSIZART — Visualization Studio">
+<meta name="twitter:description"
+      content="Cinematic architectural imagery, animation, and product CGI.">
+<meta name="twitter:image" content="assets/og-cover.jpg">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<!-- ==================== FAVICON ==================== -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+<!-- ==================== FONTS ==================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
 
-    <!-- Tailwind + Motion + Lucide -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+<!-- ==================== LIBRARIES ==================== -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- EmailJS & Calendly -->
-    <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script defer src="https://assets.calendly.com/assets/external/widget.js"></script>
+<!-- EmailJS + Calendly -->
+<script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script defer src="https://assets.calendly.com/assets/external/widget.js"></script>
 
-    <style>
-        :root{
-            --background:#fbfbf9;
-            --foreground:#111111;
-            /* المتغيّرات الخاصة بالـ Viewer */
-            --pv-dur:.45s;
-            --pv-ease:cubic-bezier(.4,.14,.3,1);
-            --rev-dur:.7s;
-            --rev-ease:cubic-bezier(.2,.65,.15,1);
-        }
-        body{
-            background:var(--background);
-            color:var(--foreground);
-            font-family:'Inter',sans-serif;
-            scroll-behavior:smooth;
-            overflow-x:hidden;
-        }
-        .scroll-reveal{
-            opacity:0;
-            transform:translateY(2.5rem);
-            transition:opacity .6s ease,transform .6s ease;
-        }
-        .scroll-reveal.show{
-            opacity:1;
-            transform:none;
-        }
+<style>
+:root{
+    --background:#fbfbf9;
+    --foreground:#111111;
+    /* المتغيّرات الخاصة بالـ Viewer */
+    --pv-dur:.45s;
+    --pv-ease:cubic-bezier(.4,.14,.3,1);
+    --rev-dur:.7s;
+    --rev-ease:cubic-bezier(.2,.65,.15,1);
+}
+body{
+    background:var(--background);
+    color:var(--foreground);
+    font-family:'Inter',sans-serif;
+    scroll-behavior:smooth;
+    overflow-x:hidden;
+}
+.scroll-reveal{
+    opacity:0;
+    transform:translateY(2.5rem);
+    transition:opacity .6s ease,transform .6s ease;
+}
+.scroll-reveal.show{
+    opacity:1;
+    transform:none;
+}
 
-        /* ==================== Project Viewer ==================== */
-        .pv{
-            position:fixed; inset:0; z-index:200; background:#000;
-            display:flex; flex-direction:column; align-items:center; justify-content:center;
-            opacity:0; pointer-events:none;
-            transition:opacity var(--pv-dur) var(--pv-ease);
-        }
-        .pv.show{
-            opacity:1; pointer-events:auto;
-        }
-        .pv__content{
-            position:relative; width:100%; height:100%;
-        }
-        .pv__image{
-            position:absolute; inset:0;
-            display:flex; align-items:center; justify-content:center;
-        }
-        .pv__img{
-            position:absolute;
-            inset:auto;                 /* أزل الـ inset:0 لتصبح الأبعاد مرنة */
-            max-width:85vw;            /* أقصى عرض 85 % من عرض المتصفح */
-            max-height:85vh;            /* أقصى ارتفاع 85 % من ارتفاع المتصفح */
-            width:auto;
-            height:auto;
-            object-fit:contain;
-            opacity:0;
-            transition:opacity .5s ease;
-            will-change:opacity,transform;
-        }
-        .pv__img.is-top{
-            opacity:1;
-            animation:pvIn var(--pv-dur) var(--pv-ease);
-        }
-        @keyframes pvIn{
-            from{transform:translateY(-40px);opacity:.9}
-            to{transform:translateY(0);opacity:1}
-        }
-        .pv__info{
-            position:absolute; left:0; right:0; bottom:0;
-            padding:22px 28px; font-size:15px; line-height:1.5;
-            color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.7);
-            transform:translateY(100%);
-            opacity:0;
-            transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
-        }
-        .pv.show .pv__info{
-            transform:translateY(0);
-            opacity:1;
-        }
-        .pv__close{
-            position:absolute; top:14px; left:14px;
-            width:40px; height:40px; border-radius:10px;
-            background:rgba(0,0,0,.45); border:1px solid #1a1f27; color:#fff;
-            font-size:26px; line-height:1; cursor:pointer;
-            display:flex; align-items:center; justify-content:center;
-            box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:15;
-        }
-        .pv__close:hover{background:rgba(0,0,0,.6)}
-        .pv__arrow{
-            position:absolute;
-            top:50%;
-            transform:translateY(-50%);
-            width:64px; height:64px; font-size:44px; border-radius:50%;
-            border:none; cursor:pointer;
-            background:rgba(0,0,0,.45);
-            color:#fff; z-index:10;
-            backdrop-filter:blur(4px);
-            transition:.25s;
-        }
-        .pv__arrow:hover{background:rgba(0,0,0,.7)}
-        .pv__prev{left:20px}
-        .pv__next{right:20px}
-        @media(max-width:768px){
-            .pv__arrow{width:48px;height:48px;font-size:34px}
-        }
-    </style>
+/* ==================== Project Viewer ==================== */
+.pv{
+    position:fixed; inset:0; z-index:200; background:#000;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+    transition:opacity var(--pv-dur) var(--pv-ease);
+}
+.pv.show{opacity:1; pointer-events:auto}
+.pv__content{position:relative; width:100%; height:100%}
+.pv__image{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+}
+.pv__img{
+    position:absolute;
+    inset:auto;                         /* أزل inset:0 ليصبح العنصر مرنًا */
+    max-width:75vw;                    /* 75 % من عرض المتصفح كحد أقصى */
+    max-height:75vh;                   /* 75 % من ارتفاع المتصفح كحد أقصى */
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    opacity:0;
+    transition:opacity .5s ease;
+    will-change:opacity,transform;
+}
+.pv__img.is-top{
+    opacity:1;
+    animation:pvIn var(--pv-dur) var(--pv-ease);
+}
+@keyframes pvIn{
+    from{transform:translateY(-40px);opacity:.9}
+    to  {transform:translateY(0);opacity:1}
+}
+.pv__info{
+    position:absolute; left:0; right:0; bottom:0;
+    padding:22px 28px; font-size:15px; line-height:1.5;
+    color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.7);
+    transform:translateY(100%); opacity:0;
+    transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
+}
+.pv.show .pv__info{transform:translateY(0); opacity:1}
+.pv__close{
+    position:absolute; top:14px; left:14px;
+    width:40px; height:40px; border-radius:10px;
+    background:rgba(0,0,0,.45); border:1px solid #1a1f27; color:#fff;
+    font-size:26px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:15;
+}
+.pv__close:hover{background:rgba(0,0,0,.6)}
+.pv__arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:64px; height:64px; font-size:44px; border-radius:50%;
+    border:none; cursor:pointer; background:rgba(0,0,0,.45);
+    color:#fff; z-index:10; backdrop-filter:blur(4px);
+    transition:.25s;
+}
+.pv__arrow:hover{background:rgba(0,0,0,.7)}
+.pv__prev{left:20px}
+.pv__next{right:20px}
+@media(max-width:768px){
+    .pv__arrow{width:48px;height:48px;font-size:34px}
+}
+</style>
 </head>
 <body class="relative">
 
@@ -246,7 +234,7 @@
 
         <div id="grid"
              class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-8 md:gap-y-32">
-            <!-- Tile 1 -->
+            <!-- ==== Tile 1 ==== -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-01"
                  data-title="Verde Crest Villas"
@@ -264,7 +252,7 @@
                 </div>
             </div>
 
-            <!-- Tile 2 -->
+            <!-- ==== Tile 2 ==== -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-02"
                  data-title="Hillside Serenity"
@@ -282,7 +270,7 @@
                 </div>
             </div>
 
-            <!-- Tile 3 -->
+            <!-- ==== Tile 3 ==== -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-03"
                  data-title="Retro Home Sweet"
@@ -300,7 +288,7 @@
                 </div>
             </div>
 
-            <!-- Tile 4 -->
+            <!-- ==== Tile 4 ==== -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-04"
                  data-title="Serene Lines"
@@ -318,7 +306,7 @@
                 </div>
             </div>
 
-            <!-- Tile 5 -->
+            <!-- ==== Tile 5 ==== -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-05"
                  data-title="Modern Haven"
@@ -560,7 +548,7 @@ qInput?.addEventListener('keydown', e => {
 });
 
 /* ---------- 3D Modeling hover swap ---------- */
-(function(){
+(() => {
     const link = document.querySelector('.modeling-link[data-frames]');
     if(!link) return;
     const img = link.querySelector('img');
@@ -586,7 +574,7 @@ qInput?.addEventListener('keydown', e => {
 })();
 
 /* ---------- Project Viewer ---------- */
-(function(){
+(() => {
     const viewer   = document.getElementById('pv');
     const imgA     = document.getElementById('pvImageA');
     const imgB     = document.getElementById('pvImageB');
@@ -596,12 +584,12 @@ qInput?.addEventListener('keydown', e => {
     const btnPrev  = document.getElementById('pvPrev');
     const btnNext  = document.getElementById('pvNext');
 
-    // كل بطاقات Work تفتح الـ Viewer
+    // بطاقات العمل التي تفتح الـ Viewer
     const projectTiles = [...document.querySelectorAll('#grid .tile')];
     const projects = projectTiles.map(t => ({
         base : t.dataset.project,
-        title: t.dataset.title || '',
-        desc : t.dataset.desc  || ''
+        title: t.dataset.title  || '',
+        desc : t.dataset.desc   || ''
     }));
 
     let list = [], idx = 0, topIsA = true;
@@ -631,12 +619,10 @@ qInput?.addEventListener('keydown', e => {
         idx = (i + list.length) % list.length;
         show(list[idx]);
     }
-
     const nextImg = () => setIdx(idx+1);
     const prevImg = () => setIdx(idx-1);
-
-    btnNext?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
-    btnPrev?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
+    btnNext?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
+    btnPrev?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
 
     async function buildList(base){
         if (cache.has(base)) return cache.get(base);
@@ -644,10 +630,10 @@ qInput?.addEventListener('keydown', e => {
         const exts = ['.webp','.jpg','.jpeg','.png'];
         const tryList = [];
 
-        // base + ext
+        // base + extension
         exts.forEach(ext => tryList.push(`${base}${ext}`));
 
-        // 01‑15 مع أصفار غيرها
+        // تسلسلات رقمية 01‑15
         for(let i=1;i<=15;i++){
             const p2 = String(i).padStart(2,'0');
             exts.forEach(ext=>{
@@ -656,7 +642,7 @@ qInput?.addEventListener('keydown', e => {
             });
         }
 
-        // بعض الأنماط الشائعة
+        // بعض الأسماء الشائعة (clay، alt …)
         exts.forEach(ext=>{
             tryList.push(`${base}-clay${ext}`);
             tryList.push(`${base}-alt${ext}`);
@@ -681,17 +667,14 @@ qInput?.addEventListener('keydown', e => {
     async function openProject(i){
         const p = projects[i];
         titleEl.textContent = p.title;
-        descEl.textContent  = p.desc;
-
+        descEl.textContent   = p.desc;
         list = await buildList(p.base);
         idx = 0;
-
         imgA.classList.remove('is-top');
         imgB.classList.remove('is-top');
         const currentTop = topIsA ? imgA : imgB;
         currentTop.src = list[0];
         currentTop.classList.add('is-top');
-
         updateArrows();
     }
 
@@ -706,19 +689,14 @@ qInput?.addEventListener('keydown', e => {
         document.body.style.overflow='';
     }
 
-    // ربط الفتح بالبطاقات
     projectTiles.forEach((tile,i)=>{
         tile.addEventListener('click', async ()=>{
             await openProject(i);
             openPV();
         });
     });
-
-    // إغلاق بالنقر على الخلفية أو على زر X
     viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
     btnClose?.addEventListener('click', closePV);
-
-    // مفاتيح التحكم
     document.addEventListener('keydown',e=>{
         if(!viewer.classList.contains('show'))return;
         if(e.key==='Escape') closePV();
@@ -741,7 +719,7 @@ topBtn?.addEventListener('click',e=>{
 });
 
 /* ---------- EmailJS ---------- */
-(function(){
+(() => {
     const PUBLIC_KEY = "JdZK05NoMso2b9lHe";
     const SERVICE_ID = "service_m1dfwio";
     const TEMPLATE_ID = "template_kuqk13r";
@@ -761,7 +739,7 @@ topBtn?.addEventListener('click',e=>{
 })();
 
 /* ---------- Calendly badge ---------- */
-(function(){
+(() => {
     if(!window.Calendly) return;
     Calendly.initBadgeWidget({
         url: 'https://calendly.com/arc-mahmoud-refaey/30min',
