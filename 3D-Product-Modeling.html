@@ -1,231 +1,236 @@
 <!DOCTYPE html>
 <html lang="en" oncontextmenu="return false">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>ZSIZART — 3D Product Modeling</title>
-<link rel="icon" href="../assets/favicon.png">
+  <title>3D Modeling — ZSIZART</title>
+  <link rel="canonical" href="https://zsizart.com/3d-product-modeling/">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="3D product modeling — ZSIZART Studio.">
 
-<style>
-:root{
-  --bg:#0b0d0d;
-  --ink:#e9edf0;
-  --max:1500px;
-}
+  <meta name="theme-color" content="#ffffff">
 
-*{box-sizing:border-box}
+  <meta property="og:title" content="3D Modeling — ZSIZART">
+  <meta property="og:description" content="3D product modeling — clay and final renders.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/og-cover.jpg">
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
-  overflow-x:hidden;
-}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="3D Modeling — ZSIZART">
+  <meta name="twitter:description" content="3D product modeling — clay and final renders.">
+  <meta name="twitter:image" content="/assets/og-cover.jpg">
 
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--max);margin:auto;padding:10px}
+  <link rel="preload" as="image" href="/assets/logo.png">
 
-/* ===== Header ===== */
-header{
-  position:sticky;top:0;z-index:50;
-  background:rgba(5,7,9,.92);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid #0e1116;
-}
-header .wrap{
-  padding:20px 32px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.brand{display:flex;align-items:center;gap:14px}
-.brand .logo{height:46px}
-.brand .wordmark{font-weight:800;letter-spacing:.08em;font-size:20px}
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 
-/* ===== Menu ===== */
-.menu-btn{
-  width:44px;height:34px;border:none;background:transparent;
-  display:flex;align-items:center;justify-content:center;cursor:pointer
-}
-.menu-btn .bars,
-.menu-btn .bars::before,
-.menu-btn .bars::after{
-  content:"";display:block;width:20px;height:2.5px;background:#cfe2ff;border-radius:2px;
-  position:relative;transition:.25s
-}
-.menu-btn .bars::before{position:absolute;top:-7px}
-.menu-btn .bars::after{position:absolute;top:7px}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-.overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.4);
-  opacity:0;pointer-events:none;transition:.3s;z-index:60
-}
-.menu-panel{
-  position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
-  background:#0b0d0d;border-left:1px solid #1a1f27;
-  transform:translateX(100%);transition:.35s;z-index:70;
-  display:flex;flex-direction:column;padding:60px 28px
-}
-.menu-panel a{
-  font-size:20px;font-weight:700;color:#fff;margin:14px 0;
-}
-.menu-open .overlay{opacity:1;pointer-events:auto}
-.menu-open .menu-panel{transform:translateX(0)}
+  <link rel="stylesheet" href="/assets/site.css">
 
-/* ===== Section Replacement Animation ===== */
-.project-row{
-  position:relative;
-  min-height:70vh;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  padding:40px 3vw;
-  align-items:center;
+  <style>
+    /* Page-specific layout (keeps your compare effect) */
+    .page{
+      padding:70px 0 30px;
+    }
+    .page h1{
+      margin:0;
+      font-size:56px;
+      line-height:1.05;
+      font-weight:800;
+      letter-spacing:-.03em;
+      max-width:18ch;
+    }
+    .page p{
+      margin:14px 0 0;
+      font-size:18px;
+      color:var(--muted);
+      max-width:62ch;
+    }
 
-  opacity:0;
-  transform:translateY(140px);
-  transition:
-    transform 1s cubic-bezier(.22,.7,.2,1),
-    opacity .9s ease;
-  will-change:transform,opacity;
-  z-index:1;
-}
+    .project-row{
+      position:relative;
+      min-height:70vh;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+      padding:40px 0;
+      align-items:center;
 
-.project-row.in-view{
-  opacity:1;
-  transform:translateY(0);
-  z-index:2;
-}
+      opacity:0;
+      transform:translateY(140px);
+      transition:
+        transform 1s cubic-bezier(.22,.7,.2,1),
+        opacity .9s ease;
+      will-change:transform,opacity;
+    }
+    .project-row.in-view{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .project-row.out-view{
+      opacity:0;
+      transform:translateY(-120px);
+      transition:
+        transform .8s cubic-bezier(.4,0,.2,1),
+        opacity .6s ease;
+    }
 
-.project-row.out-view{
-  opacity:0;
-  transform:translateY(-120px);
-  transition:
-    transform .8s cubic-bezier(.4,0,.2,1),
-    opacity .6s ease;
-}
+    @media(max-width:900px){
+      .project-row{
+        grid-template-columns:1fr;
+        min-height:auto;
+        padding:26px 0;
+      }
+      .layer img{height:52vh}
+      .page h1{font-size:40px}
+    }
 
-@media(max-width:900px){
-  .project-row{
-    min-height:75vh;
-    padding:30px 5vw;
-  }
-  .layer img{
-    height:60vh;
-  }
-}
+    .stack{position:relative;cursor:pointer}
+    .layer{position:relative;border:1px solid var(--line);border-radius:16px;padding:10px;background:#fff}
+    .layer img{
+      width:100%;
+      height:62vh;
+      object-fit:contain;
+    }
 
-/* ===== Image Compare ===== */
-.stack{position:relative;cursor:pointer}
-.layer{position:relative}
-.layer img{
-  width:100%;
-  height:65vh;
-  object-fit:contain;
-}
-.img-clay{
-  position:absolute;inset:0;
-  opacity:0;
-  transition:opacity .4s ease;
-}
-.stack:hover .img-clay{opacity:1}
-.stack.is-compare .img-clay{opacity:1}
-
-</style>
+    .img-clay{
+      position:absolute;
+      inset:10px; /* matches padding */
+      width:calc(100% - 20px);
+      height:calc(100% - 20px);
+      opacity:0;
+      transition:opacity .35s ease;
+      pointer-events:none;
+    }
+    .stack:hover .img-clay{opacity:1}
+    .stack.is-compare .img-clay{opacity:1}
+  </style>
 </head>
 
 <body>
 
 <header>
-  <div class="wrap">
-    <div class="brand">
-      <img src="../assets/logo.png" alt="ZSIZART Logo" class="logo">
-      <span class="wordmark">ZSIZART</span>
-    </div>
-    <button class="menu-btn" id="menuBtn"><span class="bars"></span></button>
+  <div class="wrap header-row">
+    <a class="brand" href="/" aria-label="ZSIZART Home">
+      <img src="/assets/logo.png" alt="ZSIZART Logo" width="22" height="22" loading="eager" decoding="async">
+    </a>
+
+    <nav class="topnav" aria-label="Primary">
+      <a href="/projects/">Projects</a>
+      <a href="/careers/">Careers</a>
+      <a href="/3d-product-modeling/">3D Modeling</a>
+      <a class="cta" href="/get-in-touch/">Get in touch</a>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+      <span class="bars"></span>
+    </button>
   </div>
 </header>
 
 <div class="overlay" id="overlay"></div>
-<aside class="menu-panel" id="menuPanel">
-  <a href="/work">Work</a>
-  <a href="/services">Services</a>
-  <a href="/art">Art</a>
-  <a href="/about">About</a>
-  <a href="/contact">Contact</a>
+<aside class="menu-panel" id="menuPanel" aria-label="Site menu">
+  <a href="/projects/">Projects</a>
+  <a href="/careers/">Careers</a>
+  <a href="/3d-product-modeling/">3D Modeling</a>
+  <a href="/get-in-touch/">Get in touch</a>
 </aside>
 
 <main class="wrap">
 
-<section class="project-row">
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render01.webp">
-    <img class="img-clay" src="../assets/modeling-clay01.webp">
-  </div></div>
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render02.webp">
-    <img class="img-clay" src="../assets/modeling-clay02.webp">
-  </div></div>
-</section>
+  <section class="page">
+    <h1>3D Product Modeling</h1>
+    <p>Click to lock the comparison. Hover (or tap) to preview clay vs final renders.</p>
+  </section>
 
-<section class="project-row">
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render03.webp">
-    <img class="img-clay" src="../assets/modeling-clay03.webp">
-  </div></div>
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render04.webp">
-    <img class="img-clay" src="../assets/modeling-clay04.webp">
-  </div></div>
-</section>
+  <section class="project-row">
+    <div class="stack">
+      <div class="layer">
+        <img src="/assets/modeling-render01.webp" alt="3D Modeling Render 01" loading="lazy" decoding="async">
+        <img class="img-clay" src="/assets/modeling-clay01.webp" alt="3D Modeling Clay 01" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div class="stack">
+      <div class="layer">
+        <img src="/assets/modeling-render02.webp" alt="3D Modeling Render 02" loading="lazy" decoding="async">
+        <img class="img-clay" src="/assets/modeling-clay02.webp" alt="3D Modeling Clay 02" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
 
-<section class="project-row">
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render05.webp">
-    <img class="img-clay" src="../assets/modeling-clay05.webp">
-  </div></div>
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render06.webp">
-    <img class="img-clay" src="../assets/modeling-clay06.webp">
-  </div></div>
-</section>
+  <section class="project-row">
+    <div class="stack">
+      <div class="layer">
+        <img src="/assets/modeling-render03.webp" alt="3D Modeling Render 03" loading="lazy" decoding="async">
+        <img class="img-clay" src="/assets/modeling-clay03.webp" alt="3D Modeling Clay 03" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div class="stack">
+      <div class="layer">
+        <img src="/assets/modeling-render04.webp" alt="3D Modeling Render 04" loading="lazy" decoding="async">
+        <img class="img-clay" src="/assets/modeling-clay04.webp" alt="3D Modeling Clay 04" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
 
-<section class="project-row">
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render07.webp">
-    <img class="img-clay" src="../assets/modeling-clay07.webp">
-  </div></div>
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render08.webp">
-    <img class="img-clay" src="../assets/modeling-clay08.webp">
-  </div></div>
-</section>
+  <section class="project-row">
+    <div class="stack">
+      <div class="layer">
+        <img src="/assets/modeling-render05.webp" alt="3D Modeling Render 05" loading="lazy" decoding="async">
+        <img class="img-clay" src="/assets/modeling-clay05.webp" alt="3D Modeling Clay 05" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div class="stack">
+      <div class="layer">
+        <img src="/assets/modeling-render06.webp" alt="3D Modeling Render 06" loading="lazy" decoding="async">
+        <img class="img-clay" src="/assets/modeling-clay06.webp" alt="3D Modeling Clay 06" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="project-row">
+    <div class="stack">
+      <div class="layer">
+        <img src="/assets/modeling-render07.webp" alt="3D Modeling Render 07" loading="lazy" decoding="async">
+        <img class="img-clay" src="/assets/modeling-clay07.webp" alt="3D Modeling Clay 07" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div class="stack">
+      <div class="layer">
+        <img src="/assets/modeling-render08.webp" alt="3D Modeling Render 08" loading="lazy" decoding="async">
+        <img class="img-clay" src="/assets/modeling-clay08.webp" alt="3D Modeling Clay 08" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
 
 </main>
 
 <script>
-const body=document.body,
-menuBtn=document.getElementById('menuBtn'),
-overlay=document.getElementById('overlay');
+const body=document.body;
+const menuBtn=document.getElementById('menuBtn');
+const overlay=document.getElementById('overlay');
+const menuPanel=document.getElementById('menuPanel');
 
-menuBtn.addEventListener('click',()=>body.classList.toggle('menu-open'));
-overlay.addEventListener('click',()=>body.classList.remove('menu-open'));
+function openMenu(){ body.classList.add('menu-open'); menuBtn?.setAttribute('aria-expanded','true'); }
+function closeMenu(){ body.classList.remove('menu-open'); menuBtn?.setAttribute('aria-expanded','false'); }
 
-/* ===== Replacement Scroll Effect ===== */
+menuBtn?.addEventListener('click', ()=> body.classList.contains('menu-open') ? closeMenu() : openMenu());
+overlay?.addEventListener('click', closeMenu);
+menuPanel?.addEventListener('click', (e)=>{ if(e.target.tagName==='A') closeMenu(); });
+
 const sections=document.querySelectorAll(".project-row");
-
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
       entry.target.classList.add("in-view");
       entry.target.classList.remove("out-view");
     } else {
-      if(entry.boundingClientRect.top < 0){
-        entry.target.classList.add("out-view");
-      }
+      if(entry.boundingClientRect.top < 0) entry.target.classList.add("out-view");
       entry.target.classList.remove("in-view");
     }
   });
@@ -233,13 +238,10 @@ const observer=new IntersectionObserver(entries=>{
   threshold:0.25,
   rootMargin:"-20% 0px -20% 0px"
 });
-
 sections.forEach(section=>observer.observe(section));
 
 document.querySelectorAll(".stack").forEach(card=>{
-  card.addEventListener("click",()=>{
-    card.classList.toggle("is-compare");
-  });
+  card.addEventListener("click",()=>{ card.classList.toggle("is-compare"); });
 });
 </script>
 
@@ -260,4 +262,3 @@ window.addEventListener('load', () => {
 
 </body>
 </html>
-
