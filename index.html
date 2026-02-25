@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+a<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF‑8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZSIZART Studio — Architectural Visualization & CGI</title>
 
@@ -45,6 +45,11 @@
         :root{
             --background:#fbfbf9;
             --foreground:#111111;
+            /* المتغيّرات التي يستخدمها الـ Viewer */
+            --pv-dur:.45s;
+            --pv-ease:cubic-bezier(.4,.14,.3,1);
+            --rev-dur:.7s;
+            --rev-ease:cubic-bezier(.2,.65,.15,1);
         }
         body{
             background:var(--background);
@@ -61,6 +66,57 @@
         .scroll-reveal.show{
             opacity:1;
             transform:none;
+        }
+
+        /* ==== Project Viewer ==== */
+        .pv{
+            position:fixed; inset:0; z-index:200; background:#000;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            opacity:0; pointer-events:none;
+            transition:opacity var(--pv-dur) var(--pv-ease);
+        }
+        .pv.show{opacity:1; pointer-events:auto}
+        .pv__content{position:relative; width:100%; height:100%}
+        .pv__image{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+        .pv__img{
+            position:absolute; inset:0; width:100vw; height:100vh;
+            object-fit:contain; opacity:0;
+            transition:opacity .5s ease; will-change:opacity,transform;
+        }
+        .pv__img.is-top{opacity:1; animation:pvIn var(--pv-dur) var(--pv-ease)}
+        @keyframes pvIn{
+            from{transform:translateY(-40px);opacity:.9}
+            to{transform:translateY(0);opacity:1}
+        }
+        .pv__info{
+            position:absolute; left:0; right:0; bottom:0;
+            padding:22px 28px; font-size:15px; line-height:1.5;
+            color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.7);
+            transform:translateY(100%); opacity:0;
+            transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
+        }
+        .pv.show .pv__info{transform:translateY(0);opacity:1}
+        .pv__close{
+            position:absolute; top:14px; left:14px;
+            width:40px; height:40px; border-radius:10px;
+            background:rgba(0,0,0,.45); border:1px solid #1a1f27; color:#fff;
+            font-size:26px; line-height:1; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:15;
+        }
+        .pv__close:hover{background:rgba(0,0,0,.6)}
+        .pv__arrow{
+            position:absolute; top:50%; transform:translateY(-50%);
+            width:64px; height:64px; font-size:44px; border-radius:50%;
+            border:none; cursor:pointer; background:rgba(0,0,0,.45);
+            color:#fff; z-index:10; backdrop-filter:blur(4px);
+            transition:.25s;
+        }
+        .pv__arrow:hover{background:rgba(0,0,0,.7)}
+        .pv__prev{left:20px}
+        .pv__next{right:20px}
+        @media(max-width:768px){
+            .pv__arrow{width:48px;height:48px;font-size:34px}
         }
     </style>
 </head>
@@ -166,7 +222,7 @@
         <div id="grid"
              class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-8 md:gap-y-32">
             <!-- ----- Tile 1 ----- -->
-            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-01"
                  data-title="Verde Crest Villas"
                  data-desc="Luxury Residential Development — Concept &amp; Visualization."
@@ -184,7 +240,7 @@
             </div>
 
             <!-- ----- Tile 2 ----- -->
-            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-02"
                  data-title="Hillside Serenity"
                  data-desc="A modern retreat in nature blending architecture and landscape."
@@ -202,7 +258,7 @@
             </div>
 
             <!-- ----- Tile 3 ----- -->
-            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-03"
                  data-title="Retro Home Sweet"
                  data-desc="Interior CGI capturing warmth of retro modern living."
@@ -220,7 +276,7 @@
             </div>
 
             <!-- ----- Tile 4 ----- -->
-            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-04"
                  data-title="Serene Lines"
                  data-desc="Interior CGI focused on light, material and calm composition."
@@ -238,7 +294,7 @@
             </div>
 
             <!-- ----- Tile 5 ----- -->
-            <div class="group cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
+            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-05"
                  data-title="Modern Haven"
                  data-desc="Interior CGI capturing warmth of modern living."
@@ -350,6 +406,27 @@
 
 </main>
 
+<!-- ==================== Project Viewer (النافذة‑الكاملة) ==================== -->
+<div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
+    <div class="pv__content">
+        <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
+
+        <div class="pv__image">
+            <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
+
+            <img id="pvImageA" class="pv__img is-top" alt="">
+            <img id="pvImageB" class="pv__img" alt="">
+
+            <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+        </div>
+
+        <aside class="pv__info">
+            <h3 id="pvTitle"></h3>
+            <p id="pvDesc"></p>
+        </aside>
+    </div>
+</div>
+
 <!-- ==================== Footer ==================== -->
 <footer class="px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-neutral-200 text-sm text-neutral-500">
     <p>© 2026 ZSIZART Studio — Architectural Visualization &amp; CGI</p>
@@ -414,7 +491,7 @@ filterToggle?.addEventListener('click', () => {
     filterOverlay.classList.toggle('flex');
 });
 filterOverlay?.addEventListener('click', e => {
-    if(e.target===filterOverlay) {
+    if(e.target===filterOverlay){
         filterOverlay.classList.add('hidden');
         filterOverlay.classList.remove('flex');
     }
@@ -424,7 +501,7 @@ const resetBtn = document.getElementById('resetBtn');
 const qInput   = document.getElementById('q');
 const chkInt   = document.getElementById('tagInterior');
 const chkExt   = document.getElementById('tagExterior');
-const workTiles = document.querySelectorAll('#grid .group');
+const workTiles = document.querySelectorAll('#grid .tile');
 
 function applyFilters(){
     const q = qInput?.value?.trim().toLowerCase() || '';
@@ -480,6 +557,149 @@ qInput?.addEventListener('keydown', e => {
         ready = false;
         idx = (idx+1)%frames.length;
         swapTo(frames[idx]);
+    });
+})();
+
+/* ---------- Project Viewer ---------- */
+(function(){
+    const viewer   = document.getElementById('pv');
+    const imgA     = document.getElementById('pvImageA');
+    const imgB     = document.getElementById('pvImageB');
+    const titleEl  = document.getElementById('pvTitle');
+    const descEl   = document.getElementById('pvDesc');
+    const btnClose = document.getElementById('pvClose');
+    const btnPrev  = document.getElementById('pvPrev');
+    const btnNext  = document.getElementById('pvNext');
+
+    // جميع العناصر التي تفتح الـ Viewer (الموجودة في #grid)
+    const projectTiles = [...document.querySelectorAll('#grid .tile')];
+    const projects = projectTiles.map(t => ({
+        base: t.dataset.project,
+        title: t.dataset.title || '',
+        desc: t.dataset.desc || ''
+    }));
+
+    let list = [], idx = 0, topIsA = true;
+    const cache = new Map();
+
+    function updateArrows(){
+        const multi = (list.length > 1);
+        btnPrev.style.display = multi ? '' : 'none';
+        btnNext.style.display = multi ? '' : 'none';
+    }
+
+    function show(src){
+        const top   = topIsA ? imgA : imgB;
+        const under = topIsA ? imgB : imgA;
+
+        under.onload = () => {
+            top.classList.remove('is-top');
+            under.classList.add('is-top');
+            topIsA = !topIsA;
+            under.onload = null;
+        };
+        under.src = src;
+    }
+
+    function setIdx(i){
+        if (!list.length) return;
+        idx = (i + list.length) % list.length;
+        show(list[idx]);
+    }
+
+    const nextImg = () => setIdx(idx+1);
+    const prevImg = () => setIdx(idx-1);
+
+    btnNext?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
+    btnPrev?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
+
+    async function buildList(base){
+        if (cache.has(base)) return cache.get(base);
+
+        const exts = ['.webp','.jpg','.jpeg','.png'];
+        const tryList = [];
+
+        // الأسماء الأساسية مع كل الامتدادات
+        exts.forEach(ext=> tryList.push(`${base}${ext}`));
+
+        // تسلسلات رقمية 01‑15 (صورة‑ضوء، إلخ)
+        for(let i=1;i<=15;i++){
+            const p2 = String(i).padStart(2,'0');
+            exts.forEach(ext=>{
+                tryList.push(`${base}-${p2}${ext}`);
+                tryList.push(`${base}-${i}${ext}`);
+            });
+        }
+
+        // بعض الأنماط الشائعة (clay، alt …)
+        exts.forEach(ext=>{
+            tryList.push(`${base}-clay${ext}`);
+            tryList.push(`${base}-alt${ext}`);
+            tryList.push(`${base}-sh${ext}`);
+            tryList.push(`${base}-extra${ext}`);
+        });
+
+        const checks = tryList.map(src=>new Promise(res=>{
+            const im = new Image();
+            im.onload = ()=>res(src);
+            im.onerror = ()=>res(null);
+            im.src = src;
+        }));
+
+        const found = (await Promise.all(checks)).filter(Boolean);
+        const finalList = found.length ? found : [`${base}.webp`];
+
+        cache.set(base, finalList);
+        return finalList;
+    }
+
+    async function openProject(i){
+        const p = projects[i];
+        titleEl.textContent = p.title;
+        descEl.textContent   = p.desc;
+
+        list = await buildList(p.base);
+        idx = 0;
+        imgA.classList.remove('is-top');
+        imgB.classList.remove('is-top');
+        const currentTop = topIsA ? imgA : imgB;
+        currentTop.src = list[0];
+        currentTop.classList.add('is-top');
+
+        updateArrows();
+    }
+
+    function openPV(){
+        viewer.classList.add('show');
+        viewer.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+    }
+    function closePV(){
+        viewer.classList.remove('show');
+        viewer.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+    }
+
+    // ربط الفتح بالبطاقات
+    projectTiles.forEach((tile,i)=>{
+        tile.addEventListener('click', async ()=>{
+            await openProject(i);
+            openPV();
+        });
+    });
+
+    // إغلاق بالضغط على الخلفية أو زر الإغلاق
+    viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
+    btnClose?.addEventListener('click', closePV);
+
+    // دعم مفاتيح الإشارة
+    document.addEventListener('keydown',e=>{
+        if(!viewer.classList.contains('show'))return;
+        if(e.key==='Escape') closePV();
+        if(e.key==='ArrowRight') nextImg();
+        if(e.key==='ArrowLeft')  prevImg();
+        if(e.key==='ArrowDown'||e.key==='PageDown') nextImg();
+        if(e.key==='ArrowUp'||e.key==='PageUp') prevImg();
     });
 })();
 
