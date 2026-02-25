@@ -33,26 +33,33 @@ header{
   backdrop-filter:saturate(160%) blur(10px);
   border-bottom:1px solid var(--line);
 }
-header .wrap{padding:18px 28px}
-.header-layout{display:flex;align-items:center;justify-content:space-between;gap:18px}
+header .wrap{
+  padding:18px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+}
 
-.brand{display:flex;align-items:center;gap:12px;user-select:none}
-.brand .logo{height:34px;width:auto}
-.brand .wordmark{font-weight:800;letter-spacing:.08em;font-size:16px}
+.brand img{
+  height:22px;
+  width:auto;
+  display:block;
+}
 
-/* Top nav links */
-.topnav{display:flex;align-items:center;gap:18px}
-.topnav a{font-weight:600;color:#0b0d0d;opacity:.9}
-.topnav a:hover{opacity:1;text-decoration:underline;text-underline-offset:6px}
+.topnav{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
 
-/* Get in touch button */
 .cta{
-  padding:10px 14px;border-radius:999px;
-  border:1px solid #0b0d0d;background:#0b0d0d;color:#fff;
+  padding:10px 14px;
+  border-radius:999px;
+  background:var(--ink);
+  color:#fff !important;
   font-weight:700;
 }
-.cta:hover{filter:brightness(1.05)}
-
 /* Mobile menu */
 .menu-btn{display:none;width:44px;height:34px;border:none;background:transparent;cursor:pointer}
 .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{
