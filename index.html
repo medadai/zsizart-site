@@ -12,7 +12,7 @@
     <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="assets/og-cover.jpg">
-    <meta name="theme-color" content="#0b0d0d">
+    <meta name="theme-color" content="#ffffff">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ZSIZART — Visualization Studio">
     <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
@@ -39,12 +39,12 @@
     
     <style>
         :root {
-            --background: #0a0a0a;
-            --foreground: #f0f0f0;
+            --background: #ffffff;
+            --foreground: #000000;
             --accent: #ff7a18;
             --accent-dark: #e06300;
-            --gray-light: #2a2a2a;
-            --gray-dark: #1a1a1a;
+            --gray-light: #f5f5f5;
+            --gray-dark: #e0e0e0;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
@@ -95,6 +95,17 @@
             box-shadow: 0 10px 20px rgba(255, 122, 24, 0.2);
         }
         
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--foreground);
+            color: var(--foreground);
+        }
+        
+        .btn-outline:hover {
+            background: var(--foreground);
+            color: var(--background);
+        }
+        
         .section-title {
             font-size: 2.5rem;
             margin-bottom: 3rem;
@@ -117,7 +128,7 @@
             overflow: hidden;
             border-radius: 4px;
             transition: var(--transition);
-            background: var(--gray-dark);
+            background: var(--gray-light);
         }
         
         .project-card img {
@@ -136,7 +147,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(255,255,255,0.9);
             padding: 1.5rem;
             transform: translateY(10px);
             opacity: 0;
@@ -149,11 +160,11 @@
         }
         
         .service-card {
-            background: var(--gray-dark);
+            background: var(--gray-light);
             padding: 2rem;
             border-radius: 4px;
             transition: var(--transition);
-            border: 1px solid var(--gray-light);
+            border: 1px solid var(--gray-dark);
             height: 100%;
         }
         
@@ -296,9 +307,10 @@
         }
         
         header.scrolled {
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
         
         /* Hero */
@@ -317,7 +329,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+            background: linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
             z-index: -1;
         }
         
@@ -335,13 +347,13 @@
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
-            color: #ccc;
+            color: #333;
             max-width: 500px;
         }
         
         /* Footer */
         footer {
-            background: var(--gray-dark);
+            background: var(--gray-light);
             padding: 4rem 0 2rem;
             text-align: center;
         }
@@ -360,7 +372,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--gray-light);
+            background: var(--gray-dark);
             color: var(--foreground);
             transition: var(--transition);
         }
@@ -368,6 +380,46 @@
         .social-links a:hover {
             background: var(--accent);
             transform: translateY(-5px);
+        }
+        
+        /* Modeling CTA */
+        .modeling-cta {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .modeling-cta img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .modeling-cta:hover img {
+            transform: scale(1.05);
+        }
+        
+        .modeling-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .modeling-cta:hover .modeling-overlay {
+            opacity: 1;
         }
         
         /* Responsive */
@@ -398,16 +450,17 @@
                 <img src="assets/logo.png" alt="ZSIZART Logo" class="h-8">
             </div>
             <div class="menu-toggle cursor-pointer">
-                <i data-lucide="menu" class="text-white w-8 h-8"></i>
+                <i data-lucide="menu" class="text-black w-8 h-8"></i>
             </div>
         </div>
     </header>
     
     <!-- Navigation Menu -->
     <nav class="nav-menu" id="navMenu">
-        <a href="#work">Work</a>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
+        <a href="#work">Projects</a>
+        <a href="#modeling-cta">3D Modeling</a>
+        <a href="#about">Studio</a>
+        <a href="#courses">Courses</a>
         <a href="#contact">Contact</a>
     </nav>
     
@@ -420,7 +473,7 @@
                 <p>Premium Architectural Visualization & CGI</p>
                 <div class="flex gap-4">
                     <a href="#work" class="btn">View Work</a>
-                    <a href="#contact" class="btn">Request Proposal</a>
+                    <a href="#contact" class="btn btn-outline">Request Proposal</a>
                 </div>
             </div>
         </div>
@@ -429,7 +482,7 @@
     <!-- Work Section -->
     <section id="work" class="section-padding">
         <div class="container">
-            <h2 class="section-title">Work</h2>
+            <h2 class="section-title">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Project 1 -->
                 <div class="project-card fade-in cursor-pointer" data-project="assets/work-01" data-title="Verde Crest Villas" data-desc="Luxury Residential Development — Concept & Visualization.">
@@ -484,42 +537,56 @@
         </div>
     </section>
     
+    <!-- 3D Modeling CTA -->
+    <section id="modeling-cta" class="section-padding">
+        <div class="container">
+            <div class="modeling-cta fade-in">
+                <img src="assets/modeling-preview.jpg" alt="3D Modeling">
+                <div class="modeling-overlay">
+                    <h3 class="text-2xl font-bold mb-4">3D Product Modeling</h3>
+                    <p class="mb-6 max-w-md">High-quality 3D modeling services for architectural visualization and product design</p>
+                    <a href="3D-Product-Modeling" class="btn">Explore Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- Services Section -->
-    <section id="services" class="section-padding bg-gray-dark">
+    <section id="services" class="section-padding bg-gray-light">
         <div class="container">
             <h2 class="section-title">Services</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Service 1 -->
                 <div class="service-card fade-in">
                     <h3 class="text-xl font-bold mb-3">Interior Visualization</h3>
-                    <p class="text-gray-300">Photoreal interiors focused on mood, materials, and storytelling.</p>
+                    <p class="text-gray-700">Photoreal interiors focused on mood, materials, and storytelling.</p>
                 </div>
                 
                 <!-- Service 2 -->
                 <div class="service-card fade-in">
                     <h3 class="text-xl font-bold mb-3">Exterior Visualization</h3>
-                    <p class="text-gray-300">Compelling exteriors with dramatic atmosphere and context.</p>
+                    <p class="text-gray-700">Compelling exteriors with dramatic atmosphere and context.</p>
                 </div>
                 
                 <!-- Service 3 -->
                 <div class="service-card fade-in">
                     <h3 class="text-xl font-bold mb-3">Animation</h3>
-                    <p class="text-gray-300">Cinematic walkthroughs and product films that move audiences.</p>
+                    <p class="text-gray-700">Cinematic walkthroughs and product films that move audiences.</p>
                 </div>
                 
                 <!-- Service 4 -->
                 <div class="service-card fade-in">
                     <h3 class="text-xl font-bold mb-3">Product Visualization</h3>
-                    <p class="text-gray-300">High-end product shots for furniture and design marketing.</p>
+                    <p class="text-gray-700">High-end product shots for furniture and design marketing.</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- About Section -->
+    <!-- Studio Section -->
     <section id="about" class="section-padding">
         <div class="container">
-            <h2 class="section-title">About</h2>
+            <h2 class="section-title">Studio</h2>
             <div class="fade-in">
                 <p class="text-xl mb-6"><strong>ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production-ready architectural imagery and animation for global projects.</p>
                 <p class="text-xl mb-6">We collaborate with architects, developers, and design teams to create high-end visuals that support marketing, investor presentations, and project launches.</p>
@@ -529,11 +596,22 @@
     </section>
     
     <!-- Courses Section -->
-    <section id="courses" class="section-padding bg-gray-dark">
+    <section id="courses" class="section-padding bg-gray-light">
         <div class="container">
             <h2 class="section-title">Courses</h2>
             <div class="fade-in">
                 <p class="text-xl">Educational content currently in development.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Career Section -->
+    <section id="career" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Career</h2>
+            <div class="fade-in">
+                <p class="text-xl mb-6">Join our team of talented artists and designers. We're always looking for passionate individuals to push the boundaries of architectural visualization.</p>
+                <p class="text-xl">If you're interested in joining ZSIZART Studio, please send your portfolio and CV to careers@zsizart.com</p>
             </div>
         </div>
     </section>
@@ -545,10 +623,10 @@
             <div class="max-w-2xl mx-auto">
                 <form id="contact-form" class="fade-in">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <input type="text" name="from_name" placeholder="Your Name" class="bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent" required>
-                        <input type="email" name="reply_to" placeholder="Your Email" class="bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent" required>
+                        <input type="text" name="from_name" placeholder="Your Name" class="bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none focus:border-accent" required>
+                        <input type="email" name="reply_to" placeholder="Your Email" class="bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none focus:border-accent" required>
                     </div>
-                    <textarea name="message" placeholder="Your Message" rows="5" class="w-full bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent mb-6" required></textarea>
+                    <textarea name="message" placeholder="Your Message" rows="5" class="w-full bg-white border border-gray-300 rounded px-4 py-3 text-black focus:outline-none focus:border-accent mb-6" required></textarea>
                     <button type="submit" class="btn w-full">Send Message</button>
                     <p id="status" class="mt-4 text-center text-accent"></p>
                 </form>
@@ -568,7 +646,7 @@
                 <a href="#"><i data-lucide="behance" class="w-5 h-5"></i></a>
                 <a href="#"><i data-lucide="vimeo" class="w-5 h-5"></i></a>
             </div>
-            <p class="text-gray-400">© 2026 ZSIZART Studio — Architectural Visualization & CGI</p>
+            <p class="text-gray-600">© 2026 ZSIZART Studio — Architectural Visualization & CGI</p>
         </div>
     </footer>
     
