@@ -1,497 +1,848 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZSIZART Studio — Architectural Visualization & CGI</title>
-    
-    <!-- SEO / SOCIAL -->
-    <meta name="description" content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
-    <link rel="canonical" href="https://zsizart.com/">
-    <meta property="og:title" content="ZSIZART — Visualization Studio">
-    <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="assets/og-cover.jpg">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="twitter:card" content="summary_large_image">
-    
-    <!-- FAVICON -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
-    
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-<style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZSIZART Studio — Architectural CGI & Brand Direction</title>
+  <meta name="description" content="ZSIZART is a creative studio working on real estate and hospitality projects. Architectural imagery and film, with brand and direction shaping how projects are presented." />
 
-:root{
---background:#ffffff;
---foreground:#000000;
---accent:#ff7a18;
---accent-dark:#e06300;
---gray-light:#f8f8f8;
---gray-dark:#eaeaea;
---transition:all .4s cubic-bezier(.16,1,.3,1);
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+  <style>
+    :root{
+      --bg:#ffffff;
+      --fg:#0a0a0a;
+      --muted:rgba(10,10,10,.62);
+      --line:rgba(10,10,10,.12);
+      --soft:rgba(10,10,10,.06);
+      --ease:cubic-bezier(.16,1,.3,1);
+      --radius:14px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--fg);
+      letter-spacing:-.01em;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .container{max-width:var(--max);margin:0 auto;padding:0 28px}
+    .topbar{
+      position:fixed;left:0;right:0;top:0;z-index:50;
+      background:rgba(255,255,255,.86);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid transparent;
+      transition:border-color .3s var(--ease), background .3s var(--ease);
+    }
+    .topbar.is-scrolled{border-bottom-color:var(--line);background:rgba(255,255,255,.92)}
+    .topbar__inner{height:72px;display:flex;align-items:center;justify-content:space-between}
+    .brand{
+      display:flex;align-items:center;gap:12px;
+      font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px;
+    }
+    .brand__mark{
+      width:28px;height:28px;border-radius:9px;
+      border:1px solid var(--line);
+      display:grid;place-items:center;
+      font-size:11px;
+    }
+    .navlinks{display:flex;gap:18px;align-items:center}
+    .navlinks a{
+      font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--muted);
+      padding:10px 8px;border-radius:10px;
+      transition:background .25s var(--ease), color .25s var(--ease);
+    }
+    .navlinks a:hover{background:var(--soft);color:var(--fg)}
+    .menuBtn{
+      display:flex;align-items:center;gap:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+      transition:transform .2s var(--ease), background .25s var(--ease);
+    }
+    .menuBtn:active{transform:scale(.98)}
+    .menuBtn__dot{
+      width:8px;height:8px;border-radius:99px;background:var(--fg);
+      box-shadow:0 0 0 4px rgba(10,10,10,.08);
+    }
+    .menuBtn__label{
+      font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    }
 
-body{
-background:var(--background);
-color:var(--foreground);
-font-family:'Inter',sans-serif;
-scroll-behavior:smooth;
-overflow-x:hidden;
-line-height:1.6;
-}
+    /* Menu overlay */
+    .overlay{
+      position:fixed;inset:0;z-index:80;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(10px);
+      opacity:0;pointer-events:none;
+      transition:opacity .35s var(--ease);
+    }
+    .overlay.is-open{opacity:1;pointer-events:auto}
+    .overlay__inner{
+      height:100%;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      padding:22px 0;
+    }
+    .overlay__top{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 28px;
+    }
+    .overlay__close{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+    }
+    .overlay__nav{
+      display:flex;align-items:center;justify-content:center;
+    }
+    .overlay__nav ul{
+      list-style:none;margin:0;padding:0;
+      display:flex;flex-direction:column;gap:16px;
+      width:min(520px, 92vw);
+    }
+    .overlay__nav a{
+      display:flex;align-items:center;justify-content:space-between;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px 18px;
+      font-size:14px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      background:#fff;
+      transition:transform .25s var(--ease), background .25s var(--ease);
+    }
+    .overlay__nav a:hover{transform:translateY(-2px);background:rgba(255,255,255,.7)}
+    .overlay__nav span{color:var(--muted);font-size:12px;letter-spacing:.12em}
+    .overlay__bottom{
+      padding:0 28px;
+      display:flex;align-items:center;justify-content:space-between;
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
 
-.container{
-max-width:1200px;
-margin:0 auto;
-padding:0 2rem;
-}
+    /* Hero */
+    .hero{
+      padding-top:96px;
+      min-height:82vh;
+      display:flex;
+      align-items:flex-start;
+    }
+    .hero__grid{
+      width:100%;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:56px;
+      padding:64px 0 44px;
+      border-bottom:1px solid var(--line);
+    }
+    .hero__kicker{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:18px;
+    }
+    .hero__title{
+      font-size:56px;
+      line-height:1.02;
+      font-weight:600;
+      margin:0 0 16px;
+      letter-spacing:.22em; /* spaced feel */
+      text-transform:uppercase;
+    }
+    .hero__title small{
+      display:block;
+      font-size:18px;
+      letter-spacing:.12em;
+      color:var(--muted);
+      margin-top:14px;
+      text-transform:none;
+    }
+    .hero__copy{
+      font-size:15px;
+      line-height:1.75;
+      color:var(--muted);
+      margin:0;
+      max-width:54ch;
+    }
+    .hero__ctaRow{
+      margin-top:26px;
+      display:flex;gap:10px;flex-wrap:wrap;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:999px;
+      padding:12px 16px;
+      font-size:12px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:background .25s var(--ease), transform .2s var(--ease);
+    }
+    .btn:hover{background:var(--soft)}
+    .btn:active{transform:scale(.98)}
+    .btn--primary{
+      background:var(--fg);
+      color:#fff;
+      border-color:var(--fg);
+    }
+    .btn--primary:hover{background:#111}
 
-.section-padding{
-padding:6rem 0;
-}
+    .hero__aside{
+      padding-top:8px;
+      display:flex;flex-direction:column;gap:18px;
+    }
+    .heroCard{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      background:#fff;
+    }
+    .heroCard h3{
+      margin:0 0 8px;
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--muted);
+      font-weight:600;
+    }
+    .heroCard p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
 
-.section-title{
-font-size:2.5rem;
-margin-bottom:3rem;
-}
+    /* Section */
+    .section{padding:56px 0}
+    .sectionHead{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+      padding:10px 0 18px;
+    }
+    .sectionTitle{
+      font-size:14px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--fg);
+      margin:0;
+    }
+    .sectionActions{
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .seg{
+      display:inline-flex;
+      border:1px solid var(--line);
+      border-radius:999px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .seg button{
+      border:0;background:transparent;
+      padding:10px 14px;
+      cursor:pointer;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .seg button.is-active{background:var(--fg);color:#fff}
+    .mutedLink{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 14px;
+      background:#fff;
+      transition:background .25s var(--ease);
+    }
+    .mutedLink:hover{background:var(--soft)}
 
-.btn{
-display:inline-block;
-padding:.8rem 1.8rem;
-background:var(--accent);
-color:#fff;
-text-decoration:none;
-}
+    /* Projects grid/list */
+    .work{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .workItem{
+      grid-column: span 6;
+      border-radius:18px;
+      overflow:hidden;
+      position:relative;
+      border:1px solid var(--line);
+      background:#f7f7f7;
+      min-height:340px;
+      cursor:pointer;
+      transform:translateZ(0);
+      transition:transform .25s var(--ease);
+    }
+    .workItem:hover{transform:translateY(-3px)}
+    .workItem img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:saturate(1.02) contrast(1.02);
+      transform:scale(1.02);
+      transition:transform .6s var(--ease);
+    }
+    .workItem:hover img{transform:scale(1.06)}
+    .workMeta{
+      position:absolute;left:16px;right:16px;bottom:16px;
+      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
+      color:#fff;
+      text-shadow:0 10px 26px rgba(0,0,0,.45);
+    }
+    .workMeta__left b{
+      display:block;
+      font-size:14px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-weight:600;
+      margin-bottom:6px;
+    }
+    .workMeta__left span{
+      display:block;
+      font-size:12px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      opacity:.92;
+    }
+    .workMeta__tag{
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.35);
+      padding:8px 10px;
+      border-radius:999px;
+      backdrop-filter: blur(8px);
+      background:rgba(0,0,0,.22);
+      white-space:nowrap;
+    }
+    .workItem::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0) 62%);
+      pointer-events:none;
+    }
 
-/* HEADER */
+    /* List view */
+    .work.is-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .work.is-list .workItem{
+      min-height:auto;
+      display:grid;
+      grid-template-columns: 180px 1fr;
+      align-items:stretch;
+    }
+    .work.is-list .workItem img{height:100%;min-height:120px}
+    .work.is-list .workItem::after{display:none}
+    .work.is-list .workMeta{
+      position:static;
+      padding:14px 16px;
+      color:var(--fg);
+      text-shadow:none;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .work.is-list .workMeta__left b{margin:0 0 6px;color:var(--fg)}
+    .work.is-list .workMeta__left span{color:var(--muted)}
+    .work.is-list .workMeta__tag{
+      color:var(--muted);
+      background:transparent;
+      border-color:var(--line);
+      backdrop-filter:none;
+    }
 
-header{
-position:fixed;
-top:0;
-width:100%;
-background:#fff;
-padding:1.5rem 0;
-z-index:100;
-}
+    /* News */
+    .newsCard{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:26px 18px;
+      background:#fff;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+    }
+    .newsCard h3{
+      margin:0;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      font-weight:600;
+    }
+    .newsCard b{
+      display:block;
+      margin-top:10px;
+      font-size:28px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:600;
+    }
 
-.logo img{
-height:32px;
-}
+    /* Footer */
+    footer{
+      padding:46px 0 34px;
+      border-top:1px solid var(--line);
+    }
+    .footerGrid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap:22px;
+      align-items:start;
+    }
+    .footTitle{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin:0 0 10px;
+      font-weight:600;
+    }
+    .footLinks{
+      display:flex;flex-direction:column;gap:10px;
+      font-size:12px;letter-spacing:.10em;text-transform:uppercase;
+      color:var(--muted);
+    }
+    .footLinks a:hover{color:var(--fg)}
+    .sub{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    }
+    .sub input{
+      width:min(320px, 100%);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:12px 14px;
+      outline:none;
+      font-size:13px;
+    }
+    .sub button{
+      border:1px solid var(--fg);
+      background:var(--fg);
+      color:#fff;
+      border-radius:999px;
+      padding:12px 14px;
+      cursor:pointer;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .clocks{
+      display:flex;flex-direction:column;gap:12px;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .clockRow{
+      display:flex;align-items:center;justify-content:space-between;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 14px;
+      background:#fff;
+    }
+    .fineprint{
+      margin-top:22px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      font-size:12px;
+      letter-spacing:.08em;
+      color:var(--muted);
+      text-transform:uppercase;
+      flex-wrap:wrap;
+    }
 
-/* HERO */
+    /* Modal viewer */
+    .modal{
+      position:fixed;inset:0;z-index:120;
+      background:rgba(0,0,0,.92);
+      opacity:0;pointer-events:none;
+      transition:opacity .35s var(--ease);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .modal.is-open{opacity:1;pointer-events:auto}
+    .modal__inner{position:relative;width:min(1100px,92vw);height:min(86vh,780px)}
+    .modal__img{
+      width:100%;height:100%;
+      object-fit:contain;display:block;
+    }
+    .modal__close{
+      position:absolute;top:14px;left:14px;
+      width:44px;height:44px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,0,0,.35);
+      color:#fff;
+      font-size:28px;
+      cursor:pointer;
+      display:grid;place-items:center;
+    }
+    .modal__cap{
+      position:absolute;left:0;right:0;bottom:0;
+      padding:16px 18px;
+      color:#fff;
+      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
+      background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,0));
+    }
+    .modal__cap b{
+      display:block;
+      font-size:13px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .modal__cap span{
+      display:block;
+      font-size:12px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      opacity:.9;
+    }
 
-.hero{
-height:100vh;
-display:flex;
-align-items:center;
-position:relative;
-}
-
-.hero-bg{
-position:absolute;
-inset:0;
-background:url("assets/hero-bg.jpg") center/cover;
-z-index:-1;
-}
-
-.hero-content h1{
-font-size:3.5rem;
-margin-bottom:1rem;
-}
-
-.hero-content p{
-font-size:1.2rem;
-margin-bottom:2rem;
-}
-
-/* ===================== */
-/* PROJECT RAIL */
-/* ===================== */
-
-.projRail{
-position:relative;
-}
-
-.rail{
-display:flex;
-gap:14px;
-overflow-x:auto;
-padding:10px 60px 20px;
-scroll-snap-type:x mandatory;
-scrollbar-width:none;
-}
-
-.rail::-webkit-scrollbar{display:none;}
-
-.railCard{
-flex:0 0 auto;
-width:260px;
-height:340px;
-border-radius:12px;
-overflow:hidden;
-position:relative;
-cursor:pointer;
-background:#111;
-scroll-snap-align:start;
-transition:var(--transition);
-}
-
-.railCard img{
-width:100%;
-height:100%;
-object-fit:cover;
-transition:var(--transition);
-}
-
-.railCard:hover img{
-transform:scale(1.08);
-}
-
-.railCard::after{
-content:'';
-position:absolute;
-inset:0;
-background:linear-gradient(to top,rgba(0,0,0,.6),transparent);
-}
-
-.railLabel{
-position:absolute;
-bottom:14px;
-left:16px;
-color:#fff;
-font-size:13px;
-z-index:2;
-}
-
-.railBtn{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-width:46px;
-height:46px;
-border-radius:10px;
-border:none;
-background:#fff;
-cursor:pointer;
-font-size:26px;
-}
-
-.railPrev{left:0}
-.railNext{right:0}
-
-/* ===================== */
-/* PROJECT VIEWER */
-/* ===================== */
-
-.pv{
-position:fixed;
-inset:0;
-background:#000;
-display:flex;
-align-items:center;
-justify-content:center;
-opacity:0;
-pointer-events:none;
-transition:.4s;
-z-index:999;
-}
-
-.pv.show{
-opacity:1;
-pointer-events:auto;
-}
-
-.pv img{
-max-width:90%;
-max-height:90%;
-}
-
-.pvClose{
-position:absolute;
-top:20px;
-left:20px;
-color:#fff;
-font-size:34px;
-cursor:pointer;
-}
-
-/* SERVICES */
-
-.service-card{
-background:var(--gray-light);
-padding:2rem;
-border-radius:4px;
-border:1px solid var(--gray-dark);
-}
-
-/* FOOTER */
-
-footer{
-background:var(--gray-light);
-padding:4rem 0;
-text-align:center;
-}
-
-</style>
+    @media (max-width: 980px){
+      .hero__grid{grid-template-columns:1fr;gap:24px}
+      .hero__title{font-size:44px}
+      .workItem{grid-column:span 12}
+    }
+    @media (max-width: 640px){
+      .container{padding:0 16px}
+      .topbar__inner{height:66px}
+      .navlinks{display:none}
+      .hero__title{font-size:36px;letter-spacing:.18em}
+      .footerGrid{grid-template-columns:1fr;gap:16px}
+      .work.is-list .workItem{grid-template-columns: 1fr}
+      .work.is-list .workMeta{padding:14px 14px}
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-
-<div class="container">
-
-<div class="logo">
-
-<img src="assets/logo.png">
-
-</div>
-
-</div>
-
-</header>
-
-
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="hero-bg"></div>
-
-<div class="container">
-
-<div class="hero-content">
-
-<h1>ZSIZART Studio</h1>
-
-<p>Premium Architectural Visualization & CGI</p>
-
-<a href="#work" class="btn">View Work</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- PROJECTS -->
-
-<section id="work" class="section-padding">
-
-<div class="container">
-
-<h2 class="section-title">Projects</h2>
-
-<div class="projRail">
-
-<button class="railBtn railPrev">‹</button>
-
-<div class="rail" id="rail">
-
-
-
-<div class="railCard"
-
-data-project="assets/work-01.webp">
-
-<img src="assets/work-01.webp">
-
-<div class="railLabel">Exterior Rendering</div>
-
-</div>
-
-
-
-<div class="railCard"
-
-data-project="assets/work-02.webp">
-
-<img src="assets/work-02.webp">
-
-<div class="railLabel">Landscape Rendering</div>
-
-</div>
-
-
-
-<div class="railCard"
-
-data-project="assets/work-03.webp">
-
-<img src="assets/work-03.webp">
-
-<div class="railLabel">Interior Rendering</div>
-
-</div>
-
-
-
-<div class="railCard"
-
-data-project="assets/work-04.webp">
-
-<img src="assets/work-04.webp">
-
-<div class="railLabel">Hospitality Rendering</div>
-
-</div>
-
-
-
-<div class="railCard"
-
-data-project="assets/work-05.webp">
-
-<img src="assets/work-05.webp">
-
-<div class="railLabel">Furniture Rendering</div>
-
-</div>
-
-
-
-</div>
-
-<button class="railBtn railNext">›</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- SERVICES -->
-
-<section class="section-padding">
-
-<div class="container">
-
-<h2 class="section-title">Services</h2>
-
-<div class="service-card">
-
-Interior, Exterior, Animation, Product Visualization
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- CONTACT -->
-
-<section class="section-padding">
-
-<div class="container">
-
-<h2 class="section-title">Contact</h2>
-
-<p>careers@zsizart.com</p>
-
-</div>
-
-</section>
-
-
-
-<footer>
-
-<div class="container">
-
-© 2026 ZSIZART Studio
-
-</div>
-
-</footer>
-
-
-
-<!-- VIEWER -->
-
-<div class="pv" id="viewer">
-
-<div class="pvClose" id="close">×</div>
-
-<img id="viewerImg">
-
-</div>
-
-
-
-<script>
-
-rail=document.getElementById("rail")
-
-document.querySelector(".railPrev").onclick=()=>{
-
-rail.scrollBy({left:-300,behavior:"smooth"})
-
-}
-
-document.querySelector(".railNext").onclick=()=>{
-
-rail.scrollBy({left:300,behavior:"smooth"})
-
-}
-
-
-
-viewer=document.getElementById("viewer")
-
-viewerImg=document.getElementById("viewerImg")
-
-
-
-document.querySelectorAll(".railCard")
-
-.forEach(card=>{
-
-card.onclick=()=>{
-
-viewer.classList.add("show")
-
-viewerImg.src=card.dataset.project
-
-}
-
-})
-
-
-
-close.onclick=()=>{
-
-viewer.classList.remove("show")
-
-}
-
-
-
-viewer.onclick=e=>{
-
-if(e.target===viewer)
-
-viewer.classList.remove("show")
-
-}
-
-</script>
-
-
-
+  <!-- Topbar -->
+  <header class="topbar" id="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="#">
+        <span class="brand__mark">Z</span>
+        <span>ZSIZART Studio</span>
+      </a>
+
+      <nav class="navlinks" aria-label="Primary">
+        <a href="#projects">Projects</a>
+        <a href="#studio">Studio</a>
+        <a href="#news">News</a>
+        <a href="#careers">Careers</a>
+        <a href="#contact">Get in touch</a>
+      </nav>
+
+      <button class="menuBtn" id="menuOpen" type="button" aria-label="Open menu">
+        <span class="menuBtn__dot" aria-hidden="true"></span>
+        <span class="menuBtn__label">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Menu Overlay -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="overlay__inner">
+      <div class="overlay__top">
+        <a class="brand" href="#">
+          <span class="brand__mark">Z</span>
+          <span>ZSIZART Studio</span>
+        </a>
+        <button class="overlay__close" id="menuClose" type="button" aria-label="Close menu">Close</button>
+      </div>
+
+      <nav class="overlay__nav" aria-label="Menu">
+        <ul>
+          <li><a href="#projects" class="overlayLink">Projects <span>01</span></a></li>
+          <li><a href="#studio" class="overlayLink">Studio <span>02</span></a></li>
+          <li><a href="#news" class="overlayLink">News <span>03</span></a></li>
+          <li><a href="#careers" class="overlayLink">Careers <span>04</span></a></li>
+          <li><a href="#contact" class="overlayLink">Get in touch <span>05</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="overlay__bottom">
+        <span>©<span id="year"></span> ZSIZART Studio</span>
+        <span>Architectural CGI + Brand Direction</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <main class="hero">
+    <div class="container">
+      <section class="hero__grid">
+        <div>
+          <div class="hero__kicker">A creative practice for place.</div>
+          <h1 class="hero__title">
+            A CREATIVE PRACTICE FOR PLACE.
+            <small>Architectural imagery & film, with brand and direction shaping how projects are presented and understood.</small>
+          </h1>
+          <p class="hero__copy">
+            ZSIZART is a creative studio working on real estate and hospitality projects. Our work is led by architectural imagery and film, with brand and direction shaping how projects are presented and understood.
+          </p>
+          <div class="hero__ctaRow">
+            <a class="btn btn--primary" href="#projects">View work</a>
+            <a class="btn" href="#contact">About us</a>
+          </div>
+        </div>
+
+        <aside class="hero__aside" id="studio">
+          <div class="heroCard">
+            <h3>Studio</h3>
+            <p>Visualization, film, and brand systems for architectural and development teams.</p>
+          </div>
+          <div class="heroCard">
+            <h3>Capabilities</h3>
+            <p>CGI • Film • Interior styling • Brand direction • Launch assets • Investor decks</p>
+          </div>
+          <div class="heroCard" id="careers">
+            <h3>Careers</h3>
+            <p>Send portfolio + CV to careers@zsizart.com</p>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Featured work -->
+      <section class="section" id="projects">
+        <div class="sectionHead">
+          <h2 class="sectionTitle">Featured work</h2>
+          <div class="sectionActions">
+            <a class="mutedLink" href="#projects">View all projects</a>
+            <div class="seg" role="tablist" aria-label="View mode">
+              <button type="button" id="btnGrid" class="is-active" role="tab" aria-selected="true">Grid</button>
+              <button type="button" id="btnList" role="tab" aria-selected="false">Lists</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="work" id="work">
+          <!-- Replace images/titles with your assets -->
+          <article class="workItem" data-img="assets/work-01.webp" data-title="Parkside St" data-sub="CGI / Film">
+            <img src="assets/work-01.webp" alt="Project 01">
+            <div class="workMeta">
+              <div class="workMeta__left">
+                <b>Parkside St</b>
+                <span>CGI / Film</span>
+              </div>
+              <div class="workMeta__tag">Melbourne</div>
+            </div>
+          </article>
+
+          <article class="workItem" data-img="assets/work-02.webp" data-title="Linden Grove" data-sub="CGI / Film">
+            <img src="assets/work-02.webp" alt="Project 02">
+            <div class="workMeta">
+              <div class="workMeta__left">
+                <b>Linden Grove</b>
+                <span>CGI / Film</span>
+              </div>
+              <div class="workMeta__tag">Sydney</div>
+            </div>
+          </article>
+
+          <article class="workItem" data-img="assets/work-03.webp" data-title="Cielo Collection" data-sub="CGI / Film">
+            <img src="assets/work-03.webp" alt="Project 03">
+            <div class="workMeta">
+              <div class="workMeta__left">
+                <b>Cielo Collection</b>
+                <span>CGI / Film</span>
+              </div>
+              <div class="workMeta__tag">Dubai</div>
+            </div>
+          </article>
+
+          <article class="workItem" data-img="assets/work-04.webp" data-title="Senso" data-sub="CGI / Interior Styling">
+            <img src="assets/work-04.webp" alt="Project 04">
+            <div class="workMeta">
+              <div class="workMeta__left">
+                <b>Senso</b>
+                <span>CGI / Interior Styling</span>
+              </div>
+              <div class="workMeta__tag">Berlin</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Newsroom -->
+      <section class="section" id="news">
+        <div class="sectionHead">
+          <h2 class="sectionTitle">Newsroom</h2>
+          <div class="sectionActions">
+            <a class="mutedLink" href="#news">Read all articles</a>
+          </div>
+        </div>
+
+        <div class="newsCard">
+          <div>
+            <h3>All articles</h3>
+            <b>COMING SOON</b>
+          </div>
+          <a class="mutedLink" href="#contact">Contact</a>
+        </div>
+      </section>
+
+      <!-- Contact anchor -->
+      <div id="contact" style="height:1px"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footerGrid">
+        <div>
+          <p class="footTitle">ZSIZART Studio</p>
+          <div class="footLinks">
+            <a href="#" rel="noopener">Instagram</a>
+            <a href="#" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+
+        <div>
+          <p class="footTitle">Keep in touch with us</p>
+          <form class="sub" id="subForm">
+            <input type="email" id="subEmail" placeholder="Email address" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+
+        <div>
+          <p class="footTitle">Local time</p>
+          <div class="clocks">
+            <div class="clockRow"><span>Berlin</span><span id="tBerlin">--:--:--</span></div>
+            <div class="clockRow"><span>Dubai</span><span id="tDubai">--:--:--</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fineprint">
+        <span>©<span id="year2"></span> ZSIZART Studio</span>
+        <span>
+          <a href="#" style="text-decoration:underline;text-underline-offset:3px">Privacy policy</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Project preview">
+    <div class="modal__inner">
+      <button class="modal__close" id="modalClose" type="button" aria-label="Close">×</button>
+      <img class="modal__img" id="modalImg" alt="">
+      <div class="modal__cap">
+        <div>
+          <b id="modalTitle"></b>
+          <span id="modalSub"></span>
+        </div>
+        <span style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9">Preview</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // year
+    const y = new Date().getFullYear();
+    document.getElementById("year").textContent = y;
+    document.getElementById("year2").textContent = y;
+
+    // scroll header line
+    const topbar = document.getElementById("topbar");
+    const onScroll = () => topbar.classList.toggle("is-scrolled", window.scrollY > 10);
+    onScroll(); window.addEventListener("scroll", onScroll, {passive:true});
+
+    // menu overlay
+    const overlay = document.getElementById("overlay");
+    const openBtn = document.getElementById("menuOpen");
+    const closeBtn = document.getElementById("menuClose");
+    const openMenu = () => { overlay.classList.add("is-open"); overlay.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; };
+    const closeMenu = () => { overlay.classList.remove("is-open"); overlay.setAttribute("aria-hidden","true"); document.body.style.overflow=""; };
+    openBtn.addEventListener("click", openMenu);
+    closeBtn.addEventListener("click", closeMenu);
+    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeMenu(); });
+    document.querySelectorAll(".overlayLink").forEach(a=>{
+      a.addEventListener("click", ()=>{ closeMenu(); });
+    });
+    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape" && overlay.classList.contains("is-open")) closeMenu(); });
+
+    // grid/list toggle
+    const work = document.getElementById("work");
+    const btnGrid = document.getElementById("btnGrid");
+    const btnList = document.getElementById("btnList");
+    const setMode = (mode)=>{
+      const isList = mode==="list";
+      work.classList.toggle("is-list", isList);
+      btnGrid.classList.toggle("is-active", !isList);
+      btnList.classList.toggle("is-active", isList);
+      btnGrid.setAttribute("aria-selected", String(!isList));
+      btnList.setAttribute("aria-selected", String(isList));
+    };
+    btnGrid.addEventListener("click", ()=>setMode("grid"));
+    btnList.addEventListener("click", ()=>setMode("list"));
+
+    // modal preview
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalSub = document.getElementById("modalSub");
+    const modalClose = document.getElementById("modalClose");
+
+    const openModal = (img,title,sub)=>{
+      modalImg.src = img;
+      modalImg.alt = title || "Project";
+      modalTitle.textContent = title || "";
+      modalSub.textContent = sub || "";
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden","false");
+      document.body.style.overflow="hidden";
+    };
+    const closeModal = ()=>{
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden","true");
+      document.body.style.overflow="";
+    };
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click",(e)=>{ if(e.target===modal) closeModal(); });
+    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape" && modal.classList.contains("is-open")) closeModal(); });
+
+    document.querySelectorAll(".workItem").forEach(card=>{
+      card.addEventListener("click", ()=>{
+        openModal(card.dataset.img, card.dataset.title, card.dataset.sub);
+      });
+    });
+
+    // clocks (Berlin + Dubai)
+    const fmt = (tz) => new Intl.DateTimeFormat("en-GB", {
+      timeZone: tz, hour:"2-digit", minute:"2-digit", second:"2-digit", hourCycle:"h23"
+    });
+    const berlin = fmt("Europe/Berlin");
+    const dubai  = fmt("Asia/Dubai");
+    const tBerlin = document.getElementById("tBerlin");
+    const tDubai  = document.getElementById("tDubai");
+    const tick = ()=>{
+      const now = new Date();
+      tBerlin.textContent = berlin.format(now);
+      tDubai.textContent  = dubai.format(now);
+    };
+    tick(); setInterval(tick, 1000);
+
+    // subscribe (front-end only)
+    document.getElementById("subForm").addEventListener("submit",(e)=>{
+      e.preventDefault();
+      const email = document.getElementById("subEmail").value.trim();
+      if(!email) return;
+      // Replace with your backend endpoint / Mailchimp / EmailJS
+      document.getElementById("subEmail").value = "";
+    });
+  </script>
 </body>
 </html>
