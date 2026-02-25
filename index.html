@@ -1,4 +1,4 @@
-a<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,7 +45,7 @@ a<!DOCTYPE html>
         :root{
             --background:#fbfbf9;
             --foreground:#111111;
-            /* المتغيّرات التي يستخدمها الـ Viewer */
+            /* المتغيّرات الخاصة بالـ Viewer */
             --pv-dur:.45s;
             --pv-ease:cubic-bezier(.4,.14,.3,1);
             --rev-dur:.7s;
@@ -68,22 +68,39 @@ a<!DOCTYPE html>
             transform:none;
         }
 
-        /* ==== Project Viewer ==== */
+        /* ==================== Project Viewer ==================== */
         .pv{
             position:fixed; inset:0; z-index:200; background:#000;
             display:flex; flex-direction:column; align-items:center; justify-content:center;
             opacity:0; pointer-events:none;
             transition:opacity var(--pv-dur) var(--pv-ease);
         }
-        .pv.show{opacity:1; pointer-events:auto}
-        .pv__content{position:relative; width:100%; height:100%}
-        .pv__image{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
-        .pv__img{
-            position:absolute; inset:0; width:100vw; height:100vh;
-            object-fit:contain; opacity:0;
-            transition:opacity .5s ease; will-change:opacity,transform;
+        .pv.show{
+            opacity:1; pointer-events:auto;
         }
-        .pv__img.is-top{opacity:1; animation:pvIn var(--pv-dur) var(--pv-ease)}
+        .pv__content{
+            position:relative; width:100%; height:100%;
+        }
+        .pv__image{
+            position:absolute; inset:0;
+            display:flex; align-items:center; justify-content:center;
+        }
+        .pv__img{
+            position:absolute;
+            inset:auto;                 /* أزل الـ inset:0 لتصبح الأبعاد مرنة */
+            max-width:85vw;            /* أقصى عرض 85 % من عرض المتصفح */
+            max-height:85vh;            /* أقصى ارتفاع 85 % من ارتفاع المتصفح */
+            width:auto;
+            height:auto;
+            object-fit:contain;
+            opacity:0;
+            transition:opacity .5s ease;
+            will-change:opacity,transform;
+        }
+        .pv__img.is-top{
+            opacity:1;
+            animation:pvIn var(--pv-dur) var(--pv-ease);
+        }
         @keyframes pvIn{
             from{transform:translateY(-40px);opacity:.9}
             to{transform:translateY(0);opacity:1}
@@ -92,10 +109,14 @@ a<!DOCTYPE html>
             position:absolute; left:0; right:0; bottom:0;
             padding:22px 28px; font-size:15px; line-height:1.5;
             color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.7);
-            transform:translateY(100%); opacity:0;
+            transform:translateY(100%);
+            opacity:0;
             transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
         }
-        .pv.show .pv__info{transform:translateY(0);opacity:1}
+        .pv.show .pv__info{
+            transform:translateY(0);
+            opacity:1;
+        }
         .pv__close{
             position:absolute; top:14px; left:14px;
             width:40px; height:40px; border-radius:10px;
@@ -106,10 +127,14 @@ a<!DOCTYPE html>
         }
         .pv__close:hover{background:rgba(0,0,0,.6)}
         .pv__arrow{
-            position:absolute; top:50%; transform:translateY(-50%);
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
             width:64px; height:64px; font-size:44px; border-radius:50%;
-            border:none; cursor:pointer; background:rgba(0,0,0,.45);
-            color:#fff; z-index:10; backdrop-filter:blur(4px);
+            border:none; cursor:pointer;
+            background:rgba(0,0,0,.45);
+            color:#fff; z-index:10;
+            backdrop-filter:blur(4px);
             transition:.25s;
         }
         .pv__arrow:hover{background:rgba(0,0,0,.7)}
@@ -221,7 +246,7 @@ a<!DOCTYPE html>
 
         <div id="grid"
              class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-8 md:gap-y-32">
-            <!-- ----- Tile 1 ----- -->
+            <!-- Tile 1 -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-01"
                  data-title="Verde Crest Villas"
@@ -239,7 +264,7 @@ a<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- ----- Tile 2 ----- -->
+            <!-- Tile 2 -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-02"
                  data-title="Hillside Serenity"
@@ -257,7 +282,7 @@ a<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- ----- Tile 3 ----- -->
+            <!-- Tile 3 -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-03"
                  data-title="Retro Home Sweet"
@@ -275,7 +300,7 @@ a<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- ----- Tile 4 ----- -->
+            <!-- Tile 4 -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-04"
                  data-title="Serene Lines"
@@ -293,7 +318,7 @@ a<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- ----- Tile 5 ----- -->
+            <!-- Tile 5 -->
             <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
                  data-project="assets/work-05"
                  data-title="Modern Haven"
@@ -406,7 +431,7 @@ a<!DOCTYPE html>
 
 </main>
 
-<!-- ==================== Project Viewer (النافذة‑الكاملة) ==================== -->
+<!-- ==================== Project Viewer (Fullscreen) ==================== -->
 <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
     <div class="pv__content">
         <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
@@ -436,7 +461,7 @@ a<!DOCTYPE html>
     </button>
 </footer>
 
-<!-- ==================== Back‑to‑Top button (Tailwind) ==================== -->
+<!-- ==================== Back‑to‑Top button ==================== -->
 <button id="topBtn"
         class="hidden fixed right-6 bottom-6 flex items-center gap-2 bg-black/80 text-white px-4 py-2 rounded-full hover:bg-black/90 transition-all"
         aria-label="Back to top">
@@ -571,12 +596,12 @@ qInput?.addEventListener('keydown', e => {
     const btnPrev  = document.getElementById('pvPrev');
     const btnNext  = document.getElementById('pvNext');
 
-    // جميع العناصر التي تفتح الـ Viewer (الموجودة في #grid)
+    // كل بطاقات Work تفتح الـ Viewer
     const projectTiles = [...document.querySelectorAll('#grid .tile')];
     const projects = projectTiles.map(t => ({
-        base: t.dataset.project,
+        base : t.dataset.project,
         title: t.dataset.title || '',
-        desc: t.dataset.desc || ''
+        desc : t.dataset.desc  || ''
     }));
 
     let list = [], idx = 0, topIsA = true;
@@ -619,10 +644,10 @@ qInput?.addEventListener('keydown', e => {
         const exts = ['.webp','.jpg','.jpeg','.png'];
         const tryList = [];
 
-        // الأسماء الأساسية مع كل الامتدادات
-        exts.forEach(ext=> tryList.push(`${base}${ext}`));
+        // base + ext
+        exts.forEach(ext => tryList.push(`${base}${ext}`));
 
-        // تسلسلات رقمية 01‑15 (صورة‑ضوء، إلخ)
+        // 01‑15 مع أصفار غيرها
         for(let i=1;i<=15;i++){
             const p2 = String(i).padStart(2,'0');
             exts.forEach(ext=>{
@@ -631,7 +656,7 @@ qInput?.addEventListener('keydown', e => {
             });
         }
 
-        // بعض الأنماط الشائعة (clay، alt …)
+        // بعض الأنماط الشائعة
         exts.forEach(ext=>{
             tryList.push(`${base}-clay${ext}`);
             tryList.push(`${base}-alt${ext}`);
@@ -642,7 +667,7 @@ qInput?.addEventListener('keydown', e => {
         const checks = tryList.map(src=>new Promise(res=>{
             const im = new Image();
             im.onload = ()=>res(src);
-            im.onerror = ()=>res(null);
+            im.onerror= ()=>res(null);
             im.src = src;
         }));
 
@@ -656,10 +681,11 @@ qInput?.addEventListener('keydown', e => {
     async function openProject(i){
         const p = projects[i];
         titleEl.textContent = p.title;
-        descEl.textContent   = p.desc;
+        descEl.textContent  = p.desc;
 
         list = await buildList(p.base);
         idx = 0;
+
         imgA.classList.remove('is-top');
         imgB.classList.remove('is-top');
         const currentTop = topIsA ? imgA : imgB;
@@ -688,11 +714,11 @@ qInput?.addEventListener('keydown', e => {
         });
     });
 
-    // إغلاق بالضغط على الخلفية أو زر الإغلاق
+    // إغلاق بالنقر على الخلفية أو على زر X
     viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
     btnClose?.addEventListener('click', closePV);
 
-    // دعم مفاتيح الإشارة
+    // مفاتيح التحكم
     document.addEventListener('keydown',e=>{
         if(!viewer.classList.contains('show'))return;
         if(e.key==='Escape') closePV();
