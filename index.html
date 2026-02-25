@@ -1,755 +1,836 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZSIZART Studio — Architectural Visualization & CGI</title>
-
-<!-- ==================== SEO / SOCIAL ==================== -->
-<meta name="description"
-      content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
-<link rel="canonical" href="https://zsizart.com/">
-<meta property="og:title" content="ZSIZART — Visualization Studio">
-<meta property="og:description"
-      content="Cinematic architectural imagery, animation, and product CGI.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="assets/og-cover.jpg">
-<meta name="theme-color" content="#0b0d0d">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ZSIZART — Visualization Studio">
-<meta name="twitter:description"
-      content="Cinematic architectural imagery, animation, and product CGI.">
-<meta name="twitter:image" content="assets/og-cover.jpg">
-
-<!-- ==================== FAVICON ==================== -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-
-<!-- ==================== FONTS ==================== -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet">
-
-<!-- ==================== LIBRARIES ==================== -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-
-<!-- EmailJS + Calendly -->
-<script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script defer src="https://assets.calendly.com/assets/external/widget.js"></script>
-
-<style>
-:root{
-    --background:#fbfbf9;
-    --foreground:#111111;
-    /* المتغيّرات الخاصة بالـ Viewer */
-    --pv-dur:.45s;
-    --pv-ease:cubic-bezier(.4,.14,.3,1);
-    --rev-dur:.7s;
-    --rev-ease:cubic-bezier(.2,.65,.15,1);
-}
-body{
-    background:var(--background);
-    color:var(--foreground);
-    font-family:'Inter',sans-serif;
-    scroll-behavior:smooth;
-    overflow-x:hidden;
-}
-.scroll-reveal{
-    opacity:0;
-    transform:translateY(2.5rem);
-    transition:opacity .6s ease,transform .6s ease;
-}
-.scroll-reveal.show{
-    opacity:1;
-    transform:none;
-}
-
-/* ==================== Project Viewer ==================== */
-.pv{
-    position:fixed; inset:0; z-index:200; background:#000;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    opacity:0; pointer-events:none;
-    transition:opacity var(--pv-dur) var(--pv-ease);
-}
-.pv.show{opacity:1; pointer-events:auto}
-.pv__content{position:relative; width:100%; height:100%}
-.pv__image{
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-}
-.pv__img{
-    position:absolute;
-    inset:auto;                         /* أزل inset:0 ليصبح العنصر مرنًا */
-    max-width:75vw;                    /* 75 % من عرض المتصفح كحد أقصى */
-    max-height:75vh;                   /* 75 % من ارتفاع المتصفح كحد أقصى */
-    width:auto;
-    height:auto;
-    object-fit:contain;
-    opacity:0;
-    transition:opacity .5s ease;
-    will-change:opacity,transform;
-}
-.pv__img.is-top{
-    opacity:1;
-    animation:pvIn var(--pv-dur) var(--pv-ease);
-}
-@keyframes pvIn{
-    from{transform:translateY(-40px);opacity:.9}
-    to  {transform:translateY(0);opacity:1}
-}
-.pv__info{
-    position:absolute; left:0; right:0; bottom:0;
-    padding:22px 28px; font-size:15px; line-height:1.5;
-    color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.7);
-    transform:translateY(100%); opacity:0;
-    transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
-}
-.pv.show .pv__info{transform:translateY(0); opacity:1}
-.pv__close{
-    position:absolute; top:14px; left:14px;
-    width:40px; height:40px; border-radius:10px;
-    background:rgba(0,0,0,.45); border:1px solid #1a1f27; color:#fff;
-    font-size:26px; line-height:1; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:15;
-}
-.pv__close:hover{background:rgba(0,0,0,.6)}
-.pv__arrow{
-    position:absolute; top:50%; transform:translateY(-50%);
-    width:64px; height:64px; font-size:44px; border-radius:50%;
-    border:none; cursor:pointer; background:rgba(0,0,0,.45);
-    color:#fff; z-index:10; backdrop-filter:blur(4px);
-    transition:.25s;
-}
-.pv__arrow:hover{background:rgba(0,0,0,.7)}
-.pv__prev{left:20px}
-.pv__next{right:20px}
-@media(max-width:768px){
-    .pv__arrow{width:48px;height:48px;font-size:34px}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZSIZART Studio — Architectural Visualization & CGI</title>
+    
+    <!-- SEO / SOCIAL -->
+    <meta name="description" content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
+    <link rel="canonical" href="https://zsizart.com/">
+    <meta property="og:title" content="ZSIZART — Visualization Studio">
+    <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/og-cover.jpg">
+    <meta name="theme-color" content="#0b0d0d">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ZSIZART — Visualization Studio">
+    <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
+    <meta name="twitter:image" content="assets/og-cover.jpg">
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- LIBRARIES -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- EmailJS + Calendly -->
+    <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script defer src="https://assets.calendly.com/assets/external/widget.js"></script>
+    
+    <style>
+        :root {
+            --background: #0a0a0a;
+            --foreground: #f5f5f5;
+            --accent: #ff6b35;
+            --accent-dark: #e55a2b;
+            --gray-light: #2a2a2a;
+            --gray-dark: #1a1a1a;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section-padding {
+            padding: 8rem 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        .btn-outline:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .section-title {
+            font-size: 3.5rem;
+            margin-bottom: 5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 2rem;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover .project-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .service-card {
+            background: var(--gray-dark);
+            padding: 2.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid var(--gray-light);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-icon i {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* ==================== Project Viewer ==================== */
+        .pv{
+            position:fixed; inset:0; z-index:200; background:#000;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            opacity:0; pointer-events:none;
+            transition:opacity var(--pv-dur) var(--pv-ease);
+        }
+        .pv.show{opacity:1; pointer-events:auto}
+        .pv__content{position:relative; width:100%; height:100%}
+        .pv__image{
+            position:absolute; inset:0;
+            display:flex; align-items:center; justify-content:center;
+        }
+        .pv__img{
+            position:absolute;
+            inset:auto;
+            max-width:90vw;
+            max-height:90vh;
+            width:auto;
+            height:auto;
+            object-fit:contain;
+            opacity:0;
+            transition:opacity .5s ease;
+            will-change:opacity,transform;
+        }
+        .pv__img.is-top{
+            opacity:1;
+            animation:pvIn var(--pv-dur) var(--pv-ease);
+        }
+        @keyframes pvIn{
+            from{transform:translateY(-40px);opacity:.9}
+            to  {transform:translateY(0);opacity:1}
+        }
+        .pv__info{
+            position:absolute; left:0; right:0; bottom:0;
+            padding:22px 28px; font-size:15px; line-height:1.5;
+            color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.7);
+            transform:translateY(100%); opacity:0;
+            transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease);
+        }
+        .pv.show .pv__info{transform:translateY(0); opacity:1}
+        .pv__close{
+            position:absolute; top:14px; left:14px;
+            width:40px; height:40px; border-radius:10px;
+            background:rgba(0,0,0,.45); border:1px solid #1a1f27; color:#fff;
+            font-size:26px; line-height:1; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:15;
+        }
+        .pv__close:hover{background:rgba(0,0,0,.6)}
+        .pv__arrow{
+            position:absolute; top:50%; transform:translateY(-50%);
+            width:64px; height:64px; font-size:44px; border-radius:50%;
+            border:none; cursor:pointer; background:rgba(0,0,0,.45);
+            color:#fff; z-index:10; backdrop-filter:blur(4px);
+            transition:.25s;
+        }
+        .pv__arrow:hover{background:rgba(0,0,0,.7)}
+        .pv__prev{left:20px}
+        .pv__next{right:20px}
+        @media(max-width:768px){
+            .pv__arrow{width:48px;height:48px;font-size:34px}
+        }
+        
+        /* Navigation */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100%;
+            background: var(--background);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .nav-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .nav-menu a {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            text-decoration: none;
+            color: var(--foreground);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 90;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+        }
+        
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 700px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #ccc;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--gray-dark);
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            color: var(--foreground);
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-menu a {
+                font-size: 2rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="relative">
-
-<!-- ==================== Header ==================== -->
-<header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white px-6 md:px-12 py-8 flex justify-between items-center pointer-events-none">
-    <div class="flex items-center gap-3 pointer-events-auto">
-        <img src="assets/logo.png" alt="Logo" class="h-6 w-auto invert">
-        <span class="font-semibold tracking-widest text-sm uppercase">ZSIZART</span>
-    </div>
-    <button id="menu-toggle"
-            class="pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors">
-        <i data-lucide="menu" class="w-5 h-5"></i>
-    </button>
-</header>
-
-<!-- ==================== Overlay Menu ==================== -->
-<div id="menu-overlay"
-     class="fixed inset-0 z-[60] bg-[#111111] text-[#fbfbf9] hidden flex-col justify-center px-12">
-    <button id="menu-close"
-            class="absolute top-8 right-6 md:right-12 w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
-        <i data-lucide="x" class="w-6 h-6"></i>
-    </button>
-    <nav class="flex flex-col gap-6 md:gap-10 text-4xl md:text-7xl font-light tracking-tighter">
-        <a href="#work"      class="menu-link hover:translate-x-4 transition-transform duration-500">Work</a>
-        <a href="#services"  class="menu-link hover:translate-x-4 transition-transform duration-500">Services</a>
-        <a href="#modeling-cta" class="menu-link hover:translate-x-4 transition-transform duration-500">3D Modeling</a>
-        <a href="#about"    class="menu-link hover:translate-x-4 transition-transform duration-500">About</a>
-        <a href="#contact"  class="menu-link hover:translate-x-4 transition-transform duration-500">Contact</a>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container flex justify-between items-center">
+            <div class="logo">
+                <img src="assets/logo.png" alt="ZSIZART Logo" class="h-8">
+            </div>
+            <div class="menu-toggle cursor-pointer">
+                <i data-lucide="menu" class="text-white w-8 h-8"></i>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Navigation Menu -->
+    <nav class="nav-menu" id="navMenu">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
     </nav>
-</div>
-
-<!-- ==================== Main Content ==================== -->
-<main class="pt-32 pb-24 md:pb-32 px-6 md:px-12">
-
-    <!-- ==================== Hero ==================== -->
-    <section class="flex flex-col justify-end min-h-screen pb-24 md:pb-32">
-        <div id="hero-content"
-             class="max-w-5xl opacity-0 translate-y-10 transition-all duration-1000">
-            <h2 class="text-5xl md:text-[8vw] leading-[1.05] tracking-tighter font-medium mb-6">
-                ZSIZART Studio
-            </h2>
-            <p class="text-xl md:text-3xl text-neutral-500 font-light tracking-tight max-w-2xl mb-16">
-                Premium Architectural Visualization &amp; CGI
-            </p>
-            <div class="flex flex-wrap gap-6 text-sm font-medium tracking-wide uppercase">
-                <a href="#work"
-                   class="border-b border-black pb-1 hover:text-neutral-500 hover:border-neutral-500 transition-colors">
-                    View Work
-                </a>
-                <a href="#contact"
-                   class="border-b border-black pb-1 hover:text-neutral-500 hover:border-neutral-500 transition-colors">
-                    Request Proposal
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== Filter Panel (Overlay) ==================== -->
-    <section id="filters"
-             class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center px-6">
-        <div class="bg-[#111111] text-[#fbfbf9] p-8 rounded-lg w-full max-w-xl">
-            <form id="filterForm" class="flex flex-col gap-4">
-                <div class="flex flex-wrap gap-2 items-center">
-                    <input type="search"
-                           id="q"
-                           placeholder="Search projects…"
-                           class="flex-1 px-3 py-2 bg-[#0c0e12] border border-[#2a3140] rounded text-sm">
-                    <label class="flex items-center gap-1 text-sm"><input type="checkbox"
-                                                                        id="tagInterior"
-                                                                        class="mr-1 accent-indigo-500">INTERIOR</label>
-                    <label class="flex items-center gap-1 text-sm"><input type="checkbox"
-                                                                        id="tagExterior"
-                                                                        class="mr-1 accent-indigo-500">EXTERIOR</label>
-                </div>
-                <div class="flex justify-end gap-4">
-                    <button type="button"
-                            id="resetBtn"
-                            class="border border-[#2a3140] px-4 py-2 rounded hover:bg-white/10 text-sm">
-                        Reset
-                    </button>
-                    <button type="button"
-                            id="applyBtn"
-                            class="bg-gradient-to-r from-[#ff7a18] to-[#a855f7] text-white px-4 py-2 rounded text-sm hover:brightness-110">
-                        Apply
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- ==================== Work ==================== -->
-    <section id="work" class="py-24 md:py-40 border-t border-neutral-200">
-        <div class="flex justify-between items-end mb-16 md:mb-24">
-            <h2 class="text-4xl md:text-6xl font-medium">Work</h2>
-            <button id="filterToggle"
-                    class="border-b border-black pb-1 text-sm uppercase tracking-widest hover:text-neutral-500 hover:border-neutral-500 transition-colors">
-                Search &amp; Filter
-            </button>
-        </div>
-
-        <div id="grid"
-             class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-8 md:gap-y-32">
-            <!-- ==== Tile 1 ==== -->
-            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
-                 data-project="assets/work-01"
-                 data-title="Verde Crest Villas"
-                 data-desc="Luxury Residential Development — Concept &amp; Visualization."
-                 data-tags="exterior">
-                <img src="assets/work-01.webp"
-                     alt="Verde Crest Villas"
-                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                <div class="p-4 flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-medium mb-2">Verde Crest Villas</h3>
-                        <p class="text-neutral-500 font-light">Luxury Residential Development — Concept &amp; Visualization.</p>
-                    </div>
-                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">EXTERIOR</span>
-                </div>
-            </div>
-
-            <!-- ==== Tile 2 ==== -->
-            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
-                 data-project="assets/work-02"
-                 data-title="Hillside Serenity"
-                 data-desc="A modern retreat in nature blending architecture and landscape."
-                 data-tags="exterior">
-                <img src="assets/work-02.webp"
-                     alt="Hillside Serenity"
-                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                <div class="p-4 flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-medium mb-2">Hillside Serenity</h3>
-                        <p class="text-neutral-500 font-light">A modern retreat in nature blending architecture and landscape.</p>
-                    </div>
-                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">EXTERIOR</span>
-                </div>
-            </div>
-
-            <!-- ==== Tile 3 ==== -->
-            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
-                 data-project="assets/work-03"
-                 data-title="Retro Home Sweet"
-                 data-desc="Interior CGI capturing warmth of retro modern living."
-                 data-tags="interior">
-                <img src="assets/work-03.webp"
-                     alt="Retro Home Sweet"
-                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                <div class="p-4 flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-medium mb-2">Retro Home Sweet</h3>
-                        <p class="text-neutral-500 font-light">Interior CGI capturing warmth of retro modern living.</p>
-                    </div>
-                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">INTERIOR</span>
-                </div>
-            </div>
-
-            <!-- ==== Tile 4 ==== -->
-            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
-                 data-project="assets/work-04"
-                 data-title="Serene Lines"
-                 data-desc="Interior CGI focused on light, material and calm composition."
-                 data-tags="interior">
-                <img src="assets/work-04.webp"
-                     alt="Serene Lines"
-                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                <div class="p-4 flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-medium mb-2">Serene Lines</h3>
-                        <p class="text-neutral-500 font-light">Interior CGI focused on light, material and calm composition.</p>
-                    </div>
-                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">INTERIOR</span>
-                </div>
-            </div>
-
-            <!-- ==== Tile 5 ==== -->
-            <div class="group tile cursor-pointer overflow-hidden bg-neutral-100 aspect-w-4 aspect-h-3 mb-6 scroll-reveal"
-                 data-project="assets/work-05"
-                 data-title="Modern Haven"
-                 data-desc="Interior CGI capturing warmth of modern living."
-                 data-tags="interior">
-                <img src="assets/work-05.webp"
-                     alt="Modern Haven"
-                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                <div class="p-4 flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-medium mb-2">Modern Haven</h3>
-                        <p class="text-neutral-500 font-light">Interior CGI capturing warmth of modern living.</p>
-                    </div>
-                    <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">INTERIOR</span>
+    
+    <!-- Hero Section -->
+    <section class="hero relative">
+        <div class="absolute inset-0 bg-[url('assets/hero-bg.jpg')] bg-cover bg-center bg-no-repeat"></div>
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">Architectural Visualization Studio</h1>
+                <p class="text-xl mb-8 max-w-2xl">Creating cinematic architectural imagery and animation for global projects</p>
+                <div class="flex gap-4">
+                    <a href="#work" class="btn">View Projects</a>
+                    <a href="#contact" class="btn btn-outline">Get in Touch</a>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- ==================== Services ==================== -->
-    <section id="services"
-             class="px-6 md:px-12 py-24 md:py-40 bg-[#111111] text-[#fbfbf9]">
-        <h2 class="text-4xl md:text-6xl font-medium mb-16 md:mb-24 text-center">Services</h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
-            <div class="border-t border-white/20 pt-8 scroll-reveal">
-                <h3 class="text-xl font-medium mb-4">Interior Visualization</h3>
-                <p class="text-neutral-400 font-light">Photoreal interiors focused on mood, materials, and storytelling.</p>
-            </div>
-            <div class="border-t border-white/20 pt-8 scroll-reveal">
-                <h3 class="text-xl font-medium mb-4">Exterior Visualization</h3>
-                <p class="text-neutral-400 font-light">Compelling exteriors with dramatic atmosphere and context.</p>
-            </div>
-            <div class="border-t border-white/20 pt-8 scroll-reveal">
-                <h3 class="text-xl font-medium mb-4">Animation</h3>
-                <p class="text-neutral-400 font-light">Cinematic walkthroughs and product films that move audiences.</p>
-            </div>
-            <div class="border-t border-white/20 pt-8 scroll-reveal">
-                <h3 class="text-xl font-medium mb-4">Product Visualization</h3>
-                <p class="text-neutral-400 font-light">High‑end product shots for furniture and design marketing.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== 3D Modeling CTA ==================== -->
-    <section id="modeling-cta" class="py-24 md:py-40">
-        <a href="3D-Product-Modeling"
-           class="modeling-link relative block overflow-hidden rounded-xl border border-[#1a1f27] bg-[#0c0e12] shadow-xl"
-           data-frames="assets/zsiz-modeling-thumb01.webp|assets/zsiz-modeling-thumb02.webp|assets/zsiz-modeling-thumb03.webp|assets/zsiz-modeling-thumb04.webp|assets/zsiz-modeling-thumb05.webp">
-            <img src="assets/zsiz-modeling-thumb01.webp"
-                 alt="3D Modeling Preview"
-                 class="w-full h-auto object-cover transition-transform duration-500">
-            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/65 to-transparent">
-                <div class="text-center text-white">
-                    <h3 class="text-2xl font-bold mb-2">3D Modeling</h3>
-                    <div class="inline-block px-4 py-2 border border-white/85 rounded-lg bg-black/35 backdrop-blur-sm font-bold hover:bg-white hover:text-black transition">
-                        SEE MORE
+    
+    <!-- Work Section -->
+    <section id="work" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Featured Work</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card fade-in">
+                    <img src="assets/work-01.webp" alt="Verde Crest Villas">
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold mb-2">Verde Crest Villas</h3>
+                        <p class="mb-4">Luxury Residential Development — Concept & Visualization</p>
+                        <span class="text-sm uppercase tracking-widest text-accent">Exterior</span>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card fade-in">
+                    <img src="assets/work-02.webp" alt="Hillside Serenity">
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold mb-2">Hillside Serenity</h3>
+                        <p class="mb-4">A modern retreat in nature blending architecture and landscape</p>
+                        <span class="text-sm uppercase tracking-widest text-accent">Exterior</span>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card fade-in">
+                    <img src="assets/work-03.webp" alt="Retro Home Sweet">
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold mb-2">Retro Home Sweet</h3>
+                        <p class="mb-4">Interior CGI capturing warmth of retro modern living</p>
+                        <span class="text-sm uppercase tracking-widest text-accent">Interior</span>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card fade-in">
+                    <img src="assets/work-04.webp" alt="Serene Lines">
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold mb-2">Serene Lines</h3>
+                        <p class="mb-4">Interior CGI focused on light, material and calm composition</p>
+                        <span class="text-sm uppercase tracking-widest text-accent">Interior</span>
                     </div>
                 </div>
             </div>
-        </a>
-    </section>
-
-    <!-- ==================== About ==================== -->
-    <section id="about"
-             class="px-6 md:px-12 py-24 md:py-40 bg-[#f0f0ee]">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl md:text-6xl font-medium mb-12">About</h2>
-            <p class="text-xl md:text-2xl font-light leading-relaxed text-neutral-600 mb-8"><strong class="text-black font-medium">ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production‑ready architectural imagery and animation for global projects.</p>
-            <p class="text-xl md:text-2xl font-light leading-relaxed text-neutral-600 mb-8">We collaborate with architects, developers, and design teams to create high‑end visuals that support marketing, investor presentations, and project launches.</p>
         </div>
     </section>
-
-    <!-- ==================== Courses ==================== -->
-    <section id="courses"
-             class="px-6 md:px-12 py-24 md:py-40">
-        <h2 class="text-4xl md:text-6xl font-medium mb-12">Courses</h2>
-        <p class="text-xl md:text-2xl font-light text-neutral-600">Educational content currently in development.</p>
-    </section>
-
-    <!-- ==================== Contact ==================== -->
-    <section id="contact"
-             class="px-6 md:px-12 py-24 md:py-40">
-        <div class="max-w-3xl mx-auto text-center scroll-reveal">
-            <h2 class="text-4xl md:text-6xl font-medium mb-16">Contact</h2>
-            <form id="contact-form"
-                  class="flex flex-col gap-12">
-                <input type="text"
-                       name="from_name"
-                       placeholder="Your Name"
-                       required
-                       class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors">
-                <input type="email"
-                       name="reply_to"
-                       placeholder="Your Email"
-                       required
-                       class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors">
-                <textarea name="message"
-                          placeholder="Your Message…"
-                          rows="4"
-                          required
-                          class="w-full bg-transparent border-b border-neutral-300 pb-4 text-xl md:text-2xl font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors resize-none"></textarea>
-                <button type="submit"
-                        class="self-center bg-black text-white px-12 py-5 rounded-full text-sm font-medium tracking-widest uppercase hover:bg-neutral-800 transition-colors">
-                    Send Message
-                </button>
-                <p id="status" class="mt-4 text-indigo-400"></p>
-            </form>
+    
+    <!-- Services Section -->
+    <section id="services" class="section-padding bg-gray-dark">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i data-lucide="home" class="text-white w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Interior Visualization</h3>
+                    <p class="text-gray-300">Photoreal interiors focused on mood, materials, and storytelling</p>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i data-lucide="building" class="text-white w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Exterior Visualization</h3>
+                    <p class="text-gray-300">Compelling exteriors with dramatic atmosphere and context</p>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i data-lucide="film" class="text-white w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Animation</h3>
+                    <p class="text-gray-300">Cinematic walkthroughs and product films that move audiences</p>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i data-lucide="package" class="text-white w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Product Visualization</h3>
+                    <p class="text-gray-300">High-end product shots for furniture and design marketing</p>
+                </div>
+            </div>
         </div>
     </section>
-
-</main>
-
-<!-- ==================== Project Viewer (Fullscreen) ==================== -->
-<div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
-    <div class="pv__content">
-        <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
-
-        <div class="pv__image">
-            <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
-
-            <img id="pvImageA" class="pv__img is-top" alt="">
-            <img id="pvImageB" class="pv__img" alt="">
-
-            <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+    
+    <!-- About Section -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-in">
+                    <h2 class="section-title">About Us</h2>
+                    <p class="text-xl mb-6">ZSIZART Studio is a visualization practice focused on delivering refined, production-ready architectural imagery and animation for global projects.</p>
+                    <p class="text-xl mb-6">We collaborate with architects, developers, and design teams to create high-end visuals that support marketing, investor presentations, and project launches.</p>
+                    <p class="text-xl">We collaborate with architects, developers, and design brands worldwide—supporting projects from concept to polished marketing assets. Our focus is reliability, clarity, and delivering consistent quality at production speed.</p>
+                </div>
+                <div class="fade-in">
+                    <img src="assets/about-image.jpg" alt="About ZSIZART" class="rounded-lg shadow-2xl">
+                </div>
+            </div>
         </div>
-
-        <aside class="pv__info">
-            <h3 id="pvTitle"></h3>
-            <p id="pvDesc"></p>
-        </aside>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding bg-gray-dark">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="max-w-2xl mx-auto">
+                <form id="contact-form" class="fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <input type="text" name="from_name" placeholder="Your Name" class="bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent" required>
+                        <input type="email" name="reply_to" placeholder="Your Email" class="bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent" required>
+                    </div>
+                    <textarea name="message" placeholder="Your Message" rows="6" class="w-full bg-gray-light border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-accent mb-6" required></textarea>
+                    <button type="submit" class="btn w-full">Send Message</button>
+                    <p id="status" class="mt-4 text-center text-accent"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo mb-6">
+                <img src="assets/logo.png" alt="ZSIZART Logo" class="h-8 mx-auto">
+            </div>
+            <div class="social-links">
+                <a href="#"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="#"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                <a href="#"><i data-lucide="behance" class="w-5 h-5"></i></a>
+                <a href="#"><i data-lucide="vimeo" class="w-5 h-5"></i></a>
+            </div>
+            <p class="text-gray-400">© 2026 ZSIZART Studio — Architectural Visualization & CGI</p>
+        </div>
+    </footer>
+    
+    <!-- Project Viewer -->
+    <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
+        <div class="pv__content">
+            <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
+            <div class="pv__image">
+                <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
+                <img id="pvImageA" class="pv__img is-top" alt="">
+                <img id="pvImageB" class="pv__img" alt="">
+                <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+            </div>
+            <aside class="pv__info">
+                <h3 id="pvTitle"></h3>
+                <p id="pvDesc"></p>
+            </aside>
+        </div>
     </div>
-</div>
-
-<!-- ==================== Footer ==================== -->
-<footer class="px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-neutral-200 text-sm text-neutral-500">
-    <p>© 2026 ZSIZART Studio — Architectural Visualization &amp; CGI</p>
-    <button onclick="window.scrollTo({top:0, behavior:'smooth'});"
-            class="flex items-center gap-2 uppercase font-medium tracking-widest hover:text-black transition-colors">
-        <i data-lucide="arrow-up" class="w-4 h-4"></i> Top
-    </button>
-</footer>
-
-<!-- ==================== Back‑to‑Top button ==================== -->
-<button id="topBtn"
-        class="hidden fixed right-6 bottom-6 flex items-center gap-2 bg-black/80 text-white px-4 py-2 rounded-full hover:bg-black/90 transition-all"
-        aria-label="Back to top">
-    <i data-lucide="arrow-up" class="w-5 h-5"></i> Top
-</button>
-
-<!-- ==================== Scripts ==================== -->
-<script>
-/* ---------- Lucide ---------- */
-lucide.createIcons();
-
-/* ---------- Overlay Menu ---------- */
-const menuToggle   = document.getElementById('menu-toggle');
-const menuClose    = document.getElementById('menu-close');
-const menuOverlay  = document.getElementById('menu-overlay');
-
-menuToggle.addEventListener('click', () => {
-    menuOverlay.classList.remove('hidden');
-    menuOverlay.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-});
-menuClose.addEventListener('click', closeMenu);
-function closeMenu(){
-    menuOverlay.classList.add('hidden');
-    menuOverlay.classList.remove('flex');
-    document.body.style.overflow = '';
-}
-
-/* ---------- Hero entrance ---------- */
-window.addEventListener('load', () => {
-    const hero = document.getElementById('hero-content');
-    hero?.classList.remove('opacity-0','translate-y-10');
-});
-
-/* ---------- Scroll Reveal ---------- */
-const reveals = document.querySelectorAll('.scroll-reveal');
-const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add('show');
-            revealObserver.unobserve(entry.target);
-        }
-    });
-},{threshold:0.15});
-reveals.forEach(el => revealObserver.observe(el));
-
-/* ---------- Filter panel ---------- */
-const filterToggle = document.getElementById('filterToggle');
-const filterOverlay = document.getElementById('filters');
-filterToggle?.addEventListener('click', () => {
-    filterOverlay.classList.toggle('hidden');
-    filterOverlay.classList.toggle('flex');
-});
-filterOverlay?.addEventListener('click', e => {
-    if(e.target===filterOverlay){
-        filterOverlay.classList.add('hidden');
-        filterOverlay.classList.remove('flex');
-    }
-});
-const applyBtn = document.getElementById('applyBtn');
-const resetBtn = document.getElementById('resetBtn');
-const qInput   = document.getElementById('q');
-const chkInt   = document.getElementById('tagInterior');
-const chkExt   = document.getElementById('tagExterior');
-const workTiles = document.querySelectorAll('#grid .tile');
-
-function applyFilters(){
-    const q = qInput?.value?.trim().toLowerCase() || '';
-    const wantInt = chkInt?.checked;
-    const wantExt = chkExt?.checked;
-    workTiles.forEach(tile=>{
-        const title = (tile.dataset.title||'').toLowerCase();
-        const tags  = (tile.dataset.tags||'').toLowerCase();
-        const textMatch = q ? title.includes(q) : true;
-        let tagMatch = true;
-        if(wantInt||wantExt){
-            tagMatch = (wantInt && tags.includes('interior')) ||
-                       (wantExt && tags.includes('exterior'));
-        }
-        tile.style.display = (textMatch && tagMatch) ? '' : 'none';
-    });
-}
-function resetFilters(){
-    if(qInput) qInput.value = '';
-    if(chkInt) chkInt.checked = false;
-    if(chkExt) chkExt.checked = false;
-    workTiles.forEach(t=>t.style.display='');
-}
-applyBtn?.addEventListener('click', applyFilters);
-resetBtn?.addEventListener('click', resetFilters);
-qInput?.addEventListener('keydown', e => {
-    if(e.key==='Enter'){
-        e.preventDefault();
-        applyFilters();
-    }
-});
-
-/* ---------- 3D Modeling hover swap ---------- */
-(() => {
-    const link = document.querySelector('.modeling-link[data-frames]');
-    if(!link) return;
-    const img = link.querySelector('img');
-    const frames = (link.dataset.frames||'')
-        .split('|')
-        .map(s=>s.trim())
-        .filter(Boolean);
-    frames.forEach(src=>{ const i=new Image(); i.src=src; });
-
-    let idx = Math.max(0, frames.indexOf(img.getAttribute('src')));
-    let ready = true;
-    function swapTo(src){
-        if(img.getAttribute('src')===src){ ready = true; return; }
-        img.classList.add('opacity-50');
-        setTimeout(()=>{ img.src = src; img.classList.remove('opacity-50'); ready = true; },120);
-    }
-    link.addEventListener('mouseenter',()=>{
-        if(!ready) return;
-        ready = false;
-        idx = (idx+1)%frames.length;
-        swapTo(frames[idx]);
-    });
-})();
-
-/* ---------- Project Viewer ---------- */
-(() => {
-    const viewer   = document.getElementById('pv');
-    const imgA     = document.getElementById('pvImageA');
-    const imgB     = document.getElementById('pvImageB');
-    const titleEl  = document.getElementById('pvTitle');
-    const descEl   = document.getElementById('pvDesc');
-    const btnClose = document.getElementById('pvClose');
-    const btnPrev  = document.getElementById('pvPrev');
-    const btnNext  = document.getElementById('pvNext');
-
-    // بطاقات العمل التي تفتح الـ Viewer
-    const projectTiles = [...document.querySelectorAll('#grid .tile')];
-    const projects = projectTiles.map(t => ({
-        base : t.dataset.project,
-        title: t.dataset.title  || '',
-        desc : t.dataset.desc   || ''
-    }));
-
-    let list = [], idx = 0, topIsA = true;
-    const cache = new Map();
-
-    function updateArrows(){
-        const multi = (list.length > 1);
-        btnPrev.style.display = multi ? '' : 'none';
-        btnNext.style.display = multi ? '' : 'none';
-    }
-
-    function show(src){
-        const top   = topIsA ? imgA : imgB;
-        const under = topIsA ? imgB : imgA;
-
-        under.onload = () => {
-            top.classList.remove('is-top');
-            under.classList.add('is-top');
-            topIsA = !topIsA;
-            under.onload = null;
-        };
-        under.src = src;
-    }
-
-    function setIdx(i){
-        if (!list.length) return;
-        idx = (i + list.length) % list.length;
-        show(list[idx]);
-    }
-    const nextImg = () => setIdx(idx+1);
-    const prevImg = () => setIdx(idx-1);
-    btnNext?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
-    btnPrev?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
-
-    async function buildList(base){
-        if (cache.has(base)) return cache.get(base);
-
-        const exts = ['.webp','.jpg','.jpeg','.png'];
-        const tryList = [];
-
-        // base + extension
-        exts.forEach(ext => tryList.push(`${base}${ext}`));
-
-        // تسلسلات رقمية 01‑15
-        for(let i=1;i<=15;i++){
-            const p2 = String(i).padStart(2,'0');
-            exts.forEach(ext=>{
-                tryList.push(`${base}-${p2}${ext}`);
-                tryList.push(`${base}-${i}${ext}`);
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
             });
-        }
-
-        // بعض الأسماء الشائعة (clay، alt …)
-        exts.forEach(ext=>{
-            tryList.push(`${base}-clay${ext}`);
-            tryList.push(`${base}-alt${ext}`);
-            tryList.push(`${base}-sh${ext}`);
-            tryList.push(`${base}-extra${ext}`);
         });
-
-        const checks = tryList.map(src=>new Promise(res=>{
-            const im = new Image();
-            im.onload = ()=>res(src);
-            im.onerror= ()=>res(null);
-            im.src = src;
-        }));
-
-        const found = (await Promise.all(checks)).filter(Boolean);
-        const finalList = found.length ? found : [`${base}.webp`];
-
-        cache.set(base, finalList);
-        return finalList;
-    }
-
-    async function openProject(i){
-        const p = projects[i];
-        titleEl.textContent = p.title;
-        descEl.textContent   = p.desc;
-        list = await buildList(p.base);
-        idx = 0;
-        imgA.classList.remove('is-top');
-        imgB.classList.remove('is-top');
-        const currentTop = topIsA ? imgA : imgB;
-        currentTop.src = list[0];
-        currentTop.classList.add('is-top');
-        updateArrows();
-    }
-
-    function openPV(){
-        viewer.classList.add('show');
-        viewer.setAttribute('aria-hidden','false');
-        document.body.style.overflow='hidden';
-    }
-    function closePV(){
-        viewer.classList.remove('show');
-        viewer.setAttribute('aria-hidden','true');
-        document.body.style.overflow='';
-    }
-
-    projectTiles.forEach((tile,i)=>{
-        tile.addEventListener('click', async ()=>{
-            await openProject(i);
-            openPV();
+        
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
-    });
-    viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
-    btnClose?.addEventListener('click', closePV);
-    document.addEventListener('keydown',e=>{
-        if(!viewer.classList.contains('show'))return;
-        if(e.key==='Escape') closePV();
-        if(e.key==='ArrowRight') nextImg();
-        if(e.key==='ArrowLeft')  prevImg();
-        if(e.key==='ArrowDown'||e.key==='PageDown') nextImg();
-        if(e.key==='ArrowUp'||e.key==='PageUp') prevImg();
-    });
-})();
-
-/* ---------- Back‑to‑Top button ---------- */
-const topBtn = document.getElementById('topBtn');
-window.addEventListener('scroll',()=>{
-    if(window.scrollY>600) topBtn?.classList.remove('hidden');
-    else topBtn?.classList.add('hidden');
-});
-topBtn?.addEventListener('click',e=>{
-    e.preventDefault();
-    window.scrollTo({top:0,behavior:'smooth'});
-});
-
-/* ---------- EmailJS ---------- */
-(() => {
-    const PUBLIC_KEY = "JdZK05NoMso2b9lHe";
-    const SERVICE_ID = "service_m1dfwio";
-    const TEMPLATE_ID = "template_kuqk13r";
-
-    const form   = document.getElementById('contact-form');
-    const status = document.getElementById('status');
-
-    if(!form) return;
-    window.addEventListener('load',()=>{ try{ emailjs.init(PUBLIC_KEY) }catch(e){} });
-
-    form.addEventListener('submit',function(e){
-        e.preventDefault();
-        emailjs.sendForm(SERVICE_ID,TEMPLATE_ID,this)
-            .then(()=>{ status.textContent='Message sent!'; this.reset(); })
-            .catch(()=>{ status.textContent='Failed, try again.'; });
-    });
-})();
-
-/* ---------- Calendly badge ---------- */
-(() => {
-    if(!window.Calendly) return;
-    Calendly.initBadgeWidget({
-        url: 'https://calendly.com/arc-mahmoud-refaey/30min',
-        text: 'Schedule a call',
-        color: '#ff7a18',
-        textColor: '#ffffff',
-        branding: false
-    });
-})();
-</script>
-
+        
+        // Fade in animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        fadeElements.forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Project Viewer
+        (() => {
+            const viewer   = document.getElementById('pv');
+            const imgA     = document.getElementById('pvImageA');
+            const imgB     = document.getElementById('pvImageB');
+            const titleEl  = document.getElementById('pvTitle');
+            const descEl   = document.getElementById('pvDesc');
+            const btnClose = document.getElementById('pvClose');
+            const btnPrev  = document.getElementById('pvPrev');
+            const btnNext  = document.getElementById('pvNext');
+            
+            // Project data
+            const projects = [
+                {
+                    base: 'assets/work-01',
+                    title: 'Verde Crest Villas',
+                    desc: 'Luxury Residential Development — Concept & Visualization.'
+                },
+                {
+                    base: 'assets/work-02',
+                    title: 'Hillside Serenity',
+                    desc: 'A modern retreat in nature blending architecture and landscape.'
+                },
+                {
+                    base: 'assets/work-03',
+                    title: 'Retro Home Sweet',
+                    desc: 'Interior CGI capturing warmth of retro modern living.'
+                },
+                {
+                    base: 'assets/work-04',
+                    title: 'Serene Lines',
+                    desc: 'Interior CGI focused on light, material and calm composition.'
+                }
+            ];
+            
+            let list = [], idx = 0, topIsA = true;
+            const cache = new Map();
+            
+            function updateArrows(){
+                const multi = (list.length > 1);
+                btnPrev.style.display = multi ? '' : 'none';
+                btnNext.style.display = multi ? '' : 'none';
+            }
+            
+            function show(src){
+                const top   = topIsA ? imgA : imgB;
+                const under = topIsA ? imgB : imgA;
+                
+                under.onload = () => {
+                    top.classList.remove('is-top');
+                    under.classList.add('is-top');
+                    topIsA = !topIsA;
+                    under.onload = null;
+                };
+                under.src = src;
+            }
+            
+            function setIdx(i){
+                if (!list.length) return;
+                idx = (i + list.length) % list.length;
+                show(list[idx]);
+            }
+            const nextImg = () => setIdx(idx+1);
+            const prevImg = () => setIdx(idx-1);
+            btnNext?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
+            btnPrev?.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
+            
+            async function buildList(base){
+                if (cache.has(base)) return cache.get(base);
+                
+                const exts = ['.webp','.jpg','.jpeg','.png'];
+                const tryList = [];
+                
+                // base + extension
+                exts.forEach(ext => tryList.push(`${base}${ext}`));
+                
+                // تسلسلات رقمية 01‑15
+                for(let i=1;i<=15;i++){
+                    const p2 = String(i).padStart(2,'0');
+                    exts.forEach(ext=>{
+                        tryList.push(`${base}-${p2}${ext}`);
+                        tryList.push(`${base}-${i}${ext}`);
+                    });
+                }
+                
+                // بعض الأسماء الشائعة (clay، alt …)
+                exts.forEach(ext=>{
+                    tryList.push(`${base}-clay${ext}`);
+                    tryList.push(`${base}-alt${ext}`);
+                    tryList.push(`${base}-sh${ext}`);
+                    tryList.push(`${base}-extra${ext}`);
+                });
+                
+                const checks = tryList.map(src=>new Promise(res=>{
+                    const im = new Image();
+                    im.onload = ()=>res(src);
+                    im.onerror= ()=>res(null);
+                    im.src = src;
+                }));
+                
+                const found = (await Promise.all(checks)).filter(Boolean);
+                const finalList = found.length ? found : [`${base}.webp`];
+                
+                cache.set(base, finalList);
+                return finalList;
+            }
+            
+            async function openProject(i){
+                const p = projects[i];
+                titleEl.textContent = p.title;
+                descEl.textContent   = p.desc;
+                list = await buildList(p.base);
+                idx = 0;
+                imgA.classList.remove('is-top');
+                imgB.classList.remove('is-top');
+                const currentTop = topIsA ? imgA : imgB;
+                currentTop.src = list[0];
+                currentTop.classList.add('is-top');
+                updateArrows();
+            }
+            
+            function openPV(){
+                viewer.classList.add('show');
+                viewer.setAttribute('aria-hidden','false');
+                document.body.style.overflow='hidden';
+            }
+            function closePV(){
+                viewer.classList.remove('show');
+                viewer.setAttribute('aria-hidden','true');
+                document.body.style.overflow='';
+            }
+            
+            // Open viewer when clicking on project cards
+            document.querySelectorAll('.project-card').forEach((card, i) => {
+                card.addEventListener('click', async () => {
+                    await openProject(i);
+                    openPV();
+                });
+            });
+            
+            viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
+            btnClose?.addEventListener('click', closePV);
+            document.addEventListener('keydown',e=>{
+                if(!viewer.classList.contains('show'))return;
+                if(e.key==='Escape') closePV();
+                if(e.key==='ArrowRight') nextImg();
+                if(e.key==='ArrowLeft')  prevImg();
+                if(e.key==='ArrowDown'||e.key==='PageDown') nextImg();
+                if(e.key==='ArrowUp'||e.key==='PageUp') prevImg();
+            });
+        })();
+        
+        // EmailJS
+        (() => {
+            const PUBLIC_KEY = "JdZK05NoMso2b9lHe";
+            const SERVICE_ID = "service_m1dfwio";
+            const TEMPLATE_ID = "template_kuqk13r";
+            
+            const form   = document.getElementById('contact-form');
+            const status = document.getElementById('status');
+            
+            if(!form) return;
+            window.addEventListener('load',()=>{ try{ emailjs.init(PUBLIC_KEY) }catch(e){} });
+            
+            form.addEventListener('submit',function(e){
+                e.preventDefault();
+                emailjs.sendForm(SERVICE_ID,TEMPLATE_ID,this)
+                    .then(()=>{ 
+                        status.textContent='Message sent successfully!';
+                        form.reset();
+                    })
+                    .catch(()=>{ status.textContent='Failed to send message. Please try again.'; });
+            });
+        })();
+    </script>
 </body>
 </html>
