@@ -188,12 +188,10 @@ header .wrap{
     .grid{grid-template-columns:1fr;}
   }
 
-.tile{
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
-  display:block;
-}
+  .tile{
+    position:relative;overflow:hidden;background:transparent;cursor:pointer;border:none;border-radius:0;box-shadow:none;
+    --mx:-1000px; --my:-1000px; --r:0px;
+  }
 
   /* Label */
   .label{
@@ -214,6 +212,16 @@ header .wrap{
   .grid .tile:hover .img-main{ filter:none; transform:scale(1.02) }
   @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
 
+  /* Clay overlay (masked by circle) */
+  .tile .img-clay{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity .25s ease;
+    -webkit-mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
+            mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
+    pointer-events:none;
+  }
+  .tile:hover .img-clay{opacity:1}
+
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:1fr;gap:18px}
   .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
@@ -226,7 +234,7 @@ header .wrap{
   footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
 
   /* ===== Project Viewer ===== */
-  .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity var(--pv-dur) var(--pv-ease)}
+  .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
   .pv.show{opacity:1;pointer-events:auto}
   .pv__content{position:relative;width:100%;height:100%}
   .pv__image{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
@@ -675,6 +683,35 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
 })();
 
 
+/* ===== Clay hover circle ===== */
+(function(){
+  const supportsMask = window.CSS && (
+    CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') ||
+    CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))')
+  );
+  if(!supportsMask) return;
+
+  const exts = ['.webp','.jpg','.png'];
+  const RADIUS = 80;
+  const tiles = [...document.querySelectorAll('#grid .tile')];
+
+  tiles.forEach(tile=>{
+    const base = tile.dataset.project || '';
+    if(!base) return;
+
+    const cand = exts.map(ext=>`${base}-clay${ext}`);
+    const imgClay = new Image();
+    imgClay.className = 'img-clay';
+    imgClay.loading = 'lazy';
+    imgClay.decoding = 'async';
+
+    (function tryNext(i=0){
+      if(i>=cand.length) return;
+      imgClay.onload = ()=>{ tile.appendChild(imgClay); bind(); };
+      imgClay.onerror = ()=> tryNext(i+1);
+      imgClay.src = cand[i];
+    })();
+
     function bind(){
       tile.addEventListener('pointerenter', ()=>{ tile.style.setProperty('--r', RADIUS+'px'); });
       tile.addEventListener('pointerleave', ()=>{ tile.style.setProperty('--r','0px'); tile.style.setProperty('--mx','-1000px'); tile.style.setProperty('--my','-1000px'); });
@@ -812,14 +849,11 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   }
 
   projectTiles.forEach((tile,i)=>{
-  tile.addEventListener('click', async (e)=>{
-    e.preventDefault();
-    e.stopPropagation();
-
-    await openProject(i);
-    openPV();
+    tile.addEventListener('click', async ()=>{
+      await openProject(i);
+      openPV();
+    });
   });
-});
 
   viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
   btnClose?.addEventListener('click', closePV);
@@ -920,6 +954,26 @@ window.addEventListener('scroll', () => requestAnimationFrame(updateHeader), {pa
     });
   });
 </script>
+
+<!-- Calendly Widget -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+<script>
+  window.addEventListener('load', () => {
+    if (!window.Calendly) return;
+
+    Calendly.initBadgeWidget({
+      url: 'https://calendly.com/arc-mahmoud-refaey/30min',
+      text: 'Schedule a call',
+      color: '#ff7a18',
+      textColor: '#ffffff',
+      branding: false
+    });
+  });
+</script>
+
 
 </body>
 </html>
