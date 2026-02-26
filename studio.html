@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>ZSIZART — Studio</title>
 
 <link rel="canonical" href="https://zsizart.com/studio">
@@ -24,7 +25,7 @@
 --muted:#6b7280;
 --radius:18px;
 --shadow:0 12px 40px rgba(0,0,0,.08);
---max:920px;
+--max:1160px;
 }
 
 *{box-sizing:border-box}
@@ -42,95 +43,137 @@ margin:auto;
 padding:28px;
 }
 
-/* ===== Header ===== */
-    .site-header{
-      position:sticky;
-      top:0;
-      z-index:70;
-      background:rgba(255,255,255,.78);
-      backdrop-filter:saturate(160%) blur(10px);
-      border-bottom:1px solid rgba(0,0,0,.08);
-      box-shadow:0 8px 30px rgba(0,0,0,.08);
-    }
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
 
-    .site-header .wrap{ padding:18px 32px; }
+/* ===== SAME HEADER AS INDEX ===== */
 
-    .header-layout{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:22px;
-    }
+.site-header{
+position:sticky;
+top:0;
+z-index:70;
+background:rgba(255,255,255,.78);
+backdrop-filter:saturate(160%) blur(10px);
+border-bottom:1px solid rgba(0,0,0,.08);
+box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      user-select:none;
-    }
+.site-header .wrap{
+padding:18px 32px;
+}
 
-    .brand .logo{height:34px;width:auto;}
-    .brand .wordmark{
-      font-weight:500;
-      letter-spacing:.14em;
-      font-size:13px;
-      text-transform:uppercase;
-      color:var(--ink);
-    }
+.header-layout{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:22px;
+}
 
-    .nav{
-      display:flex;
-      align-items:center;
-      gap:22px;
-    }
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+user-select:none;
+}
 
-    .nav-link{
-      font-size:13px;
-      font-weight:500;
-      letter-spacing:.02em;
-      color:rgba(11,13,13,.78);
-      padding:8px 2px;
-    }
-    .nav-link:hover{ color:var(--ink); }
+.brand .logo{
+height:34px;
+}
 
-    .cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height:38px;
-      padding:0 14px;
-      border-radius:999px;
-      border:1px solid rgba(0,0,0,.14);
-      background:rgba(0,0,0,.04);
-      color:var(--ink);
-      font-size:13px;
-      font-weight:600;
-      letter-spacing:.02em;
-    }
-    .cta:hover{
-      background:rgba(0,0,0,.06);
-      border-color:rgba(0,0,0,.18);
-    }
+.brand .wordmark{
+font-weight:500;
+letter-spacing:.14em;
+font-size:13px;
+text-transform:uppercase;
+}
 
-    @media (max-width: 860px){
-      .nav{
-        gap:14px;
-        overflow:auto;
-        -webkit-overflow-scrolling:touch;
-        scrollbar-width:none;
-      }
-      .nav::-webkit-scrollbar{ display:none; }
-      .cta{ display:none; }
-    }
+.nav{
+display:flex;
+gap:22px;
+}
 
-/* footer */
+.nav-link{
+font-size:13px;
+font-weight:500;
+letter-spacing:.02em;
+color:rgba(11,13,13,.78);
+}
+
+.nav-link:hover{
+color:var(--ink);
+}
+
+.cta{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+height:38px;
+padding:0 14px;
+border-radius:999px;
+border:1px solid rgba(0,0,0,.14);
+background:rgba(0,0,0,.04);
+font-size:13px;
+font-weight:600;
+}
+
+.cta:hover{
+background:rgba(0,0,0,.06);
+}
+
+/* ===== CONTENT ===== */
+
+.hero{
+margin-top:40px;
+max-width:720px;
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:16px;
+}
+
+.hero p{
+color:var(--muted);
+font-size:17px;
+}
+
+.card{
+background:var(--card);
+padding:28px;
+border-radius:var(--radius);
+box-shadow:var(--shadow);
+margin-top:40px;
+max-width:720px;
+}
+
+.card p{
+margin-bottom:18px;
+}
+
+.stats{
+display:flex;
+gap:60px;
+margin-top:60px;
+}
+
+.stat strong{
+display:block;
+font-size:18px;
+}
+
+.stat span{
+color:var(--muted);
+font-size:14px;
+}
+
+/* ===== SAME FOOTER AS INDEX ===== */
 
 footer{
-margin-top:60px;
+border-top:1px solid rgba(0,0,0,.10);
+color:var(--muted);
 padding:20px;
 text-align:center;
-color:var(--muted);
-border-top:1px solid rgba(0,0,0,.08);
+margin-top:80px;
 }
 
 </style>
@@ -138,24 +181,41 @@ border-top:1px solid rgba(0,0,0,.08);
 
 <body>
 
+
 <header class="site-header">
 
-<div class="header">
+<div class="wrap header-layout">
 
-<div class="brand">
-<img src="assets/logo.png">
-<span>ZSIZART</span>
-</div>
+<a class="brand" href="/">
+
+<img src="assets/logo.png" class="logo">
+
+<span class="wordmark">ZSIZART</span>
+
+</a>
+
 
 <nav class="nav">
 
-<a href="/work.html">Work</a>
-<a href="/services.html">Services</a>
-<a href="/careers.html">Careers</a>
-<a href="/studio.html">Studio</a>
-<a href="/contact.html">Contact</a>
+<a class="nav-link" href="/work">Work</a>
+
+<a class="nav-link" href="/3D-Product-Modeling">Services</a>
+
+<a class="nav-link" href="/careers">Careers</a>
+
+<a class="nav-link" href="/studio">Studio</a>
+
+<a class="nav-link" href="/contact">Contact</a>
 
 </nav>
+
+
+<a class="cta" href="/contact">
+
+Start a Project
+
+</a>
+
 
 </div>
 
@@ -174,15 +234,13 @@ border-top:1px solid rgba(0,0,0,.08);
 
 ZSIZART Studio produces photoreal CGI for real estate developers and interior design brands.
 
-Our work is built for marketing, sales, and presentation — images that communicate space with clarity and control.
+Our visuals are built to support marketing, accelerate sales, and communicate architecture with precision.
 
 </p>
 
 </section>
 
 
-
-<section class="section">
 
 <div class="card">
 
@@ -190,65 +248,71 @@ Our work is built for marketing, sales, and presentation — images that communi
 
 <strong>Focused on real estate and interiors.</strong>
 
-We collaborate with developers, architects, and designers to create visuals that define projects before they exist.
+We create imagery for developments, residences, and branded spaces.
 
 </p>
 
 
 <p>
 
-<strong>Built for marketing impact.</strong>
+<strong>Built for commercial use.</strong>
 
-Every image is structured to support launches, listings, investor presentations, and brand positioning.
-
-</p>
-
-
-<p>
-
-<strong>Production-level workflow.</strong>
-
-Clear communication, fast iterations, and consistent output across full project sets.
+Every image is designed for launches, listings, and investor presentations.
 
 </p>
 
 
 <p>
 
-<strong>Based in Egypt. Working globally.</strong>
+<strong>Production workflow.</strong>
 
-Projects delivered worldwide across residential, hospitality, and commercial sectors.
+Reliable delivery, fast revisions, and consistent visual quality.
+
+</p>
+
+
+<p>
+
+<strong>Working globally.</strong>
+
+Delivering projects worldwide from concept to final marketing visuals.
 
 </p>
 
 </div>
 
-</section>
 
-
-
-<section class="section">
 
 <div class="stats">
 
 <div class="stat">
+
 <strong>Real Estate</strong>
+
 <span>Developers</span>
+
 </div>
 
+
 <div class="stat">
+
 <strong>Interior</strong>
+
 <span>Design Studios</span>
+
 </div>
+
 
 <div class="stat">
+
 <strong>Global</strong>
+
 <span>Clients</span>
-</div>
 
 </div>
 
-</section>
+
+</div>
 
 
 
@@ -258,7 +322,7 @@ Projects delivered worldwide across residential, hospitality, and commercial sec
 
 <footer>
 
-© 2026 ZSIZART Studio
+© 2026 ZSIZART Studio — Architectural Visualization & CGI
 
 </footer>
 
