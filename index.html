@@ -96,45 +96,81 @@
   .wrap{max-width:var(--max);margin:auto;padding:28px}
 
   /* ===== Header ===== */
-  header{
-    position:sticky;top:0;z-index:70;
-    background:rgba(5,7,9,.92);
-    backdrop-filter:saturate(160%) blur(10px);
-    border-bottom:1px solid #0e1116;
-    box-shadow:0 8px 30px rgba(0,0,0,.35);
-    transition:transform .4s ease;
-  }
- /* ===== Bigger Header ===== */
+  .site-header{
+  position:sticky;
+  top:0;
+  z-index:70;
+  background:rgba(5,7,9,.92);
+  backdrop-filter:saturate(160%) blur(10px);
+  border-bottom:1px solid #0e1116;
+  box-shadow:0 8px 30px rgba(0,0,0,.35);
+}
 
-header .wrap{
-  padding:20px 32px;   /* كان 10px 20px */
+.site-header .wrap{
+  padding:18px 32px;
 }
 
 .header-layout{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:22px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:14px;            /* كان 10px */
+  gap:12px;
+  text-decoration:none;
   user-select:none;
-  cursor:default;
 }
 
-/* Bigger logo */
-.brand .logo{
-  height:46px;         /* كان 30px */
-  width:auto;
-}
-
-/* Bigger text */
+.brand .logo{height:34px;width:auto;}
 .brand .wordmark{
-  font-weight:800;
-  letter-spacing:.08em;
-  font-size:20px;      /* جديد */
+  font-weight:600;
+  letter-spacing:.14em;
+  font-size:13px;
+  text-transform:uppercase;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+
+.nav-link{
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.02em;
+  opacity:.86;
+  padding:8px 2px;
+}
+
+.nav-link:hover{opacity:1}
+
+.cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:38px;
+  padding:0 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.02em;
+}
+
+.cta:hover{
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.28);
+}
+
+@media (max-width: 860px){
+  .nav{display:none;}
+  .site-header .wrap{padding:16px 20px;}
 }
 
   /* Menu button */
@@ -386,14 +422,6 @@ header .wrap{
   </div>
 </header>
 
-<div class="overlay" id="overlay"></div>
-<aside class="menu-panel" id="menuPanel" aria-label="Site menu">
-  <a href="/work">Work</a>
-  <a href="/services">Services</a>
-  <a href="/art">Art</a>
-  <a href="/about">About</a>
-  <a href="/contact">Contact</a>
-</aside>
 
 <main class="wrap">
   <section class="hero">
@@ -578,18 +606,6 @@ function initLenis(){
 }
 window.addEventListener('load', initLenis);
 
-/* ===== Menu ===== */
-const body=document.body,
-      menuBtn=document.getElementById('menuBtn'),
-      overlay=document.getElementById('overlay'),
-      menuPanel=document.getElementById('menuPanel');
-
-function openMenu(){ body.classList.add('menu-open'); menuBtn?.setAttribute('aria-expanded','true'); }
-function closeMenu(){ body.classList.remove('menu-open'); menuBtn?.setAttribute('aria-expanded','false'); }
-
-menuBtn?.addEventListener('click', openMenu);
-overlay?.addEventListener('click', closeMenu);
-menuPanel?.addEventListener('click',e=>{ if(e.target.tagName==='A') closeMenu(); });
 
 /* ===== Filter Panel ===== */
 const filterToggle=document.getElementById('filterToggle');
@@ -845,15 +861,6 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
   document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 })();
 
-/* ===== Hide header on scroll ===== */
-let lastScrollY = 0;
-const headerEl = document.querySelector('header');
-function updateHeader(){
-  const y = window.pageYOffset || document.documentElement.scrollTop;
-  headerEl.style.transform = (y > lastScrollY && y > 100) ? 'translateY(-100%)' : 'translateY(0)';
-  lastScrollY = y;
-}
-window.addEventListener('scroll', () => requestAnimationFrame(updateHeader), {passive:true});
 
 /* ===== Back-to-Top ===== */
 (function(){
