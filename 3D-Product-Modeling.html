@@ -10,28 +10,22 @@
   <meta name="description" content="High-end 3D product modeling and CGI for real estate developers and interior design brands.">
   <meta name="theme-color" content="#0b0d0d">
 
-  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
 
-  <!-- Lenis Smooth Scrolling (same stack as main) -->
   <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
 
   <style>
     :root{
       --bg:#f5f5f4;
-      --card:#ffffff;
       --ink:#0b0d0d;
       --muted:#6b7280;
       --accent1:#111827;
       --accent2:#111827;
-      --radius:18px;
-      --shadow:0 12px 40px rgba(0,0,0,.08);
       --max:1160px;
 
       --pv-dur:.45s;
@@ -145,9 +139,7 @@
     }
 
     /* ===== Page title ===== */
-    .page-head{
-      padding:18px 0 6px;
-    }
+    .page-head{ padding:18px 0 6px; }
     .page-kicker{
       color:var(--muted);
       font-size:13px;
@@ -167,83 +159,68 @@
       color:rgba(11,13,13,.72);
       max-width:72ch;
     }
-
-    /* ===== Sections (same replacement feel, but clean) ===== */
-    .project-row{
-      position:relative;
-      min-height:70vh;
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px;
-      padding:28px 0;
-      align-items:center;
-
-      opacity:0;
-      transform:translateY(140px);
-      transition:
-        transform 1s var(--rev-in),
-        opacity .9s ease;
-      will-change:transform,opacity;
-      z-index:1;
-    }
-
-    .project-row.in-view{
-      opacity:1;
-      transform:translateY(0);
-      z-index:2;
-    }
-
-    .project-row.out-view{
-      opacity:0;
-      transform:translateY(-120px);
-      transition:
-        transform .8s var(--rev-out),
-        opacity .6s ease;
-    }
-
-    @media(max-width:900px){
-      .project-row{
-        min-height:75vh;
-        grid-template-columns:1fr;
-        padding:18px 0;
-      }
-      .layer img{ height:54vh; }
-    }
-
-    /* ===== Image compare cards ===== */
-    .stack{
-      position:relative;
-      cursor:pointer;
-      border-radius:var(--radius);
-      overflow:hidden;
-      background:var(--card);
-      border:1px solid rgba(0,0,0,.10);
-      box-shadow:var(--shadow);
-    }
-    .layer{ position:relative; }
-    .layer img{
-      width:100%;
-      height:65vh;
-      object-fit:contain;
-      background:linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.00));
-    }
-    .img-clay{
-      position:absolute;
-      inset:0;
-      opacity:0;
-      transition:opacity .35s ease;
-    }
-    .stack:hover .img-clay{opacity:1}
-    .stack.is-compare .img-clay{opacity:1}
-
-    /* ===== Tiny hint ===== */
     .hint{
       color:var(--muted);
       font-size:13px;
       margin:14px 0 0;
     }
 
-    /* ===== Footer (same vibe) ===== */
+    /* ===== Gallery rows (NO CARDS) ===== */
+    .project-row{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+      padding:28px 0;
+      margin:0;
+
+      opacity:0;
+      transform:translateY(140px);
+      transition:transform 1s var(--rev-in), opacity .9s ease;
+      will-change:transform,opacity;
+    }
+    .project-row.in-view{ opacity:1; transform:translateY(0); }
+    .project-row.out-view{
+      opacity:0;
+      transform:translateY(-120px);
+      transition:transform .8s var(--rev-out), opacity .6s ease;
+    }
+
+    /* the “card” removal happens here */
+    .stack{
+      position:relative;
+      cursor:pointer;
+      border:0;
+      border-radius:0;
+      background:transparent;
+      box-shadow:none;
+      overflow:hidden; /* keep for the overlay swap */
+    }
+    .layer{ position:relative; }
+    .layer img{
+      width:100%;
+      height:auto;            /* no fixed card height */
+      max-height:72vh;        /* keeps consistency */
+      object-fit:contain;     /* preserves your clean white product look */
+      background:transparent; /* no panel behind */
+    }
+
+    .img-clay{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      transition:opacity .35s ease;
+    }
+    .stack:hover .img-clay{ opacity:1; }
+    .stack.is-compare .img-clay{ opacity:1; }
+
+    @media(max-width:900px){
+      .project-row{
+        grid-template-columns:1fr;
+        padding:18px 0;
+      }
+      .layer img{ max-height:62vh; }
+    }
+
     footer{
       border-top:1px solid rgba(0,0,0,.10);
       color:var(--muted);
@@ -252,7 +229,6 @@
       margin-top:18px;
     }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion:reduce){
       *{ scroll-behavior:auto !important; }
       .project-row{ transition:none !important; transform:none !important; opacity:1 !important; }
@@ -286,7 +262,7 @@
       <p class="page-kicker">Service</p>
       <h1 class="page-title">3D Product Modeling</h1>
       <p class="page-sub">
-        Product-ready modeling and CGI for real estate developers and interior design brands. Tap any card to lock the clay/beauty compare.
+        Product-ready modeling and CGI for real estate developers and interior design brands. Hover to preview clay. Click to lock compare.
       </p>
       <p class="hint">Hover = clay preview. Click = toggle compare.</p>
     </section>
@@ -298,7 +274,6 @@
           <img class="img-clay" src="../assets/modeling-clay01.webp" alt="3D product clay 01" loading="lazy" decoding="async">
         </div>
       </div>
-
       <div class="stack" role="button" tabindex="0" aria-label="Compare image 2">
         <div class="layer">
           <img src="../assets/modeling-render02.webp" alt="3D product render 02" loading="lazy" decoding="async">
@@ -314,7 +289,6 @@
           <img class="img-clay" src="../assets/modeling-clay03.webp" alt="3D product clay 03" loading="lazy" decoding="async">
         </div>
       </div>
-
       <div class="stack" role="button" tabindex="0" aria-label="Compare image 4">
         <div class="layer">
           <img src="../assets/modeling-render04.webp" alt="3D product render 04" loading="lazy" decoding="async">
@@ -330,7 +304,6 @@
           <img class="img-clay" src="../assets/modeling-clay05.webp" alt="3D product clay 05" loading="lazy" decoding="async">
         </div>
       </div>
-
       <div class="stack" role="button" tabindex="0" aria-label="Compare image 6">
         <div class="layer">
           <img src="../assets/modeling-render06.webp" alt="3D product render 06" loading="lazy" decoding="async">
@@ -346,7 +319,6 @@
           <img class="img-clay" src="../assets/modeling-clay07.webp" alt="3D product clay 07" loading="lazy" decoding="async">
         </div>
       </div>
-
       <div class="stack" role="button" tabindex="0" aria-label="Compare image 8">
         <div class="layer">
           <img src="../assets/modeling-render08.webp" alt="3D product render 08" loading="lazy" decoding="async">
@@ -409,22 +381,6 @@
           e.preventDefault();
           toggleCompare(card);
         }
-      });
-    });
-  </script>
-
-  <!-- Calendly Badge (kept, styled to match) -->
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-  <script>
-    window.addEventListener('load', () => {
-      if (!window.Calendly) return;
-      Calendly.initBadgeWidget({
-        url: 'https://calendly.com/arc-mahmoud-refaey/30min',
-        text: 'Schedule a call',
-        color: '#111827',
-        textColor: '#ffffff',
-        branding: false
       });
     });
   </script>
