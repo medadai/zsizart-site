@@ -1,0 +1,32 @@
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#fff;
+color:#111;
+}
+
+.header{
+position:fixed;
+width:100%;
+display:flex;
+justify-content:space-between;
+padding:20px 40px;
+}
+
+.hero{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.projects{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:40px;
+padding:100px;
+}
+
+.project img{
+width:100%;
+}
