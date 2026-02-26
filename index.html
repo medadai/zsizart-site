@@ -1,109 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" oncontextmenu="return false">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZSIZART Studio — Architectural Visualization & CGI</title>
-
-  <link rel="canonical" href="https://zsizart.com/">
-  <meta name="robots" content="index, follow">
-  <meta name="description" content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
-
-  <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="ZSIZART — Visualization Studio">
-  <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/og-cover.jpg">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ZSIZART — Visualization Studio">
-  <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
-  <meta name="twitter:image" content="assets/og-cover.jpg">
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"ZSIZART",
-    "url":"https://zsizart.com/",
-    "logo":"https://zsizart.com/assets/logo.png",
-    "sameAs":[
-      "https://www.instagram.com/",
-      "https://www.behance.net/",
-      "https://vimeo.com/",
-      "https://www.linkedin.com/"
-    ]
-  }
-  </script>
-
-  <link rel="preload" as="image" href="assets/logo.png">
-  <link rel="preload" as="image" href="assets/og-cover.jpg">
-
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="assets/site.css">
+<meta charset="UTF-8">
+<title>ZSIZART</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="wrap header-row">
-    <a class="brand" href="/" aria-label="ZSIZART Home">
-      <img src="assets/logo.png" alt="ZSIZART Logo" width="22" height="22" loading="eager" decoding="async">
-    </a>
-
-    <nav class="topnav" aria-label="Primary">
-      <a href="/projects/">Projects</a>
-      <a href="/careers/">Careers</a>
-      <a href="/3d-product-modeling/">3D Modeling</a>
-      <a class="cta" href="/get-in-touch/">Get in touch</a>
-    </nav>
-
-    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
-      <span class="bars"></span>
-    </button>
-  </div>
+<header class="header">
+  <div class="logo">ZSIZART</div>
+  <nav>
+    <a href="#">Work</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
 </header>
 
-<div class="overlay" id="overlay"></div>
-<aside class="menu-panel" id="menuPanel" aria-label="Site menu">
-  <a href="/projects/">Projects</a>
-  <a href="/careers/">Careers</a>
-  <a href="/3d-product-modeling/">3D Modeling</a>
-  <a href="/get-in-touch/">Get in touch</a>
-</aside>
+<section class="hero">
+  <h1>3D Visualization Studio</h1>
+</section>
 
-<main class="wrap">
-  <section class="hero">
-    <h1>Architectural Visualization & CGI</h1>
-    <p>ZSIZART Studio creates photoreal imagery and animation for architects, developers, and design teams worldwide.</p>
+<section class="projects">
 
-    <div class="hero-actions">
-      <a class="btn primary" href="/projects/">View Projects</a>
-      <a class="btn" href="/get-in-touch/">Request Proposal</a>
-    </div>
-  </section>
-</main>
+  <div class="project">
+    <img src="assets/work-01.webp">
+    <h2>Project Name</h2>
+  </div>
 
-<script>
-const body=document.body;
-const menuBtn=document.getElementById('menuBtn');
-const overlay=document.getElementById('overlay');
-const menuPanel=document.getElementById('menuPanel');
+  <div class="project">
+    <img src="assets/work-02.webp">
+    <h2>Project Name</h2>
+  </div>
 
-function openMenu(){ body.classList.add('menu-open'); menuBtn?.setAttribute('aria-expanded','true'); }
-function closeMenu(){ body.classList.remove('menu-open'); menuBtn?.setAttribute('aria-expanded','false'); }
-
-menuBtn?.addEventListener('click', ()=> body.classList.contains('menu-open') ? closeMenu() : openMenu());
-overlay?.addEventListener('click', closeMenu);
-menuPanel?.addEventListener('click', (e)=>{ if(e.target.tagName==='A') closeMenu(); });
-</script>
+</section>
 
 </body>
 </html>
