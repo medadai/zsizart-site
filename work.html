@@ -1,0 +1,97 @@
+<!-- Work -->
+<section id="work" class="work">
+  <div class="section-row">
+    <h2 class="section-title">Work</h2>
+    <button class="inline-btn" id="filterToggle" type="button" aria-expanded="false">
+      Search & Filter
+    </button>
+  </div>
+
+  <!-- Panel -->
+  <aside class="filter-panel" id="filterPanel" aria-hidden="true">
+    <div class="filter-head">
+      <div class="filter-title">Search & Filter</div>
+      <button class="x" id="filterClose" type="button" aria-label="Close">×</button>
+    </div>
+
+    <label class="field">
+      <span>Search</span>
+      <input id="searchInput" type="search" placeholder="Type to search…" autocomplete="off">
+    </label>
+
+    <div class="chips" id="tagChips">
+      <button class="chip is-active" data-tag="all" type="button">All</button>
+      <button class="chip" data-tag="exterior" type="button">Exterior</button>
+      <button class="chip" data-tag="interior" type="button">Interior</button>
+    </div>
+  </aside>
+
+  <div class="backdrop" id="filterBackdrop" hidden></div>
+
+  <div class="grid" id="grid">
+    <a class="tile" href="work-detail.html?p=assets/work-01"
+       data-project="assets/work-01"
+       data-title="Verde Crest Villas"
+       data-desc="Luxury Residential Development — Concept & Visualization."
+       data-tags="exterior">
+      <img class="img-main" src="assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Verde Crest Villas">
+      <div class="meta">
+        <div class="kicker">EXTERIOR</div>
+        <div class="title">Verde Crest Villas</div>
+        <div class="desc">Luxury Residential Development — Concept & Visualization.</div>
+      </div>
+    </a>
+
+    <a class="tile" href="work-detail.html?p=assets/work-02"
+       data-project="assets/work-02"
+       data-title="Hillside Serenity"
+       data-desc="A modern retreat in nature blending architecture and landscape."
+       data-tags="exterior">
+      <img class="img-main" src="assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
+      <div class="meta">
+        <div class="kicker">EXTERIOR</div>
+        <div class="title">Hillside Serenity</div>
+        <div class="desc">A modern retreat in nature blending architecture and landscape.</div>
+      </div>
+    </a>
+
+    <a class="tile" href="work-detail.html?p=assets/work-03"
+       data-project="assets/work-03"
+       data-title="Retro Home Sweet"
+       data-desc="Interior CGI capturing warmth of retro modern living."
+       data-tags="interior">
+      <img class="img-main" src="assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
+      <div class="meta">
+        <div class="kicker">INTERIOR</div>
+        <div class="title">Retro Home Sweet</div>
+        <div class="desc">Interior CGI capturing warmth of retro modern living.</div>
+      </div>
+    </a>
+
+    <a class="tile" href="work-detail.html?p=assets/work-04"
+       data-project="assets/work-04"
+       data-title="Serene Lines"
+       data-desc="Interior CGI focused on light, material and calm composition."
+       data-tags="interior">
+      <img class="img-main" src="assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
+      <div class="meta">
+        <div class="kicker">INTERIOR</div>
+        <div class="title">Serene Lines</div>
+        <div class="desc">Interior CGI focused on light, material and calm composition.</div>
+      </div>
+    </a>
+
+    <a class="tile" href="work-detail.html?p=assets/work-05"
+       data-project="assets/work-05"
+       data-title="Modern Haven"
+       data-desc="Interior CGI capturing warmth of modern living."
+       data-tags="interior">
+      <img class="img-main" src="assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
+      <div class="meta">
+        <div class="kicker">INTERIOR</div>
+        <div class="title">Modern Haven</div>
+        <div class="desc">Interior CGI capturing warmth of modern living.</div>
+      </div>
+    </a>
+  </div>
+</section>
