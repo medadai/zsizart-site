@@ -127,7 +127,7 @@
 
 .brand .logo{height:34px;width:auto;}
 .brand .wordmark{
-  font-weight:600;
+  font-weight:500;
   letter-spacing:.14em;
   font-size:13px;
   text-transform:uppercase;
@@ -169,32 +169,17 @@
 }
 
 @media (max-width: 860px){
-  .nav{display:none;}
-  .site-header .wrap{padding:16px 20px;}
+  .nav{
+    display:flex;
+    gap:14px;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .nav::-webkit-scrollbar{ display:none; }
+  .cta{ display:none; } /* أو سيبه لو عايزه */
 }
 
-  /* Menu button */
-  .menu-btn{width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;display:flex;align-items:center;justify-content:center;cursor:pointer}
-  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
-  .menu-btn .bars::before{position:absolute;top:-6px}
-  .menu-btn .bars::after{position:absolute;top:6px}
-
-  /* Slide-in overlay / panel */
-  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
-  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);background:rgba(0,0,0,.88);border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column;padding:40px 28px}
-  .menu-panel a{font-size:20px;font-weight:700;color:#fff;margin:10px 0;transition:color .25s ease}
-  .menu-panel a:hover{color:var(--accent1)}
-  .menu-open .overlay{opacity:1;pointer-events:auto}
-  .menu-open .menu-panel{transform:translateX(0)}
-
-  /* Hamburger → Logo morph while open */
-  .menu-open .menu-btn .bars{background:transparent}
-  .menu-open .menu-btn .bars::before,.menu-open .menu-btn .bars::after{opacity:0}
-  .menu-open .menu-btn::after{
-    content:"";display:block;width:24px;height:24px;background:url('assets/logo.png') center/contain no-repeat;
-    animation:popIn .45s var(--rev-ease);
-  }
-  @keyframes popIn{from{transform:scale(.6);opacity:.2}to{transform:scale(1);opacity:1}}
 
   /* ===== Hero ===== */
   .hero{padding:0 0 8px;position:relative;overflow:hidden}
@@ -406,7 +391,7 @@
 <header class="site-header">
   <div class="wrap header-layout">
     <a class="brand" href="/">
-      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo" width="46" height="46" loading="eager" decoding="async">
+      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo" width="34" height="34" loading="eager" decoding="async">
       <span class="wordmark">ZSIZART</span>
     </a>
 
