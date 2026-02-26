@@ -1,263 +1,432 @@
 <!DOCTYPE html>
 <html lang="en" oncontextmenu="return false">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZSIZART — 3D Product Modeling</title>
 
-<title>ZSIZART — 3D Product Modeling</title>
-<link rel="icon" href="../assets/favicon.png">
+  <link rel="canonical" href="https://zsizart.com/3D-Product-Modeling">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="High-end 3D product modeling and CGI for real estate developers and interior design brands.">
+  <meta name="theme-color" content="#0b0d0d">
 
-<style>
-:root{
-  --bg:#0b0d0d;
-  --ink:#e9edf0;
-  --max:1500px;
-}
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-*{box-sizing:border-box}
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png">
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
-  overflow-x:hidden;
-}
+  <!-- Lenis Smooth Scrolling (same stack as main) -->
+  <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
 
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--max);margin:auto;padding:10px}
+  <style>
+    :root{
+      --bg:#f5f5f4;
+      --card:#ffffff;
+      --ink:#0b0d0d;
+      --muted:#6b7280;
+      --accent1:#111827;
+      --accent2:#111827;
+      --radius:18px;
+      --shadow:0 12px 40px rgba(0,0,0,.08);
+      --max:1160px;
 
-/* ===== Header ===== */
-header{
-  position:sticky;top:0;z-index:50;
-  background:rgba(5,7,9,.92);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid #0e1116;
-}
-header .wrap{
-  padding:20px 32px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.brand{display:flex;align-items:center;gap:14px}
-.brand .logo{height:46px}
-.brand .wordmark{font-weight:800;letter-spacing:.08em;font-size:20px}
+      --pv-dur:.45s;
+      --pv-ease:cubic-bezier(.4,.14,.3,1);
 
-/* ===== Menu ===== */
-.menu-btn{
-  width:44px;height:34px;border:none;background:transparent;
-  display:flex;align-items:center;justify-content:center;cursor:pointer
-}
-.menu-btn .bars,
-.menu-btn .bars::before,
-.menu-btn .bars::after{
-  content:"";display:block;width:20px;height:2.5px;background:#cfe2ff;border-radius:2px;
-  position:relative;transition:.25s
-}
-.menu-btn .bars::before{position:absolute;top:-7px}
-.menu-btn .bars::after{position:absolute;top:7px}
+      --rev-in: cubic-bezier(.22,.7,.2,1);
+      --rev-out: cubic-bezier(.4,0,.2,1);
+    }
 
-.overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.4);
-  opacity:0;pointer-events:none;transition:.3s;z-index:60
-}
-.menu-panel{
-  position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);
-  background:#0b0d0d;border-left:1px solid #1a1f27;
-  transform:translateX(100%);transition:.35s;z-index:70;
-  display:flex;flex-direction:column;padding:60px 28px
-}
-.menu-panel a{
-  font-size:20px;font-weight:700;color:#fff;margin:14px 0;
-}
-.menu-open .overlay{opacity:1;pointer-events:auto}
-.menu-open .menu-panel{transform:translateX(0)}
+    *{box-sizing:border-box}
+    *{caret-color:transparent}
+    input,textarea,select{caret-color:auto}
 
-/* ===== Section Replacement Animation ===== */
-.project-row{
-  position:relative;
-  min-height:70vh;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  padding:40px 3vw;
-  align-items:center;
+    html{scroll-behavior:smooth}
+    html.lenis,html.lenis body{height:auto}
+    .lenis.lenis-smooth{scroll-behavior:unset}
 
-  opacity:0;
-  transform:translateY(140px);
-  transition:
-    transform 1s cubic-bezier(.22,.7,.2,1),
-    opacity .9s ease;
-  will-change:transform,opacity;
-  z-index:1;
-}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font:16px/1.6 "Inter", system-ui, Segoe UI, Roboto, Helvetica, Arial;
+      overflow-x:hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.project-row.in-view{
-  opacity:1;
-  transform:translateY(0);
-  z-index:2;
-}
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:auto;padding:28px}
 
-.project-row.out-view{
-  opacity:0;
-  transform:translateY(-120px);
-  transition:
-    transform .8s cubic-bezier(.4,0,.2,1),
-    opacity .6s ease;
-}
+    /* ===== Header (same as main) ===== */
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:70;
+      background:rgba(255,255,255,.78);
+      backdrop-filter:saturate(160%) blur(10px);
+      border-bottom:1px solid rgba(0,0,0,.08);
+      box-shadow:0 8px 30px rgba(0,0,0,.08);
+    }
+    .site-header .wrap{ padding:18px 32px; }
 
-@media(max-width:900px){
-  .project-row{
-    min-height:75vh;
-    padding:30px 5vw;
-  }
-  .layer img{
-    height:60vh;
-  }
-}
+    .header-layout{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:22px;
+    }
 
-/* ===== Image Compare ===== */
-.stack{position:relative;cursor:pointer}
-.layer{position:relative}
-.layer img{
-  width:100%;
-  height:65vh;
-  object-fit:contain;
-}
-.img-clay{
-  position:absolute;inset:0;
-  opacity:0;
-  transition:opacity .4s ease;
-}
-.stack:hover .img-clay{opacity:1}
-.stack.is-compare .img-clay{opacity:1}
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .brand .logo{height:34px;width:auto;}
+    .brand .wordmark{
+      font-weight:500;
+      letter-spacing:.14em;
+      font-size:13px;
+      text-transform:uppercase;
+      color:var(--ink);
+    }
 
-</style>
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      min-width:0;
+    }
+    .nav-link{
+      font-size:13px;
+      font-weight:500;
+      letter-spacing:.02em;
+      color:rgba(11,13,13,.78);
+      padding:8px 2px;
+      white-space:nowrap;
+    }
+    .nav-link:hover{ color:var(--ink); }
+
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height:38px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.14);
+      background:rgba(0,0,0,.04);
+      color:var(--ink);
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:.02em;
+      white-space:nowrap;
+    }
+    .cta:hover{
+      background:rgba(0,0,0,.06);
+      border-color:rgba(0,0,0,.18);
+    }
+
+    @media (max-width: 860px){
+      .nav{
+        gap:14px;
+        overflow:auto;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+      }
+      .nav::-webkit-scrollbar{ display:none; }
+      .cta{ display:none; }
+    }
+
+    /* ===== Page title ===== */
+    .page-head{
+      padding:18px 0 6px;
+    }
+    .page-kicker{
+      color:var(--muted);
+      font-size:13px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      margin:0 0 10px;
+    }
+    .page-title{
+      font-size:34px;
+      line-height:1.15;
+      letter-spacing:-0.02em;
+      margin:0;
+      font-weight:700;
+    }
+    .page-sub{
+      margin:10px 0 0;
+      color:rgba(11,13,13,.72);
+      max-width:72ch;
+    }
+
+    /* ===== Sections (same replacement feel, but clean) ===== */
+    .project-row{
+      position:relative;
+      min-height:70vh;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+      padding:28px 0;
+      align-items:center;
+
+      opacity:0;
+      transform:translateY(140px);
+      transition:
+        transform 1s var(--rev-in),
+        opacity .9s ease;
+      will-change:transform,opacity;
+      z-index:1;
+    }
+
+    .project-row.in-view{
+      opacity:1;
+      transform:translateY(0);
+      z-index:2;
+    }
+
+    .project-row.out-view{
+      opacity:0;
+      transform:translateY(-120px);
+      transition:
+        transform .8s var(--rev-out),
+        opacity .6s ease;
+    }
+
+    @media(max-width:900px){
+      .project-row{
+        min-height:75vh;
+        grid-template-columns:1fr;
+        padding:18px 0;
+      }
+      .layer img{ height:54vh; }
+    }
+
+    /* ===== Image compare cards ===== */
+    .stack{
+      position:relative;
+      cursor:pointer;
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:var(--card);
+      border:1px solid rgba(0,0,0,.10);
+      box-shadow:var(--shadow);
+    }
+    .layer{ position:relative; }
+    .layer img{
+      width:100%;
+      height:65vh;
+      object-fit:contain;
+      background:linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.00));
+    }
+    .img-clay{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      transition:opacity .35s ease;
+    }
+    .stack:hover .img-clay{opacity:1}
+    .stack.is-compare .img-clay{opacity:1}
+
+    /* ===== Tiny hint ===== */
+    .hint{
+      color:var(--muted);
+      font-size:13px;
+      margin:14px 0 0;
+    }
+
+    /* ===== Footer (same vibe) ===== */
+    footer{
+      border-top:1px solid rgba(0,0,0,.10);
+      color:var(--muted);
+      padding:20px;
+      text-align:center;
+      margin-top:18px;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion:reduce){
+      *{ scroll-behavior:auto !important; }
+      .project-row{ transition:none !important; transform:none !important; opacity:1 !important; }
+      .img-clay{ transition:none !important; }
+    }
+  </style>
 </head>
 
 <body>
+  <header class="site-header">
+    <div class="wrap header-layout">
+      <a class="brand" href="/">
+        <img src="../assets/logo.png" alt="ZSIZART Logo" class="logo" width="34" height="34" loading="eager" decoding="async">
+        <span class="wordmark">ZSIZART</span>
+      </a>
 
-<header>
-  <div class="wrap">
-    <div class="brand">
-      <img src="../assets/logo.png" alt="ZSIZART Logo" class="logo">
-      <span class="wordmark">ZSIZART</span>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="/#work">Work</a>
+        <a class="nav-link" href="/#services">Services</a>
+        <a class="nav-link" href="/art">Art</a>
+        <a class="nav-link" href="/#about">Studio</a>
+        <a class="nav-link" href="/#contact">Contact</a>
+      </nav>
+
+      <a class="cta" href="/#contact">Start a Project</a>
     </div>
-    <button class="menu-btn" id="menuBtn"><span class="bars"></span></button>
-  </div>
-</header>
+  </header>
 
-<div class="overlay" id="overlay"></div>
-<aside class="menu-panel" id="menuPanel">
-  <a href="/work">Work</a>
-  <a href="/services">Services</a>
-  <a href="/art">Art</a>
-  <a href="/about">About</a>
-  <a href="/contact">Contact</a>
-</aside>
+  <main class="wrap">
+    <section class="page-head" aria-label="Page intro">
+      <p class="page-kicker">Service</p>
+      <h1 class="page-title">3D Product Modeling</h1>
+      <p class="page-sub">
+        Product-ready modeling and CGI for real estate developers and interior design brands. Tap any card to lock the clay/beauty compare.
+      </p>
+      <p class="hint">Hover = clay preview. Click = toggle compare.</p>
+    </section>
 
-<main class="wrap">
+    <section class="project-row" aria-label="Row 1">
+      <div class="stack" role="button" tabindex="0" aria-label="Compare image 1">
+        <div class="layer">
+          <img src="../assets/modeling-render01.webp" alt="3D product render 01" loading="lazy" decoding="async">
+          <img class="img-clay" src="../assets/modeling-clay01.webp" alt="3D product clay 01" loading="lazy" decoding="async">
+        </div>
+      </div>
 
-<section class="project-row">
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render01.webp">
-    <img class="img-clay" src="../assets/modeling-clay01.webp">
-  </div></div>
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render02.webp">
-    <img class="img-clay" src="../assets/modeling-clay02.webp">
-  </div></div>
-</section>
+      <div class="stack" role="button" tabindex="0" aria-label="Compare image 2">
+        <div class="layer">
+          <img src="../assets/modeling-render02.webp" alt="3D product render 02" loading="lazy" decoding="async">
+          <img class="img-clay" src="../assets/modeling-clay02.webp" alt="3D product clay 02" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
 
-<section class="project-row">
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render03.webp">
-    <img class="img-clay" src="../assets/modeling-clay03.webp">
-  </div></div>
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render04.webp">
-    <img class="img-clay" src="../assets/modeling-clay04.webp">
-  </div></div>
-</section>
+    <section class="project-row" aria-label="Row 2">
+      <div class="stack" role="button" tabindex="0" aria-label="Compare image 3">
+        <div class="layer">
+          <img src="../assets/modeling-render03.webp" alt="3D product render 03" loading="lazy" decoding="async">
+          <img class="img-clay" src="../assets/modeling-clay03.webp" alt="3D product clay 03" loading="lazy" decoding="async">
+        </div>
+      </div>
 
-<section class="project-row">
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render05.webp">
-    <img class="img-clay" src="../assets/modeling-clay05.webp">
-  </div></div>
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render06.webp">
-    <img class="img-clay" src="../assets/modeling-clay06.webp">
-  </div></div>
-</section>
+      <div class="stack" role="button" tabindex="0" aria-label="Compare image 4">
+        <div class="layer">
+          <img src="../assets/modeling-render04.webp" alt="3D product render 04" loading="lazy" decoding="async">
+          <img class="img-clay" src="../assets/modeling-clay04.webp" alt="3D product clay 04" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
 
-<section class="project-row">
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render07.webp">
-    <img class="img-clay" src="../assets/modeling-clay07.webp">
-  </div></div>
-  <div class="stack"><div class="layer">
-    <img src="../assets/modeling-render08.webp">
-    <img class="img-clay" src="../assets/modeling-clay08.webp">
-  </div></div>
-</section>
+    <section class="project-row" aria-label="Row 3">
+      <div class="stack" role="button" tabindex="0" aria-label="Compare image 5">
+        <div class="layer">
+          <img src="../assets/modeling-render05.webp" alt="3D product render 05" loading="lazy" decoding="async">
+          <img class="img-clay" src="../assets/modeling-clay05.webp" alt="3D product clay 05" loading="lazy" decoding="async">
+        </div>
+      </div>
 
-</main>
+      <div class="stack" role="button" tabindex="0" aria-label="Compare image 6">
+        <div class="layer">
+          <img src="../assets/modeling-render06.webp" alt="3D product render 06" loading="lazy" decoding="async">
+          <img class="img-clay" src="../assets/modeling-clay06.webp" alt="3D product clay 06" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
 
-<script>
-const body=document.body,
-menuBtn=document.getElementById('menuBtn'),
-overlay=document.getElementById('overlay');
+    <section class="project-row" aria-label="Row 4">
+      <div class="stack" role="button" tabindex="0" aria-label="Compare image 7">
+        <div class="layer">
+          <img src="../assets/modeling-render07.webp" alt="3D product render 07" loading="lazy" decoding="async">
+          <img class="img-clay" src="../assets/modeling-clay07.webp" alt="3D product clay 07" loading="lazy" decoding="async">
+        </div>
+      </div>
 
-menuBtn.addEventListener('click',()=>body.classList.toggle('menu-open'));
-overlay.addEventListener('click',()=>body.classList.remove('menu-open'));
+      <div class="stack" role="button" tabindex="0" aria-label="Compare image 8">
+        <div class="layer">
+          <img src="../assets/modeling-render08.webp" alt="3D product render 08" loading="lazy" decoding="async">
+          <img class="img-clay" src="../assets/modeling-clay08.webp" alt="3D product clay 08" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
+  </main>
 
-/* ===== Replacement Scroll Effect ===== */
-const sections=document.querySelectorAll(".project-row");
+  <footer>© 2026 ZSIZART Studio — Architectural Visualization & CGI</footer>
 
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("in-view");
-      entry.target.classList.remove("out-view");
-    } else {
-      if(entry.boundingClientRect.top < 0){
-        entry.target.classList.add("out-view");
-      }
-      entry.target.classList.remove("in-view");
+  <script>
+    /* ===== Lenis (same as main) ===== */
+    let lenis;
+    function initLenis(){
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+      if (!window.Lenis) return;
+
+      lenis = new Lenis({
+        duration:1.2,
+        easing:(t)=>Math.min(1,1.001 - Math.pow(2, -10*t)),
+        direction:'vertical',
+        gestureDirection:'vertical',
+        smooth:true, mouseMultiplier:1, smoothTouch:false, touchMultiplier:2, infinite:false,
+      });
+
+      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
     }
-  });
-},{
-  threshold:0.25,
-  rootMargin:"-20% 0px -20% 0px"
-});
+    window.addEventListener('load', initLenis);
 
-sections.forEach(section=>observer.observe(section));
+    /* ===== Replacement Scroll Effect ===== */
+    const sections = document.querySelectorAll(".project-row");
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add("in-view");
+          entry.target.classList.remove("out-view");
+        } else {
+          if(entry.boundingClientRect.top < 0){
+            entry.target.classList.add("out-view");
+          }
+          entry.target.classList.remove("in-view");
+        }
+      });
+    },{
+      threshold:0.25,
+      rootMargin:"-20% 0px -20% 0px"
+    });
+    sections.forEach(section=>observer.observe(section));
 
-document.querySelectorAll(".stack").forEach(card=>{
-  card.addEventListener("click",()=>{
-    card.classList.toggle("is-compare");
-  });
-});
-</script>
+    /* ===== Compare toggle (click + keyboard) ===== */
+    function toggleCompare(el){ el.classList.toggle("is-compare"); }
 
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-<script>
-window.addEventListener('load', () => {
-  if (!window.Calendly) return;
-  Calendly.initBadgeWidget({
-    url: 'https://calendly.com/arc-mahmoud-refaey/30min',
-    text: 'Schedule a call',
-    color: '#ff7a18',
-    textColor: '#ffffff',
-    branding: false
-  });
-});
-</script>
+    document.querySelectorAll(".stack").forEach(card=>{
+      card.addEventListener("click",()=>toggleCompare(card));
+      card.addEventListener("keydown",(e)=>{
+        if(e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          toggleCompare(card);
+        }
+      });
+    });
+  </script>
 
+  <!-- Calendly Badge (kept, styled to match) -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <script>
+    window.addEventListener('load', () => {
+      if (!window.Calendly) return;
+      Calendly.initBadgeWidget({
+        url: 'https://calendly.com/arc-mahmoud-refaey/30min',
+        text: 'Schedule a call',
+        color: '#111827',
+        textColor: '#ffffff',
+        branding: false
+      });
+    });
+  </script>
 </body>
 </html>
-
