@@ -200,17 +200,18 @@ header .wrap{
     padding:4px 8px;border-radius:10px;font-size:12px
   }
 
-  /* B/W → color hover */
   .grid .tile .img-main{
-    width:100%;
-    height:auto;
-    object-fit:cover;
-    display:block;
-    filter:grayscale(80%) saturate(0.75) contrast(1.08);
-    transition:filter .35s ease, transform .35s ease;
-  }
-  .grid .tile:hover .img-main{ filter:none; transform:scale(1.02) }
-  @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
+  width:100%;
+  height:auto;
+  object-fit:cover;
+  display:block;
+  filter:none;
+  transition:transform .35s ease;
+}
+
+.grid .tile:hover .img-main{
+  transform:scale(1.02);
+}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:1fr;gap:18px}
