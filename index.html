@@ -200,27 +200,16 @@ header .wrap{
     padding:4px 8px;border-radius:10px;font-size:12px
   }
 
-  /* B/W → color hover */
+
   .grid .tile .img-main{
-    width:100%;
-    height:auto;
-    object-fit:cover;
-    display:block;
-    filter:grayscale(80%) saturate(0.75) contrast(1.08);
-    transition:filter .35s ease, transform .35s ease;
-  }
-  .grid .tile:hover .img-main{ filter:none; transform:scale(1.02) }
+  width:100%;
+  height:auto;
+  object-fit:cover;
+  display:block;
+  filter:none;
+}
   @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
 
-  /* Clay overlay (masked by circle) */
-  .tile .img-clay{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    opacity:0; transition:opacity .25s ease;
-    -webkit-mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
-            mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
-    pointer-events:none;
-  }
-  .tile:hover .img-clay{opacity:1}
 
   section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
   .about{display:grid;grid-template-columns:1fr;gap:18px}
@@ -327,22 +316,16 @@ header .wrap{
   height:auto;
   display:block;
   object-fit:cover;
-  filter:grayscale(70%) saturate(0.85) contrast(1.05);
   transform:scale(1.01);
-  transition:
-    opacity .25s ease,
-    transform .6s ease,
-    filter .35s ease;
+  transition:transform .6s ease;
 }
-
 .modeling-img.is-swapping{
   opacity:.65;
 }
 
   .modeling-link:hover .modeling-img{
-    filter:none;
-    transform:scale(1.04);
-  }
+  transform:scale(1.04);
+}
   .modeling-overlay{
     position:absolute;
     inset:0;
@@ -683,46 +666,7 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
 })();
 
 
-/* ===== Clay hover circle ===== */
-(function(){
-  const supportsMask = window.CSS && (
-    CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') ||
-    CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))')
-  );
-  if(!supportsMask) return;
 
-  const exts = ['.webp','.jpg','.png'];
-  const RADIUS = 80;
-  const tiles = [...document.querySelectorAll('#grid .tile')];
-
-  tiles.forEach(tile=>{
-    const base = tile.dataset.project || '';
-    if(!base) return;
-
-    const cand = exts.map(ext=>`${base}-clay${ext}`);
-    const imgClay = new Image();
-    imgClay.className = 'img-clay';
-    imgClay.loading = 'lazy';
-    imgClay.decoding = 'async';
-
-    (function tryNext(i=0){
-      if(i>=cand.length) return;
-      imgClay.onload = ()=>{ tile.appendChild(imgClay); bind(); };
-      imgClay.onerror = ()=> tryNext(i+1);
-      imgClay.src = cand[i];
-    })();
-
-    function bind(){
-      tile.addEventListener('pointerenter', ()=>{ tile.style.setProperty('--r', RADIUS+'px'); });
-      tile.addEventListener('pointerleave', ()=>{ tile.style.setProperty('--r','0px'); tile.style.setProperty('--mx','-1000px'); tile.style.setProperty('--my','-1000px'); });
-      tile.addEventListener('pointermove', (e)=>{
-        const rect=tile.getBoundingClientRect();
-        tile.style.setProperty('--mx',(e.clientX-rect.left)+'px');
-        tile.style.setProperty('--my',(e.clientY-rect.top)+'px');
-      }, {passive:true});
-    }
-  });
-})();
 
 /* ===== Project Viewer (Work only + arrows wired) ===== */
 (function(){
@@ -796,7 +740,6 @@ qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault();
     // common variants
     exts.forEach(ext=>{
       tryList.push(`${base}-sh${ext}`);
-      tryList.push(`${base}-clay${ext}`);
       tryList.push(`${base}-alt${ext}`);
       tryList.push(`${base}-extra${ext}`);
     });
