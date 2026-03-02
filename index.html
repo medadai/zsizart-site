@@ -1066,20 +1066,5 @@
     });
   </script>
 
-  <script>
-(function() {
-  if (sessionStorage.getItem("geoChecked")) return;
-  fetch("https://ipapi.co/json/")
-    .then(r => r.json())
-    .then(d => {
-      if (d.country_code === "EG" || d.country_code === "DE") {
-        sessionStorage.setItem("geoChecked", "1");
-        window.location.replace("/eg-de.html");
-      }
-    })
-    .catch(()=>{});
-})();
-</script>
-  
 </body>
 </html>
