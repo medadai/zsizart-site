@@ -1,1 +1,979 @@
+<!DOCTYPE html>
+<html lang="en" oncontextmenu="return false">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZSIZART Studio — Architectural Visualization & CGI</title>
+  <link rel="canonical" href="https://zsizart.com/">
+  <meta name="robots" content="index, follow">
 
+  <!-- SEO / Social -->
+  <meta name="description" content="ZSIZART Studio delivers premium architectural visualization, photorealistic rendering, and CGI for global architectural and development projects.">
+  <meta property="og:title" content="ZSIZART — Visualization Studio">
+  <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/og-cover.jpg">
+  <meta name="theme-color" content="#0b0d0d">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZSIZART — Visualization Studio">
+  <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
+  <meta name="twitter:image" content="assets/og-cover.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"ZSIZART",
+    "url":"https://zsizart.com/",
+    "logo":"https://zsizart.com/assets/logo.png",
+    "sameAs":[
+      "https://www.instagram.com/",
+      "https://www.behance.net/",
+      "https://vimeo.com/",
+      "https://www.linkedin.com/"
+    ]
+  }
+  </script>
+
+  <!-- Preload small wins -->
+  <link rel="preload" as="image" href="assets/logo.png">
+  <link rel="preload" as="image" href="assets/og-cover.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+  <!-- Lenis Smooth Scrolling (defer) -->
+  <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+
+  <style>
+  :root{
+    --bg:#0b0d0d;
+    --card:#141414;
+    --ink:#e9edf0;
+    --muted:#9fb3c8;
+    --accent1:#ff7a18;
+    --accent2:#a855f7;
+    --radius:18px;
+    --shadow:0 12px 40px rgba(0,0,0,.35);
+    --max:1160px;
+
+    /* Motion */
+    --pv-dur:.45s;
+    --pv-ease:cubic-bezier(.4,.14,.3,1);
+    --rev-dur:.7s;
+    --rev-ease:cubic-bezier(.2,.65,.15,1);
+  }
+
+  *{box-sizing:border-box}
+
+  /* hide caret globally, show in inputs */
+  *{ caret-color:transparent }
+  input,textarea,select{ caret-color:auto }
+
+  html{scroll-behavior:smooth}
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:unset}
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:auto;padding:28px}
+
+  /* ===== Header ===== */
+  header{
+    position:sticky;top:0;z-index:70;
+    background:rgba(5,7,9,.92);
+    backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid #0e1116;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+    transition:transform .4s ease;
+  }
+ /* ===== Bigger Header ===== */
+
+header .wrap{
+  padding:20px 32px;   /* كان 10px 20px */
+}
+
+.header-layout{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;            /* كان 10px */
+  user-select:none;
+  cursor:default;
+}
+
+/* Bigger logo */
+.brand .logo{
+  height:46px;         /* كان 30px */
+  width:auto;
+}
+
+/* Bigger text */
+.brand .wordmark{
+  font-weight:800;
+  letter-spacing:.08em;
+  font-size:20px;      /* جديد */
+}
+
+  /* Menu button */
+  .menu-btn{width:44px;height:34px;border:none;background:transparent;color:#cfe2ff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .menu-btn .bars,.menu-btn .bars::before,.menu-btn .bars::after{content:"";display:block;width:18px;height:2.5px;background:#cfe2ff;border-radius:2px;position:relative;transition:.25s}
+  .menu-btn .bars::before{position:absolute;top:-6px}
+  .menu-btn .bars::after{position:absolute;top:6px}
+
+  /* Slide-in overlay / panel */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+  .menu-panel{position:fixed;top:0;right:0;height:100%;width:min(360px,90vw);background:rgba(0,0,0,.88);border-left:1px solid #1a1f27;box-shadow:-20px 0 50px rgba(0,0,0,.4);transform:translateX(100%);transition:.3s;z-index:90;display:flex;flex-direction:column;padding:40px 28px}
+  .menu-panel a{font-size:20px;font-weight:700;color:#fff;margin:10px 0;transition:color .25s ease}
+  .menu-panel a:hover{color:var(--accent1)}
+  .menu-open .overlay{opacity:1;pointer-events:auto}
+  .menu-open .menu-panel{transform:translateX(0)}
+
+  /* Hamburger → Logo morph while open */
+  .menu-open .menu-btn .bars{background:transparent}
+  .menu-open .menu-btn .bars::before,.menu-open .menu-btn .bars::after{opacity:0}
+  .menu-open .menu-btn::after{
+    content:"";display:block;width:24px;height:24px;background:url('assets/logo.png') center/contain no-repeat;
+    animation:popIn .45s var(--rev-ease);
+  }
+  @keyframes popIn{from{transform:scale(.6);opacity:.2}to{transform:scale(1);opacity:1}}
+
+  /* ===== Hero ===== */
+  .hero{padding:0 0 8px;position:relative;overflow:hidden}
+  .hero h2{font-size:42px;margin:0 0 12px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;will-change:transform}
+  .hero p{margin:0;color:var(--muted);font-size:18px;will-change:transform}
+  .hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#e9edf0;font-weight:600;cursor:pointer}
+  .btn.primary{background:linear-gradient(135deg,var(--accent1),var(--accent2));border-color:transparent;color:#fff}
+  .btn.primary:hover{filter:brightness(1.06)}
+
+  /* ===== Filter Panel ===== */
+  .filter-panel{position:sticky; top:64px; z-index:60; margin:18px 0 0 0;background:rgba(0,0,0,.55); border:1px solid #1a1f27; border-radius:14px; padding:14px;display:none}
+  .filter-panel.show{display:block}
+  .filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #2a3140;border-radius:12px;background:#0c0e12;color:#e9edf0;cursor:pointer;user-select:none}
+  .chip input{accent-color:#1a68ff}
+  .search-input{flex:1;min-width:220px;padding:10px 12px;border:1px solid #2a3140;border-radius:10px;background:#0c0e12;color:#e9edf0}
+  .filter-actions{margin-left:auto;display:flex;gap:10px}
+  .hint{margin-top:10px;color:#9fb3c8;font-size:13px}
+
+  /* ===== Section headings row ===== */
+  .section-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .inline-btn{padding:8px 12px;border-radius:10px;border:1px solid #2a3140;background:#0e1116;color:#cfe2ff;font-weight:700;cursor:pointer}
+
+  /* ===== Grid ===== */
+  .grid{
+    display:grid;
+    gap:18px;
+    grid-template-columns:repeat(2,1fr);
+  }
+  @media(max-width:768px){
+    .grid{grid-template-columns:1fr;}
+  }
+
+  .tile{
+    position:relative;overflow:hidden;background:transparent;cursor:pointer;border:none;border-radius:0;box-shadow:none;
+    --mx:-1000px; --my:-1000px; --r:0px;
+  }
+
+  /* Label */
+  .label{
+    position:absolute;left:10px;top:10px;
+    background:#0e1116cc;border:1px solid #1a1f27;
+    padding:4px 8px;border-radius:10px;font-size:12px
+  }
+
+  /* B/W → color hover */
+  .grid .tile .img-main{
+    width:100%;
+    height:auto;
+    object-fit:cover;
+    display:block;
+    filter:grayscale(80%) saturate(0.75) contrast(1.08);
+    transition:filter .35s ease, transform .35s ease;
+  }
+  .grid .tile:hover .img-main{ filter:none; transform:scale(1.02) }
+  @media(hover:none){ .grid .tile:active .img-main{ filter:none } }
+
+  /* Clay overlay (masked by circle) */
+  .tile .img-clay{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity .25s ease;
+    -webkit-mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
+            mask: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 98%, transparent 100%);
+    pointer-events:none;
+  }
+  .tile:hover .img-clay{opacity:1}
+
+  section h2{margin:26px 0 18px;font-size:28px;font-weight:700}
+  .about{display:grid;grid-template-columns:1fr;gap:18px}
+  .card{background:var(--card);border:1px solid #1a1f27;border-radius:var(--radius);padding:18px}
+
+  form{display:grid;gap:10px}
+  input,textarea,button,select{font:inherit;color:var(--ink);background:#0c0e12;border:1px solid #1f2733;border-radius:10px;padding:10px 12px}
+  textarea{min-height:120px;resize:vertical}
+  button{background:linear-gradient(135deg,var(--accent1),var(--accent2));border-color:transparent;color:#fff;cursor:pointer;font-weight:600}
+  button:hover{filter:brightness(1.06)}
+  footer{border-top:1px solid #1a1f27;color:var(--muted);padding:20px;text-align:center}
+
+  /* ===== Project Viewer ===== */
+  .pv{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--pv-dur) var(--pv-ease)}
+  .pv.show{opacity:1;pointer-events:auto}
+  .pv__content{position:relative;width:100%;height:100%}
+  .pv__image{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .pv__img{position:absolute;inset:0;width:100vw;height:100vh;object-fit:contain;opacity:0;transition:opacity .5s ease;will-change:opacity,transform}
+  .pv__img.is-top{opacity:1;animation:pvIn var(--pv-dur) var(--pv-ease)}
+  @keyframes pvIn{from{transform:translateY(-40px);opacity:.9}to{transform:translateY(0);opacity:1}}
+  .pv__info{position:absolute;left:0;right:0;bottom:0;padding:22px 28px;font-size:15px;line-height:1.5;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.7);transform:translateY(100%);opacity:0;transition:transform var(--pv-dur) var(--pv-ease),opacity var(--pv-dur) var(--pv-ease)}
+  .pv.show .pv__info{transform:translateY(0);opacity:1}
+  .pv__close{
+    position:absolute; top:14px; left:14px;
+    width:40px; height:40px; border-radius:10px;
+    background:rgba(0,0,0,.45); border:1px solid #1a1f27;
+    color:#fff; font-size:26px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,.35); z-index:15;
+  }
+  .pv__close:hover{background:rgba(0,0,0,.6)}
+
+  /* ===== Viewer Arrows ===== */
+  .pv__arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:64px;
+    height:64px;
+    font-size:44px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    background:rgba(0,0,0,.45);
+    color:#fff;
+    z-index:10;
+    backdrop-filter:blur(4px);
+    transition:.25s;
+  }
+  .pv__arrow:hover{ background:rgba(0,0,0,.7); }
+  .pv__prev{ left:20px; }
+  .pv__next{ right:20px; }
+  @media(max-width:768px){
+    .pv__arrow{ width:48px;height:48px;font-size:34px; }
+  }
+
+  /* ===== Back-to-Top ===== */
+  .top-btn{
+    position:fixed; right:22px; bottom:22px; z-index:120;
+    display:flex; align-items:center; gap:8px;
+    padding:10px 14px; border-radius:14px;
+    background:rgba(14,17,22,.92);
+    border:1px solid #1a1f27;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+    color:#cfe2ff; font-weight:700; cursor:pointer;
+    opacity:0; transform:translateY(10px) scale(.98);
+    transition:opacity .25s ease, transform .25s ease, box-shadow .25s ease;
+    pointer-events:none;
+  }
+  .top-btn.show{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+  .top-btn:hover{ box-shadow:0 10px 40px rgba(0,0,0,.45); }
+  .top-glyph{ font-size:16px; line-height:1; display:inline-block; transform:translateY(-1px); }
+  .top-text{ font-size:16px; }
+
+  .top-btn.morph{ padding:10px; border-radius:50%; width:48px; height:48px; justify-content:center; gap:0; }
+  .top-btn.morph .top-text{ width:0; opacity:0; transform:scale(.8); transition:.2s ease; }
+  .top-btn.morph .top-glyph{
+    width:24px; height:24px; font-size:0;
+    background:url("assets/logo.png") center/contain no-repeat;
+    animation:spinIn .7s cubic-bezier(.2,.65,.15,1);
+  }
+  @keyframes spinIn{ 0%{ transform:scale(.6) rotate(-90deg); opacity:.2 } 100%{ transform:scale(1) rotate(0deg); opacity:1 } }
+  @media (prefers-reduced-motion:reduce){ .top-btn,.top-btn *{ transition:none !important; animation:none !important } }
+
+  /* ===== Reveal classes ===== */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.show{opacity:1; transform:none}
+  .reveal.hide-up{opacity:0; transform:translateY(-16px)}
+  .reveal.hide-down{opacity:0; transform:translateY(16px)}
+
+  /* ===== 3D Modeling CTA (ADDED) ===== */
+  #modeling-cta{ margin:18px 0 0; }
+  .modeling-link{
+    position:relative;
+    display:block;
+    overflow:hidden;
+    border-radius:18px;
+    border:1px solid #1a1f27;
+    background:#0c0e12;
+    box-shadow:0 12px 40px rgba(0,0,0,.35);
+  }
+.modeling-img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+  filter:grayscale(70%) saturate(0.85) contrast(1.05);
+  transform:scale(1.01);
+  transition:
+    opacity .25s ease,
+    transform .6s ease,
+    filter .35s ease;
+}
+
+.modeling-img.is-swapping{
+  opacity:.65;
+}
+
+  .modeling-link:hover .modeling-img{
+    filter:none;
+    transform:scale(1.04);
+  }
+  .modeling-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.08) 60%);
+  }
+  .modeling-text{ text-align:center; }
+  .modeling-title{
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:.02em;
+    margin-bottom:12px;
+    text-shadow:0 2px 10px rgba(0,0,0,.55);
+  }
+  .modeling-btn{
+    display:inline-block;
+    padding:10px 18px;
+    border:1px solid rgba(255,255,255,.85);
+    border-radius:12px;
+    font-weight:800;
+    letter-spacing:.08em;
+    background:rgba(0,0,0,.35);
+    backdrop-filter:blur(6px);
+    transition:.25s;
+  }
+  .modeling-link:hover .modeling-btn{
+    background:#fff;
+    color:#000;
+    border-color:#fff;
+  }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap header-layout">
+    <div class="brand">
+      <img src="assets/logo.png" alt="ZSIZART Logo" class="logo" width="30" height="30" loading="eager" decoding="async">
+      <span class="wordmark">ZSIZART</span>
+    </div>
+    <div class="actions">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><span class="bars"></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="overlay"></div>
+<aside class="menu-panel" id="menuPanel" aria-label="Site menu">
+  <a href="/work">Work</a>
+  <a href="/services">Services</a>
+  <a href="/art">Art</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+</aside>
+
+<main class="wrap">
+  <section class="hero">
+      <h2 class="parallax hero-parallax">ZSIZART Studio</h2>
+      <p class="parallax hero-parallax">Premium Architectural Visualization & CGI</p>
+    <div class="actions">
+      <a class="btn primary" href="#work">View Work</a>
+      <a class="btn" href="#contact">Request Proposal</a>
+    </div>
+  </section>
+
+  <!-- Filter Panel -->
+  <section id="filters" class="filter-panel">
+    <form id="filterForm" onsubmit="return false;">
+      <div class="filter-row">
+        <input class="search-input" type="search" id="q" placeholder="Search projects by name…" />
+        <label class="chip"><input type="checkbox" id="tagInterior" /> INTERIOR</label>
+        <label class="chip"><input type="checkbox" id="tagExterior" /> EXTERIOR</label>
+        <div class="filter-actions">
+          <button type="button" class="btn" id="resetBtn">Reset</button>
+          <button type="button" class="btn primary" id="applyBtn">Apply</button>
+        </div>
+      </div>
+      <div class="hint">Tip: you can filter by text (project name) and/or category.</div>
+    </form>
+  </section>
+
+  <!-- Work -->
+  <section id="work">
+    <div class="section-row">
+      <h2>Work</h2>
+      <button class="inline-btn" id="filterToggle" type="button">Search & Filter</button>
+    </div>
+
+    <div class="grid" id="grid">
+      <div class="tile" data-project="assets/work-01" data-title="Verde Crest Villas" data-desc="Luxury Residential Development — Concept & Visualization." data-tags="exterior">
+        <span class="label">EXTERIOR</span>
+        <img class="img-main" src="assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Luxury Residential Architectural Visualization">
+      </div>
+
+      <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
+        <span class="label">EXTERIOR</span>
+        <img class="img-main" src="assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
+      </div>
+
+      <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <span class="label">INTERIOR</span>
+        <img class="img-main" src="assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
+      </div>
+
+      <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition." data-tags="interior">
+        <span class="label">INTERIOR</span>
+        <img class="img-main" src="assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
+      </div>
+
+      <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living." data-tags="interior">
+        <span class="label">INTERIOR</span>
+        <img class="img-main" src="assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <h2>Services</h2>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:18px">
+      <article class="card"><h3>Interior Visualization</h3><p style="color:#9fb3c8">Photoreal interiors focused on mood, materials, and storytelling.</p></article>
+      <article class="card"><h3>Exterior Visualization</h3><p style="color:#9fb3c8">Compelling exteriors with dramatic atmosphere and context.</p></article>
+      <article class="card"><h3>Animation</h3><p style="color:#9fb3c8">Cinematic walkthroughs and product films that move audiences.</p></article>
+      <article class="card"><h3>Product Visualization</h3><p style="color:#9fb3c8">High-end product shots for furniture and design marketing.</p></article>
+    </div>
+  </section>
+
+  <!-- ===== 3D MODELING CTA (ADDED) ===== -->
+  <section id="modeling-cta">
+    <a class="modeling-link"
+       href="3D-Product-Modeling"
+       aria-label="Open 3D Modeling Page"
+       data-frames="assets/zsiz-modeling-thumb01.webp|assets/zsiz-modeling-thumb02.webp|assets/zsiz-modeling-thumb03.webp|assets/zsiz-modeling-thumb04.webp|assets/zsiz-modeling-thumb05.webp">
+
+      <img class="modeling-img"
+           src="assets/zsiz-modeling-thumb01.webp"
+           width="1600" height="900"
+           loading="lazy"
+           decoding="async"
+           alt="3D Modeling Preview">
+
+      <div class="modeling-overlay">
+        <div class="modeling-text">
+          <div class="modeling-title">3D Modeling</div>
+          <div class="modeling-btn">SEE MORE</div>
+        </div>
+      </div>
+    </a>
+  </section>
+  <!-- ===== /3D MODELING CTA ===== -->
+
+
+
+
+  <!-- About -->
+  <section id="about">
+    <h2>About</h2>
+    <div class="about">
+      <div class="card scrub scrub-right">
+        <p><strong>ZSIZART Studio</strong> is a visualization practice focused on delivering refined, production-ready architectural imagery and animation for global projects.</p>
+<p>We collaborate with architects, developers, and design teams to create high-end visuals that support marketing, investor presentations, and project launches.</p>
+        <p>We collaborate with architects, developers, and design brands worldwide—supporting projects from concept to polished marketing assets. Our focus is reliability, clarity, and delivering consistent quality at production speed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section id="courses">
+    <h2>Courses</h2>
+    <div class="card">Educational content currently in development.</div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="card">
+      <form id="contact-form">
+        <input type="text" name="from_name" placeholder="Your Name" required>
+        <input type="email" name="reply_to" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message…" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <p id="status" style="margin-top:8px;color:#9ec2ff"></p>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 ZSIZART Studio — Architectural Visualization & CGI</footer>
+
+<!-- Project Viewer -->
+<div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
+  <div class="pv__content">
+    <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
+
+    <div class="pv__image">
+      <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
+
+      <img id="pvImageA" class="pv__img is-top" alt="">
+      <img id="pvImageB" class="pv__img" alt="">
+
+      <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+    </div>
+
+    <aside class="pv__info">
+      <h3 id="pvTitle"></h3>
+      <p id="pvDesc"></p>
+    </aside>
+  </div>
+</div>
+
+<!-- Back-to-Top -->
+<button id="topBtn" class="top-btn" aria-label="Back to top">
+  <span class="top-glyph" aria-hidden="true">↑</span>
+  <span class="top-text">Top</span>
+</button>
+
+<!-- Main JS -->
+<script defer>
+/* ===== Lenis ===== */
+let lenis;
+function initLenis(){
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+  if (!window.Lenis) return;
+
+  lenis = new Lenis({
+    duration:1.2,
+    easing:(t)=>Math.min(1,1.001 - Math.pow(2, -10*t)),
+    direction:'vertical',
+    gestureDirection:'vertical',
+    smooth:true, mouseMultiplier:1, smoothTouch:false, touchMultiplier:2, infinite:false,
+  });
+
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+}
+window.addEventListener('load', initLenis);
+
+/* ===== Menu ===== */
+const body=document.body,
+      menuBtn=document.getElementById('menuBtn'),
+      overlay=document.getElementById('overlay'),
+      menuPanel=document.getElementById('menuPanel');
+
+function openMenu(){ body.classList.add('menu-open'); menuBtn?.setAttribute('aria-expanded','true'); }
+function closeMenu(){ body.classList.remove('menu-open'); menuBtn?.setAttribute('aria-expanded','false'); }
+
+menuBtn?.addEventListener('click', openMenu);
+overlay?.addEventListener('click', closeMenu);
+menuPanel?.addEventListener('click',e=>{ if(e.target.tagName==='A') closeMenu(); });
+
+/* ===== Filter Panel ===== */
+const filterToggle=document.getElementById('filterToggle');
+const filterPanel=document.getElementById('filters');
+filterToggle?.addEventListener('click',()=>filterPanel.classList.toggle('show'));
+
+/* ===== Filtering ===== */
+const applyBtn=document.getElementById('applyBtn');
+const resetBtn=document.getElementById('resetBtn');
+const qInput=document.getElementById('q');
+const chkInt=document.getElementById('tagInterior');
+const chkExt=document.getElementById('tagExterior');
+const tiles=[...document.querySelectorAll('#grid .tile')];
+
+function applyFilters(){
+  const q=(qInput?.value||'').trim().toLowerCase();
+  const wantInt=!!chkInt?.checked, wantExt=!!chkExt?.checked;
+
+  tiles.forEach(tile=>{
+    const name=(tile.dataset.title||'').toLowerCase();
+    const tags=(tile.dataset.tags||'').toLowerCase();
+    const matchText = q ? name.includes(q) : true;
+    let matchCat = true;
+
+    if (wantInt || wantExt){
+      matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior'));
+    }
+    tile.style.display = (matchText && matchCat) ? '' : 'none';
+  });
+}
+function resetFilters(){
+  if(!qInput) return;
+  qInput.value='';
+  if(chkInt) chkInt.checked=false;
+  if(chkExt) chkExt.checked=false;
+  tiles.forEach(t=>t.style.display='');
+}
+applyBtn?.addEventListener('click',applyFilters);
+resetBtn?.addEventListener('click',resetFilters);
+qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
+
+/* ===== Hover step (one image per hover) ===== */
+(function(){
+
+  const el = document.querySelector('.modeling-link[data-frames]');
+  if(!el) return;
+
+  const img = el.querySelector('.modeling-img');
+  if(!img) return;
+
+  const frames = (el.dataset.frames || '')
+    .split('|')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  if(frames.length < 2) return;
+
+  // Preload
+  frames.forEach(src => { const im = new Image(); im.src = src; });
+
+  // ابدأ من الصورة الحالية فعلاً
+  let idx = Math.max(0, frames.indexOf(img.getAttribute('src')));
+
+  let ready = true; // يمنع تريجر مرتين بسرعة
+
+  function swapTo(src){
+    if(img.getAttribute('src') === src) { ready = true; return; }
+
+    img.classList.add('is-swapping');
+    setTimeout(()=>{
+      img.src = src;
+      img.classList.remove('is-swapping');
+      ready = true;
+    }, 120);
+  }
+
+  el.addEventListener('mouseenter', ()=>{
+    if(!ready) return;
+    ready = false;
+
+    idx = (idx + 1) % frames.length; // خطوة واحدة بس
+    swapTo(frames[idx]);
+  });
+
+  // مهم: مفيش mouseleave reset — تفضل على آخر صورة
+})();
+
+
+/* ===== Clay hover circle ===== */
+(function(){
+  const supportsMask = window.CSS && (
+    CSS.supports('(-webkit-mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))') ||
+    CSS.supports('(mask:radial-gradient(circle 10px at 5px 5px, #000 98%, transparent))')
+  );
+  if(!supportsMask) return;
+
+  const exts = ['.webp','.jpg','.png'];
+  const RADIUS = 80;
+  const tiles = [...document.querySelectorAll('#grid .tile')];
+
+  tiles.forEach(tile=>{
+    const base = tile.dataset.project || '';
+    if(!base) return;
+
+    const cand = exts.map(ext=>`${base}-clay${ext}`);
+    const imgClay = new Image();
+    imgClay.className = 'img-clay';
+    imgClay.loading = 'lazy';
+    imgClay.decoding = 'async';
+
+    (function tryNext(i=0){
+      if(i>=cand.length) return;
+      imgClay.onload = ()=>{ tile.appendChild(imgClay); bind(); };
+      imgClay.onerror = ()=> tryNext(i+1);
+      imgClay.src = cand[i];
+    })();
+
+    function bind(){
+      tile.addEventListener('pointerenter', ()=>{ tile.style.setProperty('--r', RADIUS+'px'); });
+      tile.addEventListener('pointerleave', ()=>{ tile.style.setProperty('--r','0px'); tile.style.setProperty('--mx','-1000px'); tile.style.setProperty('--my','-1000px'); });
+      tile.addEventListener('pointermove', (e)=>{
+        const rect=tile.getBoundingClientRect();
+        tile.style.setProperty('--mx',(e.clientX-rect.left)+'px');
+        tile.style.setProperty('--my',(e.clientY-rect.top)+'px');
+      }, {passive:true});
+    }
+  });
+})();
+
+/* ===== Project Viewer (Work only + arrows wired) ===== */
+(function(){
+  const viewer  = document.getElementById('pv'),
+        imgA    = document.getElementById('pvImageA'),
+        imgB    = document.getElementById('pvImageB'),
+        titleEl = document.getElementById('pvTitle'),
+        descEl  = document.getElementById('pvDesc'),
+        btnClose= document.getElementById('pvClose'),
+        btnPrev = document.getElementById('pvPrev'),
+        btnNext = document.getElementById('pvNext');
+
+  // IMPORTANT FIX: only tiles inside #grid (Work) can open viewer
+  const projectTiles = [...document.querySelectorAll('#grid .tile')];
+  const projects = projectTiles.map(t => ({ base:t.dataset.project, title:t.dataset.title||'', desc:t.dataset.desc||'' }));
+
+  let list = [], idx = 0, topIsA = true;
+  const cache = new Map();
+
+  function updateArrows(){
+    const multi = (list.length > 1);
+    btnPrev.style.display = multi ? '' : 'none';
+    btnNext.style.display = multi ? '' : 'none';
+    btnPrev.disabled = !multi;
+    btnNext.disabled = !multi;
+  }
+
+  function show(src){
+    const top   = topIsA ? imgA : imgB;
+    const under = topIsA ? imgB : imgA;
+
+    under.onload = () => {
+      top.classList.remove('is-top');
+      under.classList.add('is-top');
+      topIsA = !topIsA;
+      under.onload = null;
+    };
+    under.src = src;
+  }
+
+  function setIdx(i){
+    if (!list.length) return;
+    idx = (i + list.length) % list.length;
+    show(list[idx]);
+  }
+
+  const nextImg = () => setIdx(idx+1);
+  const prevImg = () => setIdx(idx-1);
+
+  btnNext?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
+  btnPrev?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
+
+  async function buildList(base){
+    if (cache.has(base)) return cache.get(base);
+
+    const exts = ['.webp','.jpg','.jpeg','.png'];
+    const tryList = [];
+
+    // base.ext
+    exts.forEach(ext => tryList.push(`${base}${ext}`));
+
+    // 1..15 (light)
+    for(let i=1;i<=15;i++){
+      const p2 = String(i).padStart(2,'0');
+      exts.forEach(ext=>{
+        tryList.push(`${base}-${p2}${ext}`);
+        tryList.push(`${base}-${i}${ext}`);
+      });
+    }
+
+    // common variants
+    exts.forEach(ext=>{
+      tryList.push(`${base}-sh${ext}`);
+      tryList.push(`${base}-clay${ext}`);
+      tryList.push(`${base}-alt${ext}`);
+      tryList.push(`${base}-extra${ext}`);
+    });
+
+    const checks = tryList.map(src=>new Promise(res=>{
+      const im=new Image();
+      im.onload = ()=>res(src);
+      im.onerror= ()=>res(null);
+      im.src = src;
+    }));
+
+    const found=(await Promise.all(checks)).filter(Boolean);
+    const finalList = found.length ? found : [`${base}.webp`];
+
+    cache.set(base, finalList);
+    return finalList;
+  }
+
+  async function openProject(i){
+    const p = projects[i];
+    viewer.dataset.title = p.title;
+    viewer.dataset.desc  = p.desc;
+
+    titleEl.textContent = p.title || '';
+    descEl.textContent  = p.desc  || '';
+
+    list = await buildList(p.base);
+    idx = 0;
+
+    imgA.classList.remove('is-top'); imgB.classList.remove('is-top');
+    const currentTop = topIsA ? imgA : imgB;
+    currentTop.src = list[0];
+    currentTop.classList.add('is-top');
+
+    updateArrows();
+  }
+
+  function openPV(){
+    viewer.classList.add('show');
+    viewer.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    if (lenis) lenis.stop();
+  }
+
+  function closePV(){
+    viewer.classList.remove('show');
+    viewer.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    if (lenis) lenis.start();
+  }
+
+  projectTiles.forEach((tile,i)=>{
+    tile.addEventListener('click', async ()=>{
+      await openProject(i);
+      openPV();
+    });
+  });
+
+  viewer.addEventListener('click',e=>{ if(e.target===viewer) closePV(); });
+  btnClose?.addEventListener('click', closePV);
+
+  document.addEventListener('keydown',e=>{
+    if(!viewer.classList.contains('show'))return;
+    if(e.key==='Escape') closePV();
+    if(e.key==='ArrowRight') nextImg();
+    if(e.key==='ArrowLeft')  prevImg();
+    if(e.key==='ArrowDown'||e.key==='PageDown') nextImg();
+    if(e.key==='ArrowUp'||e.key==='PageUp') prevImg();
+  });
+})();
+
+/* ===== Reveal on scroll ===== */
+(function(){
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  const autoTargets = ['.hero h2','.hero p','section h2','.grid .tile','#contact .card'];
+  autoTargets.forEach(sel=>{
+    document.querySelectorAll(sel).forEach(el=>{
+      if(!el.classList.contains('reveal')) el.classList.add('reveal');
+    });
+  });
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('show');
+      else entry.target.classList.remove('show');
+    });
+  },{threshold:0.15});
+
+  document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+})();
+
+/* ===== Hide header on scroll ===== */
+let lastScrollY = 0;
+const headerEl = document.querySelector('header');
+function updateHeader(){
+  const y = window.pageYOffset || document.documentElement.scrollTop;
+  headerEl.style.transform = (y > lastScrollY && y > 100) ? 'translateY(-100%)' : 'translateY(0)';
+  lastScrollY = y;
+}
+window.addEventListener('scroll', () => requestAnimationFrame(updateHeader), {passive:true});
+
+/* ===== Back-to-Top ===== */
+(function(){
+  const btn = document.getElementById('topBtn');
+  if(!btn) return;
+
+  function toggleTop(){
+    const y = window.pageYOffset || document.documentElement.scrollTop;
+    if (y > 600) btn.classList.add('show');
+    else btn.classList.remove('show');
+  }
+  window.addEventListener('scroll', toggleTop, { passive:true });
+  window.addEventListener('load', toggleTop);
+
+  btn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    btn.classList.add('morph');
+    window.scrollTo({ top:0, behavior:'smooth' });
+
+    let reverted = false;
+    const revert = ()=>{ if(reverted) return; reverted = true; btn.classList.remove('morph'); };
+    setTimeout(revert, 1100);
+
+    const onScrollTop = ()=>{
+      if ((window.pageYOffset || document.documentElement.scrollTop) <= 2){
+        revert();
+        window.removeEventListener('scroll', onScrollTop);
+      }
+    };
+    window.addEventListener('scroll', onScrollTop, { passive:true });
+  });
+})();
+</script>
+
+<!-- EmailJS (defer) -->
+<script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script defer>
+  const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
+  const EMAILJS_SERVICE_ID="service_m1dfwio";
+  const EMAILJS_TEMPLATE_ID="template_kuqk13r";
+
+  window.addEventListener('load', ()=>{
+    try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
+
+    const form = document.getElementById('contact-form');
+    const statusEl = document.getElementById('status');
+
+    form?.addEventListener('submit',function(e){
+      e.preventDefault();
+      emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
+        .then(()=>{statusEl.textContent='Message sent!';this.reset();})
+        .catch(()=>{statusEl.textContent='Failed, try again.';});
+    });
+  });
+</script>
+
+<!-- Calendly Widget -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+<script>
+  window.addEventListener('load', () => {
+    if (!window.Calendly) return;
+
+    Calendly.initBadgeWidget({
+      url: 'https://calendly.com/arc-mahmoud-refaey/30min',
+      text: 'Schedule a call',
+      color: '#ff7a18',
+      textColor: '#ffffff',
+      branding: false
+    });
+  });
+</script>
+
+
+</body>
+</html>
