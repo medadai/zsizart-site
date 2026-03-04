@@ -473,25 +473,26 @@
 
     /* كروت الـthumb */
     .pv__thumb{
-      scroll-snap-align:start;
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:14px 16px;
-      border-radius:18px;
-      border:1px solid rgba(0,0,0,.08);
-      background:#fafafa;
-      cursor:pointer;
-      min-width:420px;
-      max-width:480px;
-      user-select:none;
-      transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
-    }
-    .pv__thumb:hover{
-      transform:translateY(-3px);
-      box-shadow:0 12px 30px rgba(0,0,0,.12);
-      background:#fff;
-    }
+  scroll-snap-align:start;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  border-radius:18px;
+  border:1px solid rgba(0,0,0,.08);
+  background:#fafafa;
+  cursor:pointer;
+  min-width:420px;
+  max-width:480px;
+  user-select:none;
+  transition:none;            /* شيل الأنيميشن */
+}
+
+.pv__thumb:hover{
+  transform:none;             /* شيل الحركة */
+  box-shadow:none;            /* شيل الظل الإضافي */
+  background:#fafafa;         /* خليه ثابت */
+}
     .pv__thumb img{
       width:120px;
       height:80px;
