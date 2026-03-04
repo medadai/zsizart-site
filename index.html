@@ -548,6 +548,40 @@
 
   </head>
 
+<script>
+  (function () {
+    const form = document.getElementById('subscribeForm');
+    if (!form) return;
+
+    const ok = document.getElementById('subscribeOk');
+    const err = document.getElementById('subscribeErr');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (ok) ok.style.display = 'none';
+      if (err) err.style.display = 'none';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.reset();
+          if (ok) ok.style.display = 'block';
+        } else {
+          if (err) err.style.display = 'block';
+        }
+      } catch (_) {
+        if (err) err.style.display = 'block';
+      }
+    });
+  })();
+</script>
+
 <body>
   <header class="site-header">
   <div class="wrap header-layout">
@@ -631,17 +665,6 @@
       </div>
     </section>
 
-    <!-- Clients -->
-    <section id="clients">
-      <h2>Clients</h2>
-      <div class="clients">
-        <img src="/assets/client-01.svg" alt="Client">
-        <img src="/assets/client-02.svg" alt="Client">
-        <img src="/assets/client-03.svg" alt="Client">
-        <img src="/assets/client-04.svg" alt="Client">
-      </div>
-    </section>
-
     <!-- Services -->
     <section id="services">
       <h2>Services</h2>
@@ -684,10 +707,20 @@
   <div class="nf-mid">
     <div class="nf-col nf-newsletter">
       <div class="nf-kicker">Keep in touch with us</div>
-      <form class="nf-form" action="#" method="post" autocomplete="on">
-        <input class="nf-input" type="email" name="email" placeholder="Email Address" required>
-        <button class="nf-btn" type="submit">Subscribe</button>
-      </form>
+      <form class="nf-form" id="subscribeForm"
+      action="https://formspree.io/f/xpqjvrnn"
+      method="POST">
+  <input class="nf-input" type="email" name="email" placeholder="Email Address" required>
+  <input type="hidden" name="type" value="newsletter_subscribe">
+  <button class="nf-btn" type="submit">Subscribe</button>
+</form>
+
+<div id="subscribeOk" class="nf-muted" style="margin-top:10px; display:none;">
+  Subscribed successfully.
+</div>
+<div id="subscribeErr" class="nf-muted" style="margin-top:10px; display:none;">
+  Something went wrong. Try again.
+</div>
     </div>
 
     <div class="nf-col nf-time">
@@ -1241,28 +1274,6 @@
       });
     })();
   </script>
-
-  <!-- EmailJS -->
-  <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script defer>
-    const EMAILJS_PUBLIC_KEY="JdZK05NoMso2b9lHe";
-    const EMAILJS_SERVICE_ID="service_m1dfwio";
-    const EMAILJS_TEMPLATE_ID="template_kuqk13r";
-
-    window.addEventListener('load', ()=>{
-      try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
-
-      const form = document.getElementById('contact-form');
-      const statusEl = document.getElementById('status');
-
-      form?.addEventListener('submit',function(e){
-        e.preventDefault();
-        emailjs.sendForm(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,this)
-          .then(()=>{ statusEl.textContent='Message sent!'; this.reset(); })
-          .catch(()=>{ statusEl.textContent='Failed, try again.'; });
-      });
-    });
-  </script>
-  
+ 
 </body>
 </html>
