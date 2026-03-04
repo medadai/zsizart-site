@@ -13,7 +13,7 @@
   <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
@@ -293,158 +293,168 @@
       margin-top:18px;
     }
 
-    /* ===== Project Viewer ===== */
+    /* ===========================================
+       PROJECT VIEWER (WHITE + SMALL FRAME + SIDE)
+       =========================================== */
+
     .pv{
       position:fixed;
       inset:0;
       z-index:200;
-      background:#000;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
+      background:#fff;                 /* بدل الأسود */
       opacity:0;
       pointer-events:none;
-      transition:opacity var(--pv-dur) var(--pv-ease)
+      transition:opacity var(--pv-dur) var(--pv-ease);
     }
     .pv.show{opacity:1;pointer-events:auto}
     .pv__content{position:relative;width:100%;height:100%}
-    .pv__image{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-    .pv__img{
-      position:absolute;
-      inset:0;
-      width:100vw;
-      height:100vh;
-      object-fit:contain;
-      opacity:0;
-      transition:opacity .5s ease;
-      will-change:opacity,transform
-    }
-    .pv__img.is-top{opacity:1;animation:pvIn var(--pv-dur) var(--pv-ease)}
-    @keyframes pvIn{from{transform:translateY(-40px);opacity:.9}to{transform:translateY(0);opacity:1}}
 
     .pv__close{
       position:absolute;
-      top:14px; left:14px;
-      width:40px; height:40px;
-      border-radius:10px;
-      background:rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.18);
-      color:#fff;
+      top:18px; left:18px;
+      width:42px; height:42px;
+      border-radius:12px;
+      background:rgba(0,0,0,.06);
+      border:1px solid rgba(0,0,0,.10);
+      color:#111;
       font-size:26px;
       line-height:1;
       cursor:pointer;
       display:flex;
       align-items:center;
       justify-content:center;
-      box-shadow:0 6px 20px rgba(0,0,0,.35);
-      z-index:15;
+      z-index:30;
     }
+
+    .pv__stage{
+      position:absolute;
+      left:0; right:0;
+      top:0;
+      bottom:150px;                    /* مساحة للـ more projects */
+      display:grid;
+      grid-template-columns:minmax(280px, 860px) minmax(260px, 380px);
+      gap:24px;
+      align-items:center;
+      justify-content:center;
+      padding:72px 28px 24px;
+    }
+    @media(max-width:980px){
+      .pv__stage{
+        grid-template-columns:1fr;
+        bottom:180px;
+        padding:66px 18px 18px;
+      }
+    }
+
+    .pv__frame{
+      position:relative;
+      width:min(860px, 100%);
+      aspect-ratio:16/9;
+      border-radius:18px;
+      background:#f5f5f4;
+      border:1px solid rgba(0,0,0,.10);
+      box-shadow:0 18px 70px rgba(0,0,0,.14);
+      overflow:hidden;
+    }
+
+    .pv__img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;               /* لو عايز contain بدل cover */
+      opacity:0;
+      transition:opacity .45s ease;
+    }
+    .pv__img.is-top{opacity:1}
 
     .pv__arrow{
       position:absolute;
       top:50%;
       transform:translateY(-50%);
-      width:64px;
-      height:64px;
-      font-size:44px;
+      width:54px;
+      height:54px;
+      font-size:40px;
       border-radius:50%;
-      border:none;
+      border:1px solid rgba(0,0,0,.10);
       cursor:pointer;
-      background:rgba(0,0,0,.45);
-      color:#fff;
+      background:rgba(255,255,255,.78);
+      color:#111;
       z-index:10;
-      backdrop-filter:blur(4px);
-      transition:.25s;
+      backdrop-filter: blur(8px);
+      transition:.2s;
     }
-    .pv__arrow:hover{ background:rgba(0,0,0,.7); }
-    .pv__prev{ left:20px; }
-    .pv__next{ right:20px; }
+    .pv__arrow:hover{ background:rgba(255,255,255,.92); }
+    .pv__prev{ left:12px; }
+    .pv__next{ right:12px; }
 
-    @media(max-width:768px){
-      .pv__arrow{ width:48px;height:48px;font-size:34px; }
+    .pv__side{
+      width:min(380px, 100%);
     }
-
-    /* ===== NAM-like meta panel ===== */
-    .pv__meta{
-      position:absolute;
-      left:0;
-      bottom:0;
-      z-index:16;
-      padding:18px 18px 18px 18px;
-      pointer-events:none;
+    .pv__side-card{
+      border-radius:18px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.10);
+      box-shadow:0 18px 70px rgba(0,0,0,.10);
+      padding:18px 18px 16px;
     }
-    .pv__meta-card{
-      width:min(360px, calc(100vw - 36px));
-      background:rgba(0,0,0,.70);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:14px;
-      padding:14px 14px 12px;
-      box-shadow:0 18px 60px rgba(0,0,0,.45);
-      backdrop-filter: blur(10px);
-    }
-    .pv__meta-title{
-      font-weight:700;
-      letter-spacing:-0.01em;
-      font-size:14px;
+    .pv__side-title{
+      font-weight:800;
+      font-size:16px;
       line-height:1.25;
-      margin:0 0 8px;
-      color:#fff;
+      margin:0 0 10px;
+      color:#0b0d0d;
     }
-    .pv__meta-desc{
+    .pv__side-loc{
+      font-weight:600;
       font-size:12px;
-      line-height:1.5;
-      color:rgba(255,255,255,.86);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:rgba(11,13,13,.55);
+      margin:0 0 12px;
+    }
+    .pv__side-desc{
+      font-size:13px;
+      line-height:1.55;
+      color:rgba(11,13,13,.75);
       margin:0;
     }
-    .pv__info{ display:none !important; }
 
-    /* ===== Open/Close shared-element transition (ghost) ===== */
-    .pv__ghost{
-      position:fixed;
-      left:0; top:0;
-      width:100px; height:100px;
-      border-radius:0;
-      object-fit:cover;
-      z-index:250;
-      will-change:transform, width, height, border-radius, opacity;
-      pointer-events:none;
-      box-shadow:0 20px 80px rgba(0,0,0,.40);
-    }
-
-    /* ===== More projects marquee ===== */
+    /* ===== More projects (BIG + SLOW) ===== */
     .pv__more{
       position:absolute;
-      left:0; right:0;
-      bottom:10px;
-      z-index:14;
-      padding:0 16px 10px;
+      left:0;
+      right:0;
+      bottom:20px;
+      z-index:25;
+      padding:0 32px;
       pointer-events:auto;
     }
     .pv__more-label{
-      color:rgba(255,255,255,.80);
-      font-size:12px;
-      letter-spacing:.10em;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.12em;
       text-transform:uppercase;
-      margin:0 0 10px;
-      text-shadow:0 2px 8px rgba(0,0,0,.55);
+      color:rgba(0,0,0,.55);
+      margin:0 0 14px;
     }
     .pv__marquee{
       overflow:hidden;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.40);
-      backdrop-filter: blur(10px);
+      border-radius:20px;
+      border:1px solid rgba(0,0,0,.10);
+      background:#fff;
+      box-shadow:0 20px 60px rgba(0,0,0,.10);
     }
     .pv__marquee-track{
       display:flex;
-      gap:12px;
-      padding:10px;
+      align-items:center;
+      gap:18px;
+      padding:18px;
       width:max-content;
-      animation: pvMarquee 28s linear infinite;
+      animation: pvMarquee 75s linear infinite; /* أبطأ */
     }
     .pv__marquee:hover .pv__marquee-track{
-      animation-play-state: paused;
+      animation-play-state:paused;
     }
     @keyframes pvMarquee{
       from{ transform:translateX(0); }
@@ -454,37 +464,43 @@
     .pv__thumb{
       display:flex;
       align-items:center;
-      gap:10px;
-      padding:8px 10px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.06);
+      gap:14px;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.08);
+      background:#fafafa;
       cursor:pointer;
-      min-width:240px;
-      max-width:320px;
+      min-width:420px;
+      max-width:480px;
       user-select:none;
+      transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .pv__thumb:hover{
+      transform:translateY(-3px);
+      box-shadow:0 12px 30px rgba(0,0,0,.12);
+      background:#fff;
     }
     .pv__thumb img{
-      width:68px;
-      height:44px;
+      width:120px;
+      height:80px;
       object-fit:cover;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.08);
       flex:0 0 auto;
     }
     .pv__thumb .t1{
-      color:#fff;
-      font-weight:700;
-      font-size:12px;
+      color:#0b0d0d;
+      font-weight:800;
+      font-size:14px;
       line-height:1.2;
-      margin:0 0 4px;
+      margin:0 0 6px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
     .pv__thumb .t2{
-      color:rgba(255,255,255,.78);
-      font-size:11px;
+      color:rgba(11,13,13,.65);
+      font-size:13px;
       line-height:1.3;
       margin:0;
       white-space:nowrap;
@@ -492,10 +508,13 @@
       text-overflow:ellipsis;
     }
 
-    @media(max-width:768px){
-      .pv__meta{ padding:14px; }
-      .pv__more{ bottom:8px; padding:0 12px 10px; }
-      .pv__thumb{ min-width:210px; }
+    @media(max-width:1000px){
+      .pv__more{ padding:0 18px; }
+      .pv__marquee-track{ padding:14px; gap:14px; animation-duration:85s; }
+      .pv__thumb{ min-width:320px; max-width:360px; }
+      .pv__thumb img{ width:96px; height:64px; }
+      .pv__thumb .t1{ font-size:13px; }
+      .pv__thumb .t2{ font-size:12px; }
     }
   </style>
 </head>
@@ -549,27 +568,52 @@
       </div>
 
       <div class="grid" id="grid">
-        <div class="tile" data-project="assets/work-01" data-title="Verde Crest Villas" data-desc="Luxury Residential Development — Concept & Visualization." data-tags="exterior">
+        <div class="tile"
+             data-project="assets/work-01"
+             data-title="Verde Crest Villas"
+             data-loc="Dubai"
+             data-desc="Luxury Residential Development — Concept & Visualization."
+             data-tags="exterior">
           <span class="label">EXTERIOR</span>
           <img class="img-main" src="assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Verde Crest Villas">
         </div>
 
-        <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
+        <div class="tile"
+             data-project="assets/work-02"
+             data-title="Hillside Serenity"
+             data-loc="California"
+             data-desc="A modern retreat in nature blending architecture and landscape."
+             data-tags="exterior">
           <span class="label">EXTERIOR</span>
           <img class="img-main" src="assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
         </div>
 
-        <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <div class="tile"
+             data-project="assets/work-03"
+             data-title="Retro Home Sweet"
+             data-loc="London"
+             data-desc="Interior CGI capturing warmth of retro modern living."
+             data-tags="interior">
           <span class="label">INTERIOR</span>
           <img class="img-main" src="assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
         </div>
 
-        <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition." data-tags="interior">
+        <div class="tile"
+             data-project="assets/work-04"
+             data-title="Serene Lines"
+             data-loc="Copenhagen"
+             data-desc="Interior CGI focused on light, material and calm composition."
+             data-tags="interior">
           <span class="label">INTERIOR</span>
           <img class="img-main" src="assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
         </div>
 
-        <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living." data-tags="interior">
+        <div class="tile"
+             data-project="assets/work-05"
+             data-title="Modern Haven"
+             data-loc="Amsterdam"
+             data-desc="Interior CGI capturing warmth of modern living."
+             data-tags="interior">
           <span class="label">INTERIOR</span>
           <img class="img-main" src="assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
         </div>
@@ -584,27 +628,28 @@
     <div class="pv__content">
       <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
 
-      <div class="pv__image">
-        <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
+      <div class="pv__stage">
+        <div class="pv__frame" id="pvFrame">
+          <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
 
-        <img id="pvImageA" class="pv__img is-top" alt="">
-        <img id="pvImageB" class="pv__img" alt="">
+          <img id="pvImageA" class="pv__img is-top" alt="">
+          <img id="pvImageB" class="pv__img" alt="">
 
-        <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+          <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
+        </div>
+
+        <aside class="pv__side" aria-live="polite">
+          <div class="pv__side-card">
+            <div class="pv__side-title" id="pvTitle"></div>
+            <div class="pv__side-loc" id="pvLoc"></div>
+            <p class="pv__side-desc" id="pvDesc"></p>
+          </div>
+        </aside>
       </div>
 
-      <!-- Meta panel (NAM-like) -->
-      <aside class="pv__meta" aria-live="polite">
-        <div class="pv__meta-card">
-          <div class="pv__meta-title" id="pvTitle"></div>
-          <div class="pv__meta-desc" id="pvDesc"></div>
-        </div>
-      </aside>
-
-      <!-- More projects marquee -->
       <section class="pv__more" aria-label="More projects">
         <div class="pv__more-label">More projects</div>
-        <div class="pv__marquee" id="pvMarquee">
+        <div class="pv__marquee">
           <div class="pv__marquee-track" id="pvMarqueeTrack"></div>
         </div>
       </section>
@@ -653,11 +698,12 @@
         const name=(tile.dataset.title||'').toLowerCase();
         const tags=(tile.dataset.tags||'').toLowerCase();
         const matchText = q ? name.includes(q) : true;
-        let matchCat = true;
 
+        let matchCat = true;
         if (wantInt || wantExt){
           matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior'));
         }
+
         tile.style.display = (matchText && matchCat) ? '' : 'none';
       });
     }
@@ -673,12 +719,14 @@
     resetBtn?.addEventListener('click',resetFilters);
     qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-    /* ===== Project Viewer (NAM-like transition + marquee) ===== */
+    /* ===== Project Viewer (white frame + side info + big slow marquee) ===== */
     (function(){
       const viewer  = document.getElementById('pv'),
+            frame   = document.getElementById('pvFrame'),
             imgA    = document.getElementById('pvImageA'),
             imgB    = document.getElementById('pvImageB'),
             titleEl = document.getElementById('pvTitle'),
+            locEl   = document.getElementById('pvLoc'),
             descEl  = document.getElementById('pvDesc'),
             btnClose= document.getElementById('pvClose'),
             btnPrev = document.getElementById('pvPrev'),
@@ -690,17 +738,13 @@
         index:i,
         base:t.dataset.project,
         title:t.dataset.title||'',
+        loc:t.dataset.loc||'',
         desc:t.dataset.desc||'',
         cover:t.querySelector('img')?.getAttribute('src') || ''
       }));
 
       let list = [], idx = 0, topIsA = true;
       const cache = new Map();
-
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      let lastTileImg = null;
-      let ghost = null;
 
       function lockScroll(){
         document.body.style.overflow='hidden';
@@ -711,12 +755,29 @@
         if (lenis) lenis.start();
       }
 
+      function showViewer(){
+        viewer.classList.add('show');
+        viewer.setAttribute('aria-hidden','false');
+        lockScroll();
+      }
+      function hideViewer(){
+        viewer.classList.remove('show');
+        viewer.setAttribute('aria-hidden','true');
+        unlockScroll();
+      }
+
       function updateArrows(){
         const multi = (list.length > 1);
         btnPrev.style.display = multi ? '' : 'none';
         btnNext.style.display = multi ? '' : 'none';
         btnPrev.disabled = !multi;
         btnNext.disabled = !multi;
+      }
+
+      function setInfo(p){
+        titleEl.textContent = p.title || '';
+        locEl.textContent   = p.loc || '';
+        descEl.textContent  = p.desc || '';
       }
 
       function crossfadeTo(src){
@@ -758,11 +819,6 @@
             tryList.push(`${base}-${i}${ext}`);
           });
         }
-        exts.forEach(ext=>{
-          tryList.push(`${base}-sh${ext}`);
-          tryList.push(`${base}-alt${ext}`);
-          tryList.push(`${base}-extra${ext}`);
-        });
 
         const checks = tryList.map(src=>new Promise(res=>{
           const im=new Image();
@@ -787,27 +843,27 @@
           .replaceAll("'","&#039;");
       }
 
-      function renderMarquee(activeIndex){
+      function renderMarquee(){
         if (!marqueeTrack) return;
 
         const items = projects.map(p => `
-          <div class="pv__thumb" data-open="${p.index}" role="button" tabindex="0" aria-label="Open ${escapeHtml(p.title)}">
+          <div class="pv__thumb" data-open="${p.index}" role="button" tabindex="0">
             <img src="${p.cover}" alt="">
             <div>
               <p class="t1">${escapeHtml(p.title)}</p>
-              <p class="t2">${escapeHtml(p.desc)}</p>
+              <p class="t2">${escapeHtml(p.loc || p.desc)}</p>
             </div>
           </div>
         `).join('');
 
-        marqueeTrack.innerHTML = items + items; // duplicate for seamless loop
+        marqueeTrack.innerHTML = items + items;
 
         marqueeTrack.querySelectorAll('.pv__thumb').forEach(el=>{
           el.addEventListener('click', async (e)=>{
             e.stopPropagation();
             const i = Number(el.getAttribute('data-open'));
             if (!Number.isFinite(i)) return;
-            await openProject(i, null, true); // inside viewer
+            await openProject(i, true);
           });
           el.addEventListener('keydown', async (e)=>{
             if (e.key !== 'Enter') return;
@@ -815,203 +871,52 @@
             e.stopPropagation();
             const i = Number(el.getAttribute('data-open'));
             if (!Number.isFinite(i)) return;
-            await openProject(i, null, true);
+            await openProject(i, true);
           });
         });
       }
 
-      function showViewer(){
-        viewer.classList.add('show');
-        viewer.setAttribute('aria-hidden','false');
-        lockScroll();
-      }
-
-      function hideViewer(){
-        viewer.classList.remove('show');
-        viewer.setAttribute('aria-hidden','true');
-        unlockScroll();
-      }
-
-      function createGhost(fromImg){
-        if (!fromImg) return null;
-        const r = fromImg.getBoundingClientRect();
-        const g = document.createElement('img');
-        g.className = 'pv__ghost';
-        g.src = fromImg.currentSrc || fromImg.src;
-        g.style.left = r.left + 'px';
-        g.style.top  = r.top  + 'px';
-        g.style.width  = r.width + 'px';
-        g.style.height = r.height + 'px';
-        g.style.borderRadius = getComputedStyle(fromImg).borderRadius || '0px';
-        document.body.appendChild(g);
-        return g;
-      }
-
-      function animateOpen(fromImg){
-        if (prefersReducedMotion) return Promise.resolve();
-
-        ghost = createGhost(fromImg);
-        if (!ghost) return Promise.resolve();
-
-        const r0 = fromImg.getBoundingClientRect();
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-
-        const dx = 0 - r0.left;
-        const dy = 0 - r0.top;
-
-        const sx = vw / r0.width;
-        const sy = vh / r0.height;
-
-        ghost.style.transformOrigin = 'top left';
-
-        const anim = ghost.animate([
-          { transform:`translate(0px,0px) scale(1,1)`, borderRadius: ghost.style.borderRadius, opacity:1 },
-          { transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`, borderRadius:'0px', opacity:1 }
-        ], {
-          duration: 520,
-          easing: 'cubic-bezier(.2,.8,.2,1)',
-          fill: 'forwards'
-        });
-
-        return anim.finished.catch(()=>{});
-      }
-
-      function animateClose(toImg){
-        if (prefersReducedMotion) return Promise.resolve();
-
-        if (!ghost){
-          ghost = createGhost(toImg);
-          if (!ghost) return Promise.resolve();
-          ghost.style.left = '0px';
-          ghost.style.top = '0px';
-          ghost.style.width = window.innerWidth + 'px';
-          ghost.style.height = window.innerHeight + 'px';
-          ghost.style.borderRadius = '0px';
-        }
-
-        const r1 = toImg?.getBoundingClientRect?.() || {left:14, top:14, width:220, height:124};
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-
-        const sx = r1.width / vw;
-        const sy = r1.height / vh;
-        const dx = r1.left;
-        const dy = r1.top;
-
-        ghost.style.transformOrigin = 'top left';
-
-        const anim = ghost.animate([
-          { transform:`translate(0px,0px) scale(1,1)`, borderRadius:'0px', opacity:1 },
-          { transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`, borderRadius: getComputedStyle(toImg).borderRadius || '0px', opacity:1 }
-        ], {
-          duration: 480,
-          easing: 'cubic-bezier(.4,.0,.2,1)',
-          fill: 'forwards'
-        });
-
-        return anim.finished.catch(()=>{});
-      }
-
-      function cleanupGhost(){
-        if (ghost){
-          ghost.remove();
-          ghost = null;
-        }
-      }
-
-      async function openProject(i, clickedTile, keepOpen){
+      async function openProject(i, keepViewerOpen){
         const p = projects[i];
         if (!p) return;
 
-        titleEl.textContent = p.title || '';
-        descEl.textContent  = p.desc  || '';
+        setInfo(p);
 
         list = await buildList(p.base);
         idx = 0;
 
-        const first = list[0];
         imgA.classList.remove('is-top'); imgB.classList.remove('is-top');
-
-        const currentTop = topIsA ? imgA : imgB;
-        currentTop.src = first;
-        currentTop.classList.add('is-top');
+        topIsA = true;
+        imgA.src = list[0];
+        imgA.classList.add('is-top');
 
         updateArrows();
-        renderMarquee(i);
+        renderMarquee();
 
-        if (keepOpen){
-          return; // switching projects while viewer already open
-        }
-
-        showViewer();
-
-        if (clickedTile){
-          const tileImg = clickedTile.querySelector('img');
-          lastTileImg = tileImg || clickedTile;
-
-          imgA.style.opacity = '0';
-          imgB.style.opacity = '0';
-
-          await animateOpen(lastTileImg);
-
-          imgA.style.opacity = '';
-          imgB.style.opacity = '';
-          cleanupGhost();
-        }
+        if (!keepViewerOpen) showViewer();
       }
 
-      async function closeProject(){
-        if (!viewer.classList.contains('show')){
-          cleanupGhost();
-          return;
-        }
+      function openFromTile(i){
+        openProject(i, false);
+      }
 
-        const targetImg = lastTileImg;
-
-        if (prefersReducedMotion || !targetImg){
-          hideViewer();
-          cleanupGhost();
-          return;
-        }
-
-        cleanupGhost();
-        ghost = document.createElement('img');
-        ghost.className = 'pv__ghost';
-
-        const topImg = (imgA.classList.contains('is-top') ? imgA : imgB);
-        ghost.src = topImg.currentSrc || topImg.src || imgA.src || imgB.src;
-
-        ghost.style.left = '0px';
-        ghost.style.top  = '0px';
-        ghost.style.width  = window.innerWidth + 'px';
-        ghost.style.height = window.innerHeight + 'px';
-        ghost.style.borderRadius = '0px';
-        document.body.appendChild(ghost);
-
+      function closeProject(){
         hideViewer();
-
-        await animateClose(targetImg);
-
-        cleanupGhost();
       }
 
       projectTiles.forEach((tile,i)=>{
-        tile.addEventListener('click', async ()=>{
-          await openProject(i, tile, false);
-        });
+        tile.addEventListener('click', ()=> openFromTile(i));
       });
 
-      viewer.addEventListener('click',e=>{ if(e.target===viewer) closeProject(); });
       btnClose?.addEventListener('click', (e)=>{ e.preventDefault(); closeProject(); });
 
-      document.addEventListener('keydown',e=>{
-        if(!viewer.classList.contains('show'))return;
+      viewer.addEventListener('click', (e)=>{ if (e.target===viewer) closeProject(); });
+
+      document.addEventListener('keydown', (e)=>{
+        if(!viewer.classList.contains('show')) return;
         if(e.key==='Escape') closeProject();
         if(e.key==='ArrowRight') nextImg();
-        if(e.key==='ArrowLeft')  prevImg();
-        if(e.key==='ArrowDown'||e.key==='PageDown') nextImg();
-        if(e.key==='ArrowUp'||e.key==='PageUp') prevImg();
+        if(e.key==='ArrowLeft') prevImg();
       });
     })();
   </script>
