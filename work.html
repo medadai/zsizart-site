@@ -33,9 +33,6 @@
       --radius:18px;
       --shadow:0 12px 40px rgba(0,0,0,.08);
       --max:1160px;
-
-      --pv-dur:.45s;
-      --pv-ease:cubic-bezier(.4,.14,.3,1);
     }
 
     *{box-sizing:border-box}
@@ -294,261 +291,227 @@
     }
 
     /* ===========================================
-       PROJECT VIEWER (WHITE + SMALL FRAME + SIDE)
+       PROJECT PAGE (NAM-like)
        =========================================== */
 
-    .pv{
-      position:fixed;
-      inset:0;
-      z-index:200;
-      background:#fff;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity var(--pv-dur) var(--pv-ease);
-    }
-    .pv.show{opacity:1;pointer-events:auto}
-    .pv__content{position:relative;width:100%;height:100%}
+    .pp{ display:none; }
+    .pp.show{ display:block; }
 
-    .pv__close{
-      position:absolute;
-      top:18px; left:18px;
-      width:42px; height:42px;
-      border-radius:12px;
-      background:rgba(0,0,0,.06);
-      border:1px solid rgba(0,0,0,.10);
-      color:#111;
-      font-size:26px;
-      line-height:1;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:30;
-    }
-
-    .pv__stage{
-      position:absolute;
-      left:0; right:0;
-      top:0;
-      bottom:150px;
-      display:grid;
-      grid-template-columns:minmax(280px, 860px) minmax(260px, 380px);
-      gap:24px;
-      align-items:center;
-      justify-content:center;
-      padding:72px 28px 24px;
-    }
-    @media(max-width:980px){
-      .pv__stage{
-        grid-template-columns:1fr;
-        bottom:180px;
-        padding:66px 18px 18px;
-      }
-    }
-
-    .pv__frame{
-      position:relative;
-      width:min(860px, 100%);
-      aspect-ratio:16/9;
-      border-radius:18px;
-      background:#f5f5f4;
-      border:1px solid rgba(0,0,0,.10);
-      box-shadow:0 18px 70px rgba(0,0,0,.14);
-      overflow:hidden;
-    }
-
-    .pv__img{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      opacity:0;
-      transition:opacity .28s ease; /* أقرب لنام */
-      will-change:opacity;
-    }
-    .pv__img.is-top{opacity:1}
-
-    .pv__arrow{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      width:54px;
-      height:54px;
-      font-size:40px;
-      border-radius:50%;
-      border:1px solid rgba(0,0,0,.10);
-      cursor:pointer;
-      background:rgba(255,255,255,.78);
-      color:#111;
-      z-index:10;
-      backdrop-filter: blur(8px);
-      transition:.2s;
-    }
-    .pv__arrow:hover{ background:rgba(255,255,255,.92); }
-    .pv__prev{ left:12px; }
-    .pv__next{ right:12px; }
-
-    .pv__side{
-      width:min(380px, 100%);
-    }
-    .pv__side-card{
-      border-radius:18px;
-      background:#fff;
-      border:1px solid rgba(0,0,0,.10);
-      box-shadow:0 18px 70px rgba(0,0,0,.10);
-      padding:18px 18px 16px;
-    }
-    .pv__side-title{
-      font-weight:800;
-      font-size:16px;
-      line-height:1.25;
-      margin:0 0 10px;
-      color:#0b0d0d;
-    }
-    .pv__side-loc{
-      font-weight:600;
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color:rgba(11,13,13,.55);
-      margin:0 0 12px;
-    }
-    .pv__side-desc{
-      font-size:13px;
-      line-height:1.55;
-      color:rgba(11,13,13,.75);
-      margin:0;
-    }
-
-    /* ===== More projects (BIG + SLOW) ===== */
-    .pv__more{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:20px;
-      z-index:25;
-      padding:0 32px;
-      pointer-events:auto;
-    }
-
-    /* موجود في HTML عندك */
-    .pv__more-head{
+    .pp__top{
+      padding:12px 0 22px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      margin:0 0 14px;
+      gap:16px;
     }
 
-    .pv__more-label{
+    .pp__back{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-weight:600;
       font-size:13px;
+      color:rgba(11,13,13,.72);
+    }
+    .pp__back:hover{ color:var(--ink); }
+
+    .pp__layout{
+      display:grid;
+      grid-template-columns:minmax(420px, 1fr) minmax(320px, 420px);
+      gap:42px;
+      align-items:start;
+    }
+
+    .pp__media{
+      margin:0;
+      border-radius:18px;
+      overflow:hidden;
+      background:#f3f4f6;
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow:0 28px 90px rgba(0,0,0,.10);
+    }
+    .pp__media img{
+      width:100%;
+      height:auto;
+      display:block;
+      object-fit:cover;
+    }
+
+    .pp__side{
+      position:sticky;
+      top:92px;
+      align-self:start;
+    }
+
+    .pp__title{
+      font-size:42px;
+      line-height:1.04;
+      letter-spacing:-0.03em;
+      margin:0 0 14px;
+      font-weight:800;
+      color:var(--ink);
+    }
+
+    .pp__pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.14);
+      background:#fff;
+      font-weight:600;
+      font-size:12px;
+      color:rgba(11,13,13,.8);
+    }
+    .pp__pill:hover{
+      border-color:rgba(0,0,0,.22);
+      color:var(--ink);
+    }
+
+    .pp__block{ margin-top:22px; }
+    .pp__label{
+      font-size:12px;
+      color:rgba(11,13,13,.52);
+      letter-spacing:.02em;
+      margin:0 0 10px;
+    }
+    .pp__info{
+      margin:0;
+      font-size:12.5px;
+      line-height:1.6;
+      color:rgba(11,13,13,.72);
+    }
+
+    .pp__table{
+      margin-top:26px;
+      border-top:1px solid rgba(0,0,0,.10);
+    }
+    .pp__row{
+      display:grid;
+      grid-template-columns:120px 1fr;
+      gap:18px;
+      padding:12px 0;
+      border-bottom:1px solid rgba(0,0,0,.10);
+    }
+    .pp__k{
+      font-size:12px;
+      color:rgba(11,13,13,.52);
+    }
+    .pp__v{
+      font-size:12px;
+      color:rgba(11,13,13,.78);
+      font-weight:600;
+    }
+
+    /* More projects (auto moving rail) */
+    .pp__more{
+      margin-top:34px;
+      padding-top:18px;
+      border-top:1px solid rgba(0,0,0,.10);
+    }
+    .pp__more-label{
+      font-size:12px;
       font-weight:700;
       letter-spacing:.12em;
       text-transform:uppercase;
-      color:rgba(0,0,0,.55);
-      margin:0;
+      color:rgba(11,13,13,.55);
+      margin:0 0 14px;
     }
 
-    /* ====== مهم: Rail زي NAM (بدون marquee auto) ====== */
-    .pv__rail{
-      overflow-x:auto;
-      overflow-y:hidden;
-      -webkit-overflow-scrolling:touch;
-      scrollbar-width:none;
-      border-radius:20px;
+    .pp__rail{
+      overflow:hidden;
+      border-radius:18px;
       border:1px solid rgba(0,0,0,.10);
       background:#fff;
-      box-shadow:0 20px 60px rgba(0,0,0,.10);
+      box-shadow:0 22px 70px rgba(0,0,0,.08);
     }
-    .pv__rail::-webkit-scrollbar{ display:none; }
 
-    .pv__rail-inner{
+    .pp__rail-track{
       display:flex;
       align-items:center;
-      gap:18px;
-      padding:18px;
+      gap:16px;
+      padding:16px;
       width:max-content;
-      scroll-snap-type:x mandatory;
+      animation: ppMarquee 70s linear infinite;
+      will-change: transform;
+    }
+    .pp__rail:hover .pp__rail-track{ animation-play-state: paused; }
+
+    @keyframes ppMarquee{
+      from{ transform:translateX(0); }
+      to{ transform:translateX(-50%); }
     }
 
-    /* كروت الـthumb */
-    .pv__thumb{
-  scroll-snap-align:start;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:14px 16px;
-  border-radius:18px;
-  border:1px solid rgba(0,0,0,.08);
-  background:#fafafa;
-  cursor:pointer;
-  min-width:420px;
-  max-width:480px;
-  user-select:none;
-  transition:none;            /* شيل الأنيميشن */
-}
+    .pp__thumb{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      cursor:pointer;
+      user-select:none;
 
-.pv__thumb:hover{
-  transform:none;             /* شيل الحركة */
-  box-shadow:none;            /* شيل الظل الإضافي */
-  background:#fafafa;         /* خليه ثابت */
-}
-    .pv__thumb img{
-      width:120px;
-      height:80px;
-      object-fit:cover;
+      border:1px solid rgba(0,0,0,.10);
+      background:#fff;
+      padding:12px 14px;
       border-radius:14px;
-      border:1px solid rgba(0,0,0,.08);
+
+      min-width:360px;
+      max-width:420px;
+    }
+
+    .pp__thumb img{
+      width:92px;
+      height:62px;
+      object-fit:cover;
+      border-radius:0;              /* شيل fillet بتاع الصور */
+      background:#fff;
+      border:1px solid rgba(0,0,0,.10);
       flex:0 0 auto;
     }
-    .pv__thumb .t1{
-      color:#0b0d0d;
+
+    .pp__thumb .t1{
       font-weight:800;
-      font-size:14px;
-      line-height:1.2;
-      margin:0 0 6px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .pv__thumb .t2{
-      color:rgba(11,13,13,.65);
       font-size:13px;
-      line-height:1.3;
+      line-height:1.2;
+      margin:0 0 4px;
+      color:var(--ink);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .pp__thumb .t2{
       margin:0;
+      font-size:12px;
+      color:rgba(11,13,13,.62);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
 
-    @media(max-width:1000px){
-      .pv__more{ padding:0 18px; }
-      .pv__rail-inner{ padding:14px; gap:14px; }
-      .pv__thumb{ min-width:320px; max-width:360px; }
-      .pv__thumb img{ width:96px; height:64px; }
-      .pv__thumb .t1{ font-size:13px; }
-      .pv__thumb .t2{ font-size:12px; }
-    }
+    /* remove hover movement */
+    .pp__thumb, .pp__thumb:hover{ transform:none; box-shadow:none; transition:none; }
 
-    /* ===== FLIP Ghost (NAM transition) ===== */
-    .pv__ghost{
+    /* FLIP Ghost (tile -> project image) */
+    .pp__ghost{
       position:fixed;
-      left:0;
-      top:0;
-      width:10px;
-      height:10px;
+      left:0; top:0;
+      width:10px; height:10px;
       object-fit:cover;
-      z-index:260;
+      z-index:999;
       pointer-events:none;
       will-change:transform, border-radius, opacity;
       box-shadow:0 28px 90px rgba(0,0,0,.12);
     }
 
-    /* ====== (CSS القديم بتاع marquee سيبه زي ما هو لو عايزه لاحقاً) ====== */
-    .pv__marquee{ overflow:hidden; border-radius:20px; border:1px solid rgba(0,0,0,.10); background:#fff; box-shadow:0 20px 60px rgba(0,0,0,.10); }
-    .pv__marquee-track{ display:flex; align-items:center; gap:18px; padding:18px; width:max-content; animation: pvMarquee 75s linear infinite; }
-    .pv__marquee:hover .pv__marquee-track{ animation-play-state:paused; }
-    @keyframes pvMarquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+    @media(max-width:980px){
+      .pp__layout{ grid-template-columns:1fr; gap:22px; }
+      .pp__side{ position:static; top:auto; }
+      .pp__title{ font-size:34px; }
+      .pp__thumb{ min-width:300px; max-width:360px; }
+      .pp__thumb img{ width:82px; height:56px; }
+      .pp__rail-track{ animation-duration:85s; }
+    }
   </style>
 </head>
 
@@ -573,124 +536,158 @@
   </header>
 
   <main class="wrap">
-    <section class="page-head" aria-label="Page intro">
-      <p class="page-kicker">Selected</p>
-      <h1 class="page-title">Work</h1>
-      <p class="page-sub">Architectural visualization for real estate developers and interior designers.</p>
-    </section>
 
-    <!-- Filter Panel -->
-    <section id="filters" class="filter-panel" aria-label="Search and filter">
-      <form id="filterForm" onsubmit="return false;">
-        <div class="filter-row">
-          <input class="search-input" type="search" id="q" placeholder="Search projects by name…" />
-          <label class="chip"><input type="checkbox" id="tagInterior" /> INTERIOR</label>
-          <label class="chip"><input type="checkbox" id="tagExterior" /> EXTERIOR</label>
-          <div class="filter-actions">
-            <button type="button" class="btn" id="resetBtn">Reset</button>
-            <button type="button" class="btn primary" id="applyBtn">Apply</button>
+    <!-- ===== LIST PAGE ===== -->
+    <section id="projectsSection">
+      <section class="page-head" aria-label="Page intro">
+        <p class="page-kicker">Selected</p>
+        <h1 class="page-title">Work</h1>
+        <p class="page-sub">Architectural visualization for real estate developers and interior designers.</p>
+      </section>
+
+      <!-- Filter Panel -->
+      <section id="filters" class="filter-panel" aria-label="Search and filter">
+        <form id="filterForm" onsubmit="return false;">
+          <div class="filter-row">
+            <input class="search-input" type="search" id="q" placeholder="Search projects by name…" />
+            <label class="chip"><input type="checkbox" id="tagInterior" /> INTERIOR</label>
+            <label class="chip"><input type="checkbox" id="tagExterior" /> EXTERIOR</label>
+            <div class="filter-actions">
+              <button type="button" class="btn" id="resetBtn">Reset</button>
+              <button type="button" class="btn primary" id="applyBtn">Apply</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section aria-label="Projects">
+        <div class="section-row">
+          <h2>Projects</h2>
+          <button class="inline-btn" id="filterToggle" type="button">Search & Filter</button>
+        </div>
+
+        <div class="grid" id="grid">
+          <div class="tile"
+               data-project="assets/work-01"
+               data-title="Verde Crest Villas"
+               data-loc="Dubai"
+               data-desc="Luxury Residential Development — Concept & Visualization."
+               data-tags="exterior"
+               data-services="CGI / Film"
+               data-client="Sarazin, Drive Property Group"
+               data-year="2025"
+               data-live="">
+            <span class="label">EXTERIOR</span>
+            <img class="img-main" src="assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Verde Crest Villas">
+          </div>
+
+          <div class="tile"
+               data-project="assets/work-02"
+               data-title="Hillside Serenity"
+               data-loc="California"
+               data-desc="A modern retreat in nature blending architecture and landscape."
+               data-tags="exterior"
+               data-services="CGI / Film"
+               data-client="Private Client"
+               data-year="2025"
+               data-live="">
+            <span class="label">EXTERIOR</span>
+            <img class="img-main" src="assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
+          </div>
+
+          <div class="tile"
+               data-project="assets/work-03"
+               data-title="Retro Home Sweet"
+               data-loc="London"
+               data-desc="Interior CGI capturing warmth of retro modern living."
+               data-tags="interior"
+               data-services="CGI / Film"
+               data-client="Studio Collaboration"
+               data-year="2025"
+               data-live="">
+            <span class="label">INTERIOR</span>
+            <img class="img-main" src="assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
+          </div>
+
+          <div class="tile"
+               data-project="assets/work-04"
+               data-title="Serene Lines"
+               data-loc="Copenhagen"
+               data-desc="Interior CGI focused on light, material and calm composition."
+               data-tags="interior"
+               data-services="CGI / Film"
+               data-client="Interior Brand"
+               data-year="2025"
+               data-live="">
+            <span class="label">INTERIOR</span>
+            <img class="img-main" src="assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
+          </div>
+
+          <div class="tile"
+               data-project="assets/work-05"
+               data-title="Modern Haven"
+               data-loc="Amsterdam"
+               data-desc="Interior CGI capturing warmth of modern living."
+               data-tags="interior"
+               data-services="CGI / Film"
+               data-client="Real Estate Developer"
+               data-year="2026"
+               data-live="">
+            <span class="label">INTERIOR</span>
+            <img class="img-main" src="assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
           </div>
         </div>
-      </form>
+      </section>
     </section>
 
-    <section aria-label="Projects">
-      <div class="section-row">
-        <h2>Projects</h2>
-        <button class="inline-btn" id="filterToggle" type="button">Search & Filter</button>
+    <!-- ===== PROJECT PAGE ===== -->
+    <section class="pp" id="projectPage" aria-hidden="true">
+      <div class="pp__top">
+        <a class="pp__back" id="ppBack" href="#" aria-label="Back to projects">← Back</a>
       </div>
 
-      <div class="grid" id="grid">
-        <div class="tile"
-             data-project="assets/work-01"
-             data-title="Verde Crest Villas"
-             data-loc="Dubai"
-             data-desc="Luxury Residential Development — Concept & Visualization."
-             data-tags="exterior">
-          <span class="label">EXTERIOR</span>
-          <img class="img-main" src="assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Verde Crest Villas">
-        </div>
+      <div class="pp__layout">
+        <figure class="pp__media" id="ppMedia">
+          <img id="ppHero" alt="">
+        </figure>
 
-        <div class="tile"
-             data-project="assets/work-02"
-             data-title="Hillside Serenity"
-             data-loc="California"
-             data-desc="A modern retreat in nature blending architecture and landscape."
-             data-tags="exterior">
-          <span class="label">EXTERIOR</span>
-          <img class="img-main" src="assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
-        </div>
+        <aside class="pp__side" aria-live="polite">
+          <h1 class="pp__title" id="ppTitle"></h1>
+          <a class="pp__pill" id="ppLive" href="#" target="_blank" rel="noopener">View live site</a>
 
-        <div class="tile"
-             data-project="assets/work-03"
-             data-title="Retro Home Sweet"
-             data-loc="London"
-             data-desc="Interior CGI capturing warmth of retro modern living."
-             data-tags="interior">
-          <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
-        </div>
+          <div class="pp__block">
+            <div class="pp__label">Info</div>
+            <p class="pp__info" id="ppInfo"></p>
+          </div>
 
-        <div class="tile"
-             data-project="assets/work-04"
-             data-title="Serene Lines"
-             data-loc="Copenhagen"
-             data-desc="Interior CGI focused on light, material and calm composition."
-             data-tags="interior">
-          <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
-        </div>
-
-        <div class="tile"
-             data-project="assets/work-05"
-             data-title="Modern Haven"
-             data-loc="Amsterdam"
-             data-desc="Interior CGI capturing warmth of modern living."
-             data-tags="interior">
-          <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>© 2026 ZSIZART Studio — Architectural Visualization & CGI</footer>
-
-  <!-- Project Viewer -->
-  <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
-    <div class="pv__content">
-      <button class="pv__close" id="pvClose" aria-label="Close viewer">×</button>
-
-      <div class="pv__stage">
-        <div class="pv__frame" id="pvFrame">
-          <button class="pv__arrow pv__prev" id="pvPrev" aria-label="Previous image">‹</button>
-
-          <img id="pvImageA" class="pv__img is-top" alt="">
-          <img id="pvImageB" class="pv__img" alt="">
-
-          <button class="pv__arrow pv__next" id="pvNext" aria-label="Next image">›</button>
-        </div>
-
-        <aside class="pv__side" aria-live="polite">
-          <div class="pv__side-card">
-            <div class="pv__side-title" id="pvTitle"></div>
-            <div class="pv__side-loc" id="pvLoc"></div>
-            <p class="pv__side-desc" id="pvDesc"></p>
+          <div class="pp__table" role="list">
+            <div class="pp__row" role="listitem">
+              <div class="pp__k">Services</div><div class="pp__v" id="ppServices"></div>
+            </div>
+            <div class="pp__row" role="listitem">
+              <div class="pp__k">Client</div><div class="pp__v" id="ppClient"></div>
+            </div>
+            <div class="pp__row" role="listitem">
+              <div class="pp__k">Year</div><div class="pp__v" id="ppYear"></div>
+            </div>
+            <div class="pp__row" role="listitem">
+              <div class="pp__k">Location</div><div class="pp__v" id="ppLocation"></div>
+            </div>
           </div>
         </aside>
       </div>
 
-      <section class="pv__more" aria-label="More projects">
-        <div class="pv__more-head">
-          <div class="pv__more-label">More projects</div>
-        </div>
-
-        <div class="pv__rail" id="pvRail" tabindex="0" aria-label="More projects rail">
-          <div class="pv__rail-inner" id="pvRailInner"></div>
+      <section class="pp__more" aria-label="More projects">
+        <div class="pp__more-label">More projects</div>
+        <div class="pp__rail" id="ppRail">
+          <div class="pp__rail-track" id="ppRailTrack"></div>
         </div>
       </section>
-    </div>
-  </div>
+    </section>
+
+  </main>
+
+  <footer>© 2026 ZSIZART Studio — Architectural Visualization & CGI</footer>
 
   <script>
     /* ===== Lenis ===== */
@@ -755,44 +752,42 @@
     resetBtn?.addEventListener('click',resetFilters);
     qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-    /* ===== Project Viewer (NAM-like FLIP + rail) ===== */
+    /* ===== Project Page routing + NAM-like FLIP ===== */
     (function(){
-      const viewer  = document.getElementById('pv');
-      const frame   = document.getElementById('pvFrame');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      const imgA    = document.getElementById('pvImageA');
-      const imgB    = document.getElementById('pvImageB');
+      const listSection = document.getElementById('projectsSection');
+      const pp = document.getElementById('projectPage');
 
-      const titleEl = document.getElementById('pvTitle');
-      const locEl   = document.getElementById('pvLoc');
-      const descEl  = document.getElementById('pvDesc');
+      const ppBack = document.getElementById('ppBack');
+      const ppHero = document.getElementById('ppHero');
+      const ppMedia = document.getElementById('ppMedia');
 
-      const btnClose= document.getElementById('pvClose');
-      const btnPrev = document.getElementById('pvPrev');
-      const btnNext = document.getElementById('pvNext');
+      const ppTitle = document.getElementById('ppTitle');
+      const ppLive  = document.getElementById('ppLive');
+      const ppInfo  = document.getElementById('ppInfo');
 
-      const railInner = document.getElementById('pvRailInner');
+      const ppServices = document.getElementById('ppServices');
+      const ppClient   = document.getElementById('ppClient');
+      const ppYear     = document.getElementById('ppYear');
+      const ppLocation = document.getElementById('ppLocation');
+
+      const railTrack = document.getElementById('ppRailTrack');
 
       const projectTiles = [...document.querySelectorAll('#grid .tile')];
 
       const projects = projectTiles.map((t, i) => ({
         index:i,
-        base:t.dataset.project || '',
         title:t.dataset.title || '',
         loc:t.dataset.loc || '',
         desc:t.dataset.desc || '',
-        cover:t.querySelector('img')?.getAttribute('src') || ''
+        services:t.dataset.services || '',
+        client:t.dataset.client || '',
+        year:t.dataset.year || '',
+        live:t.dataset.live || '',
+        cover:t.querySelector('img')?.getAttribute('src') || '',
+        key: encodeURIComponent(t.dataset.project || (t.querySelector('img')?.getAttribute('src')||'') || (t.dataset.title||''))
       }));
-
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      let list = [];
-      let idx = 0;
-      let topIsA = true;
-
-      const cache = new Map();
-      let lastTileImg = null;
-      let ghost = null;
 
       function lockScroll(){
         document.body.style.overflow='hidden';
@@ -801,80 +796,6 @@
       function unlockScroll(){
         document.body.style.overflow='';
         if (lenis) lenis.start();
-      }
-
-      function showViewer(){
-        viewer.classList.add('show');
-        viewer.setAttribute('aria-hidden','false');
-        lockScroll();
-      }
-      function hideViewer(){
-        viewer.classList.remove('show');
-        viewer.setAttribute('aria-hidden','true');
-        unlockScroll();
-      }
-
-      function updateArrows(){
-        const multi = list.length > 1;
-        btnPrev.style.display = multi ? '' : 'none';
-        btnNext.style.display = multi ? '' : 'none';
-      }
-
-      function setInfo(p){
-        titleEl.textContent = p.title || '';
-        locEl.textContent   = p.loc || '';
-        descEl.textContent  = p.desc || '';
-      }
-
-      function crossfadeTo(src){
-        const top   = topIsA ? imgA : imgB;
-        const under = topIsA ? imgB : imgA;
-
-        under.onload = () => {
-          top.classList.remove('is-top');
-          under.classList.add('is-top');
-          topIsA = !topIsA;
-          under.onload = null;
-        };
-        under.src = src;
-      }
-
-      function setIdx(i){
-        if (!list.length) return;
-        idx = (i + list.length) % list.length;
-        crossfadeTo(list[idx]);
-      }
-
-      btnNext.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); setIdx(idx+1); });
-      btnPrev.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); setIdx(idx-1); });
-
-      async function buildList(base){
-        if (cache.has(base)) return cache.get(base);
-
-        const exts = ['.webp','.jpg','.jpeg','.png'];
-        const tryList = [];
-
-        exts.forEach(ext => tryList.push(`${base}${ext}`));
-        for(let i=1;i<=20;i++){
-          const p2 = String(i).padStart(2,'0');
-          exts.forEach(ext=>{
-            tryList.push(`${base}-${p2}${ext}`);
-            tryList.push(`${base}-${i}${ext}`);
-          });
-        }
-
-        const checks = tryList.map(src=>new Promise(res=>{
-          const im = new Image();
-          im.onload  = ()=>res(src);
-          im.onerror = ()=>res(null);
-          im.src = src;
-        }));
-
-        const found = (await Promise.all(checks)).filter(Boolean);
-        const finalList = found.length ? found : [`${base}.webp`];
-
-        cache.set(base, finalList);
-        return finalList;
       }
 
       function escapeHtml(s){
@@ -886,59 +807,89 @@
           .replaceAll("'","&#039;");
       }
 
-      function renderRail(){
-        const html = projects.map(p => `
-          <div class="pv__thumb" data-open="${p.index}" role="button" tabindex="0">
+      function renderRail(activeIndex){
+        const items = projects.map(p => `
+          <div class="pp__thumb" data-open="${p.index}" role="button" tabindex="0" aria-label="Open ${escapeHtml(p.title)}">
             <img src="${p.cover}" alt="">
             <div>
               <p class="t1">${escapeHtml(p.title)}</p>
-              <p class="t2">${escapeHtml(p.loc || p.desc)}</p>
+              <p class="t2">${escapeHtml(p.loc)}</p>
             </div>
           </div>
         `).join('');
 
-        railInner.innerHTML = html;
+        railTrack.innerHTML = items + items;
 
-        railInner.querySelectorAll('.pv__thumb').forEach(el=>{
-          const open = async ()=>{
+        railTrack.querySelectorAll('.pp__thumb').forEach(el=>{
+          const open = ()=>{
             const i = Number(el.getAttribute('data-open'));
             if (!Number.isFinite(i)) return;
-            await openProject(i, null, true);
+            openProject(i, null, true);
           };
-
-          el.addEventListener('click', (e)=>{ e.stopPropagation(); open(); });
+          el.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); open(); });
           el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); open(); }});
         });
       }
 
+      function setProjectUI(p){
+        ppHero.src = p.cover;
+        ppHero.alt = p.title;
+
+        ppTitle.textContent = p.title;
+        ppInfo.textContent  = p.desc;
+
+        ppServices.textContent = p.services;
+        ppClient.textContent   = p.client;
+        ppYear.textContent     = p.year;
+        ppLocation.textContent = p.loc;
+
+        if (p.live){
+          ppLive.style.display = '';
+          ppLive.href = p.live;
+        }else{
+          ppLive.style.display = 'none';
+          ppLive.removeAttribute('href');
+        }
+      }
+
+      function showProject(push){
+        listSection.style.display = 'none';
+        pp.classList.add('show');
+        pp.setAttribute('aria-hidden','false');
+        lockScroll();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        if (push) {}
+      }
+
+      function showList(){
+        pp.classList.remove('show');
+        pp.setAttribute('aria-hidden','true');
+        listSection.style.display = '';
+        unlockScroll();
+      }
+
+      let ghost = null;
       function cleanupGhost(){
         if (ghost){ ghost.remove(); ghost = null; }
       }
 
-      function createGhostFrom(img){
-        if (!img) return null;
-        const r = img.getBoundingClientRect();
-        const g = document.createElement('img');
-        g.className = 'pv__ghost';
-        g.src = img.currentSrc || img.src;
-        g.style.left = r.left + 'px';
-        g.style.top  = r.top  + 'px';
-        g.style.width  = r.width + 'px';
-        g.style.height = r.height + 'px';
-        g.style.borderRadius = getComputedStyle(img).borderRadius || '0px';
-        document.body.appendChild(g);
-        return g;
-      }
-
       async function flipOpen(fromImg){
-        if (prefersReducedMotion) return;
-
+        if (prefersReducedMotion || !fromImg) return;
         cleanupGhost();
-        ghost = createGhostFrom(fromImg);
-        if (!ghost) return;
 
         const r0 = fromImg.getBoundingClientRect();
-        const r1 = frame.getBoundingClientRect();
+        const r1 = ppMedia.getBoundingClientRect();
+
+        ghost = document.createElement('img');
+        ghost.className = 'pp__ghost';
+        ghost.src = fromImg.currentSrc || fromImg.src;
+
+        ghost.style.left = r0.left + 'px';
+        ghost.style.top  = r0.top  + 'px';
+        ghost.style.width  = r0.width + 'px';
+        ghost.style.height = r0.height + 'px';
+        ghost.style.borderRadius = getComputedStyle(fromImg).borderRadius || '0px';
+        document.body.appendChild(ghost);
 
         const dx = r1.left - r0.left;
         const dy = r1.top  - r0.top;
@@ -947,8 +898,7 @@
 
         ghost.style.transformOrigin = 'top left';
 
-        imgA.style.opacity = '0';
-        imgB.style.opacity = '0';
+        ppHero.style.visibility = 'hidden';
 
         const anim = ghost.animate([
           { transform:'translate(0,0) scale(1,1)', borderRadius: ghost.style.borderRadius, opacity:1 },
@@ -960,102 +910,72 @@
         });
 
         await anim.finished.catch(()=>{});
-
-        imgA.style.opacity = '';
-        imgB.style.opacity = '';
+        ppHero.style.visibility = '';
         cleanupGhost();
       }
 
-      async function flipClose(toImg){
-        if (prefersReducedMotion || !toImg) { hideViewer(); return; }
-
-        const rFrame = frame.getBoundingClientRect();
-        const rTile  = toImg.getBoundingClientRect();
-
-        const topImg = (imgA.classList.contains('is-top') ? imgA : imgB);
-
-        cleanupGhost();
-        ghost = document.createElement('img');
-        ghost.className = 'pv__ghost';
-        ghost.src = topImg.currentSrc || topImg.src || '';
-        ghost.style.left = rFrame.left + 'px';
-        ghost.style.top  = rFrame.top  + 'px';
-        ghost.style.width  = rFrame.width + 'px';
-        ghost.style.height = rFrame.height + 'px';
-        ghost.style.borderRadius = '18px';
-        document.body.appendChild(ghost);
-
-        hideViewer();
-
-        const dx = rTile.left - rFrame.left;
-        const dy = rTile.top  - rFrame.top;
-        const sx = rTile.width  / rFrame.width;
-        const sy = rTile.height / rFrame.height;
-
-        ghost.style.transformOrigin = 'top left';
-
-        const anim = ghost.animate([
-          { transform:'translate(0,0) scale(1,1)', borderRadius:'18px', opacity:1 },
-          { transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`, borderRadius: getComputedStyle(toImg).borderRadius || '0px', opacity:1 }
-        ],{
-          duration: 480,
-          easing: 'cubic-bezier(.4,0,.2,1)',
-          fill: 'forwards'
-        });
-
-        await anim.finished.catch(()=>{});
-        cleanupGhost();
-      }
-
-      async function openProject(i, clickedTile, keepOpen){
+      async function openProject(i, clickedTile, keepHistory){
         const p = projects[i];
         if (!p) return;
 
-        setInfo(p);
+        setProjectUI(p);
+        renderRail(i);
 
-        list = await buildList(p.base);
-        idx = 0;
-        topIsA = true;
+        const fromImg = clickedTile?.querySelector('img') || null;
 
-        imgA.classList.remove('is-top');
-        imgB.classList.remove('is-top');
-        imgA.src = list[0];
-        imgA.classList.add('is-top');
+        if (keepHistory){
+          history.pushState({ p: p.key }, '', `#p=${p.key}`);
+        }
 
-        updateArrows();
-        renderRail();
-
-        if (keepOpen) return;
-
-        lastTileImg = clickedTile?.querySelector('img') || null;
-
-        showViewer();
-
-        if (lastTileImg) await flipOpen(lastTileImg);
+        showProject(false);
+        await flipOpen(fromImg);
       }
 
-      async function closeProject(){
-        await flipClose(lastTileImg);
+      function bootFromHash(){
+        const hash = location.hash || '';
+        if (!hash.startsWith('#p=')) return false;
+        const key = hash.slice(3);
+        const idx = projects.findIndex(x => x.key === key);
+        if (idx >= 0){
+          setProjectUI(projects[idx]);
+          renderRail(idx);
+          showProject(false);
+          return true;
+        }
+        return false;
       }
 
-      projectTiles.forEach((tile,i)=>{
-        tile.addEventListener('click', async ()=>{
-          await openProject(i, tile, false);
+      projectTiles.forEach((tile, i)=>{
+        tile.addEventListener('click', (e)=>{
+          e.preventDefault();
+          openProject(i, tile, true);
         });
       });
 
-      btnClose.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); closeProject(); });
-
-      viewer.addEventListener('click', (e)=>{
-        if (e.target === viewer) closeProject();
+      ppBack.addEventListener('click', (e)=>{
+        e.preventDefault();
+        history.back();
       });
 
-      document.addEventListener('keydown', (e)=>{
-        if(!viewer.classList.contains('show')) return;
-        if(e.key==='Escape') closeProject();
-        if(e.key==='ArrowRight') setIdx(idx+1);
-        if(e.key==='ArrowLeft')  setIdx(idx-1);
+      window.addEventListener('popstate', ()=>{
+        const hash = location.hash || '';
+        if (!hash.startsWith('#p=')){
+          showList();
+          return;
+        }
+        const key = hash.slice(3);
+        const idx = projects.findIndex(x => x.key === key);
+        if (idx >= 0){
+          setProjectUI(projects[idx]);
+          renderRail(idx);
+          showProject(false);
+        }
       });
+
+      // initial load
+      if (!bootFromHash()){
+        showList();
+      }
     })();
   </script>
 </body>
