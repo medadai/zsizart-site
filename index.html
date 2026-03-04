@@ -14,12 +14,12 @@
   <meta property="og:title" content="ZSIZART — Visualization Studio">
   <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/og-cover.jpg">
+  <meta property="og:image" content="https://zsizart.com/assets/og-cover.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ZSIZART — Visualization Studio">
   <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
-  <meta name="twitter:image" content="assets/og-cover.jpg">
+  <meta name="twitter:image" content="https://zsizart.com/assets/og-cover.jpg">
 
   <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,12 +27,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Preload -->
-  <link rel="preload" as="image" href="assets/logo.png">
-  <link rel="preload" as="image" href="assets/og-cover.jpg">
+  <link rel="preload" as="image" href="/assets/logo.png">
+  <link rel="preload" as="image" href="/assets/og-cover.jpg">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 
   <script type="application/ld+json">
   {
@@ -498,7 +498,7 @@
     .top-btn.morph .top-text{ width:0; opacity:0; transform:scale(.8); transition:.2s ease; }
     .top-btn.morph .top-glyph{
       width:24px; height:24px; font-size:0;
-      background:url("assets/logo.png") center/contain no-repeat;
+      background:url("/assets/logo.png") center/contain no-repeat;
       animation:spinIn .7s cubic-bezier(.2,.65,.15,1);
     }
     @keyframes spinIn{ 0%{ transform:scale(.6) rotate(-90deg); opacity:.2 } 100%{ transform:scale(1) rotate(0deg); opacity:1 } }
@@ -567,28 +567,27 @@
 
 <body>
   <header class="site-header">
-    <div class="wrap header-layout">
-      <a class="brand" href="/">
-        <img src="assets/logo.png" alt="ZSIZART Logo" class="logo" width="34" height="34" loading="eager" decoding="async">
-        <span class="wordmark">ZSIZART</span>
-      </a>
+  <div class="wrap header-layout">
+    <a class="brand" href="/">
+      <img src="/assets/logo.png" alt="ZSIZART Logo" class="logo" width="34" height="34" loading="eager" decoding="async">
+      <span class="wordmark">ZSIZART</span>
+    </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="/work">Work</a>
-             <a class="nav-link" href="/3D-Product-Modeling">Services</a>
-             <a class="nav-link" href="/careers">Careers</a>
-             <a class="nav-link" href="/studio">Studio</a>
-             
-<a class="nav-link" href="/contact">Contact</a>
-      </nav>
+    <nav class="nav" aria-label="Primary">
+      <a class="nav-link" href="/work/">Work</a>
+      <a class="nav-link" href="/3D-Product-Modeling/">Services</a>
+      <a class="nav-link" href="/careers/">Careers</a>
+      <a class="nav-link" href="/studio/">Studio</a>
+      <a class="nav-link" href="/contact/">Contact</a>
+    </nav>
 
-      <a class="cta" href="contact.html">Start a Project</a>
-    </div>
-  </header>
+    <a class="cta" href="/contact/">Start a Project</a>
+  </div>
+</header>
 
   <section class="hero-video" aria-label="Showreel">
     <video autoplay muted loop playsinline preload="metadata">
-      <source src="assets/showreel.mp4" type="video/mp4">
+      <source src="/assets/showreel.mp4" type="video/mp4">
     </video>
 
     <div class="hero-overlay">
@@ -622,29 +621,29 @@
       </div>
 
       <div class="grid" id="grid">
-        <div class="tile" data-project="assets/work-01" data-title="Verde Crest Villas" data-desc="Luxury Residential Development — Concept & Visualization." data-tags="exterior">
+        <div class="tile" data-project="/assets/work-01" data-title="Verde Crest Villas" data-desc="Luxury Residential Development — Concept & Visualization." data-tags="exterior">
           <span class="label">EXTERIOR</span>
-          <img class="img-main" src="assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Verde Crest Villas">
+          <img class="img-main" src="/assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Verde Crest Villas">
         </div>
 
-        <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
+        <div class="tile" data-project="/assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
           <span class="label">EXTERIOR</span>
-          <img class="img-main" src="assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
+          <img class="img-main" src="/assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
         </div>
 
-        <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+        <div class="tile" data-project="/assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
           <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
+          <img class="img-main" src="/assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
         </div>
 
-        <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition." data-tags="interior">
+        <div class="tile" data-project="/assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition." data-tags="interior">
           <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
+          <img class="img-main" src="/assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
         </div>
 
-        <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living." data-tags="interior">
+        <div class="tile" data-project="/assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living." data-tags="interior">
           <span class="label">INTERIOR</span>
-          <img class="img-main" src="assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
+          <img class="img-main" src="/assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
         </div>
       </div>
     </section>
@@ -653,10 +652,10 @@
     <section id="clients">
       <h2>Clients</h2>
       <div class="clients">
-        <img src="assets/client-01.svg" alt="Client">
-        <img src="assets/client-02.svg" alt="Client">
-        <img src="assets/client-03.svg" alt="Client">
-        <img src="assets/client-04.svg" alt="Client">
+        <img src="/assets/client-01.svg" alt="Client">
+        <img src="/assets/client-02.svg" alt="Client">
+        <img src="/assets/client-03.svg" alt="Client">
+        <img src="/assets/client-04.svg" alt="Client">
       </div>
     </section>
 
@@ -666,23 +665,22 @@
 
       <!-- 3D Modeling CTA -->
       <section id="modeling-cta" aria-label="3D Modeling">
-        <a class="modeling-link"
-           href="3D-Product-Modeling"
-           aria-label="Open 3D Modeling Page"
-           data-frames="assets/zsiz-modeling-thumb01.webp|assets/zsiz-modeling-thumb02.webp|assets/zsiz-modeling-thumb03.webp|assets/zsiz-modeling-thumb04.webp|assets/zsiz-modeling-thumb05.webp">
-          <img class="modeling-img"
-               src="assets/zsiz-modeling-thumb01.webp"
-               width="1600" height="900"
-               loading="lazy"
-               decoding="async"
-               alt="3D Modeling Preview">
-          <div class="modeling-overlay">
-            <div class="modeling-text">
-              <div class="modeling-title">3D Modeling</div>
-              <div class="modeling-btn">SEE MORE</div>
-            </div>
-          </div>
-        </a>
+        <a class="modeling-link" href="/3D-Product-Modeling/"
+   aria-label="Open 3D Modeling Page"
+   data-frames="/assets/zsiz-modeling-thumb01.webp|/assets/zsiz-modeling-thumb02.webp|/assets/zsiz-modeling-thumb03.webp|/assets/zsiz-modeling-thumb04.webp|/assets/zsiz-modeling-thumb05.webp">
+  <img class="modeling-img"
+       src="/assets/zsiz-modeling-thumb01.webp"
+       width="1600" height="900"
+       loading="lazy"
+       decoding="async"
+       alt="3D Modeling Preview">
+  <div class="modeling-overlay">
+    <div class="modeling-text">
+      <div class="modeling-title">3D Modeling</div>
+      <div class="modeling-btn">SEE MORE</div>
+    </div>
+  </div>
+</a>
       </section>
     </section>
 
