@@ -896,5 +896,50 @@ Governorate 11834</p>
     })();
   </script>
 
+<script>
+  (function () {
+    const copyBtn = document.getElementById('copyEmailBtn');
+    if (!copyBtn) return;
+
+    const email = 'info@zsizart.com';
+
+    async function copyEmail(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      temp.style.position = 'fixed';
+      temp.style.left = '-9999px';
+      document.body.appendChild(temp);
+      temp.focus();
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+    }
+
+    copyBtn.addEventListener('click', async function (e) {
+      e.preventDefault();
+
+      const originalText = this.textContent;
+
+      try {
+        await copyEmail(email);
+        this.textContent = 'Copied: info@zsizart.com';
+        setTimeout(() => {
+          this.textContent = originalText;
+        }, 1800);
+      } catch (_) {
+        this.textContent = 'Copy failed';
+        setTimeout(() => {
+          this.textContent = originalText;
+        }, 1800);
+      }
+    });
+  })();
+</script>
+
 </body>
 </html>
