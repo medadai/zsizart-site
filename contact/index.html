@@ -54,133 +54,215 @@
   <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
 
   <style>
-    :root{
-      --bg:#f5f5f4;
-      --card:#ffffff;
-      --ink:#0b0d0d;
-      --muted:#6b7280;
-      --line:#e7e5e4;
-      --radius:18px;
-      --shadow:0 18px 55px rgba(0,0,0,.08);
-      --max:980px;
+  :root{
+    --bg:#f5f5f4;
+    --card:#ffffff;
+    --ink:#0b0d0d;
+    --muted:#6b7280;
+    --line:#e7e5e4;
+    --radius:18px;
+    --shadow:0 18px 55px rgba(0,0,0,.08);
+    --max:980px;
+  }
+
+  *{box-sizing:border-box}
+  *{caret-color:transparent}
+  input,textarea,select{caret-color:auto}
+
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* ===== Header (copied from index) ===== */
+  .site-header{
+    position:sticky;
+    top:0;
+    z-index:70;
+    background:rgba(255,255,255,.78);
+    backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid rgba(0,0,0,.08);
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+  }
+  .site-header .wrap{ padding:18px 32px; }
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:40px 18px 80px}
+  .header-layout{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:22px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    user-select:none;
+  }
+  .brand .logo{height:34px;width:auto;}
+  .brand .wordmark{
+    font-weight:500;
+    letter-spacing:.14em;
+    font-size:13px;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    gap:22px;
+  }
+  .nav-link{
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:.02em;
+    color:rgba(11,13,13,.78);
+    padding:8px 2px;
+  }
+  .nav-link:hover{ color:var(--ink); }
+  .cta{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height:38px;
+    padding:0 14px;
+    border-radius:999px;
+    border:1px solid rgba(0,0,0,.14);
+    background:rgba(0,0,0,.04);
+    color:var(--ink);
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.02em;
+  }
+  .cta:hover{
+    background:rgba(0,0,0,.06);
+    border-color:rgba(0,0,0,.18);
+  }
+  @media (max-width: 860px){
+    .nav{
+      gap:14px;
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--ink);
-      background:var(--bg);
-    }
-    a{color:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding:40px 18px 80px}
-    header{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:18px 0 28px;
-      border-bottom:1px solid var(--line);
-    }
-    .brand{font-weight:600; letter-spacing:.2px}
-    .nav a{margin-left:18px; text-decoration:none; color:var(--muted)}
-    .nav a:hover{color:var(--ink)}
-    .hero{
-      padding:38px 0 18px;
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:22px;
-    }
-    @media (max-width:900px){ .hero{grid-template-columns:1fr} }
-    h1{margin:0 0 8px; font-size:38px; letter-spacing:-.5px}
-    .lead{margin:0; color:var(--muted); line-height:1.6}
-    .panel{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width:700px){ .grid{grid-template-columns:1fr} }
-    label{display:block; font-size:12px; color:var(--muted); margin:10px 0 6px}
-    input, select, textarea{
-      width:100%;
-      padding:12px 12px;
-      border:1px solid var(--line);
-      border-radius:12px;
-      outline:none;
-      background:#fff;
-      font-size:14px;
-    }
-    input:focus, select:focus, textarea:focus{border-color:#c4c1bd}
-    textarea{min-height:130px; resize:vertical}
-    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 14px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      text-decoration:none;
-      font-weight:600;
-      font-size:14px;
-      background:#fff;
-      cursor:pointer;
-    }
-    .btn.primary{
-      background:var(--ink);
-      color:#fff;
-      border-color:var(--ink);
-    }
-    .btn:hover{filter:brightness(.98)}
-    .meta{
-      display:grid;
-      gap:12px;
-    }
-    .meta .item{
-      padding:14px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:#fff;
-    }
-    .k{font-size:12px; color:var(--muted); margin-bottom:6px}
-    .v{font-size:14px; font-weight:600}
-    .hint{margin:10px 0 0; color:var(--muted); font-size:12px; line-height:1.5}
-    footer{
-      margin-top:26px;
-      padding-top:18px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:12px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-  </style>
+    .nav::-webkit-scrollbar{ display:none; }
+    .cta{ display:none; }
+  }
+
+  /* ===== Page layout ===== */
+  .page{max-width:var(--max);margin:0 auto;padding:34px 18px 80px}
+
+  .hero{
+    padding:10px 0 18px;
+    display:grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap:22px;
+  }
+  @media (max-width:900px){ .hero{grid-template-columns:1fr} }
+
+  h1{margin:0 0 8px; font-size:38px; letter-spacing:-.5px}
+  .lead{margin:0; color:var(--muted); line-height:1.6}
+
+  .panel{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  @media (max-width:700px){ .grid{grid-template-columns:1fr} }
+
+  label{display:block; font-size:12px; color:var(--muted); margin:10px 0 6px}
+
+  input, select, textarea{
+    width:100%;
+    padding:12px 12px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    outline:none;
+    background:#fff;
+    font-size:14px;
+    color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{border-color:#c4c1bd}
+  textarea{min-height:130px; resize:vertical}
+
+  .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:12px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    background:#fff;
+    cursor:pointer;
+  }
+  .btn.primary{
+    background:var(--ink);
+    color:#fff;
+    border-color:var(--ink);
+  }
+  .btn:hover{filter:brightness(.98)}
+
+  .meta{display:grid;gap:12px}
+  .meta .item{
+    padding:14px;
+    border-radius:16px;
+    border:1px solid var(--line);
+    background:#fff;
+  }
+  .k{font-size:12px; color:var(--muted); margin-bottom:6px}
+  .v{font-size:14px; font-weight:600}
+  .hint{margin:10px 0 0; color:var(--muted); font-size:12px; line-height:1.5}
+
+  footer{
+    margin-top:26px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:12px;
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <header class="site-header">
-  <div class="wrap header-layout">
-    <a class="brand" href="/">
-      <img src="/assets/logo.png" alt="ZSIZART Logo" class="logo" width="34" height="34" loading="eager" decoding="async">
-      <span class="wordmark">ZSIZART</span>
-    </a>
+  <header class="site-header">
+    <div class="wrap header-layout">
+      <a class="brand" href="/">
+        <img src="/assets/logo.png" alt="ZSIZART Logo" class="logo" width="34" height="34" loading="eager" decoding="async">
+        <span class="wordmark">ZSIZART</span>
+      </a>
 
-    <nav class="nav" aria-label="Primary">
-      <a class="nav-link" href="/work/">Work</a>
-      <a class="nav-link" href="/3D-Product-Modeling/">Services</a>
-      <a class="nav-link" href="/careers/">Careers</a>
-      <a class="nav-link" href="/studio/">Studio</a>
-      <a class="nav-link" href="/contact/">Contact</a>
-    </nav>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="/work/">Work</a>
+        <a class="nav-link" href="/3D-Product-Modeling/">Services</a>
+        <a class="nav-link" href="/careers/">Careers</a>
+        <a class="nav-link" href="/studio/">Studio</a>
+        <a class="nav-link" href="/contact/">Contact</a>
+      </nav>
 
-    <a class="cta" href="/contact/">Start a Project</a>
-  </div>
-</header>
+      <a class="cta" href="/contact/">Start a Project</a>
+    </div>
+  </header>
 
+  <main class="page">
     <section class="hero">
       <div>
         <h1>Start a project</h1>
@@ -190,25 +272,13 @@
         </p>
 
         <div class="panel" style="margin-top:18px;">
-          <!-- Option A (works instantly): mailto -->
           <div class="actions" style="margin-top:0;">
-            <a class="btn" href="mailto:info@zsizart@gmail.com?subject=New%20Project%20Inquiry&body=Hi%20ZSIZART%2C%0A%0AProject%20type%3A%20%0ALocation%3A%20%0ADeadline%3A%20%0ABudget%20range%3A%20%0AReference%20links%2Fbrief%3A%20%0A%0AThanks">
-              Email us
-            </a>
+            <a class="btn" href="mailto:info@zsizart@gmail.com?subject=New%20Project%20Inquiry&body=Hi%20ZSIZART%2C%0A%0AProject%20type%3A%20%0ALocation%3A%20%0ADeadline%3A%20%0ABudget%20range%3A%20%0AReference%20links%2Fbrief%3A%20%0A%0AThanks">Email us</a>
             <a class="btn" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
             <a class="btn" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
           </div>
 
-          <p class="hint">
-            تعديل الإيميل: بدّل <b>info@zsizart@gmail.com</b> بالإيميل الحقيقي عندك. لازم يكون بصيغة صحيحة (فيها @ واحدة).
-          </p>
-
-          <!-- Option B (real form): Formspree (replace action URL) -->
-          <form
-            action="https://formspree.io/f/YOUR_FORM_ID"
-            method="POST"
-            style="margin-top:14px;"
-          >
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:14px;">
             <div class="grid">
               <div>
                 <label>Full name</label>
@@ -238,11 +308,9 @@
             <label>Message</label>
             <textarea name="message" required placeholder="Scope, style references, number of shots, deliverables…"></textarea>
 
-            <!-- Optional: file link -->
             <label>Brief / Drive link</label>
             <input name="brief_link" placeholder="Google Drive / Dropbox / Notion…" />
 
-            <!-- Formspree extras -->
             <input type="hidden" name="_subject" value="New Project — ZSIZART" />
             <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
@@ -250,11 +318,6 @@
               <button class="btn primary" type="submit">Send request</button>
               <button class="btn" type="reset">Reset</button>
             </div>
-
-            <p class="hint">
-              لازم تغيّر <b>YOUR_FORM_ID</b> بعد ما تعمل فورم على Formspree.
-              غير كده الفورم مش هيوصل.
-            </p>
           </form>
         </div>
       </div>
@@ -279,7 +342,7 @@
       <div>© <span id="y"></span> ZSIZART</div>
       <div>Privacy Policy</div>
     </footer>
-  </div>
+  </main>
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
