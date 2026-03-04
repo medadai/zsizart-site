@@ -301,7 +301,7 @@
       position:fixed;
       inset:0;
       z-index:200;
-      background:#fff;                 /* بدل الأسود */
+      background:#fff;
       opacity:0;
       pointer-events:none;
       transition:opacity var(--pv-dur) var(--pv-ease);
@@ -330,7 +330,7 @@
       position:absolute;
       left:0; right:0;
       top:0;
-      bottom:150px;                    /* مساحة للـ more projects */
+      bottom:150px;
       display:grid;
       grid-template-columns:minmax(280px, 860px) minmax(260px, 380px);
       gap:24px;
@@ -362,9 +362,10 @@
       inset:0;
       width:100%;
       height:100%;
-      object-fit:cover;               /* لو عايز contain بدل cover */
+      object-fit:cover;
       opacity:0;
-      transition:opacity .45s ease;
+      transition:opacity .28s ease; /* أقرب لنام */
+      will-change:opacity;
     }
     .pv__img.is-top{opacity:1}
 
@@ -430,38 +431,49 @@
       padding:0 32px;
       pointer-events:auto;
     }
+
+    /* موجود في HTML عندك */
+    .pv__more-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin:0 0 14px;
+    }
+
     .pv__more-label{
       font-size:13px;
       font-weight:700;
       letter-spacing:.12em;
       text-transform:uppercase;
       color:rgba(0,0,0,.55);
-      margin:0 0 14px;
+      margin:0;
     }
-    .pv__marquee{
-      overflow:hidden;
+
+    /* ====== مهم: Rail زي NAM (بدون marquee auto) ====== */
+    .pv__rail{
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
       border-radius:20px;
       border:1px solid rgba(0,0,0,.10);
       background:#fff;
       box-shadow:0 20px 60px rgba(0,0,0,.10);
     }
-    .pv__marquee-track{
+    .pv__rail::-webkit-scrollbar{ display:none; }
+
+    .pv__rail-inner{
       display:flex;
       align-items:center;
       gap:18px;
       padding:18px;
       width:max-content;
-      animation: pvMarquee 75s linear infinite; /* أبطأ */
-    }
-    .pv__marquee:hover .pv__marquee-track{
-      animation-play-state:paused;
-    }
-    @keyframes pvMarquee{
-      from{ transform:translateX(0); }
-      to{ transform:translateX(-50%); }
+      scroll-snap-type:x mandatory;
     }
 
+    /* كروت الـthumb */
     .pv__thumb{
+      scroll-snap-align:start;
       display:flex;
       align-items:center;
       gap:14px;
@@ -510,12 +522,32 @@
 
     @media(max-width:1000px){
       .pv__more{ padding:0 18px; }
-      .pv__marquee-track{ padding:14px; gap:14px; animation-duration:85s; }
+      .pv__rail-inner{ padding:14px; gap:14px; }
       .pv__thumb{ min-width:320px; max-width:360px; }
       .pv__thumb img{ width:96px; height:64px; }
       .pv__thumb .t1{ font-size:13px; }
       .pv__thumb .t2{ font-size:12px; }
     }
+
+    /* ===== FLIP Ghost (NAM transition) ===== */
+    .pv__ghost{
+      position:fixed;
+      left:0;
+      top:0;
+      width:10px;
+      height:10px;
+      object-fit:cover;
+      z-index:260;
+      pointer-events:none;
+      will-change:transform, border-radius, opacity;
+      box-shadow:0 28px 90px rgba(0,0,0,.12);
+    }
+
+    /* ====== (CSS القديم بتاع marquee سيبه زي ما هو لو عايزه لاحقاً) ====== */
+    .pv__marquee{ overflow:hidden; border-radius:20px; border:1px solid rgba(0,0,0,.10); background:#fff; box-shadow:0 20px 60px rgba(0,0,0,.10); }
+    .pv__marquee-track{ display:flex; align-items:center; gap:18px; padding:18px; width:max-content; animation: pvMarquee 75s linear infinite; }
+    .pv__marquee:hover .pv__marquee-track{ animation-play-state:paused; }
+    @keyframes pvMarquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
   </style>
 </head>
 
@@ -626,7 +658,7 @@
   <!-- Project Viewer -->
   <div class="pv" id="pv" aria-hidden="true" role="dialog" aria-label="Project viewer">
     <div class="pv__content">
-      <button class="pv__close" id="pvClose" aria-label="Close viewer">&times;</button>
+      <button class="pv__close" id="pvClose" aria-label="Close viewer">×</button>
 
       <div class="pv__stage">
         <div class="pv__frame" id="pvFrame">
@@ -648,9 +680,12 @@
       </div>
 
       <section class="pv__more" aria-label="More projects">
-        <div class="pv__more-label">More projects</div>
-        <div class="pv__marquee">
-          <div class="pv__marquee-track" id="pvMarqueeTrack"></div>
+        <div class="pv__more-head">
+          <div class="pv__more-label">More projects</div>
+        </div>
+
+        <div class="pv__rail" id="pvRail" tabindex="0" aria-label="More projects rail">
+          <div class="pv__rail-inner" id="pvRailInner"></div>
         </div>
       </section>
     </div>
@@ -719,32 +754,44 @@
     resetBtn?.addEventListener('click',resetFilters);
     qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
 
-    /* ===== Project Viewer (white frame + side info + big slow marquee) ===== */
+    /* ===== Project Viewer (NAM-like FLIP + rail) ===== */
     (function(){
-      const viewer  = document.getElementById('pv'),
-            frame   = document.getElementById('pvFrame'),
-            imgA    = document.getElementById('pvImageA'),
-            imgB    = document.getElementById('pvImageB'),
-            titleEl = document.getElementById('pvTitle'),
-            locEl   = document.getElementById('pvLoc'),
-            descEl  = document.getElementById('pvDesc'),
-            btnClose= document.getElementById('pvClose'),
-            btnPrev = document.getElementById('pvPrev'),
-            btnNext = document.getElementById('pvNext'),
-            marqueeTrack = document.getElementById('pvMarqueeTrack');
+      const viewer  = document.getElementById('pv');
+      const frame   = document.getElementById('pvFrame');
+
+      const imgA    = document.getElementById('pvImageA');
+      const imgB    = document.getElementById('pvImageB');
+
+      const titleEl = document.getElementById('pvTitle');
+      const locEl   = document.getElementById('pvLoc');
+      const descEl  = document.getElementById('pvDesc');
+
+      const btnClose= document.getElementById('pvClose');
+      const btnPrev = document.getElementById('pvPrev');
+      const btnNext = document.getElementById('pvNext');
+
+      const railInner = document.getElementById('pvRailInner');
 
       const projectTiles = [...document.querySelectorAll('#grid .tile')];
+
       const projects = projectTiles.map((t, i) => ({
         index:i,
-        base:t.dataset.project,
-        title:t.dataset.title||'',
-        loc:t.dataset.loc||'',
-        desc:t.dataset.desc||'',
+        base:t.dataset.project || '',
+        title:t.dataset.title || '',
+        loc:t.dataset.loc || '',
+        desc:t.dataset.desc || '',
         cover:t.querySelector('img')?.getAttribute('src') || ''
       }));
 
-      let list = [], idx = 0, topIsA = true;
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let list = [];
+      let idx = 0;
+      let topIsA = true;
+
       const cache = new Map();
+      let lastTileImg = null;
+      let ghost = null;
 
       function lockScroll(){
         document.body.style.overflow='hidden';
@@ -767,11 +814,9 @@
       }
 
       function updateArrows(){
-        const multi = (list.length > 1);
+        const multi = list.length > 1;
         btnPrev.style.display = multi ? '' : 'none';
         btnNext.style.display = multi ? '' : 'none';
-        btnPrev.disabled = !multi;
-        btnNext.disabled = !multi;
       }
 
       function setInfo(p){
@@ -799,11 +844,8 @@
         crossfadeTo(list[idx]);
       }
 
-      const nextImg = () => setIdx(idx+1);
-      const prevImg = () => setIdx(idx-1);
-
-      btnNext?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); nextImg(); });
-      btnPrev?.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); prevImg(); });
+      btnNext.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); setIdx(idx+1); });
+      btnPrev.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); setIdx(idx-1); });
 
       async function buildList(base){
         if (cache.has(base)) return cache.get(base);
@@ -812,7 +854,7 @@
         const tryList = [];
 
         exts.forEach(ext => tryList.push(`${base}${ext}`));
-        for(let i=1;i<=15;i++){
+        for(let i=1;i<=20;i++){
           const p2 = String(i).padStart(2,'0');
           exts.forEach(ext=>{
             tryList.push(`${base}-${p2}${ext}`);
@@ -821,13 +863,13 @@
         }
 
         const checks = tryList.map(src=>new Promise(res=>{
-          const im=new Image();
-          im.onload = ()=>res(src);
-          im.onerror= ()=>res(null);
+          const im = new Image();
+          im.onload  = ()=>res(src);
+          im.onerror = ()=>res(null);
           im.src = src;
         }));
 
-        const found=(await Promise.all(checks)).filter(Boolean);
+        const found = (await Promise.all(checks)).filter(Boolean);
         const finalList = found.length ? found : [`${base}.webp`];
 
         cache.set(base, finalList);
@@ -843,10 +885,8 @@
           .replaceAll("'","&#039;");
       }
 
-      function renderMarquee(){
-        if (!marqueeTrack) return;
-
-        const items = projects.map(p => `
+      function renderRail(){
+        const html = projects.map(p => `
           <div class="pv__thumb" data-open="${p.index}" role="button" tabindex="0">
             <img src="${p.cover}" alt="">
             <div>
@@ -856,27 +896,117 @@
           </div>
         `).join('');
 
-        marqueeTrack.innerHTML = items + items;
+        railInner.innerHTML = html;
 
-        marqueeTrack.querySelectorAll('.pv__thumb').forEach(el=>{
-          el.addEventListener('click', async (e)=>{
-            e.stopPropagation();
+        railInner.querySelectorAll('.pv__thumb').forEach(el=>{
+          const open = async ()=>{
             const i = Number(el.getAttribute('data-open'));
             if (!Number.isFinite(i)) return;
-            await openProject(i, true);
-          });
-          el.addEventListener('keydown', async (e)=>{
-            if (e.key !== 'Enter') return;
-            e.preventDefault();
-            e.stopPropagation();
-            const i = Number(el.getAttribute('data-open'));
-            if (!Number.isFinite(i)) return;
-            await openProject(i, true);
-          });
+            await openProject(i, null, true);
+          };
+
+          el.addEventListener('click', (e)=>{ e.stopPropagation(); open(); });
+          el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); open(); }});
         });
       }
 
-      async function openProject(i, keepViewerOpen){
+      function cleanupGhost(){
+        if (ghost){ ghost.remove(); ghost = null; }
+      }
+
+      function createGhostFrom(img){
+        if (!img) return null;
+        const r = img.getBoundingClientRect();
+        const g = document.createElement('img');
+        g.className = 'pv__ghost';
+        g.src = img.currentSrc || img.src;
+        g.style.left = r.left + 'px';
+        g.style.top  = r.top  + 'px';
+        g.style.width  = r.width + 'px';
+        g.style.height = r.height + 'px';
+        g.style.borderRadius = getComputedStyle(img).borderRadius || '0px';
+        document.body.appendChild(g);
+        return g;
+      }
+
+      async function flipOpen(fromImg){
+        if (prefersReducedMotion) return;
+
+        cleanupGhost();
+        ghost = createGhostFrom(fromImg);
+        if (!ghost) return;
+
+        const r0 = fromImg.getBoundingClientRect();
+        const r1 = frame.getBoundingClientRect();
+
+        const dx = r1.left - r0.left;
+        const dy = r1.top  - r0.top;
+        const sx = r1.width  / r0.width;
+        const sy = r1.height / r0.height;
+
+        ghost.style.transformOrigin = 'top left';
+
+        imgA.style.opacity = '0';
+        imgB.style.opacity = '0';
+
+        const anim = ghost.animate([
+          { transform:'translate(0,0) scale(1,1)', borderRadius: ghost.style.borderRadius, opacity:1 },
+          { transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`, borderRadius:'18px', opacity:1 }
+        ],{
+          duration: 520,
+          easing: 'cubic-bezier(.2,.8,.2,1)',
+          fill: 'forwards'
+        });
+
+        await anim.finished.catch(()=>{});
+
+        imgA.style.opacity = '';
+        imgB.style.opacity = '';
+        cleanupGhost();
+      }
+
+      async function flipClose(toImg){
+        if (prefersReducedMotion || !toImg) { hideViewer(); return; }
+
+        const rFrame = frame.getBoundingClientRect();
+        const rTile  = toImg.getBoundingClientRect();
+
+        const topImg = (imgA.classList.contains('is-top') ? imgA : imgB);
+
+        cleanupGhost();
+        ghost = document.createElement('img');
+        ghost.className = 'pv__ghost';
+        ghost.src = topImg.currentSrc || topImg.src || '';
+        ghost.style.left = rFrame.left + 'px';
+        ghost.style.top  = rFrame.top  + 'px';
+        ghost.style.width  = rFrame.width + 'px';
+        ghost.style.height = rFrame.height + 'px';
+        ghost.style.borderRadius = '18px';
+        document.body.appendChild(ghost);
+
+        hideViewer();
+
+        const dx = rTile.left - rFrame.left;
+        const dy = rTile.top  - rFrame.top;
+        const sx = rTile.width  / rFrame.width;
+        const sy = rTile.height / rFrame.height;
+
+        ghost.style.transformOrigin = 'top left';
+
+        const anim = ghost.animate([
+          { transform:'translate(0,0) scale(1,1)', borderRadius:'18px', opacity:1 },
+          { transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`, borderRadius: getComputedStyle(toImg).borderRadius || '0px', opacity:1 }
+        ],{
+          duration: 480,
+          easing: 'cubic-bezier(.4,0,.2,1)',
+          fill: 'forwards'
+        });
+
+        await anim.finished.catch(()=>{});
+        cleanupGhost();
+      }
+
+      async function openProject(i, clickedTile, keepOpen){
         const p = projects[i];
         if (!p) return;
 
@@ -884,39 +1014,46 @@
 
         list = await buildList(p.base);
         idx = 0;
-
-        imgA.classList.remove('is-top'); imgB.classList.remove('is-top');
         topIsA = true;
+
+        imgA.classList.remove('is-top');
+        imgB.classList.remove('is-top');
         imgA.src = list[0];
         imgA.classList.add('is-top');
 
         updateArrows();
-        renderMarquee();
+        renderRail();
 
-        if (!keepViewerOpen) showViewer();
+        if (keepOpen) return;
+
+        lastTileImg = clickedTile?.querySelector('img') || null;
+
+        showViewer();
+
+        if (lastTileImg) await flipOpen(lastTileImg);
       }
 
-      function openFromTile(i){
-        openProject(i, false);
-      }
-
-      function closeProject(){
-        hideViewer();
+      async function closeProject(){
+        await flipClose(lastTileImg);
       }
 
       projectTiles.forEach((tile,i)=>{
-        tile.addEventListener('click', ()=> openFromTile(i));
+        tile.addEventListener('click', async ()=>{
+          await openProject(i, tile, false);
+        });
       });
 
-      btnClose?.addEventListener('click', (e)=>{ e.preventDefault(); closeProject(); });
+      btnClose.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); closeProject(); });
 
-      viewer.addEventListener('click', (e)=>{ if (e.target===viewer) closeProject(); });
+      viewer.addEventListener('click', (e)=>{
+        if (e.target === viewer) closeProject();
+      });
 
       document.addEventListener('keydown', (e)=>{
         if(!viewer.classList.contains('show')) return;
         if(e.key==='Escape') closeProject();
-        if(e.key==='ArrowRight') nextImg();
-        if(e.key==='ArrowLeft') prevImg();
+        if(e.key==='ArrowRight') setIdx(idx+1);
+        if(e.key==='ArrowLeft')  setIdx(idx-1);
       });
     })();
   </script>
