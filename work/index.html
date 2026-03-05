@@ -4,151 +4,205 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART — Work</title>
-
-  <link rel="canonical" href="https://zsizart.com/work">
-  <meta name="robots" content="index, follow">
   <meta name="description" content="Selected architectural visualization work by ZSIZART Studio for real estate and interior design." />
   <meta name="theme-color" content="#0b0d0d" />
 
-  <!-- Font -->
+  <link rel="canonical" href="https://zsizart.com/work/">
+  <meta name="robots" content="index, follow">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 
-  <!-- Lenis Smooth Scrolling -->
   <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
 
   <style>
     :root{
-      --bg:#f4f4f4;
-      --bg-2:#f7f7f7;
-      --text:#1a1a1a;
-      --muted:#6f6f6f;
-      --line:#d9d9d9;
-      --card:#ececec;
-      --max:1800px;
+      --bg:#f5f5f4;
+      --bg-2:#f7f7f6;
+      --card:#ffffff;
+      --ink:#0b0d0d;
+      --muted:#6b7280;
+      --muted-2:#a3a3a3;
+      --muted-3:#bdbdbd;
+      --line:#d9d9d6;
+      --stroke:#e4e4e1;
+      --pill:#e9e9e7;
+      --radius:18px;
+      --shadow:0 12px 40px rgba(0,0,0,.08);
+      --max:1520px;
       --ease:cubic-bezier(.16,1,.3,1);
     }
 
-     *{box-sizing:border-box}
+    *{box-sizing:border-box}
+    *{caret-color:transparent}
+    input,textarea,select{caret-color:auto}
     html{scroll-behavior:smooth}
+    html.lenis,html.lenis body{height:auto}
+    .lenis.lenis-smooth{scroll-behavior:unset}
+
     body{
       margin:0;
-      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
       background:var(--bg);
-      color:var(--text);
+      color:var(--ink);
+      font:16px/1.6 "Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      overflow-x:hidden;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
+      -webkit-tap-highlight-color:transparent;
     }
 
     a{color:inherit;text-decoration:none}
     img{display:block;max-width:100%}
+    button,input{font:inherit}
 
-    .site-nav{
-      position:fixed;
+    #app{flex:1}
+
+    .wrap{max-width:var(--max);margin:auto;padding:28px}
+    .shell{width:min(calc(100% - 56px), var(--max));margin:0 auto}
+
+    /* ===== Header ===== */
+    .site-header{
+      position:sticky;
       top:0;
-      left:0;
-      right:0;
-      z-index:100;
-      padding:24px 16px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      mix-blend-mode:difference;
-      color:#fff;
-      pointer-events:none;
+      z-index:70;
+      background:rgba(255,255,255,.78);
+      backdrop-filter:saturate(160%) blur(10px);
+      border-bottom:1px solid rgba(0,0,0,.08);
+      box-shadow:0 8px 30px rgba(0,0,0,.08);
     }
 
-    .site-nav a,
-    .site-nav button{
-      pointer-events:auto;
-      border:0;
-      background:none;
-      color:inherit;
-      font:inherit;
-      cursor:pointer;
-      padding:0;
+    .site-header .wrap{padding:18px 32px}
+
+    .header-layout{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:22px;
     }
 
     .brand{
-      font-size:13px;
-      font-weight:500;
-      letter-spacing:-0.02em;
-      text-transform:uppercase;
-      transition:opacity .25s ease;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      user-select:none;
+      white-space:nowrap;
     }
 
-    .brand:hover{opacity:.7}
+    .brand .logo{height:34px;width:auto}
+    .brand .wordmark{
+      font-weight:500;
+      letter-spacing:.14em;
+      font-size:13px;
+      text-transform:uppercase;
+      color:var(--ink);
+    }
 
-    .nav-links{
+    .nav{
       display:flex;
-      gap:24px;
       align-items:center;
+      gap:22px;
+      min-width:0;
     }
 
     .nav-link{
-      font-size:11px;
+      font-size:13px;
       font-weight:500;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      opacity:.5;
-      transition:opacity .25s ease;
+      letter-spacing:.02em;
+      color:rgba(11,13,13,.78);
+      padding:8px 2px;
+      white-space:nowrap;
+    }
+    .nav-link:hover,
+    .nav-link.active{color:var(--ink)}
+
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height:38px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.14);
+      background:rgba(0,0,0,.04);
+      color:var(--ink);
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:.02em;
+      white-space:nowrap;
+    }
+    .cta:hover{
+      background:rgba(0,0,0,.06);
+      border-color:rgba(0,0,0,.18);
     }
 
-    .nav-link.active,
-    .nav-link:hover{opacity:1}
+    @media (max-width: 860px){
+      .nav{
+        gap:14px;
+        overflow:auto;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+      }
+      .nav::-webkit-scrollbar{display:none}
+      .cta{display:none}
+    }
 
+    /* ===== Page ===== */
     .page{
-      min-height:100vh;
+      min-height:calc(100vh - 92px);
       opacity:0;
       transform:translateY(18px);
-      animation:pageIn .7s var(--ease) forwards;
+      animation:pageIn .65s var(--ease) forwards;
     }
+    @keyframes pageIn{to{opacity:1;transform:none}}
 
-    @keyframes pageIn{
-      to{opacity:1;transform:none}
-    }
-
-    .shell{
-      width:min(calc(100% - 32px), var(--max));
-      margin:0 auto;
-    }
-
-    .grid-page{
-      padding-top:96px;
-      padding-bottom:80px;
+    .grid-page,
+    .list-page,
+    .detail-page{
+      padding-top:32px;
+      padding-bottom:72px;
     }
 
     .subnav{
       display:flex;
-      gap:16px;
-      margin:0 0 48px;
-      text-transform:uppercase;
-      font-size:11px;
+      justify-content:flex-end;
+      align-items:center;
+      gap:18px;
+      margin:0 0 34px;
+      font-size:13px;
       font-weight:500;
-      letter-spacing:.16em;
+      letter-spacing:-0.02em;
     }
 
-    .subnav .current{
-      opacity:1;
-      border-bottom:1px solid #000;
-      padding-bottom:4px;
+    .subnav a,
+    .subnav span{
+      color:#6f6f6f;
+      transition:color .25s ease, opacity .25s ease;
     }
 
-    .subnav .ghost{
-      opacity:.4;
-      padding-bottom:4px;
-    }
+    .subnav .current{color:#111}
+    .subnav a:hover{color:#111}
 
+    /* ===== Grid ===== */
     .projects-grid{
       display:grid;
       grid-template-columns:repeat(12,minmax(0,1fr));
-      gap:32px;
+      gap:28px;
     }
+
+    .project-card{
+      display:block;
+      opacity:0;
+      transform:translateY(18px);
+      animation:cardIn .75s var(--ease) forwards;
+    }
+    @keyframes cardIn{to{opacity:1;transform:none}}
 
     .span-12{grid-column:span 12}
     .span-8{grid-column:span 8}
@@ -157,23 +211,12 @@
     .span-5{grid-column:span 5}
     .span-4{grid-column:span 4}
 
-    .project-card{
-      display:block;
-      opacity:0;
-      transform:translateY(24px);
-      animation:cardIn .8s var(--ease) forwards;
-    }
-
-    @keyframes cardIn{
-      to{opacity:1;transform:none}
-    }
-
     .project-thumb{
       position:relative;
       overflow:hidden;
-      background:var(--card);
+      background:#ececec;
       margin-bottom:16px;
-      height:min(70vh, 720px);
+      height:min(68vh, 720px);
       min-height:260px;
     }
 
@@ -182,7 +225,7 @@
       width:100%;
       height:100%;
       object-fit:cover;
-      transition:transform 1.1s var(--ease), filter .8s ease;
+      transition:transform 1.05s var(--ease), filter .8s ease;
     }
 
     .project-card:hover .project-thumb img,
@@ -235,12 +278,100 @@
       color:#6b6b6b;
     }
 
-    .detail-page{
-      background:var(--bg-2);
-      padding-top:128px;
-      padding-bottom:128px;
-      min-height:100vh;
+    /* ===== Lists ===== */
+    .list-shell{
+      border-top:1px dashed #c8c8c8;
+      border-bottom:1px dashed #c8c8c8;
+      padding:22px 0 130px;
     }
+
+    .list-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:24px;
+      margin-bottom:48px;
+      flex-wrap:wrap;
+    }
+
+    .list-title{
+      margin:0;
+      font-size:clamp(30px,3.5vw,58px);
+      line-height:.98;
+      font-weight:500;
+      letter-spacing:-0.05em;
+    }
+
+    .list-controls{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:22px;
+      margin-left:auto;
+    }
+
+    .list-viewall{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 16px;
+      border-radius:999px;
+      background:#e7e7e7;
+      font-size:12px;
+      font-weight:500;
+      letter-spacing:-0.02em;
+      transition:background .25s ease;
+    }
+
+    .list-viewall:hover{background:#dcdcdc}
+    .list-viewall .pill-dot{width:8px;height:8px}
+
+    .list-table{width:100%}
+
+    .list-row{
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(140px,.8fr) 28px;
+      gap:24px;
+      align-items:center;
+      padding:18px 0;
+      border-bottom:1px dashed #c8c8c8;
+      transition:transform .25s var(--ease), color .25s ease;
+    }
+
+    .list-row:hover{transform:translateX(8px)}
+
+    .list-name{
+      margin:0;
+      font-size:clamp(20px,1.8vw,30px);
+      line-height:1.05;
+      font-weight:500;
+      letter-spacing:-0.035em;
+    }
+
+    .list-service{
+      margin:0;
+      font-size:13px;
+      font-weight:400;
+      color:#7a7a7a;
+      justify-self:start;
+    }
+
+    .list-bullet{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      border:1px solid #111;
+      justify-self:end;
+      transition:background .25s ease, transform .25s ease;
+    }
+
+    .list-row:hover .list-bullet{
+      background:#111;
+      transform:scale(1.05);
+    }
+
+    /* ===== Detail ===== */
+    .detail-page{background:var(--bg-2)}
 
     .detail-layout{
       display:grid;
@@ -251,7 +382,7 @@
 
     .detail-aside{
       position:sticky;
-      top:128px;
+      top:122px;
     }
 
     .detail-title{
@@ -296,7 +427,6 @@
       text-transform:uppercase;
       transition:opacity .25s ease;
     }
-
     .visit-link:hover{opacity:.6}
 
     .facts{
@@ -377,10 +507,7 @@
       flex:0 0 auto;
     }
 
-    .marquee-wrap{
-      overflow:hidden;
-      position:relative;
-    }
+    .marquee-wrap{overflow:hidden;position:relative}
 
     .marquee-track{
       display:flex;
@@ -426,61 +553,217 @@
       letter-spacing:-0.02em;
     }
 
-    .empty-state,
     .not-found{
-      min-height:100vh;
+      min-height:50vh;
       display:grid;
       place-items:center;
-      padding:120px 16px 40px;
+      padding:80px 16px 20px;
       text-align:center;
     }
 
-    .empty-state p,
     .not-found p{
       margin:0;
       font-size:16px;
       color:#555;
     }
 
+    /* ===== Footer ===== */
+    .nam-footer{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      padding:28px 34px 16px;
+      border-top:1px solid rgba(0,0,0,.08);
+    }
+
+    .nf-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:46px;
+    }
+
+    .nf-brand{
+      font-weight:500;
+      font-size:18px;
+      letter-spacing:-0.01em;
+    }
+
+    .nf-social{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .nf-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      background:var(--pill);
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      color:var(--ink);
+      font-size:13px;
+      font-weight:500;
+      line-height:1;
+    }
+
+    .nf-dot{
+      width:8px;
+      height:8px;
+      border:1.5px solid var(--ink);
+      border-radius:999px;
+      display:inline-block;
+      opacity:.9;
+    }
+
+    .nf-mid{
+      display:grid;
+      grid-template-columns:1.5fr 1fr .8fr;
+      gap:28px;
+      align-items:start;
+      min-height:210px;
+    }
+
+    .nf-kicker{
+      font-size:12px;
+      color:var(--muted-2);
+      margin-bottom:10px;
+      font-weight:500;
+    }
+
+    .nf-form{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      max-width:520px;
+    }
+
+    .nf-input{
+      flex:1;
+      height:44px;
+      padding:0 16px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:transparent;
+      outline:none;
+      font-size:13px;
+      color:var(--ink);
+    }
+
+    .nf-input::placeholder{color:var(--muted-3)}
+
+    .nf-btn{
+      height:44px;
+      padding:0 18px;
+      border-radius:999px;
+      border:0;
+      background:#3f3f3f;
+      color:#fff;
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .nf-time{justify-self:center;width:220px}
+    .nf-time-row{margin-bottom:18px}
+
+    .nf-city{
+      font-size:13px;
+      color:var(--muted-2);
+      font-weight:500;
+      margin-bottom:6px;
+    }
+
+    .nf-clock{
+      font-size:15px;
+      font-weight:600;
+      letter-spacing:.02em;
+    }
+
+    .nf-links{
+      justify-self:end;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      text-align:left;
+    }
+
+    .nf-links a{
+      color:var(--muted-2);
+      font-size:14px;
+      font-weight:500;
+    }
+    .nf-links a:hover{color:var(--ink)}
+
+    .nf-bottom{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      align-items:center;
+      margin-top:34px;
+      padding-top:18px;
+    }
+
+    .nf-muted{
+      font-size:12px;
+      color:var(--muted-3);
+      font-weight:500;
+      text-decoration:none;
+    }
+
+    .nf-center{text-align:center}
+    .nf-right{text-align:right;justify-self:end}
+
     @media (max-width: 1024px){
-      .detail-layout{
-        grid-template-columns:1fr;
-        gap:48px;
-      }
+      .detail-layout{grid-template-columns:1fr;gap:48px}
       .detail-aside{position:static}
+      .list-row{grid-template-columns:minmax(0,1fr) minmax(120px,.7fr) 24px}
     }
 
     @media (max-width: 900px){
       .projects-grid{gap:24px}
       .span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12}
       .project-thumb{height:58vh;min-height:240px}
+
+      .nf-mid{grid-template-columns:1fr;gap:22px;min-height:auto}
+      .nf-time{justify-self:start;width:auto}
+      .nf-links{justify-self:start}
+      .nf-bottom{grid-template-columns:1fr;gap:10px}
+      .nf-center,.nf-right{text-align:left;justify-self:start}
     }
 
     @media (max-width: 768px){
-      .site-nav{padding:22px 16px}
-      .nav-links{gap:14px}
-      .nav-links a:nth-child(n+2){display:none}
-      .grid-page{padding-top:88px}
-      .detail-page{padding-top:112px;padding-bottom:96px}
-      .detail-title{margin-bottom:36px}
-      .facts{grid-template-columns:1fr 1fr}
+      .shell{width:min(calc(100% - 32px), var(--max))}
+      .list-head{margin-bottom:32px}
+      .list-controls{width:100%;align-items:flex-start;gap:16px}
+      .subnav{justify-content:flex-start;margin-bottom:22px}
+      .list-row{grid-template-columns:1fr auto;gap:10px 20px;padding:16px 0}
+      .list-name{grid-column:1 / 2}
+      .list-service{grid-column:1 / 2;font-size:12px}
+      .list-bullet{grid-column:2 / 3;grid-row:1 / span 2;align-self:center}
       .detail-gallery{gap:20px}
       .more-section{margin-top:72px}
       .marquee-track{animation-duration:28s}
+      .nav a:nth-child(n+2){display:none}
     }
 
     @media (max-width: 520px){
+      .site-header .wrap{padding:16px 18px}
       .shell{width:min(calc(100% - 24px), var(--max))}
       .project-thumb{height:44vh;min-height:220px}
       .project-meta{display:block}
       .project-services{margin-top:8px}
+      .list-shell{padding:18px 0 90px}
       .facts{grid-template-columns:1fr}
       .more-card{width:78vw}
+      .nam-footer{padding:22px 18px 14px}
+      .nf-form{flex-direction:column;align-items:stretch}
+      .nf-btn{width:100%}
     }
   </style>
-
 </head>
-
 <body>
   <header class="site-header">
     <div class="wrap header-layout">
@@ -490,10 +773,10 @@
       </a>
 
       <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="/work/">Work</a>
-        <a class="nav-link" href="/services.html">Services</a>
-        <a class="nav-link" href="/art.html">Art</a>
-        <a class="nav-link" href="/studio.html">Studio</a>
+        <a class="nav-link active" href="/work/">Work</a>
+        <a class="nav-link" href="/3D-Product-Modeling/">Services</a>
+        <a class="nav-link" href="/careers/">Careers</a>
+        <a class="nav-link" href="/studio/">Studio</a>
         <a class="nav-link" href="/contact/">Contact</a>
       </nav>
 
@@ -501,160 +784,136 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <div id="app"></div>
 
-    <!-- ===== LIST PAGE ===== -->
-    <section id="projectsSection">
-      <section class="page-head" aria-label="Page intro">
-        <p class="page-kicker">Selected</p>
-        <h1 class="page-title">Work</h1>
-        <p class="page-sub">Architectural visualization for real estate developers and interior designers.</p>
-      </section>
+  <footer class="nam-footer">
+    <div class="nf-top">
+      <div class="nf-brand">ZSIZART Studio</div>
 
-      <!-- Filter Panel -->
-      <section id="filters" class="filter-panel" aria-label="Search and filter">
-        <form id="filterForm" onsubmit="return false;">
-          <div class="filter-row">
-            <input class="search-input" type="search" id="q" placeholder="Search projects by name…" />
-            <label class="chip"><input type="checkbox" id="tagInterior" /> INTERIOR</label>
-            <label class="chip"><input type="checkbox" id="tagExterior" /> EXTERIOR</label>
-            <div class="filter-actions">
-              <button type="button" class="btn" id="resetBtn">Reset</button>
-              <button type="button" class="btn primary" id="applyBtn">Apply</button>
-            </div>
-          </div>
+      <div class="nf-social">
+        <a class="nf-pill" href="#" aria-label="Instagram">
+          <span class="nf-dot"></span> Instagram
+        </a>
+        <a class="nf-pill" href="#" aria-label="LinkedIn">
+          <span class="nf-dot"></span> LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <div class="nf-mid">
+      <div class="nf-col nf-newsletter">
+        <div class="nf-kicker">Keep in touch with us</div>
+
+        <form class="nf-form" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+          <input class="nf-input" type="email" name="email" placeholder="Email Address" required>
+          <input type="hidden" name="type" value="newsletter_subscribe">
+          <button class="nf-btn" type="submit">Subscribe</button>
         </form>
-      </section>
 
-      <section aria-label="Projects">
-        <div class="section-row">
-          <h2>Projects</h2>
-          <button class="inline-btn" id="filterToggle" type="button">Search & Filter</button>
-        </div>
-
-        <div class="grid" id="grid">
-          <div class="tile"
-               data-project="/assets/work-01"
-               data-title="Verde Crest Villas"
-               data-loc="Dubai"
-               data-desc="Luxury Residential Development — Concept & Visualization."
-               data-tags="exterior"
-               data-services="CGI / Film"
-               data-client="Sarazin, Drive Property Group"
-               data-year="2025"
-               data-live="">
-            <img class="img-main" src="/assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Verde Crest Villas">
-          </div>
-
-          <div class="tile"
-               data-project="/assets/work-02"
-               data-title="Hillside Serenity"
-               data-loc="California"
-               data-desc="A modern retreat in nature blending architecture and landscape."
-               data-tags="exterior"
-               data-services="CGI / Film"
-               data-client="Private Client"
-               data-year="2025"
-               data-live="">
-            <img class="img-main" src="/assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
-          </div>
-
-          <div class="tile"
-               data-project="/assets/work-03"
-               data-title="Retro Home Sweet"
-               data-loc="London"
-               data-desc="Interior CGI capturing warmth of retro modern living."
-               data-tags="interior"
-               data-services="CGI / Film"
-               data-client="Studio Collaboration"
-               data-year="2025"
-               data-live="">
-            <span class="label">INTERIOR</span>
-            <img class="img-main" src="/assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
-          </div>
-
-          <div class="tile"
-               data-project="/assets/work-04"
-               data-title="Serene Lines"
-               data-loc="Copenhagen"
-               data-desc="Interior CGI focused on light, material and calm composition."
-               data-tags="interior"
-               data-services="CGI / Film"
-               data-client="Interior Brand"
-               data-year="2025"
-               data-live="">
-            <span class="label">INTERIOR</span>
-            <img class="img-main" src="/assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
-          </div>
-
-          <div class="tile"
-               data-project="/assets/work-05"
-               data-title="Modern Haven"
-               data-loc="Amsterdam"
-               data-desc="Interior CGI capturing warmth of modern living."
-               data-tags="interior"
-               data-services="CGI / Film"
-               data-client="Real Estate Developer"
-               data-year="2026"
-               data-live="">
-            <span class="label">INTERIOR</span>
-            <img class="img-main" src="/assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
-          </div>
-        </div>
-      </section>
-    </section>
-
-    <!-- ===== PROJECT PAGE ===== -->
-    <section class="pp" id="projectPage" aria-hidden="true">
-      <div class="pp__top">
-        <a class="pp__back" id="ppBack" href="#" aria-label="Back to projects">← Back</a>
+        <div id="subscribeOk" class="nf-muted" style="margin-top:10px; display:none;">Subscribed successfully.</div>
+        <div id="subscribeErr" class="nf-muted" style="margin-top:10px; display:none;">Something went wrong. Try again.</div>
       </div>
 
-      <div class="pp__layout">
-        <figure class="pp__media" id="ppMedia">
-          <img id="ppHero" alt="">
-        </figure>
-
-        <aside class="pp__side" aria-live="polite">
-          <h1 class="pp__title" id="ppTitle"></h1>
-          <a class="pp__pill" id="ppLive" href="#" target="_blank" rel="noopener">View live site</a>
-
-          <div class="pp__block">
-            <div class="pp__label">Info</div>
-            <p class="pp__info" id="ppInfo"></p>
-          </div>
-
-          <div class="pp__table" role="list">
-            <div class="pp__row" role="listitem">
-              <div class="pp__k">Services</div><div class="pp__v" id="ppServices"></div>
-            </div>
-            <div class="pp__row" role="listitem">
-              <div class="pp__k">Client</div><div class="pp__v" id="ppClient"></div>
-            </div>
-            <div class="pp__row" role="listitem">
-              <div class="pp__k">Year</div><div class="pp__v" id="ppYear"></div>
-            </div>
-            <div class="pp__row" role="listitem">
-              <div class="pp__k">Location</div><div class="pp__v" id="ppLocation"></div>
-            </div>
-          </div>
-        </aside>
+      <div class="nf-col nf-time">
+        <div class="nf-time-row">
+          <div class="nf-city">Egypt</div>
+          <div class="nf-clock" id="clock-eg">--:--:--</div>
+        </div>
+        <div class="nf-time-row">
+          <div class="nf-city">Dubai</div>
+          <div class="nf-clock" id="clock-dubai">--:--:--</div>
+        </div>
       </div>
 
-      <section class="pp__more" aria-label="More projects">
-        <div class="pp__more-label">More projects</div>
-        <div class="pp__rail" id="ppRail">
-          <div class="pp__rail-track" id="ppRailTrack"></div>
-        </div>
-      </section>
-    </section>
+      <nav class="nf-col nf-links" aria-label="Footer">
+        <a href="/work/">Projects</a>
+        <a href="/studio/">Studio</a>
+        <a href="/careers/">Careers</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
 
-  </main>
-
-  <footer>© 2026 ZSIZART Studio — Architectural Visualization & CGI</footer>
+    <div class="nf-bottom">
+      <div class="nf-muted">©2026 ZSIZART Studio</div>
+      <div class="nf-muted nf-center">Made by ZSIZART</div>
+      <a class="nf-muted nf-right" href="#">Privacy Policy</a>
+    </div>
+  </footer>
 
   <script>
-    /* ===== Lenis ===== */
+    const projects = [
+      {
+        id: "verde-crest-villas",
+        slug: "verde-crest-villas",
+        title: "Verde Crest Villas",
+        services: "CGI / Film",
+        client: "Sarazin, Drive Property Group",
+        year: "2025",
+        location: "Dubai",
+        liveSite: "",
+        description: "Luxury residential development created to communicate elegance, clarity, and premium lifestyle through architectural visualization.\n\nThe visuals focus on clean composition, atmosphere, and high-end presentation for marketing and concept communication.",
+        coverImage: "/assets/work-01.webp",
+        images: [],
+        width: "span-8"
+      },
+      {
+        id: "hillside-serenity",
+        slug: "hillside-serenity",
+        title: "Hillside Serenity",
+        services: "CGI / Film",
+        client: "Private Client",
+        year: "2025",
+        location: "California",
+        liveSite: "",
+        description: "A contemporary retreat in nature designed to merge architecture with landscape.\n\nThe imagery emphasizes calm atmosphere, strong framing, and high-value exterior storytelling.",
+        coverImage: "/assets/work-02.webp",
+        images: [],
+        width: "span-4"
+      },
+      {
+        id: "retro-home-sweet",
+        slug: "retro-home-sweet",
+        title: "Retro Home Sweet",
+        services: "CGI / Film",
+        client: "Studio Collaboration",
+        year: "2025",
+        location: "London",
+        liveSite: "",
+        description: "Interior CGI crafted to capture warmth, nostalgia, and soft retro-modern character.\n\nThe compositions focus on material richness, styling, and everyday domestic mood.",
+        coverImage: "/assets/work-03.webp",
+        images: [],
+        width: "span-6"
+      },
+      {
+        id: "serene-lines",
+        slug: "serene-lines",
+        title: "Serene Lines",
+        services: "CGI / Film",
+        client: "Interior Brand",
+        year: "2025",
+        location: "Copenhagen",
+        liveSite: "",
+        description: "A calm interior study built around light, restraint, and refined material transitions.\n\nThe visuals are intentionally minimal, with emphasis on geometry, softness, and brand-ready composition.",
+        coverImage: "/assets/work-04.webp",
+        images: [],
+        width: "span-6"
+      },
+      {
+        id: "modern-haven",
+        slug: "modern-haven",
+        title: "Modern Haven",
+        services: "CGI / Film",
+        client: "Real Estate Developer",
+        year: "2026",
+        location: "Amsterdam",
+        liveSite: "",
+        description: "Interior CGI developed to present modern living through a warm, polished lens.\n\nThe scenes balance clean architectural forms with inviting lifestyle-driven atmosphere.",
+        coverImage: "/assets/work-05.webp",
+        images: [],
+        width: "span-12"
+      }
+    ];
+
     let lenis;
     function initLenis(){
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -666,282 +925,259 @@
         easing:(t)=>Math.min(1,1.001 - Math.pow(2, -10*t)),
         direction:'vertical',
         gestureDirection:'vertical',
-        smooth:true, mouseMultiplier:1, smoothTouch:false, touchMultiplier:2, infinite:false,
+        smooth:true,
+        mouseMultiplier:1,
+        smoothTouch:false,
+        touchMultiplier:2,
+        infinite:false,
       });
 
-      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+      function raf(time){
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
     }
     window.addEventListener('load', initLenis);
 
-    /* ===== Filter Panel ===== */
-    const filterToggle=document.getElementById('filterToggle');
-    const filterPanel=document.getElementById('filters');
-    filterToggle?.addEventListener('click',()=>filterPanel.classList.toggle('show'));
+    const app = document.getElementById('app');
 
-    /* ===== Filtering ===== */
-    const applyBtn=document.getElementById('applyBtn');
-    const resetBtn=document.getElementById('resetBtn');
-    const qInput=document.getElementById('q');
-    const chkInt=document.getElementById('tagInterior');
-    const chkExt=document.getElementById('tagExterior');
-    const tiles=[...document.querySelectorAll('#grid .tile')];
-
-    function applyFilters(){
-      const q=(qInput?.value||'').trim().toLowerCase();
-      const wantInt=!!chkInt?.checked, wantExt=!!chkExt?.checked;
-
-      tiles.forEach(tile=>{
-        const name=(tile.dataset.title||'').toLowerCase();
-        const tags=(tile.dataset.tags||'').toLowerCase();
-        const matchText = q ? name.includes(q) : true;
-
-        let matchCat = true;
-        if (wantInt || wantExt){
-          matchCat = (wantInt && tags.includes('interior')) || (wantExt && tags.includes('exterior'));
-        }
-
-        tile.style.display = (matchText && matchCat) ? '' : 'none';
-      });
+    function escapeHtml(value){
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
     }
 
-    function resetFilters(){
-      if(qInput) qInput.value='';
-      if(chkInt) chkInt.checked=false;
-      if(chkExt) chkExt.checked=false;
-      tiles.forEach(t=>t.style.display='');
+    function getRoute(){
+      const raw = (location.hash || '').replace(/^#/, '');
+      if (!raw || raw === '/' || raw === '') {
+        location.hash = '#/projects/grid';
+        return null;
+      }
+      return raw;
     }
 
-    applyBtn?.addEventListener('click',applyFilters);
-    resetBtn?.addEventListener('click',resetFilters);
-    qInput?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); }});
+    function renderGrid(){
+      document.title = 'ZSIZART — Work';
 
-    /* ===== Project Page routing + NAM-like FLIP ===== */
-    (function(){
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const cards = projects.map((project, index) => `
+        <a class="project-card ${project.width || 'span-12'}" style="animation-delay:${(index % 3) * 0.12}s" href="#/projects/${project.slug}">
+          <div class="project-thumb">
+            <img src="${project.coverImage}" alt="${escapeHtml(project.title)}" loading="${index > 2 ? 'lazy' : 'eager'}">
+            <div class="project-overlay"><span>View Project</span></div>
+          </div>
+          <div class="project-meta">
+            <h2 class="project-title">${escapeHtml(project.title)}</h2>
+            <p class="project-services">${escapeHtml(project.services)}</p>
+          </div>
+        </a>
+      `).join('');
 
-      const listSection = document.getElementById('projectsSection');
-      const pp = document.getElementById('projectPage');
-
-      const ppBack = document.getElementById('ppBack');
-      const ppHero = document.getElementById('ppHero');
-      const ppMedia = document.getElementById('ppMedia');
-
-      const ppTitle = document.getElementById('ppTitle');
-      const ppLive  = document.getElementById('ppLive');
-      const ppInfo  = document.getElementById('ppInfo');
-
-      const ppServices = document.getElementById('ppServices');
-      const ppClient   = document.getElementById('ppClient');
-      const ppYear     = document.getElementById('ppYear');
-      const ppLocation = document.getElementById('ppLocation');
-
-      const railTrack = document.getElementById('ppRailTrack');
-
-      const projectTiles = [...document.querySelectorAll('#grid .tile')];
-
-      const projects = projectTiles.map((t, i) => ({
-        index:i,
-        title:t.dataset.title || '',
-        loc:t.dataset.loc || '',
-        desc:t.dataset.desc || '',
-        services:t.dataset.services || '',
-        client:t.dataset.client || '',
-        year:t.dataset.year || '',
-        live:t.dataset.live || '',
-        cover:t.querySelector('img')?.getAttribute('src') || '',
-        key: encodeURIComponent(t.dataset.project || (t.querySelector('img')?.getAttribute('src')||'') || (t.dataset.title||''))
-      }));
-
-      function lockScroll(){
-        document.body.style.overflow='hidden';
-        if (lenis) lenis.stop();
-      }
-      function unlockScroll(){
-        document.body.style.overflow='';
-        if (lenis) lenis.start();
-      }
-
-      function escapeHtml(s){
-        return String(s||'')
-          .replaceAll('&','&amp;')
-          .replaceAll('<','&lt;')
-          .replaceAll('>','&gt;')
-          .replaceAll('"','&quot;')
-          .replaceAll("'","&#039;");
-      }
-
-      function renderRail(activeIndex){
-        const items = projects.map(p => `
-          <div class="pp__thumb" data-open="${p.index}" role="button" tabindex="0" aria-label="Open ${escapeHtml(p.title)}">
-            <img src="${p.cover}" alt="">
-            <div>
-              <p class="t1">${escapeHtml(p.title)}</p>
-              <p class="t2">${escapeHtml(p.loc)}</p>
+      app.innerHTML = `
+        <main class="page grid-page">
+          <div class="shell">
+            <div class="subnav">
+              <span class="current">Grid</span>
+              <a href="#/projects/lists">Lists</a>
             </div>
+            <section class="projects-grid">${cards}</section>
+          </div>
+        </main>
+      `;
+
+      window.scrollTo(0,0);
+    }
+
+    function renderList(){
+      document.title = 'ZSIZART — Featured work';
+
+      const rows = projects.map((project) => `
+        <a class="list-row" href="#/projects/${project.slug}">
+          <h2 class="list-name">${escapeHtml(project.title)}</h2>
+          <p class="list-service">${escapeHtml(project.services)}</p>
+          <span class="list-bullet" aria-hidden="true"></span>
+        </a>
+      `).join('');
+
+      app.innerHTML = `
+        <main class="page list-page">
+          <div class="shell">
+            <section class="list-shell">
+              <div class="list-head">
+                <h1 class="list-title">Featured work</h1>
+                <div class="list-controls">
+                  <a class="list-viewall" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
+                  <div class="subnav">
+                    <a href="#/projects/grid">Grid</a>
+                    <span class="current">Lists</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="list-table">${rows}</div>
+            </section>
+          </div>
+        </main>
+      `;
+
+      window.scrollTo(0,0);
+    }
+
+    function renderProject(slug){
+      const project = projects.find((item) => item.slug === slug);
+      if (!project) {
+        renderNotFound();
+        return;
+      }
+
+      document.title = `ZSIZART — ${project.title}`;
+
+      const description = project.description
+        ? `<div class="detail-block"><p class="eyebrow">Info</p><div class="detail-copy">${project.description.split('\n\n').map((p) => `<p>${escapeHtml(p)}</p>`).join('')}</div></div>`
+        : '';
+
+      const facts = [
+        project.services ? `<div><p class="eyebrow">Services</p><p class="fact-value">${escapeHtml(project.services)}</p></div>` : '',
+        project.client ? `<div><p class="eyebrow">Client</p><p class="fact-value">${escapeHtml(project.client)}</p></div>` : '',
+        project.year ? `<div><p class="eyebrow">Year</p><p class="fact-value">${escapeHtml(project.year)}</p></div>` : '',
+        project.location ? `<div><p class="eyebrow">Location</p><p class="fact-value">${escapeHtml(project.location)}</p></div>` : ''
+      ].filter(Boolean).join('');
+
+      const gallery = (project.images && project.images.length ? project.images : [project.coverImage])
+        .map((src, index) => `
+          <div class="detail-image">
+            <img src="${src}" alt="${escapeHtml(project.title)} image ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">
           </div>
         `).join('');
 
-        railTrack.innerHTML = items + items;
+      const trackItems = [...projects, ...projects].map((item) => `
+        <a class="more-card" href="#/projects/${item.slug}">
+          <div class="more-thumb"><img src="${item.coverImage}" alt="${escapeHtml(item.title)}" loading="lazy"></div>
+          <p class="more-services">${escapeHtml(item.services)}</p>
+          <h3 class="more-name">${escapeHtml(item.title)}</h3>
+        </a>
+      `).join('');
 
-        railTrack.querySelectorAll('.pp__thumb').forEach(el=>{
-          const open = ()=>{
-            const i = Number(el.getAttribute('data-open'));
-            if (!Number.isFinite(i)) return;
-            openProject(i, null, true);
-          };
-          el.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); open(); });
-          el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); open(); }});
-        });
+      app.innerHTML = `
+        <main class="page detail-page">
+          <div class="shell">
+            <section class="detail-layout">
+              <aside class="detail-aside">
+                <h1 class="detail-title">${escapeHtml(project.title)}</h1>
+                ${project.liveSite ? `<div class="detail-block"><a class="visit-link" href="${project.liveSite}" target="_blank" rel="noreferrer noopener">View live site ↗</a></div>` : ''}
+                ${description}
+                ${facts ? `<div class="detail-block"><div class="facts">${facts}</div></div>` : ''}
+              </aside>
+              <section class="detail-gallery">${gallery}</section>
+            </section>
+
+            <section class="more-section">
+              <div class="more-head">
+                <h2 class="more-title">More projects</h2>
+                <a class="pill-link" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
+              </div>
+              <div class="marquee-wrap">
+                <div class="marquee-track">${trackItems}</div>
+              </div>
+            </section>
+          </div>
+        </main>
+      `;
+
+      window.scrollTo(0,0);
+    }
+
+    function renderNotFound(){
+      document.title = 'ZSIZART — Not Found';
+      app.innerHTML = `
+        <main class="page not-found">
+          <div><p>Project not found</p></div>
+        </main>
+      `;
+      window.scrollTo(0,0);
+    }
+
+    function render(){
+      const route = getRoute();
+      if (route === null) return;
+
+      if (route === '/projects' || route === '/projects/grid') {
+        renderGrid();
+        return;
       }
 
-      function setProjectUI(p){
-        ppHero.src = p.cover;
-        ppHero.alt = p.title;
-
-        ppTitle.textContent = p.title;
-        ppInfo.textContent  = p.desc;
-
-        ppServices.textContent = p.services;
-        ppClient.textContent   = p.client;
-        ppYear.textContent     = p.year;
-        ppLocation.textContent = p.loc;
-
-        if (p.live){
-          ppLive.style.display = '';
-          ppLive.href = p.live;
-        }else{
-          ppLive.style.display = 'none';
-          ppLive.removeAttribute('href');
-        }
+      if (route === '/projects/lists') {
+        renderList();
+        return;
       }
 
-      function showProject(push){
-        listSection.style.display = 'none';
-            pp.classList.add('show');
-            pp.setAttribute('aria-hidden','false');
-            document.body.style.overflow = '';
-            if (lenis) lenis.start();
-            window.scrollTo(0, 0);
-            if (push) {}
-          }
-
-      function showList(){
-            pp.classList.remove('show');
-            pp.setAttribute('aria-hidden','true');
-            listSection.style.display = '';
-            document.body.style.overflow = '';
-            if (lenis) lenis.start();
-         }
-
-      let ghost = null;
-      function cleanupGhost(){
-        if (ghost){ ghost.remove(); ghost = null; }
+      const match = route.match(/^\/projects\/([^/?#]+)/i);
+      if (match) {
+        renderProject(decodeURIComponent(match[1]));
+        return;
       }
 
-      async function flipOpen(fromImg){
-        if (prefersReducedMotion || !fromImg) return;
-        cleanupGhost();
+      renderNotFound();
+    }
 
-        const r0 = fromImg.getBoundingClientRect();
-        const r1 = ppMedia.getBoundingClientRect();
+    window.addEventListener('hashchange', render);
+    render();
 
-        ghost = document.createElement('img');
-        ghost.className = 'pp__ghost';
-        ghost.src = fromImg.currentSrc || fromImg.src;
+    (function(){
+      const form = document.getElementById('subscribeForm');
+      if (!form) return;
 
-        ghost.style.left = r0.left + 'px';
-        ghost.style.top  = r0.top  + 'px';
-        ghost.style.width  = r0.width + 'px';
-        ghost.style.height = r0.height + 'px';
-        ghost.style.borderRadius = getComputedStyle(fromImg).borderRadius || '0px';
-        document.body.appendChild(ghost);
+      const ok = document.getElementById('subscribeOk');
+      const err = document.getElementById('subscribeErr');
 
-        const dx = r1.left - r0.left;
-        const dy = r1.top  - r0.top;
-        const sx = r1.width  / r0.width;
-        const sy = r1.height / r0.height;
-
-        ghost.style.transformOrigin = 'top left';
-
-        ppHero.style.visibility = 'hidden';
-
-        const anim = ghost.animate([
-          { transform:'translate(0,0) scale(1,1)', borderRadius: ghost.style.borderRadius, opacity:1 },
-          { transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`, borderRadius:'18px', opacity:1 }
-        ],{
-          duration: 520,
-          easing: 'cubic-bezier(.2,.8,.2,1)',
-          fill: 'forwards'
-        });
-
-        await anim.finished.catch(()=>{});
-        ppHero.style.visibility = '';
-        cleanupGhost();
-      }
-
-      async function openProject(i, clickedTile, keepHistory){
-        const p = projects[i];
-        if (!p) return;
-
-        setProjectUI(p);
-        renderRail(i);
-
-        const fromImg = clickedTile?.querySelector('img') || null;
-
-        if (keepHistory){
-          history.pushState({ p: p.key }, '', `#p=${p.key}`);
-        }
-
-        showProject(false);
-        await flipOpen(fromImg);
-      }
-
-      function bootFromHash(){
-        const hash = location.hash || '';
-        if (!hash.startsWith('#p=')) return false;
-        const key = hash.slice(3);
-        const idx = projects.findIndex(x => x.key === key);
-        if (idx >= 0){
-          setProjectUI(projects[idx]);
-          renderRail(idx);
-          showProject(false);
-          return true;
-        }
-        return false;
-      }
-
-      projectTiles.forEach((tile, i)=>{
-        tile.addEventListener('click', (e)=>{
-          e.preventDefault();
-          openProject(i, tile, true);
-        });
-      });
-
-      ppBack.addEventListener('click', (e)=>{
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        history.back();
+
+        if (ok) ok.style.display = 'none';
+        if (err) err.style.display = 'none';
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            form.reset();
+            if (ok) ok.style.display = 'block';
+          } else {
+            if (err) err.style.display = 'block';
+          }
+        } catch (_) {
+          if (err) err.style.display = 'block';
+        }
+      });
+    })();
+
+    (function(){
+      const fmt = (tz) => new Intl.DateTimeFormat('en-GB', {
+        timeZone: tz,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
       });
 
-      window.addEventListener('popstate', ()=>{
-        const hash = location.hash || '';
-        if (!hash.startsWith('#p=')){
-          showList();
-          return;
-        }
-        const key = hash.slice(3);
-        const idx = projects.findIndex(x => x.key === key);
-        if (idx >= 0){
-          setProjectUI(projects[idx]);
-          renderRail(idx);
-          showProject(false);
-        }
-      });
+      const eg = document.getElementById('clock-eg');
+      const dubai = document.getElementById('clock-dubai');
 
-      // initial load
-      if (!bootFromHash()){
-        showList();
-      }
+      const tick = () => {
+        const now = new Date();
+        if (eg) eg.textContent = fmt('Africa/Cairo').format(now);
+        if (dubai) dubai.textContent = fmt('Asia/Dubai').format(now);
+      };
+
+      tick();
+      setInterval(tick, 1000);
     })();
   </script>
 </body>
