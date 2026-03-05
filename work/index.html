@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" oncontextmenu="return false">
+<html lang="en" data-theme="light" oncontextmenu="return false">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -762,11 +762,573 @@
       .nf-form{flex-direction:column;align-items:stretch}
       .nf-btn{width:100%}
     }
+  
+
+    /* ===== NAM-inspired theme + switch ===== */
+    :root{
+      --bg:#f6f1e8;
+      --bg-2:#f6f1e8;
+      --card:#ffffff;
+      --ink:#0d0d0d;
+      --muted:#6f675e;
+      --muted-2:#988f82;
+      --muted-3:#b1a798;
+      --line:rgba(10,10,10,.08);
+      --line-2:rgba(10,10,10,.14);
+      --stroke:rgba(10,10,10,.10);
+      --pill:rgba(0,0,0,.025);
+      --soft:#181818;
+      --accent:#173128;
+      --glass:rgba(246,241,232,.78);
+      --spot-1:rgba(0,0,0,.035);
+      --spot-2:rgba(23,49,40,.08);
+      --spot-3:rgba(0,0,0,.02);
+      --grid:rgba(0,0,0,.04);
+      --chip-bg:rgba(0,0,0,.025);
+      --chip-hover:rgba(0,0,0,.05);
+      --field-bg:rgba(0,0,0,.02);
+      --header-shadow:0 12px 40px rgba(0,0,0,.12);
+      --shadow:0 24px 60px rgba(0,0,0,.08);
+      --primary-btn-bg:#0d0d0d;
+      --primary-btn-text:#f6f1e8;
+      --primary-btn-hover-bg:#000000;
+      --radius-xl:34px;
+      --radius-lg:28px;
+      --radius-md:20px;
+      --max:1440px;
+    }
+
+    html[data-theme="dark"]{
+      --bg:#090909;
+      --bg-2:#090909;
+      --card:#111111;
+      --ink:#f4efe7;
+      --muted:#b7ae9f;
+      --muted-2:#a79d8c;
+      --muted-3:#8e8577;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.12);
+      --stroke:rgba(255,255,255,.10);
+      --pill:rgba(255,255,255,.02);
+      --soft:#ddd3c3;
+      --glass:rgba(9,9,9,.78);
+      --spot-1:rgba(255,255,255,.04);
+      --spot-2:rgba(23,49,40,.24);
+      --spot-3:rgba(255,255,255,.03);
+      --grid:rgba(255,255,255,.04);
+      --chip-bg:rgba(255,255,255,.02);
+      --chip-hover:rgba(255,255,255,.06);
+      --field-bg:rgba(255,255,255,.02);
+      --header-shadow:0 12px 40px rgba(0,0,0,.28);
+      --shadow:0 30px 80px rgba(0,0,0,.38);
+      --primary-btn-bg:#f4efe7;
+      --primary-btn-text:#090909;
+      --primary-btn-hover-bg:#ffffff;
+    }
+
+    html[data-theme="dark"]{color-scheme:dark}
+
+    body{
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 20%, var(--spot-1), transparent 30%),
+        radial-gradient(circle at 85% 10%, var(--spot-2), transparent 28%),
+        radial-gradient(circle at 80% 85%, var(--spot-3), transparent 30%);
+      z-index:-2;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.14;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size:32px 32px;
+      mask-image:radial-gradient(circle at center, black 35%, transparent 85%);
+      z-index:-1;
+    }
+
+    #app{flex:1;padding-top:98px}
+    .shell{width:min(var(--max), calc(100% - 32px))}
+
+    .site-header{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:100;
+      padding:14px 0;
+      background:transparent;
+      border-bottom:0;
+      box-shadow:none;
+      backdrop-filter:none;
+      transition:.35s ease;
+    }
+
+    .site-header.scrolled{padding:10px 0}
+
+    .header-inner{
+      width:min(var(--max), calc(100% - 32px));
+      margin-inline:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      border:1px solid transparent;
+      border-radius:999px;
+      padding:10px 14px;
+      transition:.35s ease;
+    }
+
+    .site-header.scrolled .header-inner{
+      background:var(--glass);
+      backdrop-filter:blur(16px);
+      border-color:var(--line-2);
+      box-shadow:var(--header-shadow);
+    }
+
+    .brand{gap:12px}
+    .brand .wordmark{
+      color:var(--soft);
+      font-weight:700;
+      letter-spacing:.18em;
+    }
+
+    .nav{
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav-link,
+    .nav button,
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      border:1px solid var(--line);
+      background:var(--chip-bg);
+      color:var(--ink);
+      border-radius:999px;
+      padding:0 16px;
+      font:inherit;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      transition:.25s ease;
+      cursor:pointer;
+    }
+
+    .nav-link:hover,
+    .nav button:hover,
+    .cta:hover,
+    .nav-link.active{
+      background:var(--chip-hover);
+      border-color:var(--line-2);
+      color:var(--ink);
+      transform:translateY(-1px);
+    }
+
+    .cta{
+      background:var(--primary-btn-bg);
+      color:var(--primary-btn-text);
+      border-color:transparent;
+      min-height:46px;
+    }
+
+    .cta:hover{
+      background:var(--primary-btn-hover-bg);
+      color:var(--primary-btn-text);
+      border-color:transparent;
+    }
+
+    .theme-switch{
+      gap:10px;
+      padding:0 14px;
+      white-space:nowrap;
+    }
+
+    .switch-track{
+      position:relative;
+      width:46px;
+      height:26px;
+      border-radius:999px;
+      background:rgba(0,0,0,.12);
+      transition:.25s ease;
+      flex:0 0 auto;
+    }
+
+    html[data-theme="dark"] .switch-track{background:rgba(255,255,255,.18)}
+
+    .switch-thumb{
+      position:absolute;
+      top:3px;
+      left:3px;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:var(--ink);
+      transition:.25s ease;
+    }
+
+    .theme-switch.is-dark .switch-thumb{transform:translateX(20px)}
+
+    .switch-text{
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .page{animation-duration:.8s}
+    .grid-page,.list-page,.detail-page{padding-top:16px}
+    .subnav a, .subnav span{color:var(--muted)}
+    .subnav .current, .subnav a:hover{color:var(--ink)}
+
+    .project-thumb,
+    .detail-image,
+    .more-thumb{
+      border-radius:var(--radius-xl);
+      border:1px solid var(--line);
+      background:var(--card);
+      box-shadow:var(--shadow);
+    }
+
+    .project-thumb,
+    .more-thumb{overflow:hidden}
+
+    .project-overlay{
+      background:linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,.42) 100%);
+    }
+
+    .project-title,
+    .list-title,
+    .list-name,
+    .detail-title,
+    .more-title,
+    .more-name{
+      color:var(--ink);
+      font-weight:800;
+      letter-spacing:-.045em;
+    }
+
+    .project-services,
+    .list-service,
+    .eyebrow,
+    .detail-copy,
+    .more-services,
+    .not-found p,
+    .fact-value{
+      color:var(--muted);
+    }
+
+    .list-shell{
+      border-top:1px dashed var(--line-2);
+      border-bottom:1px dashed var(--line-2);
+    }
+
+    .list-viewall,
+    .pill-link{
+      background:var(--chip-bg);
+      border:1px solid var(--line);
+      color:var(--ink);
+    }
+
+    .list-viewall:hover,
+    .pill-link:hover{
+      background:var(--chip-hover);
+      color:var(--ink);
+      border-color:var(--line-2);
+    }
+
+    .list-row{border-bottom:1px dashed var(--line-2)}
+    .list-bullet{border-color:var(--ink)}
+    .list-row:hover .list-bullet{background:var(--ink)}
+
+    .detail-page{background:transparent}
+    .detail-copy{font-weight:400}
+    .visit-link{border-bottom-color:var(--ink)}
+    .more-section{border-top:1px solid var(--line)}
+    .more-card:not(:hover) img{filter:none}
+
+    .nam-footer{
+      background:transparent;
+      color:var(--ink);
+      border-top:1px solid var(--line);
+    }
+
+    .nf-pill,
+    .nf-input{
+      background:var(--chip-bg);
+      border-color:var(--stroke);
+      color:var(--ink);
+    }
+
+    .nf-btn{
+      background:var(--primary-btn-bg);
+      color:var(--primary-btn-text);
+    }
+
+    .nf-btn:hover{
+      background:var(--primary-btn-hover-bg);
+      color:var(--primary-btn-text);
+      filter:none;
+    }
+
+    .nf-links a,
+    .nf-kicker,
+    .nf-city,
+    .nf-muted{color:var(--muted)}
+    .nf-links a:hover{color:var(--ink)}
+
+    @media (max-width: 860px){
+      .cta{display:none}
+    }
+
+    @media (max-width: 768px){
+      .nav{gap:6px}
+      .theme-switch{padding:0 12px}
+      .switch-text{display:none}
+      .header-inner{width:min(var(--max), calc(100% - 24px))}
+      #app{padding-top:92px}
+    }
+
+    @media (max-width: 520px){
+      .header-inner{padding:10px 12px}
+      .shell{width:min(var(--max), calc(100% - 24px))}
+    }
+
+  
+
+    /* ===== Footer refresh — card system ===== */
+    .nam-footer{
+      margin-top:84px;
+      padding:34px 0 56px;
+      border-top:1px solid var(--line);
+      background:transparent;
+      color:var(--ink);
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1.05fr 1.65fr .86fr .92fr;
+      gap:18px;
+    }
+
+    .footer-card{
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.02));
+      min-height:210px;
+      box-shadow:none;
+    }
+
+    html[data-theme="dark"] .footer-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+    }
+
+    .footer-title{
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--soft);
+      margin:0 0 18px;
+    }
+
+    .footer-list{
+      display:grid;
+      gap:12px;
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+
+    .footer-list a,
+    .footer-list span{
+      color:var(--muted);
+      transition:.25s ease;
+      font-size:14px;
+      font-weight:500;
+      line-height:1.35;
+    }
+
+    .footer-list a:hover{color:var(--ink)}
+
+    .newsletter{
+      display:grid;
+      gap:12px;
+    }
+
+    .newsletter p{
+      color:var(--muted);
+      font-size:14px;
+      max-width:32ch;
+      margin:0;
+      line-height:1.45;
+    }
+
+    .field{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:52px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:var(--field-bg);
+      padding:0 8px 0 16px;
+      margin-top:2px;
+    }
+
+    .field input{
+      flex:1;
+      min-width:0;
+      background:transparent;
+      border:0;
+      outline:0;
+      color:var(--ink);
+      font:inherit;
+      padding:0;
+      height:auto;
+      border-radius:0;
+      box-shadow:none;
+    }
+
+    .field input::placeholder{color:var(--muted-3)}
+
+    .field button{
+      border:0;
+      outline:0;
+      cursor:pointer;
+      border-radius:999px;
+      background:var(--primary-btn-bg);
+      color:var(--primary-btn-text);
+      min-width:122px;
+      min-height:40px;
+      padding:0 16px;
+      font:inherit;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      transition:.25s ease;
+      flex:0 0 auto;
+    }
+
+    .field button:hover{background:var(--primary-btn-hover-bg);filter:none}
+
+    .footer-status{
+      margin-top:10px;
+      color:var(--muted-2);
+      font-size:12px;
+      font-weight:500;
+    }
+
+    .clock{
+      display:grid;
+      gap:14px;
+    }
+
+    .clock-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      border-bottom:1px solid var(--line);
+      padding-bottom:10px;
+    }
+
+    .clock-row:last-child{
+      border-bottom:0;
+      padding-bottom:0;
+    }
+
+    .clock-city{
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    .clock-time{
+      font-size:24px;
+      line-height:1;
+      font-weight:800;
+      letter-spacing:-.03em;
+      color:var(--ink);
+      font-variant-numeric:tabular-nums;
+    }
+
+    .legal{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-top:18px;
+      color:var(--muted-2);
+      font-size:12px;
+      font-weight:500;
+      flex-wrap:wrap;
+    }
+
+    .legal a{
+      color:inherit;
+    }
+
+    .legal a:hover{color:var(--ink)}
+
+    @media (max-width: 1100px){
+      .footer-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width: 780px){
+      .nam-footer{padding:28px 0 40px}
+
+      .footer-grid{
+        grid-template-columns:1fr;
+      }
+
+      .footer-card{
+        min-height:auto;
+      }
+
+      .field{
+        flex-direction:column;
+        align-items:stretch;
+        border-radius:24px;
+        padding:10px;
+      }
+
+      .field button{
+        width:100%;
+      }
+
+      .legal{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap header-layout">
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
       <a class="brand" href="/">
         <img src="/assets/logo.png" alt="ZSIZART Logo" class="logo" width="34" height="34" loading="eager" decoding="async">
         <span class="wordmark">ZSIZART</span>
@@ -778,6 +1340,11 @@
         <a class="nav-link" href="/careers/">Careers</a>
         <a class="nav-link" href="/studio/">Studio</a>
         <a class="nav-link" href="/contact/">Contact</a>
+
+        <button type="button" class="theme-switch" id="themeSwitch" aria-label="Toggle theme" aria-pressed="false">
+          <span class="switch-track"><span class="switch-thumb"></span></span>
+          <span class="switch-text" id="themeSwitchText">Dark</span>
+        </button>
       </nav>
 
       <a class="cta" href="/contact/">Start a Project</a>
@@ -787,56 +1354,61 @@
   <div id="app"></div>
 
   <footer class="nam-footer">
-    <div class="nf-top">
-      <div class="nf-brand">ZSIZART Studio</div>
+    <div class="footer-grid">
+      <section class="footer-card">
+        <div class="footer-title">ZSIZART Studio</div>
+        <ul class="footer-list">
+          <li><a href="#" aria-label="Instagram">Instagram</a></li>
+          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><a href="/work/">Projects</a></li>
+          <li><a href="#">Privacy policy</a></li>
+        </ul>
+      </section>
 
-      <div class="nf-social">
-        <a class="nf-pill" href="#" aria-label="Instagram">
-          <span class="nf-dot"></span> Instagram
-        </a>
-        <a class="nf-pill" href="#" aria-label="LinkedIn">
-          <span class="nf-dot"></span> LinkedIn
-        </a>
-      </div>
+      <section class="footer-card">
+        <div class="footer-title">Newsletter</div>
+        <div class="newsletter">
+          <p>Studio updates, selected work drops, and new releases delivered in a minimal format.</p>
+
+          <form class="field" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+            <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+            <input type="hidden" name="type" value="newsletter_subscribe">
+            <button type="submit">Subscribe</button>
+          </form>
+
+          <div id="subscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
+          <div id="subscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+        </div>
+      </section>
+
+      <section class="footer-card">
+        <div class="footer-title">Local time</div>
+        <div class="clock">
+          <div class="clock-row">
+            <span class="clock-city">Egypt</span>
+            <span class="clock-time" id="clock-eg">00:00:00</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-city">Dubai</span>
+            <span class="clock-time" id="clock-dubai">00:00:00</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="footer-card">
+        <div class="footer-title">Contact</div>
+        <ul class="footer-list">
+          <li><a href="/contact/">Project enquiries</a></li>
+          <li><a href="mailto:careers@zsizart.com">careers@zsizart.com</a></li>
+          <li><span>Egypt / Dubai</span></li>
+        </ul>
+      </section>
     </div>
 
-    <div class="nf-mid">
-      <div class="nf-col nf-newsletter">
-        <div class="nf-kicker">Keep in touch with us</div>
-
-        <form class="nf-form" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
-          <input class="nf-input" type="email" name="email" placeholder="Email Address" required>
-          <input type="hidden" name="type" value="newsletter_subscribe">
-          <button class="nf-btn" type="submit">Subscribe</button>
-        </form>
-
-        <div id="subscribeOk" class="nf-muted" style="margin-top:10px; display:none;">Subscribed successfully.</div>
-        <div id="subscribeErr" class="nf-muted" style="margin-top:10px; display:none;">Something went wrong. Try again.</div>
-      </div>
-
-      <div class="nf-col nf-time">
-        <div class="nf-time-row">
-          <div class="nf-city">Egypt</div>
-          <div class="nf-clock" id="clock-eg">--:--:--</div>
-        </div>
-        <div class="nf-time-row">
-          <div class="nf-city">Dubai</div>
-          <div class="nf-clock" id="clock-dubai">--:--:--</div>
-        </div>
-      </div>
-
-      <nav class="nf-col nf-links" aria-label="Footer">
-        <a href="/work/">Projects</a>
-        <a href="/studio/">Studio</a>
-        <a href="/careers/">Careers</a>
-        <a href="/contact/">Contact</a>
-      </nav>
-    </div>
-
-    <div class="nf-bottom">
-      <div class="nf-muted">©2026 ZSIZART Studio</div>
-      <div class="nf-muted nf-center">Made by ZSIZART</div>
-      <a class="nf-muted nf-right" href="#">Privacy Policy</a>
+    <div class="legal">
+      <span>© 2026 ZSIZART Studio</span>
+      <span>Built by ZSIZART</span>
+      <a href="#">Privacy Policy</a>
     </div>
   </footer>
 
@@ -1180,5 +1752,51 @@
       setInterval(tick, 1000);
     })();
   </script>
+
+
+  <script>
+    (function(){
+      const header = document.getElementById('siteHeader');
+      const root = document.documentElement;
+      const themeSwitch = document.getElementById('themeSwitch');
+      const themeSwitchText = document.getElementById('themeSwitchText');
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+
+      function syncHeader(){
+        if (!header) return;
+        if (window.scrollY > 14) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      }
+
+      function applyTheme(theme){
+        const isDark = theme === 'dark';
+        root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+
+        if (themeSwitch){
+          themeSwitch.classList.toggle('is-dark', isDark);
+          themeSwitch.setAttribute('aria-pressed', String(isDark));
+        }
+        if (themeSwitchText) {
+          themeSwitchText.textContent = isDark ? 'Light' : 'Dark';
+        }
+        if (themeColor) {
+          themeColor.setAttribute('content', isDark ? '#090909' : '#f6f1e8');
+        }
+      }
+
+      const savedTheme = localStorage.getItem('zsizart-theme');
+      applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+      syncHeader();
+      window.addEventListener('scroll', syncHeader, { passive:true });
+
+      themeSwitch?.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('zsizart-theme', next);
+        applyTheme(next);
+      });
+    })();
+  </script>
+
 </body>
 </html>
