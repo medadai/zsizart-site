@@ -49,6 +49,63 @@
     ]
   }
   </script>
+<script>
+  (function () {
+    const COUNTRY_CACHE_KEY = 'zsizart-country';
+    const COUNTRY_CACHE_TIME_KEY = 'zsizart-country-time';
+    const CACHE_DURATION = 1000 * 60 * 60 * 12;
+
+    async function getVisitorCountry() {
+      const cachedCountry = localStorage.getItem(COUNTRY_CACHE_KEY);
+      const cachedTime = localStorage.getItem(COUNTRY_CACHE_TIME_KEY);
+
+      if (cachedCountry && cachedTime && (Date.now() - Number(cachedTime) < CACHE_DURATION)) {
+        return cachedCountry;
+      }
+
+      try {
+        const res = await fetch('https://ipwho.is/');
+        const data = await res.json();
+
+        if (data && data.success && data.country_code) {
+          localStorage.setItem(COUNTRY_CACHE_KEY, data.country_code);
+          localStorage.setItem(COUNTRY_CACHE_TIME_KEY, String(Date.now()));
+          return data.country_code;
+        }
+      } catch (e) {}
+
+      return 'EG';
+    }
+
+    function applyCountryContent(country) {
+      const isGermany = country === 'DE';
+      document.documentElement.setAttribute('data-country', isGermany ? 'de' : 'eg');
+
+      document.querySelectorAll('[data-eg-text][data-de-text]').forEach(el => {
+        el.textContent = isGermany ? el.dataset.deText : el.dataset.egText;
+      });
+
+      document.querySelectorAll('[data-eg-href][data-de-href]').forEach(el => {
+        el.href = isGermany ? el.dataset.deHref : el.dataset.egHref;
+      });
+
+      document.querySelectorAll('[data-eg-src][data-de-src]').forEach(el => {
+        el.src = isGermany ? el.dataset.deSrc : el.dataset.egSrc;
+      });
+
+      document.querySelectorAll('source[data-eg-src][data-de-src]').forEach(el => {
+        el.src = isGermany ? el.dataset.deSrc : el.dataset.egSrc;
+      });
+
+      document.querySelectorAll('video').forEach(video => video.load());
+    }
+
+    window.addEventListener('load', async () => {
+      const country = await getVisitorCountry();
+      applyCountryContent(country);
+    });
+  })();
+</script>
 
   <!-- Lenis Smooth Scrolling -->
   <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
