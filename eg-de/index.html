@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZSIZART Studio — Architectural Visualization & CGI</title>
-  <link rel="canonical" href="https://zsizart.com/">
+  <link rel="canonical" href="https://zsizart.com/eg-de/">
   <meta name="robots" content="index, follow">
 
   <!-- SEO / Social -->
@@ -12,22 +12,22 @@
   <meta property="og:title" content="ZSIZART — Visualization Studio">
   <meta property="og:description" content="Cinematic architectural imagery, animation, and product CGI.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/og-cover.jpg">
+  <meta property="og:image" content="/eg-de/assets/og-cover.jpg">
   <meta name="theme-color" content="#0b0d0d">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ZSIZART — Visualization Studio">
   <meta name="twitter:description" content="Cinematic architectural imagery, animation, and product CGI.">
-  <meta name="twitter:image" content="assets/og-cover.jpg">
+  <meta name="twitter:image" content="/eg-de/assets/og-cover.jpg">
 
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"Organization",
     "name":"ZSIZART",
-    "url":"https://zsizart.com/",
-    "logo":"https://zsizart.com/assets/logo.png",
+    "url":"https://zsizart.com/eg-de/",
+    "logo":"https://zsizart.com/eg-de/assets/logo.png",
     "sameAs":[
       "https://www.instagram.com/",
       "https://www.behance.net/",
@@ -38,12 +38,12 @@
   </script>
 
   <!-- Preload small wins -->
-  <link rel="preload" as="image" href="assets/logo.png">
-  <link rel="preload" as="image" href="assets/og-cover.jpg">
+  <link rel="preload" as="image" href="/eg-de/assets/logo.png">
+  <link rel="preload" as="image" href="/eg-de/assets/og-cover.jpg">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/eg-de/assets/favicon.png">
+  <link rel="icon" type="image/x-icon" href="/eg-de/assets/favicon.ico">
 
   <!-- Lenis Smooth Scrolling (defer) -->
   <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
@@ -150,7 +150,7 @@ header .wrap{
   .menu-open .menu-btn .bars{background:transparent}
   .menu-open .menu-btn .bars::before,.menu-open .menu-btn .bars::after{opacity:0}
   .menu-open .menu-btn::after{
-    content:"";display:block;width:24px;height:24px;background:url('assets/logo.png') center/contain no-repeat;
+    content:"";display:block;width:24px;height:24px;background:url('/eg-de/assets/logo.png') center/contain no-repeat;
     animation:popIn .45s var(--rev-ease);
   }
   @keyframes popIn{from{transform:scale(.6);opacity:.2}to{transform:scale(1);opacity:1}}
@@ -299,7 +299,7 @@ header .wrap{
   .top-btn.morph .top-text{ width:0; opacity:0; transform:scale(.8); transition:.2s ease; }
   .top-btn.morph .top-glyph{
     width:24px; height:24px; font-size:0;
-    background:url("assets/logo.png") center/contain no-repeat;
+    background:url("/eg-de/assets/logo.png") center/contain no-repeat;
     animation:spinIn .7s cubic-bezier(.2,.65,.15,1);
   }
   @keyframes spinIn{ 0%{ transform:scale(.6) rotate(-90deg); opacity:.2 } 100%{ transform:scale(1) rotate(0deg); opacity:1 } }
@@ -381,10 +381,10 @@ header .wrap{
 <body>
 <header>
   <div class="wrap header-layout">
-    <div class="brand">
+    <a class="brand" href="./">
       <img src="/eg-de/assets/logo.png" alt="ZSIZART Logo" class="logo" width="30" height="30" loading="eager" decoding="async">
       <span class="wordmark">ZSIZART</span>
-    </div>
+</a>
     <div class="actions">
       <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><span class="bars"></span></button>
     </div>
@@ -393,11 +393,11 @@ header .wrap{
 
 <div class="overlay" id="overlay"></div>
 <aside class="menu-panel" id="menuPanel" aria-label="Site menu">
-  <a href="/work">Work</a>
-  <a href="/services">Services</a>
-  <a href="/art">Art</a>
-  <a href="/about">About</a>
-  <a href="/contact">Contact</a>
+  <a href="work.html">Work</a>
+  <a href="services.html">Services</a>
+  <a href="careers.html">Careers</a>
+  <a href="studio.html">Studio</a>
+  <a href="contact.html">Contact</a>
 </aside>
 
 <main class="wrap">
@@ -434,27 +434,27 @@ header .wrap{
     </div>
 
     <div class="grid" id="grid">
-      <div class="tile" data-project="assets/work-01" data-title="Verde Crest Villas" data-desc="Luxury Residential Development — Concept & Visualization." data-tags="exterior">
+      <div class="tile" data-project="/eg-de/assets/work-01" data-title="Verde Crest Villas" data-desc="Luxury Residential Development — Concept & Visualization." data-tags="exterior">
         <span class="label">EXTERIOR</span>
         <img class="img-main" src="/eg-de/assets/work-01.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Luxury Residential Architectural Visualization">
       </div>
 
-      <div class="tile" data-project="assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
+      <div class="tile" data-project="/eg-de/assets/work-02" data-title="Hillside Serenity" data-desc="A modern retreat in nature blending architecture and landscape." data-tags="exterior">
         <span class="label">EXTERIOR</span>
         <img class="img-main" src="/eg-de/assets/work-02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Hillside Serenity">
       </div>
 
-      <div class="tile" data-project="assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
+      <div class="tile" data-project="/eg-de/assets/work-03" data-title="Retro Home Sweet" data-desc="Interior CGI capturing warmth of retro modern living." data-tags="interior">
         <span class="label">INTERIOR</span>
         <img class="img-main" src="/eg-de/assets/work-03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Retro Home Sweet">
       </div>
 
-      <div class="tile" data-project="assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition." data-tags="interior">
+      <div class="tile" data-project="/eg-de/assets/work-04" data-title="Serene Lines" data-desc="Interior CGI focused on light, material and calm composition." data-tags="interior">
         <span class="label">INTERIOR</span>
         <img class="img-main" src="/eg-de/assets/work-04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Serene Lines">
       </div>
 
-      <div class="tile" data-project="assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living." data-tags="interior">
+      <div class="tile" data-project="/eg-de/assets/work-05" data-title="Modern Haven" data-desc="Interior CGI capturing warmth of modern living." data-tags="interior">
         <span class="label">INTERIOR</span>
         <img class="img-main" src="/eg-de/assets/work-05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Modern Haven">
       </div>
@@ -477,7 +477,7 @@ header .wrap{
     <a class="modeling-link"
        href="3D-Product-Modeling"
        aria-label="Open 3D Modeling Page"
-       data-frames="assets/zsiz-modeling-thumb01.webp|assets/zsiz-modeling-thumb02.webp|assets/zsiz-modeling-thumb03.webp|assets/zsiz-modeling-thumb04.webp|assets/zsiz-modeling-thumb05.webp">
+       data-frames="/eg-de/assets/zsiz-modeling-thumb01.webp|assets/zsiz-modeling-thumb02.webp|assets/zsiz-modeling-thumb03.webp|assets/zsiz-modeling-thumb04.webp|assets/zsiz-modeling-thumb05.webp">
 
       <img class="modeling-img"
            src="/eg-de/assets/zsiz-modeling-thumb01.webp"
