@@ -1358,19 +1358,20 @@
       border-radius:0 !important;
     }
 
-/* ===== WORK PAGE FULL WIDTH + NAM-LIKE LAYOUT FIX ===== */
+/* ===== FINAL WORK GRID FIX ===== */
 :root{
   --page-gutter: 8px;
 }
 
-.shell{
+.shell,
+.header-inner{
   width:calc(100% - (var(--page-gutter) * 2)) !important;
   max-width:none !important;
   margin:0 auto !important;
 }
 
 #app{
-  padding-top:112px !important;
+  padding-top:108px !important;
 }
 
 .site-header{
@@ -1378,9 +1379,6 @@
 }
 
 .header-inner{
-  width:calc(100% - (var(--page-gutter) * 2)) !important;
-  max-width:none !important;
-  margin:0 auto !important;
   padding:10px 12px !important;
 }
 
@@ -1390,30 +1388,47 @@
 
 .grid-page{
   padding-top:8px !important;
-  padding-bottom:64px !important;
+  padding-bottom:56px !important;
 }
 
 .subnav{
-  margin:0 0 18px !important;
-  padding-right:4px;
+  margin:0 0 16px !important;
 }
 
 .projects-grid{
+  display:grid !important;
+  grid-template-columns:repeat(12,minmax(0,1fr)) !important;
   gap:14px !important;
   align-items:start !important;
 }
 
 .project-thumb{
+  position:relative !important;
+  overflow:hidden !important;
   margin-bottom:8px !important;
+  height:clamp(250px, 24vw, 360px) !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+  border:1px solid var(--line) !important;
+  box-shadow:none !important;
+  background:#ececec !important;
 }
 
-/* card proportions closer to NAM */
-.project-card.span-12 .project-thumb{aspect-ratio:1.78 / 1 !important;}
-.project-card.span-8  .project-thumb{aspect-ratio:1.38 / 1 !important;}
-.project-card.span-7  .project-thumb{aspect-ratio:1.22 / 1 !important;}
-.project-card.span-6  .project-thumb{aspect-ratio:1.10 / 1 !important;}
-.project-card.span-5  .project-thumb{aspect-ratio:.90 / 1 !important;}
-.project-card.span-4  .project-thumb{aspect-ratio:.72 / 1 !important;}
+.project-card.span-12 .project-thumb,
+.project-card.span-8 .project-thumb,
+.project-card.span-7 .project-thumb,
+.project-card.span-6 .project-thumb,
+.project-card.span-5 .project-thumb,
+.project-card.span-4 .project-thumb{
+  aspect-ratio:auto !important;
+}
+
+.project-thumb img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+}
 
 .project-meta{
   display:grid !important;
@@ -1424,9 +1439,9 @@
 
 .project-title{
   margin:0 !important;
-  font-size:clamp(18px,1.45vw,24px) !important;
+  font-size:clamp(18px,1.35vw,23px) !important;
   line-height:1.02 !important;
-  letter-spacing:-0.045em !important;
+  letter-spacing:-0.04em !important;
 }
 
 .project-services{
@@ -1434,62 +1449,26 @@
   font-size:10px !important;
   letter-spacing:.14em !important;
   white-space:nowrap !important;
-  align-self:end !important;
-}
-
-.project-thumb img{
-  width:100% !important;
-  height:100% !important;
-  object-fit:cover !important;
-  object-position:center center !important;
-}
-
-@media (max-width: 1100px){
-  :root{
-    --page-gutter: 10px;
-  }
-
-  .header-inner,
-  .shell{
-    width:calc(100% - 20px) !important;
-  }
-
-  .projects-grid{
-    gap:12px !important;
-  }
 }
 
 @media (max-width: 900px){
-  :root{
-    --page-gutter: 12px;
-  }
-
-  .header-inner,
-  .shell{
-    width:calc(100% - 24px) !important;
-  }
-
   .span-8,.span-7,.span-6,.span-5,.span-4{
     grid-column:span 12 !important;
   }
 
-  .project-card .project-thumb{
-    aspect-ratio:4 / 3 !important;
-  }
-}
-
-@media (max-width: 520px){
-  :root{
-    --page-gutter: 12px;
+  .project-thumb{
+    height:clamp(240px, 58vw, 380px) !important;
   }
 
   .header-inner,
   .shell{
     width:calc(100% - 24px) !important;
   }
+}
 
-  .project-card .project-thumb{
-    aspect-ratio:4 / 5 !important;
+@media (max-width: 520px){
+  .project-thumb{
+    height:clamp(220px, 62vw, 320px) !important;
   }
 
   .project-meta{
@@ -1602,7 +1581,7 @@
         description: "Luxury residential development created to communicate elegance, clarity, and premium lifestyle through architectural visualization.\n\nThe visuals focus on clean composition, atmosphere, and high-end presentation for marketing and concept communication.",
         coverImage: "/assets/work-01.webp",
         images: [],
-        width: "span-8"
+        width: "span-4"
       },
       {
         id: "hillside-serenity",
@@ -1630,7 +1609,7 @@
         description: "A hospitality-focused visual narrative shaped around light, openness, and quiet luxury.\n\nThe imagery highlights water, horizon, and restrained architectural detailing to create a calm yet premium identity for the project.",
         coverImage: "/assets/work-03.webp",
         images: ["/assets/work-03.webp","/assets/work-03-01.webp","/assets/work-03-02.webp"],
-        width: "span-8"
+        width: "span-4"
       },
       {
         id: "serene-lines",
@@ -1644,7 +1623,7 @@
         description: "A calm interior study built around light, restraint, and refined material transitions.\n\nThe visuals are intentionally minimal, with emphasis on geometry, softness, and brand-ready composition.",
         coverImage: "/assets/work-04.webp",
         images: [],
-        width: "span-6"
+        width: "span-4"
       },
       {
         id: "modern-haven",
@@ -1658,7 +1637,7 @@
         description: "Interior CGI developed to present modern living through a warm, polished lens.\n\nThe scenes balance clean architectural forms with inviting lifestyle-driven atmosphere.",
         coverImage: "/assets/work-05.webp",
         images: [],
-        width: "span-12"
+        width: "span-4"
       }
     ];
 
