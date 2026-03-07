@@ -1358,6 +1358,148 @@
       border-radius:0 !important;
     }
 
+/* ===== WORK PAGE FULL WIDTH + NAM-LIKE LAYOUT FIX ===== */
+:root{
+  --page-gutter: 8px;
+}
+
+.shell{
+  width:calc(100% - (var(--page-gutter) * 2)) !important;
+  max-width:none !important;
+  margin:0 auto !important;
+}
+
+#app{
+  padding-top:112px !important;
+}
+
+.site-header{
+  padding:10px 0 !important;
+}
+
+.header-inner{
+  width:calc(100% - (var(--page-gutter) * 2)) !important;
+  max-width:none !important;
+  margin:0 auto !important;
+  padding:10px 12px !important;
+}
+
+.site-header.scrolled .header-inner{
+  border-radius:18px !important;
+}
+
+.grid-page{
+  padding-top:8px !important;
+  padding-bottom:64px !important;
+}
+
+.subnav{
+  margin:0 0 18px !important;
+  padding-right:4px;
+}
+
+.projects-grid{
+  gap:14px !important;
+  align-items:start !important;
+}
+
+.project-thumb{
+  margin-bottom:8px !important;
+}
+
+/* card proportions closer to NAM */
+.project-card.span-12 .project-thumb{aspect-ratio:1.78 / 1 !important;}
+.project-card.span-8  .project-thumb{aspect-ratio:1.38 / 1 !important;}
+.project-card.span-7  .project-thumb{aspect-ratio:1.22 / 1 !important;}
+.project-card.span-6  .project-thumb{aspect-ratio:1.10 / 1 !important;}
+.project-card.span-5  .project-thumb{aspect-ratio:.90 / 1 !important;}
+.project-card.span-4  .project-thumb{aspect-ratio:.72 / 1 !important;}
+
+.project-meta{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  gap:4px 12px !important;
+  align-items:end !important;
+}
+
+.project-title{
+  margin:0 !important;
+  font-size:clamp(18px,1.45vw,24px) !important;
+  line-height:1.02 !important;
+  letter-spacing:-0.045em !important;
+}
+
+.project-services{
+  margin:0 !important;
+  font-size:10px !important;
+  letter-spacing:.14em !important;
+  white-space:nowrap !important;
+  align-self:end !important;
+}
+
+.project-thumb img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+
+@media (max-width: 1100px){
+  :root{
+    --page-gutter: 10px;
+  }
+
+  .header-inner,
+  .shell{
+    width:calc(100% - 20px) !important;
+  }
+
+  .projects-grid{
+    gap:12px !important;
+  }
+}
+
+@media (max-width: 900px){
+  :root{
+    --page-gutter: 12px;
+  }
+
+  .header-inner,
+  .shell{
+    width:calc(100% - 24px) !important;
+  }
+
+  .span-8,.span-7,.span-6,.span-5,.span-4{
+    grid-column:span 12 !important;
+  }
+
+  .project-card .project-thumb{
+    aspect-ratio:4 / 3 !important;
+  }
+}
+
+@media (max-width: 520px){
+  :root{
+    --page-gutter: 12px;
+  }
+
+  .header-inner,
+  .shell{
+    width:calc(100% - 24px) !important;
+  }
+
+  .project-card .project-thumb{
+    aspect-ratio:4 / 5 !important;
+  }
+
+  .project-meta{
+    display:block !important;
+  }
+
+  .project-services{
+    margin-top:6px !important;
+  }
+}
   </style>
 </head>
 <body>
