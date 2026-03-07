@@ -190,93 +190,108 @@
     .subnav a:hover{color:#111}
 
     /* ===== Grid ===== */
-    .projects-grid{
-      display:grid;
-      grid-template-columns:repeat(12,minmax(0,1fr));
-      gap:28px;
-    }
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:22px 18px;
+  align-items:start;
+}
 
-    .project-card{
-      display:block;
-      opacity:0;
-      transform:translateY(18px);
-      animation:cardIn .75s var(--ease) forwards;
-    }
-    @keyframes cardIn{to{opacity:1;transform:none}}
+.project-card{
+  display:block;
+  min-width:0;
+  opacity:0;
+  transform:translateY(18px);
+  animation:cardIn .75s var(--ease) forwards;
+}
+@keyframes cardIn{to{opacity:1;transform:none}}
 
-    .span-12{grid-column:span 12}
-    .span-8{grid-column:span 8}
-    .span-7{grid-column:span 7}
-    .span-6{grid-column:span 6}
-    .span-5{grid-column:span 5}
-    .span-4{grid-column:span 4}
+.span-12{grid-column:span 12}
+.span-8{grid-column:span 8}
+.span-7{grid-column:span 7}
+.span-6{grid-column:span 6}
+.span-5{grid-column:span 5}
+.span-4{grid-column:span 4}
 
-    .project-thumb{
-      position:relative;
-      overflow:hidden;
-      background:#ececec;
-      margin-bottom:16px;
-      height:min(68vh, 720px);
-      min-height:260px;
-    }
+.project-thumb{
+  position:relative;
+  overflow:hidden;
+  background:#ececec;
+  margin-bottom:12px;
+  height:auto;
+  min-height:0;
+  border:1px solid var(--line);
+  box-shadow:none;
+}
 
-    .project-thumb img,
-    .more-card img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transition:transform 1.05s var(--ease), filter .8s ease;
-    }
+.project-card.span-12 .project-thumb{aspect-ratio:16 / 8.6;}
+.project-card.span-8  .project-thumb{aspect-ratio:1.42 / 1;}
+.project-card.span-7  .project-thumb{aspect-ratio:1.24 / 1;}
+.project-card.span-6  .project-thumb{aspect-ratio:1 / 1;}
+.project-card.span-5  .project-thumb{aspect-ratio:.82 / 1;}
+.project-card.span-4  .project-thumb{aspect-ratio:.68 / 1;}
 
-    .project-card:hover .project-thumb img,
-    .more-card:hover img{transform:scale(1.05)}
+.project-thumb img,
+.more-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform 1.05s var(--ease), filter .8s ease;
+}
 
-    .project-overlay{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,0,0,.18);
-      opacity:0;
-      transition:opacity .45s ease;
-    }
+.project-card:hover .project-thumb img,
+.more-card:hover img{
+  transform:scale(1.02);
+}
 
-    .project-overlay span{
-      color:#fff;
-      font-size:clamp(22px,2vw,32px);
-      font-weight:500;
-      letter-spacing:-0.02em;
-      transform:translateY(14px);
-      transition:transform .45s var(--ease);
-    }
+.project-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,.32) 100%);
+  opacity:0;
+  transition:opacity .45s ease;
+}
 
-    .project-card:hover .project-overlay{opacity:1}
-    .project-card:hover .project-overlay span{transform:none}
+.project-overlay span{
+  color:#fff;
+  font-size:clamp(20px,1.6vw,28px);
+  font-weight:500;
+  letter-spacing:-0.02em;
+  transform:translateY(14px);
+  transition:transform .45s var(--ease);
+}
 
-    .project-meta{
-      display:flex;
-      gap:8px;
-      justify-content:space-between;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
+.project-card:hover .project-overlay{opacity:1}
+.project-card:hover .project-overlay span{transform:none}
 
-    .project-title{
-      margin:0;
-      font-size:clamp(20px,1.7vw,28px);
-      font-weight:500;
-      letter-spacing:-0.03em;
-      line-height:1.1;
-    }
+.project-meta{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:8px 16px;
+  align-items:end;
+}
 
-    .project-services{
-      margin:2px 0 0;
-      font-size:11px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:#6b6b6b;
-    }
+.project-title{
+  margin:0;
+  font-size:clamp(20px,1.9vw,28px);
+  font-weight:800;
+  letter-spacing:-0.045em;
+  line-height:1.02;
+}
+
+.project-services{
+  margin:0;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
+  align-self:end;
+}
 
     /* ===== Lists ===== */
     .list-shell{
@@ -722,18 +737,25 @@
       .list-row{grid-template-columns:minmax(0,1fr) minmax(120px,.7fr) 24px}
     }
 
-    @media (max-width: 900px){
-      .projects-grid{gap:24px}
-      .span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12}
-      .project-thumb{height:58vh;min-height:240px}
+       @media (max-width: 900px){
+         .projects-grid{
+        gap:18px;
+     }
 
-      .nf-mid{grid-template-columns:1fr;gap:22px;min-height:auto}
-      .nf-time{justify-self:start;width:auto}
-      .nf-links{justify-self:start}
-      .nf-bottom{grid-template-columns:1fr;gap:10px}
-      .nf-center,.nf-right{text-align:left;justify-self:start}
-    }
+         .span-8,.span-7,.span-6,.span-5,.span-4{
+        grid-column:span 12;
+     }
 
+         .project-card .project-thumb{
+        aspect-ratio:4 / 3;
+     }
+
+         .nf-mid{grid-template-columns:1fr;gap:22px;min-height:auto}
+         .nf-time{justify-self:start;width:auto}
+         .nf-links{justify-self:start}
+         .nf-bottom{grid-template-columns:1fr;gap:10px}
+         .nf-center,.nf-right{text-align:left;justify-self:start}
+      }
     @media (max-width: 768px){
       .shell{width:min(calc(100% - 32px), var(--max))}
       .list-head{margin-bottom:32px}
@@ -752,7 +774,7 @@
     @media (max-width: 520px){
       .site-header .wrap{padding:16px 18px}
       .shell{width:min(calc(100% - 24px), var(--max))}
-      .project-thumb{height:44vh;min-height:220px}
+      .project-card .project-thumb{aspect-ratio:4 / 5}
       .project-meta{display:block}
       .project-services{margin-top:8px}
       .list-shell{padding:18px 0 90px}
