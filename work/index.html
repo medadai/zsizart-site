@@ -227,7 +227,7 @@
 .project-card.span-12 .project-thumb{aspect-ratio:16 / 8.6;}
 .project-card.span-8  .project-thumb{aspect-ratio:1.42 / 1;}
 .project-card.span-7  .project-thumb{aspect-ratio:1.24 / 1;}
-.project-card.span-6 .project-thumb{aspect-ratio:1.28 / 1;}}
+.project-card.span-6 .project-thumb{aspect-ratio:1.28 / 1;}
 .project-card.span-5  .project-thumb{aspect-ratio:.82 / 1;}
 .project-card.span-4  .project-thumb{aspect-ratio:.68 / 1;}
 
@@ -293,97 +293,170 @@
   align-self:end;
 }
 
-    /* ===== Lists ===== */
-    .list-shell{
-      border-top:1px dashed #c8c8c8;
-      border-bottom:1px dashed #c8c8c8;
-      padding:22px 0 130px;
-    }
+    /* ===== LISTS THUMBNAIL PREVIEW ===== */
+.list-shell{
+  border-top:1px dashed var(--line-2) !important;
+  border-bottom:1px dashed var(--line-2) !important;
+  padding:22px 0 96px !important;
+}
 
-    .list-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:24px;
-      margin-bottom:48px;
-      flex-wrap:wrap;
-    }
+.list-head{
+  display:flex !important;
+  justify-content:space-between !important;
+  align-items:flex-start !important;
+  gap:24px !important;
+  margin-bottom:28px !important;
+  flex-wrap:wrap !important;
+}
 
-    .list-title{
-      margin:0;
-      font-size:clamp(30px,3.5vw,58px);
-      line-height:.98;
-      font-weight:500;
-      letter-spacing:-0.05em;
-    }
+.list-body{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(420px,48vw);
+  gap:36px;
+  align-items:start;
+}
 
-    .list-controls{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:22px;
-      margin-left:auto;
-    }
+.list-table{
+  width:100%;
+}
 
-    .list-viewall{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 16px;
-      border-radius:999px;
-      background:#e7e7e7;
-      font-size:12px;
-      font-weight:500;
-      letter-spacing:-0.02em;
-      transition:background .25s ease;
-    }
+.list-preview{
+  position:sticky;
+  top:132px;
+  align-self:start;
+}
 
-    .list-viewall:hover{background:#dcdcdc}
-    .list-viewall .pill-dot{width:8px;height:8px}
+.list-preview-frame{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:var(--card);
+  height:clamp(420px, 38vw, 640px);
+  box-shadow:none;
+}
 
-    .list-table{width:100%}
+.list-preview-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transition:opacity .28s ease, transform .7s var(--ease);
+}
 
-    .list-row{
-      display:grid;
-      grid-template-columns:minmax(0,1.2fr) minmax(140px,.8fr) 28px;
-      gap:24px;
-      align-items:center;
-      padding:18px 0;
-      border-bottom:1px dashed #c8c8c8;
-      transition:transform .25s var(--ease), color .25s ease;
-    }
+.list-preview-frame.is-changing img{
+  opacity:.18;
+  transform:scale(1.03);
+}
 
-    .list-row:hover{transform:translateX(8px)}
+.list-preview-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  padding-top:12px;
+  align-items:flex-start;
+}
 
-    .list-name{
-      margin:0;
-      font-size:clamp(20px,1.8vw,30px);
-      line-height:1.05;
-      font-weight:500;
-      letter-spacing:-0.035em;
-    }
+.list-preview-title{
+  margin:0;
+  font-size:clamp(18px,1.45vw,24px);
+  line-height:1.03;
+  font-weight:800;
+  letter-spacing:-0.04em;
+  color:var(--ink);
+}
 
-    .list-service{
-      margin:0;
-      font-size:13px;
-      font-weight:400;
-      color:#7a7a7a;
-      justify-self:start;
-    }
+.list-preview-service{
+  margin:6px 0 0;
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
 
-    .list-bullet{
-      width:10px;
-      height:10px;
-      border-radius:50%;
-      border:1px solid #111;
-      justify-self:end;
-      transition:background .25s ease, transform .25s ease;
-    }
+.list-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(140px,.8fr) 28px !important;
+  gap:24px !important;
+  align-items:center !important;
+  padding:18px 0 !important;
+  border-bottom:1px dashed var(--line-2) !important;
+  transition:transform .25s var(--ease), color .25s ease, opacity .25s ease !important;
+}
 
-    .list-row:hover .list-bullet{
-      background:#111;
-      transform:scale(1.05);
-    }
+.list-row:hover,
+.list-row.is-active{
+  transform:translateX(8px);
+}
+
+.list-row.is-active .list-name{
+  color:var(--ink);
+}
+
+.list-row.is-active .list-bullet{
+  background:var(--ink);
+  transform:scale(1.05);
+}
+
+.list-name{
+  margin:0 !important;
+  font-size:clamp(20px,1.8vw,30px) !important;
+  line-height:1.04 !important;
+  font-weight:800 !important;
+  letter-spacing:-0.04em !important;
+}
+
+.list-service{
+  margin:0 !important;
+  font-size:13px !important;
+  color:var(--muted) !important;
+}
+
+.list-bullet{
+  width:10px !important;
+  height:10px !important;
+  border-radius:50% !important;
+  border:1px solid var(--ink) !important;
+  justify-self:end !important;
+  transition:background .25s ease, transform .25s ease !important;
+}
+
+@media (max-width: 900px){
+  .list-body{
+    grid-template-columns:1fr;
+  }
+
+  .list-preview{
+    display:none;
+  }
+}
+
+}@media (max-width: 768px){
+  .list-head{
+    margin-bottom:20px !important;
+  }
+
+  .list-row{
+    grid-template-columns:1fr auto !important;
+    gap:10px 20px !important;
+    padding:16px 0 !important;
+  }
+
+  .list-name{
+    grid-column:1 / 2;
+  }
+
+  .list-service{
+    grid-column:1 / 2;
+    font-size:12px !important;
+  }
+
+  .list-bullet{
+    grid-column:2 / 3;
+    grid-row:1 / span 2;
+    align-self:center;
+  }
+}
 
     /* ===== Detail ===== */
     .detail-page{background:var(--bg-2)}
@@ -1468,7 +1541,7 @@
 
 @media (max-width: 520px){
   .project-thumb{
-    height:clamp(260px, 70w, 380px) !important;
+    height:clamp(260px, 70vw, 380px) !important;
   }
 
   .project-meta{
@@ -1719,39 +1792,113 @@
     }
 
     function renderList(){
-      document.title = 'ZSIZART — Featured work';
+  document.title = 'ZSIZART — Featured work';
 
-      const rows = projects.map((project) => `
-        <a class="list-row" href="#/projects/${project.slug}">
-          <h2 class="list-name">${escapeHtml(project.title)}</h2>
-          <p class="list-service">${escapeHtml(project.services)}</p>
-          <span class="list-bullet" aria-hidden="true"></span>
-        </a>
-      `).join('');
+  const firstProject = projects[0];
 
-      app.innerHTML = `
-        <main class="page list-page">
-          <div class="shell">
-            <section class="list-shell">
-              <div class="list-head">
-                <h1 class="list-title">Featured work</h1>
-                <div class="list-controls">
-                  <a class="list-viewall" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
-                  <div class="subnav">
-                    <a href="#/projects/grid">Grid</a>
-                    <span class="current">Lists</span>
-                  </div>
-                </div>
+  const rows = projects.map((project, index) => `
+    <a
+      class="list-row ${index === 0 ? 'is-active' : ''}"
+      href="#/projects/${project.slug}"
+      data-preview="${project.coverImage}"
+      data-title="${escapeHtml(project.title)}"
+      data-service="${escapeHtml(project.services)}"
+    >
+      <h2 class="list-name">${escapeHtml(project.title)}</h2>
+      <p class="list-service">${escapeHtml(project.services)}</p>
+      <span class="list-bullet" aria-hidden="true"></span>
+    </a>
+  `).join('');
+
+  app.innerHTML = `
+    <main class="page list-page">
+      <div class="shell">
+        <section class="list-shell">
+          <div class="list-head">
+            <h1 class="list-title">Featured work</h1>
+            <div class="list-controls">
+              <a class="list-viewall" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
+              <div class="subnav">
+                <a href="#/projects/grid">Grid</a>
+                <span class="current">Lists</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="list-body">
+            <div class="list-table">${rows}</div>
+
+            <aside class="list-preview" aria-hidden="true">
+              <div class="list-preview-frame" id="listPreviewFrame">
+                <img
+                  id="listPreviewImg"
+                  src="${firstProject.coverImage}"
+                  alt="${escapeHtml(firstProject.title)}"
+                  loading="eager"
+                  decoding="async"
+                >
               </div>
 
-              <div class="list-table">${rows}</div>
-            </section>
+              <div class="list-preview-meta">
+                <div>
+                  <h2 class="list-preview-title" id="listPreviewTitle">${escapeHtml(firstProject.title)}</h2>
+                  <p class="list-preview-service" id="listPreviewService">${escapeHtml(firstProject.services)}</p>
+                </div>
+              </div>
+            </aside>
           </div>
-        </main>
-      `;
+        </section>
+      </div>
+    </main>
+  `;
 
-      window.scrollTo(0,0);
-    }
+  initListPreview();
+  window.scrollTo(0,0);
+}
+
+function initListPreview(){
+  const rows = [...document.querySelectorAll('.list-row')];
+  const frame = document.getElementById('listPreviewFrame');
+  const img = document.getElementById('listPreviewImg');
+  const title = document.getElementById('listPreviewTitle');
+  const service = document.getElementById('listPreviewService');
+
+  if (!rows.length || !frame || !img || !title || !service) return;
+
+  let swapTimer = null;
+
+  function setActive(row){
+    rows.forEach(item => item.classList.toggle('is-active', item === row));
+
+    const nextSrc = row.dataset.preview || '';
+    const nextTitle = row.dataset.title || '';
+    const nextService = row.dataset.service || '';
+
+    if (
+      img.getAttribute('src') === nextSrc &&
+      title.textContent === nextTitle &&
+      service.textContent === nextService
+    ) return;
+
+    frame.classList.add('is-changing');
+    clearTimeout(swapTimer);
+
+    swapTimer = setTimeout(() => {
+      img.src = nextSrc;
+      img.alt = nextTitle;
+      title.textContent = nextTitle;
+      service.textContent = nextService;
+      frame.classList.remove('is-changing');
+    }, 110);
+  }
+
+  rows.forEach((row) => {
+    row.addEventListener('mouseenter', () => setActive(row));
+    row.addEventListener('focus', () => setActive(row));
+  });
+
+  setActive(rows[0]);
+}
 
     function renderProject(slug){
       const project = projects.find((item) => item.slug === slug);
