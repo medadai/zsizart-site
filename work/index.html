@@ -67,7 +67,6 @@
     .wrap{max-width:var(--max);margin:auto;padding:28px}
     .shell{width:min(calc(100% - 56px), var(--max));margin:0 auto}
 
-    /* ===== Header ===== */
     .site-header{
       position:sticky;
       top:0;
@@ -153,7 +152,6 @@
       .cta{display:none}
     }
 
-    /* ===== Page ===== */
     .page{
       min-height:calc(100vh - 92px);
       opacity:0;
@@ -189,312 +187,283 @@
     .subnav .current{color:#111}
     .subnav a:hover{color:#111}
 
-    /* ===== Grid ===== */
-.projects-grid{
-  display:grid;
-  grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:22px 18px;
-  align-items:start;
-}
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(12,minmax(0,1fr));
+      gap:22px 18px;
+      align-items:start;
+    }
 
-.project-card{
-  display:block;
-  min-width:0;
-  opacity:0;
-  transform:translateY(18px);
-  animation:cardIn .75s var(--ease) forwards;
-}
-@keyframes cardIn{to{opacity:1;transform:none}}
+    .project-card{
+      display:block;
+      min-width:0;
+      opacity:0;
+      transform:translateY(18px);
+      animation:cardIn .75s var(--ease) forwards;
+    }
+    @keyframes cardIn{to{opacity:1;transform:none}}
 
-.span-12{grid-column:span 12}
-.span-8{grid-column:span 8}
-.span-7{grid-column:span 7}
-.span-6{grid-column:span 6}
-.span-5{grid-column:span 5}
-.span-4{grid-column:span 4}
+    .span-12{grid-column:span 12}
+    .span-8{grid-column:span 8}
+    .span-7{grid-column:span 7}
+    .span-6{grid-column:span 6}
+    .span-5{grid-column:span 5}
+    .span-4{grid-column:span 4}
 
-.project-thumb{
-  position:relative;
-  overflow:hidden;
-  background:#ececec;
-  margin-bottom:12px;
-  height:auto;
-  min-height:0;
-  border:1px solid var(--line);
-  box-shadow:none;
-}
+    .project-thumb{
+      position:relative;
+      overflow:hidden;
+      background:#ececec;
+      margin-bottom:12px;
+      height:auto;
+      min-height:0;
+      border:1px solid var(--line);
+      box-shadow:none;
+    }
 
-.project-card.span-12 .project-thumb{aspect-ratio:16 / 8.6;}
-.project-card.span-8  .project-thumb{aspect-ratio:1.42 / 1;}
-.project-card.span-7  .project-thumb{aspect-ratio:1.24 / 1;}
-.project-card.span-6 .project-thumb{aspect-ratio:1.28 / 1;}
-.project-card.span-5  .project-thumb{aspect-ratio:.82 / 1;}
-.project-card.span-4  .project-thumb{aspect-ratio:.68 / 1;}
+    .project-card.span-12 .project-thumb{aspect-ratio:16 / 8.6;}
+    .project-card.span-8  .project-thumb{aspect-ratio:1.42 / 1;}
+    .project-card.span-7  .project-thumb{aspect-ratio:1.24 / 1;}
+    .project-card.span-6  .project-thumb{aspect-ratio:1.28 / 1;}
+    .project-card.span-5  .project-thumb{aspect-ratio:.82 / 1;}
+    .project-card.span-4  .project-thumb{aspect-ratio:.68 / 1;}
 
-.project-thumb img,
-.more-card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  transition:transform 1.05s var(--ease), filter .8s ease;
-}
+    .project-thumb img,
+    .more-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      transition:transform 1.05s var(--ease), filter .8s ease;
+    }
 
-.project-cover{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  transition:opacity .28s ease, transform 1.05s var(--ease), filter .8s ease;
-}
+    .project-cover{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      transition:opacity .22s ease, transform 1.05s var(--ease), filter .8s ease;
+    }
 
-.project-video{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .28s ease, transform 1.05s var(--ease);
-}
+    .project-video{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .22s ease, transform 1.05s var(--ease);
+      background:#000;
+    }
 
-.project-overlay{
-  z-index:2;
-}
+    .project-thumb.has-video.is-video-visible .project-video{
+      opacity:1;
+    }
 
-.project-thumb.has-video.has-started .project-video{
-  opacity:1;
-}
+    .project-thumb.has-video.is-video-visible .project-cover{
+      opacity:0;
+    }
 
-.project-thumb.has-video.has-started .project-cover{
-  opacity:0;
-}
+    .project-overlay{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,.32) 100%);
+      opacity:0;
+      transition:opacity .45s ease;
+    }
 
-.project-card:hover .project-video{
-  transform:scale(1.02);
-}
+    .project-overlay span{
+      color:#fff;
+      font-size:clamp(20px,1.6vw,28px);
+      font-weight:500;
+      letter-spacing:-0.02em;
+      transform:translateY(14px);
+      transition:transform .45s var(--ease);
+    }
 
-.project-card:hover .project-thumb img,
-.more-card:hover img{
-  transform:scale(1.02);
-}
+    .project-card:hover .project-overlay{opacity:1}
+    .project-card:hover .project-overlay span{transform:none}
+    .project-card:hover .project-video{transform:scale(1.02)}
+    .project-card:hover .project-thumb img,
+    .more-card:hover img{transform:scale(1.02)}
 
-.project-overlay{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,.32) 100%);
-  opacity:0;
-  transition:opacity .45s ease;
-}
+    .project-meta{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:8px 16px;
+      align-items:end;
+    }
 
-.project-overlay span{
-  color:#fff;
-  font-size:clamp(20px,1.6vw,28px);
-  font-weight:500;
-  letter-spacing:-0.02em;
-  transform:translateY(14px);
-  transition:transform .45s var(--ease);
-}
+    .project-title{
+      margin:0;
+      font-size:clamp(20px,1.9vw,28px);
+      font-weight:800;
+      letter-spacing:-0.045em;
+      line-height:1.02;
+    }
 
-.project-card:hover .project-overlay{opacity:1}
-.project-card:hover .project-overlay span{transform:none}
+    .project-services{
+      margin:0;
+      font-size:10px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      white-space:nowrap;
+      align-self:end;
+    }
 
-.project-meta{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  gap:8px 16px;
-  align-items:end;
-}
+    .list-shell{
+      border-top:1px dashed var(--line-2) !important;
+      border-bottom:1px dashed var(--line-2) !important;
+      padding:22px 0 96px !important;
+    }
 
-.project-title{
-  margin:0;
-  font-size:clamp(20px,1.9vw,28px);
-  font-weight:800;
-  letter-spacing:-0.045em;
-  line-height:1.02;
-}
+    .list-head{
+      display:flex !important;
+      justify-content:space-between !important;
+      align-items:flex-start !important;
+      gap:24px !important;
+      margin-bottom:28px !important;
+      flex-wrap:wrap !important;
+    }
 
-.project-services{
-  margin:0;
-  font-size:10px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--muted);
-  white-space:nowrap;
-  align-self:end;
-}
+    .list-body{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(420px,48vw);
+      gap:36px;
+      align-items:start;
+    }
 
-    /* ===== LISTS THUMBNAIL PREVIEW ===== */
-.list-shell{
-  border-top:1px dashed var(--line-2) !important;
-  border-bottom:1px dashed var(--line-2) !important;
-  padding:22px 0 96px !important;
-}
+    .list-table{width:100%}
 
-.list-head{
-  display:flex !important;
-  justify-content:space-between !important;
-  align-items:flex-start !important;
-  gap:24px !important;
-  margin-bottom:28px !important;
-  flex-wrap:wrap !important;
-}
+    .list-preview{
+      position:sticky;
+      top:132px;
+      align-self:start;
+    }
 
-.list-body{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(420px,48vw);
-  gap:36px;
-  align-items:start;
-}
+    .list-preview-frame{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:var(--card);
+      height:clamp(420px, 38vw, 640px);
+      box-shadow:none;
+    }
 
-.list-table{
-  width:100%;
-}
+    .list-preview-frame img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+      transition:opacity .28s ease, transform .7s var(--ease);
+    }
 
-.list-preview{
-  position:sticky;
-  top:132px;
-  align-self:start;
-}
+    .list-preview-frame.is-changing img{
+      opacity:.18;
+      transform:scale(1.03);
+    }
 
-.list-preview-frame{
-  position:relative;
-  overflow:hidden;
-  border:1px solid var(--line);
-  background:var(--card);
-  height:clamp(420px, 38vw, 640px);
-  box-shadow:none;
-}
+    .list-preview-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      padding-top:12px;
+      align-items:flex-start;
+    }
 
-.list-preview-frame img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  display:block;
-  transition:opacity .28s ease, transform .7s var(--ease);
-}
+    .list-preview-title{
+      margin:0;
+      font-size:clamp(18px,1.45vw,24px);
+      line-height:1.03;
+      font-weight:800;
+      letter-spacing:-0.04em;
+      color:var(--ink);
+    }
 
-.list-preview-frame.is-changing img{
-  opacity:.18;
-  transform:scale(1.03);
-}
+    .list-preview-service{
+      margin:6px 0 0;
+      font-size:10px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
 
-.list-preview-meta{
-  display:flex;
-  justify-content:space-between;
-  gap:16px;
-  padding-top:12px;
-  align-items:flex-start;
-}
+    .list-row{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) minmax(140px,.8fr) 28px !important;
+      gap:24px !important;
+      align-items:center !important;
+      padding:18px 0 !important;
+      border-bottom:1px dashed var(--line-2) !important;
+      transition:transform .25s var(--ease), color .25s ease, opacity .25s ease !important;
+    }
 
-.list-preview-title{
-  margin:0;
-  font-size:clamp(18px,1.45vw,24px);
-  line-height:1.03;
-  font-weight:800;
-  letter-spacing:-0.04em;
-  color:var(--ink);
-}
+    .list-row:hover,
+    .list-row.is-active{
+      transform:translateX(8px);
+    }
 
-.list-preview-service{
-  margin:6px 0 0;
-  font-size:10px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--muted);
-}
+    .list-row.is-active .list-name{color:var(--ink)}
+    .list-row.is-active .list-bullet{
+      background:var(--ink);
+      transform:scale(1.05);
+    }
 
-.list-row{
-  display:grid !important;
-  grid-template-columns:minmax(0,1fr) minmax(140px,.8fr) 28px !important;
-  gap:24px !important;
-  align-items:center !important;
-  padding:18px 0 !important;
-  border-bottom:1px dashed var(--line-2) !important;
-  transition:transform .25s var(--ease), color .25s ease, opacity .25s ease !important;
-}
+    .list-name{
+      margin:0 !important;
+      font-size:clamp(20px,1.8vw,30px) !important;
+      line-height:1.04 !important;
+      font-weight:800 !important;
+      letter-spacing:-0.04em !important;
+    }
 
-.list-row:hover,
-.list-row.is-active{
-  transform:translateX(8px);
-}
+    .list-service{
+      margin:0 !important;
+      font-size:13px !important;
+      color:var(--muted) !important;
+    }
 
-.list-row.is-active .list-name{
-  color:var(--ink);
-}
+    .list-bullet{
+      width:10px !important;
+      height:10px !important;
+      border-radius:50% !important;
+      border:1px solid var(--ink) !important;
+      justify-self:end !important;
+      transition:background .25s ease, transform .25s ease !important;
+    }
 
-.list-row.is-active .list-bullet{
-  background:var(--ink);
-  transform:scale(1.05);
-}
+    @media (max-width: 900px){
+      .list-body{grid-template-columns:1fr}
+      .list-preview{display:none}
+    }
 
-.list-name{
-  margin:0 !important;
-  font-size:clamp(20px,1.8vw,30px) !important;
-  line-height:1.04 !important;
-  font-weight:800 !important;
-  letter-spacing:-0.04em !important;
-}
+    @media (max-width: 768px){
+      .list-head{margin-bottom:20px !important}
+      .list-row{
+        grid-template-columns:1fr auto !important;
+        gap:10px 20px !important;
+        padding:16px 0 !important;
+      }
+      .list-name{grid-column:1 / 2}
+      .list-service{
+        grid-column:1 / 2;
+        font-size:12px !important;
+      }
+      .list-bullet{
+        grid-column:2 / 3;
+        grid-row:1 / span 2;
+        align-self:center;
+      }
+    }
 
-.list-service{
-  margin:0 !important;
-  font-size:13px !important;
-  color:var(--muted) !important;
-}
-
-.list-bullet{
-  width:10px !important;
-  height:10px !important;
-  border-radius:50% !important;
-  border:1px solid var(--ink) !important;
-  justify-self:end !important;
-  transition:background .25s ease, transform .25s ease !important;
-}
-
-@media (max-width: 900px){
-  .list-body{
-    grid-template-columns:1fr;
-  }
-
-  .list-preview{
-    display:none;
-  }
-}
-
-@media (max-width: 768px){
-  .list-head{
-    margin-bottom:20px !important;
-  }
-
-  .list-row{
-    grid-template-columns:1fr auto !important;
-    gap:10px 20px !important;
-    padding:16px 0 !important;
-  }
-
-  .list-name{
-    grid-column:1 / 2;
-  }
-
-  .list-service{
-    grid-column:1 / 2;
-    font-size:12px !important;
-  }
-
-  .list-bullet{
-    grid-column:2 / 3;
-    grid-row:1 / span 2;
-    align-self:center;
-  }
-}
-
-    /* ===== Detail ===== */
     .detail-page{background:var(--bg-2)}
 
     .detail-layout{
@@ -691,7 +660,6 @@
       color:#555;
     }
 
-    /* ===== Footer ===== */
     .nam-footer{
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       background:var(--bg);
@@ -846,25 +814,17 @@
       .list-row{grid-template-columns:minmax(0,1fr) minmax(120px,.7fr) 24px}
     }
 
-       @media (max-width: 900px){
-         .projects-grid{
-        gap:18px;
-     }
+    @media (max-width: 900px){
+      .projects-grid{gap:18px}
+      .span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12}
+      .project-card .project-thumb{aspect-ratio:4 / 3}
+      .nf-mid{grid-template-columns:1fr;gap:22px;min-height:auto}
+      .nf-time{justify-self:start;width:auto}
+      .nf-links{justify-self:start}
+      .nf-bottom{grid-template-columns:1fr;gap:10px}
+      .nf-center,.nf-right{text-align:left;justify-self:start}
+    }
 
-         .span-8,.span-7,.span-6,.span-5,.span-4{
-        grid-column:span 12;
-     }
-
-         .project-card .project-thumb{
-        aspect-ratio:4 / 3;
-     }
-
-         .nf-mid{grid-template-columns:1fr;gap:22px;min-height:auto}
-         .nf-time{justify-self:start;width:auto}
-         .nf-links{justify-self:start}
-         .nf-bottom{grid-template-columns:1fr;gap:10px}
-         .nf-center,.nf-right{text-align:left;justify-self:start}
-      }
     @media (max-width: 768px){
       .shell{width:min(calc(100% - 32px), var(--max))}
       .list-head{margin-bottom:32px}
@@ -893,9 +853,7 @@
       .nf-form{flex-direction:column;align-items:stretch}
       .nf-btn{width:100%}
     }
-  
 
-    /* ===== NAM-inspired theme + switch ===== */
     :root{
       --bg:#f6f1e8;
       --bg-2:#f6f1e8;
@@ -1240,9 +1198,6 @@
       .shell{width:min(var(--max), calc(100% - 24px))}
     }
 
-  
-
-    /* ===== Footer refresh — card system ===== */
     .nam-footer{
       margin-top:84px;
       padding:34px 0 56px;
@@ -1415,49 +1370,30 @@
       flex-wrap:wrap;
     }
 
-    .legal a{
-      color:inherit;
-    }
-
+    .legal a{color:inherit}
     .legal a:hover{color:var(--ink)}
 
     @media (max-width: 1100px){
-      .footer-grid{
-        grid-template-columns:1fr 1fr;
-      }
+      .footer-grid{grid-template-columns:1fr 1fr}
     }
 
     @media (max-width: 780px){
       .nam-footer{padding:28px 0 40px}
-
-      .footer-grid{
-        grid-template-columns:1fr;
-      }
-
-      .footer-card{
-        min-height:auto;
-      }
-
+      .footer-grid{grid-template-columns:1fr}
+      .footer-card{min-height:auto}
       .field{
         flex-direction:column;
         align-items:stretch;
         border-radius:24px;
         padding:10px;
       }
-
-      .field button{
-        width:100%;
-      }
-
+      .field button{width:100%}
       .legal{
         flex-direction:column;
         align-items:flex-start;
       }
     }
 
-  
-
-    /* ===== Straight image corners ===== */
     .project-thumb,
     .detail-image,
     .more-thumb,
@@ -1467,127 +1403,126 @@
       border-radius:0 !important;
     }
 
-/* ===== FINAL WORK GRID FIX ===== */
-:root{
-  --page-gutter: 6px;
-}
+    :root{
+      --page-gutter: 6px;
+    }
 
-.shell,
-.header-inner{
-  width:calc(100% - (var(--page-gutter) * 2)) !important;
-  max-width:none !important;
-  margin:0 auto !important;
-}
+    .shell,
+    .header-inner{
+      width:calc(100% - (var(--page-gutter) * 2)) !important;
+      max-width:none !important;
+      margin:0 auto !important;
+    }
 
-#app{
-  padding-top:108px !important;
-}
+    #app{
+      padding-top:108px !important;
+    }
 
-.site-header{
-  padding:10px 0 !important;
-}
+    .site-header{
+      padding:10px 0 !important;
+    }
 
-.header-inner{
-  padding:10px 12px !important;
-}
+    .header-inner{
+      padding:10px 12px !important;
+    }
 
-.site-header.scrolled .header-inner{
-  border-radius:18px !important;
-}
+    .site-header.scrolled .header-inner{
+      border-radius:18px !important;
+    }
 
-.grid-page{
-  padding-top:8px !important;
-  padding-bottom:56px !important;
-}
+    .grid-page{
+      padding-top:8px !important;
+      padding-bottom:56px !important;
+    }
 
-.subnav{
-  margin:0 0 16px !important;
-}
+    .subnav{
+      margin:0 0 16px !important;
+    }
 
-.projects-grid{
-  display:grid !important;
-  grid-template-columns:repeat(12,minmax(0,1fr)) !important;
-  gap:14px !important;
-  align-items:start !important;
-}
+    .projects-grid{
+      display:grid !important;
+      grid-template-columns:repeat(12,minmax(0,1fr)) !important;
+      gap:14px !important;
+      align-items:start !important;
+    }
 
-.project-thumb{
-  position:relative !important;
-  overflow:hidden !important;
-  margin-bottom:8px !important;
-  height:clamp(300px, 28vw, 430px) !important;
-  min-height:0 !important;
-  aspect-ratio:auto !important;
-  border:1px solid var(--line) !important;
-  box-shadow:none !important;
-  background:#ececec !important;
-}
+    .project-thumb{
+      position:relative !important;
+      overflow:hidden !important;
+      margin-bottom:8px !important;
+      height:clamp(300px, 28vw, 430px) !important;
+      min-height:0 !important;
+      aspect-ratio:auto !important;
+      border:1px solid var(--line) !important;
+      box-shadow:none !important;
+      background:#ececec !important;
+    }
 
-.project-card.span-12 .project-thumb,
-.project-card.span-8 .project-thumb,
-.project-card.span-7 .project-thumb,
-.project-card.span-6 .project-thumb,
-.project-card.span-5 .project-thumb,
-.project-card.span-4 .project-thumb{
-  aspect-ratio:auto !important;
-}
+    .project-card.span-12 .project-thumb,
+    .project-card.span-8 .project-thumb,
+    .project-card.span-7 .project-thumb,
+    .project-card.span-6 .project-thumb,
+    .project-card.span-5 .project-thumb,
+    .project-card.span-4 .project-thumb{
+      aspect-ratio:auto !important;
+    }
 
-.project-thumb img{
-  width:100% !important;
-  height:100% !important;
-  object-fit:cover !important;
-  object-position:center center !important;
-}
+    .project-thumb img{
+      width:100% !important;
+      height:100% !important;
+      object-fit:cover !important;
+      object-position:center center !important;
+    }
 
-.project-meta{
-  display:grid !important;
-  grid-template-columns:minmax(0,1fr) auto !important;
-  gap:4px 12px !important;
-  align-items:end !important;
-}
+    .project-meta{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) auto !important;
+      gap:4px 12px !important;
+      align-items:end !important;
+    }
 
-.project-title{
-  margin:0 !important;
-  font-size:clamp(18px,1.35vw,23px) !important;
-  line-height:1.02 !important;
-  letter-spacing:-0.04em !important;
-}
+    .project-title{
+      margin:0 !important;
+      font-size:clamp(18px,1.35vw,23px) !important;
+      line-height:1.02 !important;
+      letter-spacing:-0.04em !important;
+    }
 
-.project-services{
-  margin:0 !important;
-  font-size:10px !important;
-  letter-spacing:.14em !important;
-  white-space:nowrap !important;
-}
+    .project-services{
+      margin:0 !important;
+      font-size:10px !important;
+      letter-spacing:.14em !important;
+      white-space:nowrap !important;
+    }
 
-@media (max-width: 900px){
-  .span-8,.span-7,.span-6,.span-5,.span-4{
-    grid-column:span 12 !important;
-  }
+    @media (max-width: 900px){
+      .span-8,.span-7,.span-6,.span-5,.span-4{
+        grid-column:span 12 !important;
+      }
 
-  .project-thumb{
-    height:clamp(280px, 62vw, 460px) !important;
-  }
+      .project-thumb{
+        height:clamp(280px, 62vw, 460px) !important;
+      }
 
-  .header-inner,
-  .shell{
-    width:calc(100% - 24px) !important;
-  }
-}
+      .header-inner,
+      .shell{
+        width:calc(100% - 24px) !important;
+      }
+    }
 
-@media (max-width: 520px){
-  .project-thumb{
-    height:clamp(260px, 70vw, 380px) !important;
-  }
+    @media (max-width: 520px){
+      .project-thumb{
+        height:clamp(260px, 70vw, 380px) !important;
+      }
 
-  .project-meta{
-    display:block !important;
-  }
+      .project-meta{
+        display:block !important;
+      }
 
-  .project-services{
-    margin-top:6px !important;
-  }
-}
+      .project-services{
+        margin-top:6px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1678,78 +1613,78 @@
 
   <script>
     const projects = [
-  {
-    id: "The-Alfred",
-    slug: "The-Alfred",
-    title: "The-Alfred",
-    services: "CGI / Film",
-    client: "DANKAV",
-    year: "2025",
-    location: "Mermaid Beach",
-    liveSite: "http://thealfred.co/",
-    description: "A hospitality-focused visual narrative shaped around light, openness, and quiet luxury.\n\nThe imagery highlights water, horizon, and restrained architectural detailing to create a calm yet premium identity for the project.",
-    coverImage: "/assets/work-03.webp",
-    previewVideo: "assets/work-03.mp4",
-    images: ["/assets/work-03.webp","/assets/work-03-01.webp","/assets/work-03-02.webp"],
-    width: "span-4"
-  },
-  {
-    id: "verde-crest-villas",
-    slug: "verde-crest-villas",
-    title: "Verde Crest Villas",
-    services: "CGI / Film",
-    client: "Sarazin, Drive Property Group",
-    year: "2025",
-    location: "Dubai",
-    liveSite: "",
-    description: "Luxury residential development created to communicate elegance, clarity, and premium lifestyle through architectural visualization.\n\nThe visuals focus on clean composition, atmosphere, and high-end presentation for marketing and concept communication.",
-    coverImage: "/assets/work-01.webp",
-    images: [],
-    width: "span-4"
-  },
-  {
-    id: "hillside-serenity",
-    slug: "hillside-serenity",
-    title: "Hillside Serenity",
-    services: "CGI / Film",
-    client: "Private Client",
-    year: "2025",
-    location: "California",
-    liveSite: "",
-    description: "A contemporary retreat in nature designed to merge architecture with landscape.\n\nThe imagery emphasizes calm atmosphere, strong framing, and high-value exterior storytelling.",
-    coverImage: "/assets/work-02.webp",
-    images: [],
-    width: "span-4"
-  },
-  {
-    id: "serene-lines",
-    slug: "serene-lines",
-    title: "Serene Lines",
-    services: "CGI / Film",
-    client: "Interior Brand",
-    year: "2025",
-    location: "Copenhagen",
-    liveSite: "",
-    description: "A calm interior study built around light, restraint, and refined material transitions.\n\nThe visuals are intentionally minimal, with emphasis on geometry, softness, and brand-ready composition.",
-    coverImage: "/assets/work-04.webp",
-    images: [],
-    width: "span-4"
-  },
-  {
-    id: "modern-haven",
-    slug: "modern-haven",
-    title: "Modern Haven",
-    services: "CGI / Film",
-    client: "Real Estate Developer",
-    year: "2026",
-    location: "Amsterdam",
-    liveSite: "",
-    description: "Interior CGI developed to present modern living through a warm, polished lens.\n\nThe scenes balance clean architectural forms with inviting lifestyle-driven atmosphere.",
-    coverImage: "/assets/work-05.webp",
-    images: [],
-    width: "span-4"
-  }
-];
+      {
+        id: "The-Alfred",
+        slug: "The-Alfred",
+        title: "The-Alfred",
+        services: "CGI / Film",
+        client: "DANKAV",
+        year: "2025",
+        location: "Mermaid Beach",
+        liveSite: "http://thealfred.co/",
+        description: "A hospitality-focused visual narrative shaped around light, openness, and quiet luxury.\n\nThe imagery highlights water, horizon, and restrained architectural detailing to create a calm yet premium identity for the project.",
+        coverImage: "/assets/work-03.webp",
+        previewVideo: "/assets/work-03.mp4",
+        images: ["/assets/work-03.webp","/assets/work-03-01.webp","/assets/work-03-02.webp"],
+        width: "span-4"
+      },
+      {
+        id: "verde-crest-villas",
+        slug: "verde-crest-villas",
+        title: "Verde Crest Villas",
+        services: "CGI / Film",
+        client: "Sarazin, Drive Property Group",
+        year: "2025",
+        location: "Dubai",
+        liveSite: "",
+        description: "Luxury residential development created to communicate elegance, clarity, and premium lifestyle through architectural visualization.\n\nThe visuals focus on clean composition, atmosphere, and high-end presentation for marketing and concept communication.",
+        coverImage: "/assets/work-01.webp",
+        images: [],
+        width: "span-4"
+      },
+      {
+        id: "hillside-serenity",
+        slug: "hillside-serenity",
+        title: "Hillside Serenity",
+        services: "CGI / Film",
+        client: "Private Client",
+        year: "2025",
+        location: "California",
+        liveSite: "",
+        description: "A contemporary retreat in nature designed to merge architecture with landscape.\n\nThe imagery emphasizes calm atmosphere, strong framing, and high-value exterior storytelling.",
+        coverImage: "/assets/work-02.webp",
+        images: [],
+        width: "span-4"
+      },
+      {
+        id: "serene-lines",
+        slug: "serene-lines",
+        title: "Serene Lines",
+        services: "CGI / Film",
+        client: "Interior Brand",
+        year: "2025",
+        location: "Copenhagen",
+        liveSite: "",
+        description: "A calm interior study built around light, restraint, and refined material transitions.\n\nThe visuals are intentionally minimal, with emphasis on geometry, softness, and brand-ready composition.",
+        coverImage: "/assets/work-04.webp",
+        images: [],
+        width: "span-4"
+      },
+      {
+        id: "modern-haven",
+        slug: "modern-haven",
+        title: "Modern Haven",
+        services: "CGI / Film",
+        client: "Real Estate Developer",
+        year: "2026",
+        location: "Amsterdam",
+        liveSite: "",
+        description: "Interior CGI developed to present modern living through a warm, polished lens.\n\nThe scenes balance clean architectural forms with inviting lifestyle-driven atmosphere.",
+        coverImage: "/assets/work-05.webp",
+        images: [],
+        width: "span-4"
+      }
+    ];
 
     let lenis;
     function initLenis(){
@@ -1801,219 +1736,243 @@
       document.title = 'ZSIZART — Work';
 
       const cards = projects.map((project, index) => `
-  <a
-    class="project-card ${project.width || 'span-12'}"
-    style="animation-delay:${(index % 3) * 0.12}s"
-    href="#/projects/${project.slug}"
-    ${project.previewVideo ? `data-video="${project.previewVideo}"` : ''}
-  >
-    <div class="project-thumb ${project.previewVideo ? 'has-video' : ''}">
-      <img
-        class="project-cover"
-        src="${project.coverImage}"
-        alt="${escapeHtml(project.title)}"
-        loading="${index > 2 ? 'lazy' : 'eager'}"
-      >
-
-      ${project.previewVideo ? `
-        <video
-          class="project-video"
-          muted
-          playsinline
-          preload="none"
-          poster="${project.coverImage}"
+        <a
+          class="project-card ${project.width || 'span-12'}"
+          style="animation-delay:${(index % 3) * 0.12}s"
+          href="#/projects/${project.slug}"
+          ${project.previewVideo ? `data-video="${project.previewVideo}"` : ''}
         >
-          <source src="${project.previewVideo}" type="video/mp4">
-        </video>
-      ` : ''}
+          <div class="project-thumb ${project.previewVideo ? 'has-video' : ''}">
+            <img
+              class="project-cover"
+              src="${project.coverImage}"
+              alt="${escapeHtml(project.title)}"
+              loading="${index > 2 ? 'lazy' : 'eager'}"
+            >
 
-      <div class="project-overlay"><span>View Project</span></div>
-    </div>
+            ${project.previewVideo ? `
+              <video
+                class="project-video"
+                muted
+                playsinline
+                webkit-playsinline
+                preload="auto"
+                poster="${project.coverImage}"
+              >
+                <source src="${project.previewVideo}" type="video/mp4">
+              </video>
+            ` : ''}
 
-    <div class="project-meta">
-      <h2 class="project-title">${escapeHtml(project.title)}</h2>
-      <p class="project-services">${escapeHtml(project.services)}</p>
-    </div>
-  </a>
-`).join('');
+            <div class="project-overlay"><span>View Project</span></div>
+          </div>
 
-function initProjectHoverVideos(){
-  const cards = document.querySelectorAll('.project-card[data-video]');
-
-  cards.forEach((card) => {
-    const thumb = card.querySelector('.project-thumb');
-    const video = card.querySelector('.project-video');
-
-    if (!thumb || !video) return;
-
-    let firstFrameShown = false;
-
-    const showVideo = () => {
-      thumb.classList.add('has-started');
-      firstFrameShown = true;
-    };
-
-    const playVideo = async () => {
-      try {
-        await video.play();
-      } catch (_) {}
-    };
-
-    const pauseVideo = () => {
-      video.pause();
-
-      if (video.currentTime > 0 || firstFrameShown) {
-        thumb.classList.add('has-started');
-      }
-    };
-
-    video.addEventListener('loadeddata', showVideo, { once:true });
-
-    video.addEventListener('timeupdate', () => {
-      if (video.currentTime > 0.01 && !firstFrameShown) {
-        showVideo();
-      }
-    });
-
-    card.addEventListener('mouseenter', playVideo);
-    card.addEventListener('mouseleave', pauseVideo);
-
-    card.addEventListener('focusin', playVideo);
-    card.addEventListener('focusout', (e) => {
-      if (!card.contains(e.relatedTarget)) pauseVideo();
-    });
-
-    video.addEventListener('ended', () => {
-      video.pause();
-      thumb.classList.add('has-started');
-    });
-  });
-}
+          <div class="project-meta">
+            <h2 class="project-title">${escapeHtml(project.title)}</h2>
+            <p class="project-services">${escapeHtml(project.services)}</p>
+          </div>
+        </a>
+      `).join('');
 
       app.innerHTML = `
-  <main class="page grid-page">
-    <div class="shell">
-      <div class="subnav">
-        <span class="current">Grid</span>
-        <a href="#/projects/lists">Lists</a>
-      </div>
-      <section class="projects-grid">${cards}</section>
-    </div>
-  </main>
-`;
+        <main class="page grid-page">
+          <div class="shell">
+            <div class="subnav">
+              <span class="current">Grid</span>
+              <a href="#/projects/lists">Lists</a>
+            </div>
+            <section class="projects-grid">${cards}</section>
+          </div>
+        </main>
+      `;
 
-initProjectHoverVideos();
-window.scrollTo(0,0);
+      initProjectHoverVideos();
+      window.scrollTo(0,0);
+    }
+
+    function initProjectHoverVideos(){
+      const cards = document.querySelectorAll('.project-card[data-video]');
+
+      cards.forEach((card) => {
+        const thumb = card.querySelector('.project-thumb');
+        const video = card.querySelector('.project-video');
+
+        if (!thumb || !video) return;
+
+        let isHovering = false;
+        let isVisible = false;
+
+        video.muted = true;
+        video.playsInline = true;
+
+        const showVideoFrame = () => {
+          if (isVisible) return;
+          isVisible = true;
+          thumb.classList.add('is-video-visible');
+        };
+
+        const playVideo = async () => {
+          isHovering = true;
+
+          if (video.readyState === 0) {
+            video.load();
+          }
+
+          if (video.ended || (video.duration && video.currentTime >= video.duration - 0.05)) {
+            try { video.currentTime = 0; } catch (_) {}
+          }
+
+          try {
+            await video.play();
+          } catch (_) {}
+        };
+
+        const pauseVideo = () => {
+          isHovering = false;
+          video.pause();
+
+          if (video.readyState >= 2 || video.currentTime > 0) {
+            showVideoFrame();
+          }
+        };
+
+        video.addEventListener('loadeddata', () => {
+          showVideoFrame();
+          if (isHovering && video.paused) {
+            video.play().catch(() => {});
+          }
+        });
+
+        video.addEventListener('canplay', showVideoFrame);
+
+        video.addEventListener('timeupdate', () => {
+          if (video.currentTime > 0.01) {
+            showVideoFrame();
+          }
+        });
+
+        video.addEventListener('ended', () => {
+          video.pause();
+          showVideoFrame();
+        });
+
+        card.addEventListener('mouseenter', playVideo);
+        card.addEventListener('mouseleave', pauseVideo);
+
+        card.addEventListener('focusin', playVideo);
+        card.addEventListener('focusout', (e) => {
+          if (!card.contains(e.relatedTarget)) pauseVideo();
+        });
+      });
     }
 
     function renderList(){
-  document.title = 'ZSIZART — Featured work';
+      document.title = 'ZSIZART — Featured work';
 
-  const firstProject = projects[0];
+      const firstProject = projects[0];
 
-  const rows = projects.map((project, index) => `
-    <a
-      class="list-row ${index === 0 ? 'is-active' : ''}"
-      href="#/projects/${project.slug}"
-      data-preview="${project.coverImage}"
-      data-title="${escapeHtml(project.title)}"
-      data-service="${escapeHtml(project.services)}"
-    >
-      <h2 class="list-name">${escapeHtml(project.title)}</h2>
-      <p class="list-service">${escapeHtml(project.services)}</p>
-      <span class="list-bullet" aria-hidden="true"></span>
-    </a>
-  `).join('');
+      const rows = projects.map((project, index) => `
+        <a
+          class="list-row ${index === 0 ? 'is-active' : ''}"
+          href="#/projects/${project.slug}"
+          data-preview="${project.coverImage}"
+          data-title="${escapeHtml(project.title)}"
+          data-service="${escapeHtml(project.services)}"
+        >
+          <h2 class="list-name">${escapeHtml(project.title)}</h2>
+          <p class="list-service">${escapeHtml(project.services)}</p>
+          <span class="list-bullet" aria-hidden="true"></span>
+        </a>
+      `).join('');
 
-  app.innerHTML = `
-    <main class="page list-page">
-      <div class="shell">
-        <section class="list-shell">
-          <div class="list-head">
-            <h1 class="list-title">Featured work</h1>
-            <div class="list-controls">
-              <a class="list-viewall" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
-              <div class="subnav">
-                <a href="#/projects/grid">Grid</a>
-                <span class="current">Lists</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="list-body">
-            <div class="list-table">${rows}</div>
-
-            <aside class="list-preview" aria-hidden="true">
-              <div class="list-preview-frame" id="listPreviewFrame">
-                <img
-                  id="listPreviewImg"
-                  src="${firstProject.coverImage}"
-                  alt="${escapeHtml(firstProject.title)}"
-                  loading="eager"
-                  decoding="async"
-                >
-              </div>
-
-              <div class="list-preview-meta">
-                <div>
-                  <h2 class="list-preview-title" id="listPreviewTitle">${escapeHtml(firstProject.title)}</h2>
-                  <p class="list-preview-service" id="listPreviewService">${escapeHtml(firstProject.services)}</p>
+      app.innerHTML = `
+        <main class="page list-page">
+          <div class="shell">
+            <section class="list-shell">
+              <div class="list-head">
+                <h1 class="list-title">Featured work</h1>
+                <div class="list-controls">
+                  <a class="list-viewall" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
+                  <div class="subnav">
+                    <a href="#/projects/grid">Grid</a>
+                    <span class="current">Lists</span>
+                  </div>
                 </div>
               </div>
-            </aside>
+
+              <div class="list-body">
+                <div class="list-table">${rows}</div>
+
+                <aside class="list-preview" aria-hidden="true">
+                  <div class="list-preview-frame" id="listPreviewFrame">
+                    <img
+                      id="listPreviewImg"
+                      src="${firstProject.coverImage}"
+                      alt="${escapeHtml(firstProject.title)}"
+                      loading="eager"
+                      decoding="async"
+                    >
+                  </div>
+
+                  <div class="list-preview-meta">
+                    <div>
+                      <h2 class="list-preview-title" id="listPreviewTitle">${escapeHtml(firstProject.title)}</h2>
+                      <p class="list-preview-service" id="listPreviewService">${escapeHtml(firstProject.services)}</p>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </section>
           </div>
-        </section>
-      </div>
-    </main>
-  `;
+        </main>
+      `;
 
-  initListPreview();
-  window.scrollTo(0,0);
-}
+      initListPreview();
+      window.scrollTo(0,0);
+    }
 
-function initListPreview(){
-  const rows = [...document.querySelectorAll('.list-row')];
-  const frame = document.getElementById('listPreviewFrame');
-  const img = document.getElementById('listPreviewImg');
-  const title = document.getElementById('listPreviewTitle');
-  const service = document.getElementById('listPreviewService');
+    function initListPreview(){
+      const rows = [...document.querySelectorAll('.list-row')];
+      const frame = document.getElementById('listPreviewFrame');
+      const img = document.getElementById('listPreviewImg');
+      const title = document.getElementById('listPreviewTitle');
+      const service = document.getElementById('listPreviewService');
 
-  if (!rows.length || !frame || !img || !title || !service) return;
+      if (!rows.length || !frame || !img || !title || !service) return;
 
-  let swapTimer = null;
+      let swapTimer = null;
 
-  function setActive(row){
-    rows.forEach(item => item.classList.toggle('is-active', item === row));
+      function setActive(row){
+        rows.forEach(item => item.classList.toggle('is-active', item === row));
 
-    const nextSrc = row.dataset.preview || '';
-    const nextTitle = row.dataset.title || '';
-    const nextService = row.dataset.service || '';
+        const nextSrc = row.dataset.preview || '';
+        const nextTitle = row.dataset.title || '';
+        const nextService = row.dataset.service || '';
 
-    if (
-      img.getAttribute('src') === nextSrc &&
-      title.textContent === nextTitle &&
-      service.textContent === nextService
-    ) return;
+        if (
+          img.getAttribute('src') === nextSrc &&
+          title.textContent === nextTitle &&
+          service.textContent === nextService
+        ) return;
 
-    frame.classList.add('is-changing');
-    clearTimeout(swapTimer);
+        frame.classList.add('is-changing');
+        clearTimeout(swapTimer);
 
-    swapTimer = setTimeout(() => {
-      img.src = nextSrc;
-      img.alt = nextTitle;
-      title.textContent = nextTitle;
-      service.textContent = nextService;
-      frame.classList.remove('is-changing');
-    }, 110);
-  }
+        swapTimer = setTimeout(() => {
+          img.src = nextSrc;
+          img.alt = nextTitle;
+          title.textContent = nextTitle;
+          service.textContent = nextService;
+          frame.classList.remove('is-changing');
+        }, 110);
+      }
 
-  rows.forEach((row) => {
-    row.addEventListener('mouseenter', () => setActive(row));
-    row.addEventListener('focus', () => setActive(row));
-  });
+      rows.forEach((row) => {
+        row.addEventListener('mouseenter', () => setActive(row));
+        row.addEventListener('focus', () => setActive(row));
+      });
 
-  setActive(rows[0]);
-}
+      setActive(rows[0]);
+    }
 
     function renderProject(slug){
       const project = projects.find((item) => item.slug === slug);
@@ -2170,7 +2129,6 @@ function initListPreview(){
     })();
   </script>
 
-
   <script>
     (function(){
       const header = document.getElementById('siteHeader');
@@ -2214,6 +2172,5 @@ function initListPreview(){
       });
     })();
   </script>
-
 </body>
 </html>
