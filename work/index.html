@@ -245,18 +245,17 @@
     }
 
     .project-video{
-      position:absolute;
-      inset:0;
-      z-index:1;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .22s ease, transform 1.05s var(--ease);
-      background:#000;
-    }
+       position:absolute;
+       inset:0;
+       z-index:1;
+       width:100%;
+       height:100%;
+       object-fit:cover;
+       object-position:center;
+        opacity:0;
+       pointer-events:none;
+       transition:opacity .22s ease, transform 1.05s var(--ease);
+      }
 
     .project-thumb.has-video.is-video-visible .project-video{
       opacity:1;
@@ -266,29 +265,10 @@
       opacity:0;
     }
 
-    .project-overlay{
-      position:absolute;
-      inset:0;
-      z-index:2;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,.32) 100%);
-      opacity:0;
-      transition:opacity .45s ease;
-    }
+       .project-overlay{
+      display:none !important;
+      }
 
-    .project-overlay span{
-      color:#fff;
-      font-size:clamp(20px,1.6vw,28px);
-      font-weight:500;
-      letter-spacing:-0.02em;
-      transform:translateY(14px);
-      transition:transform .45s var(--ease);
-    }
-
-    .project-card:hover .project-overlay{opacity:1}
-    .project-card:hover .project-overlay span{transform:none}
     .project-card:hover .project-video{transform:scale(1.02)}
     .project-card:hover .project-thumb img,
     .more-card:hover img{transform:scale(1.02)}
@@ -1756,14 +1736,13 @@
                 muted
                 playsinline
                 webkit-playsinline
-                preload="auto"
+                preload="metadata"
                 poster="${project.coverImage}"
               >
                 <source src="${project.previewVideo}" type="video/mp4">
               </video>
             ` : ''}
 
-            <div class="project-overlay"><span>View Project</span></div>
           </div>
 
           <div class="project-meta">
@@ -1789,81 +1768,63 @@
       window.scrollTo(0,0);
     }
 
-    function initProjectHoverVideos(){
-      const cards = document.querySelectorAll('.project-card[data-video]');
+function initProjectHoverVideos(){
+  const cards = document.querySelectorAll('.project-card[data-video]');
 
-      cards.forEach((card) => {
-        const thumb = card.querySelector('.project-thumb');
-        const video = card.querySelector('.project-video');
+  cards.forEach((card) => {
+    const thumb = card.querySelector('.project-thumb');
+    const video = card.querySelector('.project-video');
 
-        if (!thumb || !video) return;
+    if (!thumb || !video) return;
 
-        let isHovering = false;
-        let isVisible = false;
+    let hasPlayedOnce = false;
 
-        video.muted = true;
-        video.playsInline = true;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
 
-        const showVideoFrame = () => {
-          if (isVisible) return;
-          isVisible = true;
-          thumb.classList.add('is-video-visible');
-        };
+    const showVideo = () => {
+      thumb.classList.add('is-video-visible');
+    };
 
-        const playVideo = async () => {
-          isHovering = true;
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch (_) {}
+    };
 
-          if (video.readyState === 0) {
-            video.load();
-          }
+    const pauseVideo = () => {
+      video.pause();
 
-          if (video.ended || (video.duration && video.currentTime >= video.duration - 0.05)) {
-            try { video.currentTime = 0; } catch (_) {}
-          }
+      if (hasPlayedOnce || video.currentTime > 0.01) {
+        showVideo();
+      }
+    };
 
-          try {
-            await video.play();
-          } catch (_) {}
-        };
+    video.addEventListener('timeupdate', () => {
+      if (video.currentTime > 0.01) {
+        hasPlayedOnce = true;
+        showVideo();
+      }
+    });
 
-        const pauseVideo = () => {
-          isHovering = false;
-          video.pause();
+    video.addEventListener('canplay', showVideoFrame);
 
-          if (video.readyState >= 2 || video.currentTime > 0) {
-            showVideoFrame();
-          }
-        };
+    video.addEventListener('timeupdate', () => {
+      if (video.currentTime > 0.01) {
+        showVideoFrame();
+      }
+    });
 
-        video.addEventListener('loadeddata', () => {
-          showVideoFrame();
-          if (isHovering && video.paused) {
-            video.play().catch(() => {});
-          }
-        });
+    card.addEventListener('mouseenter', playVideo);
+    card.addEventListener('mouseleave', pauseVideo);
 
-        video.addEventListener('canplay', showVideoFrame);
-
-        video.addEventListener('timeupdate', () => {
-          if (video.currentTime > 0.01) {
-            showVideoFrame();
-          }
-        });
-
-        video.addEventListener('ended', () => {
-          video.pause();
-          showVideoFrame();
-        });
-
-        card.addEventListener('mouseenter', playVideo);
-        card.addEventListener('mouseleave', pauseVideo);
-
-        card.addEventListener('focusin', playVideo);
-        card.addEventListener('focusout', (e) => {
-          if (!card.contains(e.relatedTarget)) pauseVideo();
-        });
-      });
-    }
+    card.addEventListener('focusin', playVideo);
+    card.addEventListener('focusout', (e) => {
+      if (!card.contains(e.relatedTarget)) pauseVideo();
+    });
+  });
+}
 
     function renderList(){
       document.title = 'ZSIZART — Featured work';
