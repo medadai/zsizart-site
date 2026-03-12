@@ -454,21 +454,36 @@
       flex:0 0 auto;
     }
 
-    /* ===== Projects (home 2-column layout) ===== */
-    .projects-grid{
+    /* ===== Projects (home 2-column layout + hover video) ===== */
+    .work-breakout{
+      width:calc(100vw - 12px);
+      max-width:none;
+      margin-left:calc(50% - 50vw + 6px);
+      margin-right:calc(50% - 50vw + 6px);
+    }
+
+    .work-breakout .projects-grid{
       display:grid;
       grid-template-columns:repeat(12,minmax(0,1fr));
       gap:14px;
       align-items:start;
     }
 
-    .project-card{
+    .work-breakout .project-card{
       display:block;
-      grid-column:span 6;
+      min-width:0;
+      grid-column:span 6 !important;
       opacity:0;
       transform:translateY(18px);
       animation:cardIn .75s var(--ease) forwards;
     }
+
+    .work-breakout .project-stack{
+      width:100%;
+      max-width:none;
+      margin:0;
+    }
+
     @keyframes cardIn{to{opacity:1;transform:none}}
 
     .span-12{grid-column:span 12}
@@ -478,34 +493,60 @@
     .span-5{grid-column:span 5}
     .span-4{grid-column:span 4}
 
-    .projects-grid .project-card{
-      grid-column:span 6 !important;
-    }
-
-    .project-thumb{
+    .work-breakout .project-thumb{
       position:relative;
-      overflow:hidden;
-      background:transparent;
+      display:block;
+      width:100%;
       margin-bottom:10px;
-      aspect-ratio:1.45 / 1;
-      height:auto;
+      aspect-ratio:1.42 / 1;
       min-height:0;
+      overflow:hidden;
       border:0;
+      background:transparent;
       box-shadow:none;
       border-radius:0 !important;
     }
 
-    .project-thumb img{
+    .work-breakout .project-cover,
+    .work-breakout .project-video{
+      display:block;
       width:100%;
       height:100%;
-      object-fit:cover;
-      transition:transform 1.05s var(--ease), filter .8s ease;
+      max-width:100%;
       border-radius:0 !important;
+      background:transparent;
+      object-fit:cover;
     }
 
-    .project-card:hover .project-thumb img{transform:scale(1.05)}
+    .work-breakout .project-cover{
+      position:relative;
+      z-index:1;
+      transition:opacity .22s ease, transform 1.05s var(--ease), filter .8s ease;
+    }
 
-    .project-overlay{
+    .work-breakout .project-video{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .22s ease, transform 1.05s var(--ease);
+    }
+
+    .work-breakout .project-thumb.has-video.is-video-visible .project-video{
+      opacity:1;
+    }
+
+    .work-breakout .project-thumb.has-video.is-video-visible .project-cover{
+      opacity:0;
+    }
+
+    .work-breakout .project-card:hover .project-cover,
+    .work-breakout .project-card:hover .project-video{
+      transform:scale(1.04);
+    }
+
+    .work-breakout .project-overlay{
       position:absolute;
       inset:0;
       display:flex;
@@ -514,9 +555,11 @@
       background:linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,.42) 100%);
       opacity:0;
       transition:opacity .45s ease;
+      z-index:3;
+      pointer-events:none;
     }
 
-    .project-overlay span{
+    .work-breakout .project-overlay span{
       color:#fff;
       font-size:clamp(22px,2vw,32px);
       font-weight:500;
@@ -525,61 +568,60 @@
       transition:transform .45s var(--ease);
     }
 
-    .project-card:hover .project-overlay{opacity:1}
-    .project-card:hover .project-overlay span{transform:none}
-
-    .project-meta{
-      display:flex;
-      gap:8px;
-      justify-content:space-between;
-      align-items:flex-start;
-      flex-wrap:wrap;
+    .work-breakout .project-card:hover .project-overlay{
+      opacity:1;
     }
 
-    .project-title{
+    .work-breakout .project-card:hover .project-overlay span{
+      transform:none;
+    }
+
+    .work-breakout .project-meta{
+      width:100%;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:4px 12px;
+      align-items:end;
+    }
+
+    .work-breakout .project-title{
       margin:0;
-      font-size:clamp(20px,1.7vw,28px);
+      font-size:clamp(20px,1.55vw,28px);
+      line-height:1.02;
+      letter-spacing:-0.04em;
       font-weight:800;
-      letter-spacing:-0.045em;
-      line-height:1.1;
       color:var(--ink);
     }
 
-    .project-services{
-      margin:2px 0 0;
-      font-size:11px;
-      letter-spacing:.16em;
+    .work-breakout .project-services{
+      margin:0;
+      font-size:10px;
+      letter-spacing:.14em;
       text-transform:uppercase;
       color:var(--muted);
+      white-space:nowrap;
+      align-self:end;
       font-weight:700;
     }
 
-    @media (max-width: 900px){
-      .projects-grid{
-        gap:18px;
-      }
-
-      .projects-grid .project-card{
-        grid-column:span 12 !important;
-      }
-
-      .project-thumb{
-        aspect-ratio:1.28 / 1;
+    @media (max-width: 1100px){
+      .work-breakout{
+        width:calc(100vw - 24px);
+        margin-left:calc(50% - 50vw + 12px);
+        margin-right:calc(50% - 50vw + 12px);
       }
     }
 
+    @media (max-width: 900px){
+      .work-breakout .projects-grid{gap:18px}
+      .work-breakout .project-card{grid-column:span 12 !important}
+      .work-breakout .project-thumb{aspect-ratio:1.28 / 1}
+    }
+
     @media (max-width: 520px){
-      .project-thumb{
-        aspect-ratio:1.18 / 1;
-      }
-
-      .project-meta{
-        display:block;
-      }
-
-      .project-services{
-        margin-top:8px;
-      }
+      .work-breakout .project-thumb{aspect-ratio:1.18 / 1}
+      .work-breakout .project-meta{display:block}
+      .work-breakout .project-services{margin-top:8px}
     }
 
     /* ===== Services CTA ===== */
@@ -858,61 +900,8 @@
         <a class="pill-link" href="/work/"><span class="pill-dot"></span>View all</a>
       </div>
 
-      <section class="projects-grid" aria-label="Projects">
-        <a class="project-card span-8" style="animation-delay:0s" href="/work/#/projects/verde-crest-villas">
-          <div class="project-thumb">
-            <img src="/assets/work-01.webp" alt="Verde Crest Villas" loading="eager" decoding="async">
-            <div class="project-overlay"><span>View Project</span></div>
-          </div>
-          <div class="project-meta">
-            <h3 class="project-title">Verde Crest Villas</h3>
-            <p class="project-services">CGI / Film</p>
-          </div>
-        </a>
-
-        <a class="project-card span-4" style="animation-delay:.12s" href="/work/#/projects/hillside-serenity">
-          <div class="project-thumb">
-            <img src="/assets/work-02.webp" alt="Hillside Serenity" loading="lazy" decoding="async">
-            <div class="project-overlay"><span>View Project</span></div>
-          </div>
-          <div class="project-meta">
-            <h3 class="project-title">Hillside Serenity</h3>
-            <p class="project-services">CGI / Film</p>
-          </div>
-        </a>
-
-        <a class="project-card span-6" style="animation-delay:.24s" href="/work/#/projects/retro-home-sweet">
-          <div class="project-thumb">
-            <img src="/assets/work-03.webp" alt="Retro Home Sweet" loading="lazy" decoding="async">
-            <div class="project-overlay"><span>View Project</span></div>
-          </div>
-          <div class="project-meta">
-            <h3 class="project-title">Retro Home Sweet</h3>
-            <p class="project-services">CGI / Film</p>
-          </div>
-        </a>
-
-        <a class="project-card span-6" style="animation-delay:.36s" href="/work/#/projects/serene-lines">
-          <div class="project-thumb">
-            <img src="/assets/work-04.webp" alt="Serene Lines" loading="lazy" decoding="async">
-            <div class="project-overlay"><span>View Project</span></div>
-          </div>
-          <div class="project-meta">
-            <h3 class="project-title">Serene Lines</h3>
-            <p class="project-services">CGI / Film</p>
-          </div>
-        </a>
-
-        <a class="project-card span-12" style="animation-delay:.48s" href="/work/#/projects/modern-haven">
-          <div class="project-thumb">
-            <img src="/assets/work-05.webp" alt="Modern Haven" loading="lazy" decoding="async">
-            <div class="project-overlay"><span>View Project</span></div>
-          </div>
-          <div class="project-meta">
-            <h3 class="project-title">Modern Haven</h3>
-            <p class="project-services">CGI / Film</p>
-          </div>
-        </a>
+      <section class="work-breakout">
+        <section class="projects-grid" id="homeProjectsGrid" aria-label="Projects"></section>
       </section>
     </section>
 
@@ -1037,6 +1026,162 @@
       sync();
       window.addEventListener('scroll', sync, { passive:true });
     })();
+
+    function escapeHtml(value){
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    const homeProjects = [
+      {
+        id: "The-Alfred",
+        slug: "The-Alfred",
+        title: "The-Alfred",
+        services: "CGI / Film",
+        coverImage: "/assets/work-03.webp",
+        previewVideo: "/assets/work-03.mp4",
+        width: "span-6"
+      },
+      {
+        id: "Canopy-House",
+        slug: "Canopy-House",
+        title: "Canopy-House",
+        services: "CGI / Film",
+        coverImage: "/assets/work-01.webp",
+        previewVideo: "/assets/work-01.mp4",
+        width: "span-6"
+      },
+      {
+        id: "hillside-serenity",
+        slug: "hillside-serenity",
+        title: "Hillside Serenity",
+        services: "CGI / Film",
+        coverImage: "/assets/work-02.webp",
+        width: "span-6"
+      },
+      {
+        id: "Serene-Lines",
+        slug: "Serene-Lines",
+        title: "Serene-Lines",
+        services: "CGI / Film",
+        coverImage: "/assets/work-04.webp",
+        previewVideo: "/assets/work-04.mp4",
+        width: "span-6"
+      },
+      {
+        id: "Macquarie-Park",
+        slug: "Macquarie-Park",
+        title: "Macquarie-Park",
+        services: "CGI / Film",
+        coverImage: "/assets/work-05.webp",
+        previewVideo: "/assets/work-05.mp4",
+        width: "span-6"
+      }
+    ];
+
+    function renderHomeProjects(){
+      const grid = document.getElementById('homeProjectsGrid');
+      if (!grid) return;
+
+      grid.innerHTML = homeProjects.map((project, index) => `
+        <a
+          class="project-card ${project.width || 'span-6'}"
+          style="animation-delay:${(index % 2) * 0.08}s"
+          href="/work/#/projects/${project.slug}"
+          ${project.previewVideo ? `data-video="${project.previewVideo}"` : ''}
+        >
+          <div class="project-stack">
+            <div class="project-thumb ${project.previewVideo ? 'has-video' : ''}">
+              <img
+                class="project-cover"
+                src="${project.coverImage}"
+                alt="${escapeHtml(project.title)}"
+                loading="${index > 1 ? 'lazy' : 'eager'}"
+                decoding="async"
+              >
+
+              ${project.previewVideo ? `
+                <video
+                  class="project-video"
+                  muted
+                  loop
+                  playsinline
+                  webkit-playsinline
+                  preload="metadata"
+                  poster="${project.coverImage}"
+                >
+                  <source src="${project.previewVideo}" type="video/mp4">
+                </video>
+              ` : ''}
+
+              <div class="project-overlay"><span>View Project</span></div>
+            </div>
+
+            <div class="project-meta">
+              <h3 class="project-title">${escapeHtml(project.title)}</h3>
+              <p class="project-services">${escapeHtml(project.services)}</p>
+            </div>
+          </div>
+        </a>
+      `).join('');
+
+      initHomeProjectHoverVideos();
+    }
+
+    function initHomeProjectHoverVideos(){
+      const cards = document.querySelectorAll('#homeProjectsGrid .project-card[data-video]');
+
+      cards.forEach((card) => {
+        const thumb = card.querySelector('.project-thumb');
+        const video = card.querySelector('.project-video');
+
+        if (!thumb || !video) return;
+
+        let hasPlayedOnce = false;
+
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+
+        const showVideo = () => {
+          thumb.classList.add('is-video-visible');
+        };
+
+        const playVideo = async () => {
+          try {
+            await video.play();
+          } catch (_) {}
+        };
+
+        const pauseVideo = () => {
+          video.pause();
+          if (hasPlayedOnce || video.currentTime > 0.01) {
+            showVideo();
+          }
+        };
+
+        video.addEventListener('timeupdate', () => {
+          if (video.currentTime > 0.01) {
+            hasPlayedOnce = true;
+            showVideo();
+          }
+        });
+
+        card.addEventListener('mouseenter', playVideo);
+        card.addEventListener('mouseleave', pauseVideo);
+
+        card.addEventListener('focusin', playVideo);
+        card.addEventListener('focusout', (e) => {
+          if (!card.contains(e.relatedTarget)) pauseVideo();
+        });
+      });
+    }
+
+    renderHomeProjects();
 
     /* ===== Theme switch ===== */
     (function(){
@@ -1164,3 +1309,4 @@
   </script>
 </body>
 </html>
+
