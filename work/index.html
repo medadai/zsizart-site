@@ -382,26 +382,25 @@
       }
 
 .project-thumb{
-  display:grid;
-  place-items:center;
+  display:block;
   margin-bottom:8px;
-  height:clamp(360px, 33.6vw, 516px);
+  height:auto;
   min-height:0;
   aspect-ratio:auto !important;
   background:transparent;
   border:0;
+  overflow:visible;
 }
 
 .project-cover,
 .project-video{
-  grid-area:1 / 1;
-  width:auto;
+  display:block;
+  width:100%;
+  height:auto;
   max-width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:center center;
   border-radius:0 !important;
   background:transparent;
+  object-fit:unset;
 }
 
 .project-cover{
@@ -418,6 +417,18 @@
   transition:opacity .22s ease;
 }
 
+.project-thumb.has-video.is-video-visible .project-video{
+  display:block;
+  opacity:1;
+}
+
+.project-thumb.has-video:not(.is-video-visible) .project-video{
+  display:none;
+}
+
+.project-thumb.has-video.is-video-visible .project-cover{
+  display:none;
+}
 .project-meta{
   width:100%;
   display:grid;
@@ -986,7 +997,6 @@
     @media (max-width: 900px){
       .projects-grid{gap:18px}
       .span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12 !important}
-      .project-thumb{height:clamp(336px,74.4vw,552px) !important}
       .list-body{grid-template-columns:1fr}
       .list-preview{display:none}
       .footer-grid{grid-template-columns:1fr}
@@ -1055,7 +1065,6 @@
     @media (max-width: 520px){
       .header-inner{padding:10px 12px}
       .shell{width:min(calc(100% - 24px), var(--max))}
-      .project-thumb{height:clamp(312px,84vw,456px) !important}
       .project-meta{display:block}
       .project-services{margin-top:6px}
       .list-shell{padding:18px 0 90px}
