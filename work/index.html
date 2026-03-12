@@ -345,6 +345,11 @@
       transform:translateY(18px);
       animation:cardIn .75s var(--ease) forwards;
     }
+.project-stack{
+  width:fit-content;
+  max-width:100%;
+  margin:0 auto;
+}
 
     @keyframes cardIn{
       to{opacity:1;transform:none}
@@ -376,87 +381,50 @@
         border-radius:0 !important;
       }
 
-      .project-thumb{
-        margin-bottom:8px;
-        height:clamp(360px, 33.6vw, 516px);
-        min-height:0;
-        aspect-ratio:auto !important;
-        background:transparent;
-        border:0;
-      }
+.project-thumb{
+  display:grid;
+  place-items:center;
+  margin-bottom:8px;
+  height:clamp(360px, 33.6vw, 516px);
+  min-height:0;
+  aspect-ratio:auto !important;
+  background:transparent;
+  border:0;
+}
 
-    .project-card.span-12 .project-thumb,
-    .project-card.span-8 .project-thumb,
-    .project-card.span-7 .project-thumb,
-    .project-card.span-6 .project-thumb,
-    .project-card.span-5 .project-thumb,
-    .project-card.span-4 .project-thumb{
-      aspect-ratio:auto !important;
-    }
+.project-cover,
+.project-video{
+  grid-area:1 / 1;
+  width:auto;
+  max-width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center center;
+  border-radius:0 !important;
+  background:transparent;
+}
 
-    .project-thumb img,
-      .project-video{
-        width:100%;
-        height:100%;
-        object-fit:contain;
-        object-position:center center;
-        border-radius:0 !important;
-        background:transparent;
-      }
+.project-cover{
+  position:relative;
+  z-index:1;
+  transition:opacity .22s ease, filter .8s ease;
+}
 
-      .detail-image img,
-      .more-card img{
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        object-position:center center;
-        border-radius:0 !important;
-      }
+.project-video{
+  position:relative;
+  z-index:1;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s ease;
+}
 
-    .project-cover{
-      position:absolute;
-      inset:0;
-      z-index:1;
-      transition:opacity .22s ease, transform 1.05s var(--ease), filter .8s ease;
-    }
-
-    .project-video{
-      position:absolute;
-      inset:0;
-      z-index:1;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .22s ease, transform 1.05s var(--ease);
-    }
-
-    .project-thumb.has-video.is-video-visible .project-video{
-      opacity:1;
-    }
-
-    .project-thumb.has-video.is-video-visible .project-cover{
-      opacity:0;
-    }
-
-    .project-overlay{
-      display:none !important;
-    }
-
-    .project-card:hover .project-video,
-      .project-card:hover .project-thumb img{
-        transform:none;
-      }
-
-      .more-card:hover img,
-      .detail-image:hover img{
-        transform:scale(1.02);
-      }
-
-    .project-meta{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) auto;
-      gap:4px 12px;
-      align-items:end;
-    }
+.project-meta{
+  width:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:4px 12px;
+  align-items:end;
+}
 
     .project-title{
       margin:0;
@@ -1325,43 +1293,44 @@
     function renderGrid(){
       document.title = 'ZSIZART — Work';
 
-      const cards = projects.map((project, index) => `
-        <a
-          class="project-card ${project.width || 'span-12'}"
-          style="animation-delay:${(index % 3) * 0.12}s"
-          href="#/projects/${project.slug}"
-          ${project.previewVideo ? `data-video="${project.previewVideo}"` : ''}
+const cards = projects.map((project, index) => `
+  <a
+    class="project-card ${project.width || 'span-12'}"
+    style="animation-delay:${(index % 3) * 0.12}s"
+    href="#/projects/${project.slug}"
+    ${project.previewVideo ? `data-video="${project.previewVideo}"` : ''}
+  >
+    <div class="project-stack">
+      <div class="project-thumb ${project.previewVideo ? 'has-video' : ''}">
+        <img
+          class="project-cover"
+          src="${project.coverImage}"
+          alt="${escapeHtml(project.title)}"
+          loading="${index > 2 ? 'lazy' : 'eager'}"
         >
-          <div class="project-thumb ${project.previewVideo ? 'has-video' : ''}">
-            <img
-              class="project-cover"
-              src="${project.coverImage}"
-              alt="${escapeHtml(project.title)}"
-              loading="${index > 2 ? 'lazy' : 'eager'}"
-            >
 
-            ${project.previewVideo ? `
-              <video
-                class="project-video"
-                muted
-                loop
-                playsinline
-                webkit-playsinline
-                preload="metadata"
-                poster="${project.coverImage}"
-              >
-                <source src="${project.previewVideo}" type="video/mp4">
-              </video>
-            ` : ''}
+        ${project.previewVideo ? `
+          <video
+            class="project-video"
+            muted
+            loop
+            playsinline
+            webkit-playsinline
+            preload="metadata"
+            poster="${project.coverImage}"
+          >
+            <source src="${project.previewVideo}" type="video/mp4">
+          </video>
+        ` : ''}
+      </div>
 
-          </div>
-
-          <div class="project-meta">
-            <h2 class="project-title">${escapeHtml(project.title)}</h2>
-            <p class="project-services">${escapeHtml(project.services)}</p>
-          </div>
-        </a>
-      `).join('');
+      <div class="project-meta">
+        <h2 class="project-title">${escapeHtml(project.title)}</h2>
+        <p class="project-services">${escapeHtml(project.services)}</p>
+      </div>
+    </div>
+  </a>
+`).join('');
 
       app.innerHTML = `
         <main class="page grid-page">
