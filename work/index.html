@@ -357,24 +357,33 @@
     .span-5{grid-column:span 5}
     .span-4{grid-column:span 4}
 
-    .project-thumb,
-    .detail-image,
-    .more-thumb{
-      position:relative;
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:var(--card);
-      box-shadow:none;
-      border-radius:0 !important;
-    }
+      .project-thumb{
+        position:relative;
+        overflow:hidden;
+        border:0;
+        background:transparent;
+        box-shadow:none;
+        border-radius:0 !important;
+      }
 
-    .project-thumb{
-      margin-bottom:8px;
-      height:clamp(300px, 28vw, 430px);
-      min-height:0;
-      aspect-ratio:auto !important;
-      background:transparent;
-    }
+      .detail-image,
+      .more-thumb{
+        position:relative;
+        overflow:hidden;
+        border:1px solid var(--line);
+        background:var(--card);
+        box-shadow:none;
+        border-radius:0 !important;
+      }
+
+      .project-thumb{
+        margin-bottom:8px;
+        height:clamp(360px, 33.6vw, 516px);
+        min-height:0;
+        aspect-ratio:auto !important;
+        background:transparent;
+        border:0;
+      }
 
     .project-card.span-12 .project-thumb,
     .project-card.span-8 .project-thumb,
@@ -511,8 +520,8 @@
     .list-preview-frame{
       position:relative;
       overflow:hidden;
-      border:1px solid var(--line);
-      background:var(--card);
+      border:0;
+      background:transparent;
       height:clamp(420px,38vw,640px);
       box-shadow:none;
     }
@@ -1009,7 +1018,7 @@
     @media (max-width: 900px){
       .projects-grid{gap:18px}
       .span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12 !important}
-      .project-thumb{height:clamp(280px,62vw,460px) !important}
+      .project-thumb{height:clamp(336px,74.4vw,552px) !important}
       .list-body{grid-template-columns:1fr}
       .list-preview{display:none}
       .footer-grid{grid-template-columns:1fr}
@@ -1078,7 +1087,7 @@
     @media (max-width: 520px){
       .header-inner{padding:10px 12px}
       .shell{width:min(calc(100% - 24px), var(--max))}
-      .project-thumb{height:clamp(260px,70vw,380px) !important}
+      .project-thumb{height:clamp(312px,84vw,456px) !important}
       .project-meta{display:block}
       .project-services{margin-top:6px}
       .list-shell{padding:18px 0 90px}
