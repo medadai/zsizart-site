@@ -386,15 +386,23 @@
     }
 
     .project-thumb img,
-    .project-video,
-    .detail-image img,
-    .more-card img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center center;
-      border-radius:0 !important;
-    }
+      .project-video{
+        width:100%;
+        height:100%;
+        object-fit:contain;
+        object-position:center center;
+        border-radius:0 !important;
+        background:#ececec;
+      }
+
+      .detail-image img,
+      .more-card img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center center;
+        border-radius:0 !important;
+      }
 
     .project-cover{
       position:absolute;
@@ -425,11 +433,14 @@
     }
 
     .project-card:hover .project-video,
-    .project-card:hover .project-thumb img,
-    .more-card:hover img,
-    .detail-image:hover img{
-      transform:scale(1.02);
-    }
+      .project-card:hover .project-thumb img{
+        transform:none;
+      }
+
+      .more-card:hover img,
+      .detail-image:hover img{
+        transform:scale(1.02);
+      }
 
     .project-meta{
       display:grid;
