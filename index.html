@@ -148,7 +148,7 @@
       --radius-xl:34px;
       --radius-lg:28px;
       --radius-md:20px;
-      --max:1680px;
+      --max:1920px;
       --ease:cubic-bezier(.16,1,.3,1);
     }
 
@@ -233,7 +233,7 @@
     img,video{display:block;max-width:100%}
     button,input{font:inherit}
 
-    .shell{width:min(var(--max), calc(100% - 32px));margin:0 auto}
+    .shell{width:min(var(--max), calc(100% - 20px));margin:0 auto}
     main.shell{padding:32px 0 0}
 
     /* ===== Header (Work style) ===== */
@@ -251,7 +251,7 @@
     .site-header.scrolled{padding:10px 0}
 
     .header-inner{
-      width:min(var(--max), calc(100% - 32px));
+      width:min(var(--max), calc(100% - 20px));
       margin-inline:auto;
       display:flex;
       align-items:center;
@@ -380,8 +380,8 @@
     }
     .hero-video video{
       width:100%;
-      height:100%;
-      object-fit:cover;
+height:auto;
+object-fit:contain;
           background:#000;
     }
     .hero-video::after{
@@ -526,18 +526,18 @@
     }
 
     /* ===== Projects (home 2-column layout + hover video) ===== */
-    .work-breakout{
-      width:calc(100% - 48px);
-      max-width:none;
-      margin:0 auto;
-    }
+     .work-breakout{
+       width:min(1920px, calc(100% - 20px));
+       max-width:none;
+       margin:0 auto;
+      }
 
-    .work-breakout .projects-grid{
-      display:grid;
-      grid-template-columns:repeat(12,minmax(0,1fr));
-      gap:24px;
-      align-items:start;
-    }
+      .work-breakout .projects-grid{
+        display:grid;
+        grid-template-columns:repeat(12,minmax(0,1fr));
+        gap:18px;
+        align-items:start;
+      }
 
     .work-breakout .project-card{
       display:block;
@@ -563,30 +563,29 @@
     .span-5{grid-column:span 5}
     .span-4{grid-column:span 4}
 
-    .work-breakout .project-thumb{
-      position:relative;
-      display:block;
-      width:100%;
-      margin-bottom:10px;
-      aspect-ratio:1.95 / 1;
-      min-height:0;
-      overflow:hidden;
-      border:0;
-      background:transparent;
-      box-shadow:none;
-      border-radius:0 !important;
-    }
+       .work-breakout .project-thumb{
+        position:relative;
+        display:block;
+        width:100%;
+        margin-bottom:14px;
+        min-height:0;
+        overflow:visible;
+        border:0;
+        background:transparent;
+        box-shadow:none;
+        border-radius:0 !important;
+      }
 
-    .work-breakout .project-cover,
-    .work-breakout .project-video{
-      display:block;
-      width:100%;
-      height:100%;
-      max-width:100%;
-      border-radius:0 !important;
-      background:transparent;
-      object-fit:cover;
-    }
+.work-breakout .project-cover,
+.work-breakout .project-video{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  border-radius:0 !important;
+  background:transparent;
+  object-fit:contain;
+}
 
     .work-breakout .project-cover{
       position:relative;
@@ -594,14 +593,14 @@
       transition:opacity .22s ease, transform 1.05s var(--ease), filter .8s ease;
     }
 
-    .work-breakout .project-video{
-      position:absolute;
-      inset:0;
-      z-index:2;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .22s ease, transform 1.05s var(--ease);
-    }
+.work-breakout .project-video{
+  position:relative;
+  inset:auto;
+  z-index:2;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s ease;
+}
 
     .work-breakout .project-thumb.has-video.is-video-visible .project-video{
       opacity:1;
@@ -611,10 +610,10 @@
       opacity:0;
     }
 
-    .work-breakout .project-card:hover .project-cover,
-    .work-breakout .project-card:hover .project-video{
-      transform:scale(1.04);
-    }
+.work-breakout .project-card:hover .project-cover,
+.work-breakout .project-card:hover .project-video{
+  transform:none;
+}
 
     .work-breakout .project-overlay{
       position:absolute;
@@ -654,25 +653,25 @@
       align-items:end;
     }
 
-    .work-breakout .project-title{
-      margin:0;
-      font-size:clamp(16px,1.2vw,24px);
-      line-height:1.12;
-      letter-spacing:-0.03em;
-      font-weight:500;
-      color:var(--ink);
-    }
+.work-breakout .project-title{
+  margin:0;
+  font-size:clamp(22px,1.55vw,30px);
+  line-height:1.08;
+  letter-spacing:-0.04em;
+  font-weight:500;
+  color:var(--ink);
+}
 
-    .work-breakout .project-services{
-      margin:0;
-      font-size:11px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:var(--muted);
-      white-space:nowrap;
-      align-self:end;
-      font-weight:700;
-    }
+.work-breakout .project-services{
+  margin:0;
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
+  align-self:end;
+  font-weight:700;
+}
 
     @media (max-width: 1100px){
       .work-breakout{
@@ -1120,52 +1119,61 @@
         .replace(/'/g, '&#39;');
     }
 
-    const homeProjects = [
-      {
-        id: "The-Alfred",
-        slug: "The-Alfred",
-        title: "The-Alfred",
-        services: "CGI / Film",
-        coverImage: "/assets/work-03.webp",
-        previewVideo: "/assets/work-03.mp4",
-        width: "span-6"
-      },
-      {
-        id: "Canopy-House",
-        slug: "Canopy-House",
-        title: "Canopy-House",
-        services: "CGI / Film",
-        coverImage: "/assets/work-01.webp",
-        previewVideo: "/assets/work-01.mp4",
-        width: "span-6"
-      },
-      {
-        id: "hillside-serenity",
-        slug: "hillside-serenity",
-        title: "Hillside Serenity",
-        services: "CGI / Film",
-        coverImage: "/assets/work-02.webp",
-        width: "span-6"
-      },
-      {
-        id: "Serene-Lines",
-        slug: "Serene-Lines",
-        title: "Serene-Lines",
-        services: "CGI / Film / Interior",
-        coverImage: "/assets/work-04.webp",
-        previewVideo: "/assets/work-04.mp4",
-        width: "span-6"
-      },
-      {
-        id: "Macquarie-Park",
-        slug: "Macquarie-Park",
-        title: "Macquarie-Park",
-        services: "CGI / Film / Interior",
-        coverImage: "/assets/work-05.webp",
-        previewVideo: "/assets/work-05.mp4",
-        width: "span-6"
-      }
-    ];
+const homeProjects = [
+  {
+    id: "The-Alfred",
+    slug: "The-Alfred",
+    title: "The Alfred",
+    services: "CGI / Film",
+    coverImage: "/assets/work-03.webp",
+    previewVideo: "/assets/work-03.mp4",
+    width: "span-6"
+  },
+  {
+    id: "Canopy-House",
+    slug: "Canopy-House",
+    title: "Canopy House",
+    services: "CGI / Film",
+    coverImage: "/assets/work-01.webp",
+    previewVideo: "/assets/work-01.mp4",
+    width: "span-6"
+  },
+  {
+    id: "hillside-serenity",
+    slug: "hillside-serenity",
+    title: "Hillside Serenity",
+    services: "CGI / Film",
+    coverImage: "/assets/work-02.webp",
+    width: "span-6"
+  },
+  {
+    id: "Serene-Lines",
+    slug: "Serene-Lines",
+    title: "Serene Lines",
+    services: "CGI / Film",
+    coverImage: "/assets/work-04.webp",
+    previewVideo: "/assets/work-04.mp4",
+    width: "span-6"
+  },
+  {
+    id: "Macquarie-Park",
+    slug: "Macquarie-Park",
+    title: "Macquarie Park",
+    services: "CGI / Film",
+    coverImage: "/assets/work-05.webp",
+    previewVideo: "/assets/work-05.mp4",
+    width: "span-6"
+  },
+  {
+    id: "Quiet-Form",
+    slug: "Quiet-Form",
+    title: "Quiet Form",
+    services: "CGI / Film",
+    coverImage: "/assets/work-06.webp",
+    previewVideo: "/assets/work-06.mp4",
+    width: "span-6"
+  }
+];
 
     function renderHomeProjects(){
       const grid = document.getElementById('homeProjectsGrid');
