@@ -418,6 +418,69 @@
       .hero-overlay p{ font-size:14px; }
     }
 
+       .hero-actions{
+  margin-top:18px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.hero-video-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-height:48px;
+  padding:0 18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.28);
+  background:rgba(255,255,255,.10);
+  color:#fff;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  transition:.25s ease;
+}
+
+.hero-video-btn:hover{
+  transform:translateY(-1px);
+  background:rgba(255,255,255,.18);
+  border-color:rgba(255,255,255,.42);
+}
+
+.hero-video-btn .arrow{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,.28);
+  flex:0 0 auto;
+  font-size:14px;
+  line-height:1;
+}
+
+@media (max-width: 768px){
+  .hero-actions{
+    margin-top:14px;
+  }
+
+  .hero-video-btn{
+    min-height:44px;
+    padding:0 14px;
+    font-size:11px;
+    letter-spacing:.10em;
+  }
+
+  .hero-video-btn .arrow{
+    width:30px;
+    height:30px;
+    font-size:13px;
+  }
+}
     /* ===== Section heading ===== */
     .section-row{
       display:flex;
@@ -901,10 +964,17 @@
     <source src="/assets/zsizart-canopy-villa-web.mp4" type="video/mp4">
   </video>
 
-  <div class="hero-overlay">
-    <h1>ZSIZART</h1>
-    <p>Architectural imagery for global real estate.</p>
+<div class="hero-overlay">
+  <h1>ZSIZART</h1>
+  <p>Architectural imagery for global real estate.</p>
+
+  <div class="hero-actions">
+    <a class="hero-video-btn" href="/assets/zsizart-canopy-villa-web.mp4" target="_blank" rel="noopener" aria-label="Open hero video">
+      <span class="arrow">↗</span>
+      <span>Watch Showreel</span>
+    </a>
   </div>
+</div>
 </section>
 
   <main class="shell">
