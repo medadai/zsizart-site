@@ -103,10 +103,9 @@
       });
 
       affectedVideos.forEach(video => {
-        if (video.id !== 'heroVideo') {
-          video.load();
-        }
+        video.load();
       });
+    }
 
     window.addEventListener('load', async () => {
       const country = await getVisitorCountry();
@@ -888,16 +887,25 @@
     </div>
   </header>
 
-   <section class="hero-video" aria-label="Showreel">
-     <video id="heroVideo" muted loop playsinline preload="none" poster="/assets/hero-poster.webp">
-       <source src="/assets/zsizart-canopy-villa-web.mp4" type="video/mp4">
-     </video>
+<section class="hero-video" aria-label="Showreel">
+  <video
+    id="heroVideo"
+    autoplay
+    muted
+    loop
+    playsinline
+    webkit-playsinline
+    preload="metadata"
+    poster="/assets/hero-poster.webp"
+  >
+    <source src="/assets/zsizart-canopy-villa-web.mp4" type="video/mp4">
+  </video>
 
-     <div class="hero-overlay">
-       <h1>ZSIZART</h1>
-       <p>Architectural imagery for global real estate.</p>
-     </div>
-   </section>
+  <div class="hero-overlay">
+    <h1>ZSIZART</h1>
+    <p>Architectural imagery for global real estate.</p>
+  </div>
+</section>
 
   <main class="shell">
     <section class="section" id="work" aria-label="Work">
@@ -1312,39 +1320,6 @@
         swapTo(frames[idx]);
       });
     })();
-
-    /* ===== Hero video delayed autoplay ===== */
-    (function(){
-      const heroVideo = document.getElementById('heroVideo');
-      if (!heroVideo) return;
-
-      const tryPlayHero = () => {
-        heroVideo.play().catch(() => {});
-      };
-
-      const startVideo = () => {
-        heroVideo.autoplay = true;
-        heroVideo.preload = 'metadata';
-        heroVideo.load();
-
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(() => {
-            setTimeout(tryPlayHero, 120);
-          });
-        } else {
-          setTimeout(tryPlayHero, 250);
-        }
-      };
-
-      heroVideo.addEventListener('canplay', tryPlayHero);
-      heroVideo.addEventListener('loadeddata', tryPlayHero);
-
-      if (document.readyState === 'complete') {
-        startVideo();
-      } else {
-        window.addEventListener('load', startVideo, { once:true });
-      }
-    })();
-  </script>
+   </script>
 </body>
 </html>
