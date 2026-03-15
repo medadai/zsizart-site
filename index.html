@@ -526,16 +526,17 @@ object-fit:contain;
     }
 
     /* ===== Projects (home 2-column layout + hover video) ===== */
-     .work-breakout{
-       width:min(1920px, calc(100% - 20px));
-       max-width:none;
-       margin:0 auto;
-      }
+
+.work-breakout{
+  width:min(2100px, calc(100% - 12px));
+  max-width:none;
+  margin:0 auto;
+}
 
 .work-breakout .projects-grid{
   display:grid;
   grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:18px;
+  gap:14px;
   align-items:start;
 }
     .work-breakout .project-card{
@@ -567,9 +568,8 @@ object-fit:contain;
   display:block;
   width:100%;
   margin-bottom:22px;
-  aspect-ratio:1.95 / 1;
   min-height:0;
-  overflow:hidden;
+  overflow:visible;
   border:0;
   background:transparent;
   box-shadow:none;
@@ -580,11 +580,11 @@ object-fit:contain;
 .work-breakout .project-video{
   display:block;
   width:100%;
-  height:100%;
+  height:auto;
   max-width:100%;
   border-radius:0 !important;
   background:transparent;
-  object-fit:cover;
+  object-fit:contain;
 }
 
     .work-breakout .project-cover{
@@ -594,12 +594,12 @@ object-fit:contain;
     }
 
 .work-breakout .project-video{
-  position:absolute;
-  inset:0;
+  position:relative;
+  inset:auto;
   z-index:2;
   opacity:0;
   pointer-events:none;
-  transition:opacity .22s ease, transform 1.05s var(--ease);
+  transition:opacity .22s ease;
 }
 
     .work-breakout .project-thumb.has-video.is-video-visible .project-video{
@@ -655,7 +655,7 @@ object-fit:contain;
 
 .work-breakout .project-title{
   margin:0;
-  font-size:clamp(22px,1.55vw,30px);
+  font-size:clamp(26px,1.9vw,36px);
   line-height:1.08;
   letter-spacing:-0.04em;
   font-weight:500;
@@ -677,18 +677,6 @@ object-fit:contain;
       .work-breakout{
         width:calc(100% - 28px);
       }
-    }
-
-    @media (max-width: 900px){
-      .work-breakout .projects-grid{gap:18px}
-      .work-breakout .project-card{grid-column:span 12 !important}
-      .work-breakout .project-thumb{aspect-ratio:1.34 / 1}
-    }
-
-    @media (max-width: 520px){
-      .work-breakout .project-thumb{aspect-ratio:1.18 / 1}
-      .work-breakout .project-meta{display:block}
-      .work-breakout .project-services{margin-top:8px}
     }
 
     /* ===== Services CTA ===== */
