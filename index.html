@@ -526,22 +526,22 @@ object-fit:contain;
     }
 
     /* ===== Projects (home 2-column layout + hover video) ===== */
-     .work-breakout{
-       width:min(1920px, calc(100% - 20px));
-       max-width:none;
-       margin:0 auto;
-      }
+.work-breakout{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0 60px;
+}
 
 .work-breakout .projects-grid{
   display:grid;
-  grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:18px;
+  grid-template-columns:repeat(2,1fr);
+  gap:28px;
   align-items:start;
 }
     .work-breakout .project-card{
       display:block;
       min-width:0;
-      grid-column:span 6 !important;
       opacity:0;
       transform:translateY(18px);
       animation:cardIn .75s var(--ease) forwards;
