@@ -93,12 +93,20 @@
         el.src = isGermany ? el.dataset.deSrc : el.dataset.egSrc;
       });
 
-      document.querySelectorAll('source[data-eg-src][data-de-src]').forEach(el => {
-        el.src = isGermany ? el.dataset.deSrc : el.dataset.egSrc;
+      const countrySources = document.querySelectorAll('source[data-eg-src][data-de-src]');
+      const affectedVideos = new Set();
+
+      countrySources.forEach(source => {
+        source.src = isGermany ? source.dataset.deSrc : source.dataset.egSrc;
+        const parentVideo = source.closest('video');
+        if (parentVideo) affectedVideos.add(parentVideo);
       });
 
-      document.querySelectorAll('video').forEach(video => video.load());
-    }
+      affectedVideos.forEach(video => {
+        if (video.id !== 'heroVideo') {
+          video.load();
+        }
+      });
 
     window.addEventListener('load', async () => {
       const country = await getVisitorCountry();
@@ -1310,22 +1318,26 @@
       const heroVideo = document.getElementById('heroVideo');
       if (!heroVideo) return;
 
+      const tryPlayHero = () => {
+        heroVideo.play().catch(() => {});
+      };
+
       const startVideo = () => {
         heroVideo.autoplay = true;
+        heroVideo.preload = 'metadata';
         heroVideo.load();
-
-        const tryPlay = () => {
-          heroVideo.play().catch(() => {});
-        };
 
         if ('requestIdleCallback' in window) {
           requestIdleCallback(() => {
-            setTimeout(tryPlay, 120);
+            setTimeout(tryPlayHero, 120);
           });
         } else {
-          setTimeout(tryPlay, 250);
+          setTimeout(tryPlayHero, 250);
         }
       };
+
+      heroVideo.addEventListener('canplay', tryPlayHero);
+      heroVideo.addEventListener('loadeddata', tryPlayHero);
 
       if (document.readyState === 'complete') {
         startVideo();
