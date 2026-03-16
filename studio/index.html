@@ -138,7 +138,6 @@
     #app{flex:1;padding-top:98px}
     .shell{width:min(var(--max), calc(100% - 32px));margin:0 auto}
 
-    /* ===== Header (نفس صفحتك) ===== */
     .site-header{
       position:fixed;
       inset:0 0 auto 0;
@@ -298,7 +297,6 @@
       .shell{width:min(var(--max), calc(100% - 24px))}
     }
 
-    /* ===== Page ===== */
     .page{
       opacity:0;
       transform:translateY(18px);
@@ -342,7 +340,6 @@
       background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
     }
 
-    /* ===== About Layout ===== */
     .about-hero{
       display:grid;
       grid-template-columns: 1.35fr .65fr;
@@ -361,7 +358,7 @@
       min-height:min(66vh, 640px);
     }
 
-    .hero-media video{
+    .hero-media img{
       width:100%;
       height:100%;
       object-fit:cover;
@@ -650,7 +647,6 @@
       .steps{grid-template-columns:1fr}
     }
 
-    /* ===== Footer (نفس صفحتك) ===== */
     .nam-footer{
       margin-top:84px;
       padding:34px 0 56px;
@@ -881,12 +877,13 @@
     <main class="page">
       <div class="shell">
         <section class="about-hero" aria-label="About hero">
-          <div class="hero-media" aria-label="Hero video">
-            <!-- ضع الفيديو هنا -->
-            <!-- /assets/about-hero.mp4 -->
-            <video autoplay muted loop playsinline preload="metadata" poster="/assets/about-hero.jpg">
-              <source src="/assets/about-hero.mp4" type="video/mp4">
-            </video>
+          <div class="hero-media" aria-label="Hero gif">
+            <img
+              src="/assets/zsizart.gif"
+              alt="ZSIZART Studio visual"
+              loading="eager"
+              decoding="async"
+            >
 
             <div class="hero-overlay">
               <div class="hero-info">
