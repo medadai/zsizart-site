@@ -548,7 +548,7 @@
 
     .steps{
       display:grid;
-      grid-template-columns:repeat(4, minmax(0, 1fr));
+      grid-template-columns:repeat(3, minmax(0, 1fr));
       gap:12px;
     }
 
@@ -648,8 +648,8 @@
     }
 
     .nam-footer{
-      margin-top:84px;
-      padding:34px 0 56px;
+      margin-top:72px;
+      padding:30px 0 52px;
       border-top:1px solid var(--line);
       background:transparent;
       color:var(--ink);
@@ -659,8 +659,9 @@
       width:min(var(--max), calc(100% - 32px));
       margin:0 auto;
       display:grid;
-      grid-template-columns:1.05fr 1.65fr .86fr .92fr;
+      grid-template-columns:1fr 1.55fr .95fr;
       gap:18px;
+      align-items:stretch;
     }
 
     .footer-card{
@@ -668,7 +669,7 @@
       border-radius:28px;
       padding:22px;
       background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.02));
-      min-height:210px;
+      min-height:198px;
       box-shadow:none;
     }
 
@@ -712,7 +713,7 @@
     .newsletter p{
       color:var(--muted);
       font-size:14px;
-      max-width:32ch;
+      max-width:34ch;
       margin:0;
       line-height:1.45;
     }
@@ -773,42 +774,6 @@
       font-weight:500;
     }
 
-    .clock{
-      display:grid;
-      gap:14px;
-    }
-
-    .clock-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      border-bottom:1px solid var(--line);
-      padding-bottom:10px;
-    }
-
-    .clock-row:last-child{
-      border-bottom:0;
-      padding-bottom:0;
-    }
-
-    .clock-city{
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--muted);
-    }
-
-    .clock-time{
-      font-size:24px;
-      line-height:1;
-      font-weight:800;
-      letter-spacing:-.03em;
-      color:var(--ink);
-      font-variant-numeric:tabular-nums;
-    }
-
     .legal{
       width:min(var(--max), calc(100% - 32px));
       margin:18px auto 0;
@@ -827,6 +792,7 @@
 
     @media (max-width: 1100px){
       .footer-grid{grid-template-columns:1fr 1fr}
+      .footer-card:last-child{grid-column:1 / -1}
     }
 
     @media (max-width: 780px){
@@ -860,7 +826,7 @@
         <a class="nav-link" href="/work/">Work</a>
         <a class="nav-link" href="/services/">Services</a>
         <a class="nav-link" href="/careers/">Careers</a>
-        <a class="nav-link" href="/studio/">Studio</a>
+        <a class="nav-link active" href="/studio/">Studio</a>
         <a class="nav-link" href="/contact/">Contact</a>
 
         <button type="button" class="theme-switch" id="themeSwitch" aria-label="Toggle theme" aria-pressed="false">
@@ -1027,7 +993,7 @@
           <li><a href="#" aria-label="Instagram">Instagram</a></li>
           <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
           <li><a href="/work/">Projects</a></li>
-          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
         </ul>
       </section>
 
@@ -1048,25 +1014,11 @@
       </section>
 
       <section class="footer-card">
-        <div class="footer-title">Local time</div>
-        <div class="clock">
-          <div class="clock-row">
-            <span class="clock-city">Egypt</span>
-            <span class="clock-time" id="clock-eg">00:00:00</span>
-          </div>
-          <div class="clock-row">
-            <span class="clock-city">Dubai</span>
-            <span class="clock-time" id="clock-dubai">00:00:00</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="footer-card">
         <div class="footer-title">Contact</div>
         <ul class="footer-list">
           <li><a href="/contact/">Project enquiries</a></li>
-          <li><a href="mailto:info@zsizart.com">careers@zsizart.com</a></li>
-          <li><span>Egypt / Dubai</span></li>
+          <li><a href="mailto:hello@zsizart.com">hello@zsizart.com</a></li>
+          <li><span>Global studio</span></li>
         </ul>
       </section>
     </div>
@@ -1135,28 +1087,6 @@
           if (err) err.style.display = 'block';
         }
       });
-    })();
-
-    (function(){
-      const fmt = (tz) => new Intl.DateTimeFormat('en-GB', {
-        timeZone: tz,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      });
-
-      const eg = document.getElementById('clock-eg');
-      const dubai = document.getElementById('clock-dubai');
-
-      const tick = () => {
-        const now = new Date();
-        if (eg) eg.textContent = fmt('Africa/Cairo').format(now);
-        if (dubai) dubai.textContent = fmt('Asia/Dubai').format(now);
-      };
-
-      tick();
-      setInterval(tick, 1000);
     })();
 
     (function(){
