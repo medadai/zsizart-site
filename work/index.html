@@ -515,8 +515,8 @@
     }
 
     .list-preview-frame.is-changing img{
-      opacity:.18;
-      transform:scale(1.03);
+      opacity:.55;
+      transform:scale(1.01);
     }
 
     .list-preview-meta{
@@ -1147,7 +1147,7 @@
         <div class="footer-title">Contact</div>
         <ul class="footer-list">
           <li><a href="/contact/">Project enquiries</a></li>
-          <li><a href="mailto:info@zsizart.com">careers@zsizart.com</a></li>
+          <li><a href="mailto:careers@zsizart.com">careers@zsizart.com</a></li>
           <li><span>Egypt / Dubai</span></li>
         </ul>
       </section>
@@ -1423,115 +1423,136 @@ const cards = projects.map((project, index) => `
       });
     }
 
-    function renderList(){
-      document.title = 'ZSIZART — Featured work';
+<script>
+  function renderList(){
+    document.title = 'ZSIZART — Featured work';
 
-      const firstProject = projects[0];
+    const firstProject = projects[0];
 
-      const rows = projects.map((project, index) => `
-        <a
-          class="list-row ${index === 0 ? 'is-active' : ''}"
-          href="#/projects/${project.slug}"
-          data-preview="${project.coverImage}"
-          data-title="${escapeHtml(project.title)}"
-          data-service="${escapeHtml(project.services)}"
-        >
-          <h2 class="list-name">${escapeHtml(project.title)}</h2>
-          <p class="list-service">${escapeHtml(project.services)}</p>
-          <span class="list-bullet" aria-hidden="true"></span>
-        </a>
-      `).join('');
+    const rows = projects.map((project, index) => `
+      <a
+        class="list-row ${index === 0 ? 'is-active' : ''}"
+        href="#/projects/${project.slug}"
+        data-slug="${project.slug}"
+      >
+        <h2 class="list-name">${escapeHtml(project.title)}</h2>
+        <p class="list-service">${escapeHtml(project.services)}</p>
+        <span class="list-bullet" aria-hidden="true"></span>
+      </a>
+    `).join('');
 
-      app.innerHTML = `
-        <main class="page list-page">
-          <div class="shell">
-            <section class="list-shell">
-              <div class="list-head">
-                <h1 class="list-title">Featured work</h1>
-                <div class="list-controls">
-                  <a class="list-viewall" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
-                  <div class="subnav">
-                    <a href="#/projects/grid">Grid</a>
-                    <span class="current">Lists</span>
-                  </div>
+    app.innerHTML = `
+      <main class="page list-page">
+        <div class="shell">
+          <section class="list-shell">
+            <div class="list-head">
+              <h1 class="list-title">Featured work</h1>
+              <div class="list-controls">
+                <a class="list-viewall" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
+                <div class="subnav">
+                  <a href="#/projects/grid">Grid</a>
+                  <span class="current">Lists</span>
                 </div>
               </div>
+            </div>
 
-              <div class="list-body">
-                <div class="list-table">${rows}</div>
+            <div class="list-body">
+              <div class="list-table">${rows}</div>
 
-                <aside class="list-preview" aria-hidden="true">
-                  <div class="list-preview-frame" id="listPreviewFrame">
-                    <img
-                      id="listPreviewImg"
-                      src="${firstProject.coverImage}"
-                      alt="${escapeHtml(firstProject.title)}"
-                      loading="eager"
-                      decoding="async"
-                    >
+              <aside class="list-preview" aria-hidden="true">
+                <div class="list-preview-frame" id="listPreviewFrame">
+                  <img
+                    id="listPreviewImg"
+                    src="${firstProject.coverImage}"
+                    alt="${escapeHtml(firstProject.title)}"
+                    loading="eager"
+                    decoding="async"
+                  >
+                </div>
+
+                <div class="list-preview-meta">
+                  <div>
+                    <h2 class="list-preview-title" id="listPreviewTitle">${escapeHtml(firstProject.title)}</h2>
+                    <p class="list-preview-service" id="listPreviewService">${escapeHtml(firstProject.services)}</p>
                   </div>
+                </div>
+              </aside>
+            </div>
+          </section>
+        </div>
+      </main>
+    `;
 
-                  <div class="list-preview-meta">
-                    <div>
-                      <h2 class="list-preview-title" id="listPreviewTitle">${escapeHtml(firstProject.title)}</h2>
-                      <p class="list-preview-service" id="listPreviewService">${escapeHtml(firstProject.services)}</p>
-                    </div>
-                  </div>
-                </aside>
-              </div>
-            </section>
-          </div>
-        </main>
-      `;
+    initListPreview();
+    window.scrollTo(0,0);
+  }
+</script>
+<script>
+  function initListPreview(){
+    const rows = [...document.querySelectorAll('.list-row')];
+    const frame = document.getElementById('listPreviewFrame');
+    const img = document.getElementById('listPreviewImg');
+    const title = document.getElementById('listPreviewTitle');
+    const service = document.getElementById('listPreviewService');
 
-      initListPreview();
-      window.scrollTo(0,0);
+    if (!rows.length || !frame || !img || !title || !service) return;
+
+    let swapTimer = null;
+
+    function getProjectByRow(row){
+      const slug = row.dataset.slug || '';
+      return projects.find(project => project.slug === slug);
     }
 
-    function initListPreview(){
-      const rows = [...document.querySelectorAll('.list-row')];
-      const frame = document.getElementById('listPreviewFrame');
-      const img = document.getElementById('listPreviewImg');
-      const title = document.getElementById('listPreviewTitle');
-      const service = document.getElementById('listPreviewService');
+    function setActive(row){
+      const project = getProjectByRow(row);
+      if (!project) return;
 
-      if (!rows.length || !frame || !img || !title || !service) return;
+      rows.forEach(item => item.classList.toggle('is-active', item === row));
 
-      let swapTimer = null;
+      const nextSrc = project.coverImage;
+      const nextTitle = project.title;
+      const nextService = project.services;
 
-      function setActive(row){
-        rows.forEach(item => item.classList.toggle('is-active', item === row));
+      if (
+        img.getAttribute('src') === nextSrc &&
+        title.textContent === nextTitle &&
+        service.textContent === nextService
+      ) return;
 
-        const nextSrc = row.dataset.preview || '';
-        const nextTitle = row.dataset.title || '';
-        const nextService = row.dataset.service || '';
+      frame.classList.add('is-changing');
+      clearTimeout(swapTimer);
 
-        if (
-          img.getAttribute('src') === nextSrc &&
-          title.textContent === nextTitle &&
-          service.textContent === nextService
-        ) return;
+      const preload = new Image();
+      preload.src = nextSrc;
 
-        frame.classList.add('is-changing');
-        clearTimeout(swapTimer);
-
+      preload.onload = () => {
         swapTimer = setTimeout(() => {
           img.src = nextSrc;
           img.alt = nextTitle;
           title.textContent = nextTitle;
           service.textContent = nextService;
           frame.classList.remove('is-changing');
-        }, 110);
-      }
+        }, 60);
+      };
 
-      rows.forEach((row) => {
-        row.addEventListener('mouseenter', () => setActive(row));
-        row.addEventListener('focus', () => setActive(row));
-      });
-
-      setActive(rows[0]);
+      preload.onerror = () => {
+        img.src = nextSrc;
+        img.alt = nextTitle;
+        title.textContent = nextTitle;
+        service.textContent = nextService;
+        frame.classList.remove('is-changing');
+      };
     }
 
+    rows.forEach((row) => {
+      row.addEventListener('mouseenter', () => setActive(row));
+      row.addEventListener('focus', () => setActive(row));
+    });
+
+    setActive(rows[0]);
+  }
+</script>
     function renderProject(slug){
       const project = projects.find((item) => item.slug === slug);
       if (!project) {
