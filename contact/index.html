@@ -301,14 +301,14 @@
     align-items:start;
   }
 
-  .hero h1{
-    margin:0;
-    font-size:clamp(34px, 6vw, 72px);
-    line-height:.96;
-    font-weight:800;
-    letter-spacing:-.05em;
-    text-transform:uppercase;
-  }
+.hero h1{
+  margin:0;
+  font-size:clamp(34px, 6vw, 72px);
+  line-height:.96;
+  font-weight:800;
+  letter-spacing:-.05em;
+  text-transform:uppercase;
+}
 
   .lead-wrap{
     max-width:520px;
@@ -325,13 +325,13 @@
     color:var(--muted);
   }
 
-  .lead{
-    margin:0 0 18px;
-    font-size:14px;
-    line-height:1.6;
-    color:var(--ink);
-    font-weight:600;
-  }
+.lead{
+  margin:0 0 18px;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--ink);
+  font-weight:400;
+}
 
   .hero-actions{
     display:flex;
@@ -340,23 +340,21 @@
     align-items:center;
   }
 
-  .hero-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-height:40px;
-    padding:0 16px;
-    border-radius:999px;
-    border:1px solid var(--line);
-    background:var(--chip-bg);
-    color:var(--ink);
-    font-size:11px;
-    font-weight:800;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    transition:.25s ease;
-    white-space:nowrap;
-  }
+.hero-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:0 16px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--chip-bg);
+  color:var(--ink);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:none;
+}
   .hero-btn:hover{
     background:var(--chip-hover);
     border-color:var(--line-2);
@@ -382,13 +380,13 @@
     align-items:start;
   }
 
-  .contact-city{
-    margin:0;
-    font-size:clamp(28px, 4vw, 48px);
-    line-height:1;
-    font-weight:700;
-    letter-spacing:-.04em;
-  }
+.contact-city{
+  margin:0;
+  font-size:clamp(28px, 4vw, 48px);
+  line-height:1;
+  font-weight:500;
+  letter-spacing:-.03em;
+}
 
   .contact-table{
     display:grid;
@@ -407,19 +405,19 @@
     border-bottom:0;
   }
 
-  .contact-label{
-    font-size:12px;
-    color:var(--muted);
-    font-weight:600;
-  }
+.contact-label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:400;
+}
 
-  .contact-value,
-  .contact-value a{
-    font-size:14px;
-    line-height:1.35;
-    font-weight:600;
-    color:var(--ink);
-  }
+.contact-value,
+.contact-value a{
+  font-size:14px;
+  line-height:1.35;
+  font-weight:400;
+  color:var(--ink);
+}
 
   .contact-value a:hover{
     text-decoration:underline;
@@ -438,13 +436,13 @@
     align-items:start;
   }
 
-  .follow-title{
-    margin:0;
-    font-size:clamp(28px, 4vw, 44px);
-    line-height:1;
-    font-weight:700;
-    letter-spacing:-.04em;
-  }
+.follow-title{
+  margin:0;
+  font-size:clamp(28px, 4vw, 44px);
+  line-height:1;
+  font-weight:500;
+  letter-spacing:-.03em;
+}
 
   .follow-links{
     display:grid;
@@ -452,12 +450,12 @@
     justify-content:start;
   }
 
-  .follow-links a{
-    font-size:clamp(22px, 2.6vw, 42px);
-    line-height:1.05;
-    font-weight:500;
-    letter-spacing:-.04em;
-  }
+.follow-links a{
+  font-size:clamp(22px, 2.6vw, 42px);
+  line-height:1.05;
+  font-weight:400;
+  letter-spacing:-.03em;
+}
 
   .follow-links a:hover{
     opacity:.65;
@@ -730,9 +728,53 @@
 </main>  </div>
 
 <footer class="zsizart-footer">
-  <div class="footer-bar">
+  <div class="footer-top">
+    <div class="footer-brand">ZSIZART Studio</div>
+
+    <div class="footer-social">
+      <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="footer-main">
+    <div class="footer-newsletter">
+      <p class="footer-label">Keep in touch with us</p>
+
+      <form class="footer-subscribe" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+        <input type="email" name="email" placeholder="Email Address" aria-label="Email address" required>
+        <input type="hidden" name="type" value="newsletter_subscribe">
+        <button type="submit">Subscribe</button>
+      </form>
+
+      <div id="subscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
+      <div id="subscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+    </div>
+
+    <div class="footer-time">
+      <div class="footer-time-row">
+        <span class="footer-time-city">London</span>
+        <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
+      </div>
+
+      <div class="footer-time-row">
+        <span class="footer-time-city">Dubai</span>
+        <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
+      </div>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="/work/">Projects</a>
+      <a href="/news/">News</a>
+      <a href="/studio/">Studio</a>
+      <a href="/careers/">Careers</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+
+  <div class="footer-bottom">
     <span>© 2026 ZSIZART Studio</span>
-    <span>Built by ZSIZART</span>
+    <span>Made by ZSIZART</span>
     <a href="#">Privacy Policy</a>
   </div>
 </footer>
