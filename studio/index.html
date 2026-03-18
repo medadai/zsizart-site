@@ -301,7 +301,7 @@
       opacity:0;
       transform:translateY(18px);
       animation:pageIn .8s var(--ease) forwards;
-      padding:18px 0 72px;
+      padding:18px 0 40px;
     }
     @keyframes pageIn{to{opacity:1;transform:none}}
 
@@ -328,7 +328,7 @@
       line-height:1.85;
       font-weight:400;
       color:var(--muted);
-      max-width:72ch;
+      max-width:64ch;
     }
 
     .card{
@@ -460,62 +460,6 @@
       gap:18px;
     }
 
-    .about-grid{
-      display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap:18px;
-      align-items:start;
-    }
-
-    .pad{padding:22px}
-
-    .h2{
-      margin:0 0 10px;
-      font-size:clamp(22px, 2.1vw, 30px);
-      line-height:1.1;
-      font-weight:800;
-      letter-spacing:-0.03em;
-    }
-
-    .copy{
-      margin:0;
-      font-size:14px;
-      line-height:1.85;
-      font-weight:400;
-      color:var(--muted);
-      max-width:78ch;
-    }
-
-    .aside-list{
-      display:grid;
-      gap:10px;
-      margin-top:8px;
-    }
-
-    .aside-item{
-      border:1px solid var(--line);
-      background:var(--chip-bg);
-      border-radius:var(--radius-md);
-      padding:14px;
-    }
-
-    .aside-item strong{
-      display:block;
-      font-size:12px;
-      font-weight:800;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      color:var(--ink);
-      margin-bottom:6px;
-    }
-
-    .aside-item span{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.55;
-    }
-
     .services-grid{
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));
@@ -527,7 +471,7 @@
       background:var(--chip-bg);
       border-radius:var(--radius-lg);
       padding:16px;
-      min-height:140px;
+      min-height:132px;
     }
 
     .service h3{
@@ -557,7 +501,7 @@
       background:var(--chip-bg);
       border-radius:var(--radius-lg);
       padding:16px;
-      min-height:150px;
+      min-height:146px;
     }
 
     .step .no{
@@ -590,7 +534,7 @@
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      padding:18px 18px;
+      padding:18px;
       border-radius:999px;
       border:1px solid var(--line);
       background:var(--glass);
@@ -638,7 +582,6 @@
 
     @media (max-width: 1100px){
       .about-hero{grid-template-columns:1fr}
-      .about-grid{grid-template-columns:1fr}
       .steps{grid-template-columns:1fr 1fr}
     }
 
@@ -648,7 +591,7 @@
     }
 
     .nam-footer{
-      margin-top:72px;
+      margin-top:40px;
       padding:30px 0 52px;
       border-top:1px solid var(--line);
       background:transparent;
@@ -863,121 +806,86 @@
           <div class="hero-copy">
             <div>
               <p class="eyebrow">About</p>
-              <h1 class="h1">Visual clarity for architecture.</h1>
+              <h1 class="h1">Architectural visuals with clear direction.</h1>
               <p class="lead">
-                ZSIZART is a visualization studio producing stills and moving image for projects that need to be understood before they exist.
-                We lock a visual language early—light, materials, atmosphere—then deliver consistently across every output.
+                ZSIZART creates stills and motion for architecture, interiors, and real estate. One visual language. Consistent across every deliverable.
               </p>
 
               <div class="chips" aria-label="Studio tags">
-                <span class="chip">Real estate</span>
+                <span class="chip">Architecture</span>
                 <span class="chip">Interiors</span>
-                <span class="chip">CGI</span>
-                <span class="chip">Film</span>
-                <span class="chip">Brand-led</span>
+                <span class="chip">Real Estate</span>
+                <span class="chip">CGI + Motion</span>
               </div>
             </div>
           </div>
-        </section>
-
-        <section class="section about-grid" aria-label="About us">
-          <div class="card pad">
-            <p class="eyebrow">About us</p>
-            <h2 class="h2">Built for decision-making, not decoration.</h2>
-            <p class="copy">
-              Strong imagery communicates intent. We translate plans, models, and narratives into visuals that feel inevitable—measured, believable, and easy to trust.
-              The work sits between design and marketing: accurate geometry and materials, with the framing, pacing, and hierarchy needed for launch decks, listings, and brand touchpoints.
-            </p>
-          </div>
-
-          <aside class="card pad" aria-label="What to expect">
-            <p class="eyebrow">What to expect</p>
-            <div class="aside-list">
-              <div class="aside-item">
-                <strong>Fast alignment</strong>
-                <span>Clean brief, references, and early direction tests to prevent drift.</span>
-              </div>
-              <div class="aside-item">
-                <strong>Controlled realism</strong>
-                <span>Material accuracy with restraint—no over-stylised noise.</span>
-              </div>
-              <div class="aside-item">
-                <strong>Reliable delivery</strong>
-                <span>Review loops, versioning, and consistent output quality.</span>
-              </div>
-              <div class="aside-item">
-                <strong>Global workflow</strong>
-                <span>Remote production built for international teams.</span>
-              </div>
-            </div>
-          </aside>
         </section>
 
         <section class="section card pad" aria-label="Services">
           <p class="eyebrow">Services</p>
-          <h2 class="h2">Capabilities that stay consistent across still and motion.</h2>
+          <h2 class="h2">Capabilities across still and motion.</h2>
           <p class="copy" style="margin-top:6px;">
-            Select what you need or run a full visual package. Everything is built around one goal: one visual language across every deliverable.
+            From single images to full visual packages.
           </p>
 
           <div class="services-grid" style="margin-top:14px;">
             <div class="service">
               <h3>Architecture CGI</h3>
-              <p>Photoreal stills for exterior and interior marketing, from concept to launch.</p>
+              <p>Photoreal stills for exterior and interior presentation.</p>
             </div>
             <div class="service">
               <h3>Film & Moving Image</h3>
-              <p>Camera sequences, edits, social-first motion deliverables, and launch cuts.</p>
+              <p>Cinematic motion for launches, marketing, and social edits.</p>
             </div>
             <div class="service">
               <h3>3D Modeling</h3>
-              <p>Clean, production-ready geometry for architecture, products, and environments.</p>
+              <p>Clean production-ready models for architecture and objects.</p>
             </div>
             <div class="service">
               <h3>Interior Styling</h3>
-              <p>FF&E direction, prop balance, and lived-in realism that supports the design.</p>
+              <p>FF&amp;E and prop direction that supports the space.</p>
             </div>
             <div class="service">
               <h3>Brand Expression</h3>
-              <p>Visual direction that aligns render language with your brand system and tone.</p>
+              <p>Visual language aligned with brand tone and presentation.</p>
             </div>
             <div class="service">
               <h3>Production Support</h3>
-              <p>Shot lists, deliverable planning, and presentation packaging for rollout.</p>
+              <p>Shot planning, deliverables, and rollout structure.</p>
             </div>
           </div>
         </section>
 
         <section class="section card pad" aria-label="Approach">
           <p class="eyebrow">Approach</p>
-          <h2 class="h2">Direction first. Production second. Polish last.</h2>
+          <h2 class="h2">A simple process. Clear at every stage.</h2>
           <p class="copy" style="margin-top:6px;">
-            The look should not drift between frames, phases, or formats. We lock direction early, then execute with repeatable controls.
+            We define the look early, build with control, and deliver with consistency.
           </p>
 
           <div class="steps" style="margin-top:14px;">
             <div class="step">
               <p class="no">01</p>
-              <h3>Alignment</h3>
-              <p>Understanding the project, defining the visual direction, and translating architectural ideas into initial sketches and references.</p>
+              <h3>Direction</h3>
+              <p>We define mood, materials, light, and framing.</p>
             </div>
             <div class="step">
               <p class="no">02</p>
-              <h3>Development</h3>
-              <p>Building the visual language through materials, lighting studies, and composition to shape the final atmosphere.</p>
+              <h3>Production</h3>
+              <p>We build and refine the scenes with technical accuracy.</p>
             </div>
             <div class="step">
               <p class="no">03</p>
               <h3>Delivery</h3>
-              <p>Delivering refined architectural imagery ready for presentation, showcasing the project with clarity and realism.</p>
+              <p>We prepare final stills and motion for presentation or launch.</p>
             </div>
           </div>
         </section>
 
         <section class="cta-strip" aria-label="Start a project">
           <div>
-            <strong>Have a project that needs a clear visual direction?</strong>
-            <span>Send scope + timeline. You get a clean plan for stills, motion, and rollout assets.</span>
+            <strong>Need visuals for an upcoming project?</strong>
+            <span>Share the scope and timeline. We’ll define the right visual package.</span>
           </div>
           <a class="cta-btn" href="/contact/">Start a Project</a>
         </section>
