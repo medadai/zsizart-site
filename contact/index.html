@@ -29,558 +29,684 @@
 
   <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
 
-<style>
-  :root{
-    --bg:#f6f1e8;
-    --bg-2:#f6f1e8;
-    --card:#ffffff;
-    --ink:#0d0d0d;
-    --muted:#6f675e;
-    --muted-2:#988f82;
-    --muted-3:#b1a798;
-    --line:rgba(10,10,10,.08);
-    --line-2:rgba(10,10,10,.14);
-    --stroke:rgba(10,10,10,.10);
-    --pill:rgba(0,0,0,.025);
-    --soft:#181818;
-    --glass:rgba(246,241,232,.78);
-    --spot-1:rgba(0,0,0,.035);
-    --spot-2:rgba(23,49,40,.08);
-    --spot-3:rgba(0,0,0,.02);
-    --grid:rgba(0,0,0,.04);
-    --chip-bg:rgba(0,0,0,.025);
-    --chip-hover:rgba(0,0,0,.05);
-    --field-bg:rgba(0,0,0,.02);
-    --header-shadow:0 12px 40px rgba(0,0,0,.12);
-    --shadow:0 24px 60px rgba(0,0,0,.08);
-    --primary-btn-bg:#0d0d0d;
-    --primary-btn-text:#f6f1e8;
-    --primary-btn-hover-bg:#000000;
-    --radius-xl:34px;
-    --radius-lg:28px;
-    --radius-md:20px;
-    --max:1440px;
-    --ease:cubic-bezier(.16,1,.3,1);
-  }
+  <style>
+    :root{
+      --bg:#f6f1e8;
+      --bg-2:#f6f1e8;
+      --card:#ffffff;
+      --ink:#0d0d0d;
+      --muted:#6f675e;
+      --muted-2:#988f82;
+      --muted-3:#b1a798;
+      --line:rgba(10,10,10,.08);
+      --line-2:rgba(10,10,10,.14);
+      --stroke:rgba(10,10,10,.10);
+      --pill:rgba(0,0,0,.025);
+      --soft:#181818;
+      --glass:rgba(246,241,232,.78);
+      --spot-1:rgba(0,0,0,.035);
+      --spot-2:rgba(23,49,40,.08);
+      --spot-3:rgba(0,0,0,.02);
+      --grid:rgba(0,0,0,.04);
+      --chip-bg:rgba(0,0,0,.025);
+      --chip-hover:rgba(0,0,0,.05);
+      --field-bg:rgba(0,0,0,.02);
+      --header-shadow:0 12px 40px rgba(0,0,0,.12);
+      --shadow:0 24px 60px rgba(0,0,0,.08);
+      --primary-btn-bg:#0d0d0d;
+      --primary-btn-text:#f6f1e8;
+      --primary-btn-hover-bg:#000000;
+      --radius-xl:34px;
+      --radius-lg:28px;
+      --radius-md:20px;
+      --max:1440px;
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
 
-  html[data-theme="dark"]{
-    --bg:#090909;
-    --bg-2:#090909;
-    --card:#111111;
-    --ink:#f4efe7;
-    --muted:#b7ae9f;
-    --muted-2:#a79d8c;
-    --muted-3:#8e8577;
-    --line:rgba(255,255,255,.08);
-    --line-2:rgba(255,255,255,.12);
-    --stroke:rgba(255,255,255,.10);
-    --pill:rgba(255,255,255,.02);
-    --soft:#ddd3c3;
-    --glass:rgba(9,9,9,.78);
-    --spot-1:rgba(255,255,255,.04);
-    --spot-2:rgba(23,49,40,.24);
-    --spot-3:rgba(255,255,255,.03);
-    --grid:rgba(255,255,255,.04);
-    --chip-bg:rgba(255,255,255,.02);
-    --chip-hover:rgba(255,255,255,.06);
-    --field-bg:rgba(255,255,255,.02);
-    --header-shadow:0 12px 40px rgba(0,0,0,.28);
-    --shadow:0 30px 80px rgba(0,0,0,.38);
-    --primary-btn-bg:#f4efe7;
-    --primary-btn-text:#090909;
-    --primary-btn-hover-bg:#ffffff;
-  }
+    html[data-theme="dark"]{
+      --bg:#090909;
+      --bg-2:#090909;
+      --card:#111111;
+      --ink:#f4efe7;
+      --muted:#b7ae9f;
+      --muted-2:#a79d8c;
+      --muted-3:#8e8577;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.12);
+      --stroke:rgba(255,255,255,.10);
+      --pill:rgba(255,255,255,.02);
+      --soft:#ddd3c3;
+      --glass:rgba(9,9,9,.78);
+      --spot-1:rgba(255,255,255,.04);
+      --spot-2:rgba(23,49,40,.24);
+      --spot-3:rgba(255,255,255,.03);
+      --grid:rgba(255,255,255,.04);
+      --chip-bg:rgba(255,255,255,.02);
+      --chip-hover:rgba(255,255,255,.06);
+      --field-bg:rgba(255,255,255,.02);
+      --header-shadow:0 12px 40px rgba(0,0,0,.28);
+      --shadow:0 30px 80px rgba(0,0,0,.38);
+      --primary-btn-bg:#f4efe7;
+      --primary-btn-text:#090909;
+      --primary-btn-hover-bg:#ffffff;
+    }
 
-  *{box-sizing:border-box}
-  *{caret-color:transparent}
-  input,textarea,select{caret-color:auto}
-  html{scroll-behavior:smooth}
-  html.lenis,html.lenis body{height:auto}
-  .lenis.lenis-smooth{scroll-behavior:unset}
-  html[data-theme="dark"]{color-scheme:dark}
+    *{box-sizing:border-box}
+    *{caret-color:transparent}
+    input,textarea,select{caret-color:auto}
+    html{scroll-behavior:smooth}
+    html.lenis,html.lenis body{height:auto}
+    .lenis.lenis-smooth{scroll-behavior:unset}
+    html[data-theme="dark"]{color-scheme:dark}
 
-  body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    background:var(--bg);
-    color:var(--ink);
-    font:16px/1.6 "Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-    -webkit-tap-highlight-color:transparent;
-  }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      background:var(--bg);
+      color:var(--ink);
+      font:16px/1.6 "Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      -webkit-tap-highlight-color:transparent;
+    }
 
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:
-      radial-gradient(circle at 15% 20%, var(--spot-1), transparent 30%),
-      radial-gradient(circle at 85% 10%, var(--spot-2), transparent 28%),
-      radial-gradient(circle at 80% 85%, var(--spot-3), transparent 30%);
-    z-index:-2;
-  }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 20%, var(--spot-1), transparent 30%),
+        radial-gradient(circle at 85% 10%, var(--spot-2), transparent 28%),
+        radial-gradient(circle at 80% 85%, var(--spot-3), transparent 30%);
+      z-index:-2;
+    }
 
-  body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    opacity:.14;
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size:32px 32px;
-    mask-image:radial-gradient(circle at center, black 35%, transparent 85%);
-    z-index:-1;
-  }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.14;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size:32px 32px;
+      mask-image:radial-gradient(circle at center, black 35%, transparent 85%);
+      z-index:-1;
+    }
 
-  a{color:inherit;text-decoration:none}
-  img{display:block;max-width:100%}
-  button,input{font:inherit}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button,input{font:inherit}
 
-  #app{flex:1;padding-top:98px}
-  .shell{width:min(var(--max), calc(100% - 32px));margin:0 auto}
-  @media (max-width:768px){ #app{padding-top:92px} }
+    #app{flex:1;padding-top:98px}
+    .shell{width:min(var(--max), calc(100% - 32px));margin:0 auto}
+    @media (max-width:768px){ #app{padding-top:92px} }
 
-  .site-header{
-    position:fixed;
-    inset:0 0 auto 0;
-    z-index:100;
-    padding:14px 0;
-    background:transparent;
-    border-bottom:0;
-    box-shadow:none;
-    backdrop-filter:none;
-    transition:.35s ease;
-  }
-  .site-header.scrolled{padding:10px 0}
+    .site-header{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:100;
+      padding:14px 0;
+      background:transparent;
+      border-bottom:0;
+      box-shadow:none;
+      backdrop-filter:none;
+      transition:.35s ease;
+    }
+    .site-header.scrolled{padding:10px 0}
 
-  .header-inner{
-    width:min(var(--max), calc(100% - 32px));
-    margin-inline:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    border:1px solid transparent;
-    border-radius:999px;
-    padding:10px 14px;
-    transition:.35s ease;
-  }
+    .header-inner{
+      width:min(var(--max), calc(100% - 32px));
+      margin-inline:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      border:1px solid transparent;
+      border-radius:999px;
+      padding:10px 14px;
+      transition:.35s ease;
+    }
 
-  .site-header.scrolled .header-inner{
-    background:var(--glass);
-    backdrop-filter:blur(16px);
-    border-color:var(--line-2);
-    box-shadow:var(--header-shadow);
-  }
+    .site-header.scrolled .header-inner{
+      background:var(--glass);
+      backdrop-filter:blur(16px);
+      border-color:var(--line-2);
+      box-shadow:var(--header-shadow);
+    }
 
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    user-select:none;
-    white-space:nowrap;
-  }
-  .brand .logo{height:34px;width:auto}
-  .brand .wordmark{
-    color:var(--soft);
-    font-weight:800;
-    letter-spacing:.18em;
-    font-size:13px;
-    text-transform:uppercase;
-  }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .brand .logo{height:34px;width:auto}
+    .brand .wordmark{
+      color:var(--soft);
+      font-weight:800;
+      letter-spacing:.18em;
+      font-size:13px;
+      text-transform:uppercase;
+    }
 
-  .nav{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    flex-wrap:wrap;
-    justify-content:flex-end;
-    min-width:0;
-  }
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      min-width:0;
+    }
 
-  .nav-link,
-  .nav button,
-  .cta{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-height:46px;
-    border:1px solid var(--line);
-    background:var(--chip-bg);
-    color:var(--ink);
-    border-radius:999px;
-    padding:0 16px;
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    transition:.25s ease;
-    cursor:pointer;
-    white-space:nowrap;
-  }
+    .nav-link,
+    .nav button,
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      border:1px solid var(--line);
+      background:var(--chip-bg);
+      color:var(--ink);
+      border-radius:999px;
+      padding:0 16px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      transition:.25s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
 
-  .nav-link:hover,
-  .nav button:hover,
-  .cta:hover,
-  .nav-link.active{
-    background:var(--chip-hover);
-    border-color:var(--line-2);
-    transform:translateY(-1px);
-  }
+    .nav-link:hover,
+    .nav button:hover,
+    .cta:hover,
+    .nav-link.active{
+      background:var(--chip-hover);
+      border-color:var(--line-2);
+      transform:translateY(-1px);
+    }
 
-  .cta{
-    background:var(--primary-btn-bg);
-    color:var(--primary-btn-text);
-    border-color:transparent;
-    min-height:46px;
-  }
-  .cta:hover{
-    background:var(--primary-btn-hover-bg);
-    color:var(--primary-btn-text);
-    border-color:transparent;
-  }
+    .cta{
+      background:var(--primary-btn-bg);
+      color:var(--primary-btn-text);
+      border-color:transparent;
+      min-height:46px;
+    }
+    .cta:hover{
+      background:var(--primary-btn-hover-bg);
+      color:var(--primary-btn-text);
+      border-color:transparent;
+    }
 
-  .theme-switch{gap:10px;padding:0 14px}
-  .switch-track{
-    position:relative;
-    width:46px;height:26px;border-radius:999px;
-    background:rgba(0,0,0,.12);
-    transition:.25s ease;
-    flex:0 0 auto;
-  }
-  html[data-theme="dark"] .switch-track{background:rgba(255,255,255,.18)}
-  .switch-thumb{
-    position:absolute;top:3px;left:3px;
-    width:20px;height:20px;border-radius:50%;
-    background:var(--ink);
-    transition:.25s ease;
-  }
-  .theme-switch.is-dark .switch-thumb{transform:translateX(20px)}
-  .switch-text{
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-  }
+    .theme-switch{gap:10px;padding:0 14px}
+    .switch-track{
+      position:relative;
+      width:46px;height:26px;border-radius:999px;
+      background:rgba(0,0,0,.12);
+      transition:.25s ease;
+      flex:0 0 auto;
+    }
+    html[data-theme="dark"] .switch-track{background:rgba(255,255,255,.18)}
+    .switch-thumb{
+      position:absolute;top:3px;left:3px;
+      width:20px;height:20px;border-radius:50%;
+      background:var(--ink);
+      transition:.25s ease;
+    }
+    .theme-switch.is-dark .switch-thumb{transform:translateX(20px)}
+    .switch-text{
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
 
-  @media (max-width: 860px){ .cta{display:none} }
-  @media (max-width: 768px){
-    .nav{gap:6px}
-    .theme-switch{padding:0 12px}
-    .switch-text{display:none}
-    .header-inner{width:min(var(--max), calc(100% - 24px))}
-    .nav a:nth-child(n+2){display:none}
-  }
-  @media (max-width: 520px){ .header-inner{padding:10px 12px} }
+    @media (max-width: 860px){ .cta{display:none} }
+    @media (max-width: 768px){
+      .nav{gap:6px}
+      .theme-switch{padding:0 12px}
+      .switch-text{display:none}
+      .header-inner{width:min(var(--max), calc(100% - 24px))}
+      .nav a:nth-child(n+2){display:none}
+    }
+    @media (max-width: 520px){ .header-inner{padding:10px 12px} }
 
-  .page{
-    opacity:0;
-    transform:translateY(18px);
-    animation:pageIn .8s var(--ease) forwards;
-    padding:28px 0 72px;
-  }
-  @keyframes pageIn{to{opacity:1;transform:none}}
+    .page{
+      opacity:0;
+      transform:translateY(18px);
+      animation:pageIn .8s var(--ease) forwards;
+      padding:28px 0 72px;
+    }
+    @keyframes pageIn{to{opacity:1;transform:none}}
 
-  .hero{
-    padding:38px 0 46px;
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-  }
+    .hero{
+      padding:38px 0 46px;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+    }
 
-  .hero-grid{
-    display:grid;
-    grid-template-columns:.95fr 1.05fr;
-    gap:48px;
-    align-items:start;
-  }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:.95fr 1.05fr;
+      gap:48px;
+      align-items:start;
+    }
 
-.hero h1{
-  margin:0;
-  font-size:clamp(34px, 6vw, 72px);
-  line-height:.96;
-  font-weight:800;
-  letter-spacing:-.05em;
-  text-transform:uppercase;
-}
-
-  .lead-wrap{
-    max-width:520px;
-    justify-self:end;
-  }
-
-  .lead-label{
-    display:block;
-    margin-bottom:10px;
-    font-size:11px;
-    font-weight:800;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color:var(--muted);
-  }
-
-.lead{
-  margin:0 0 18px;
-  font-size:14px;
-  line-height:1.6;
-  color:var(--ink);
-  font-weight:400;
-}
-
-  .hero-actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    align-items:center;
-  }
-
-.hero-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:40px;
-  padding:0 16px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:var(--chip-bg);
-  color:var(--ink);
-  font-size:11px;
-  font-weight:600;
-  letter-spacing:.04em;
-  text-transform:none;
-}
-  .hero-btn:hover{
-    background:var(--chip-hover);
-    border-color:var(--line-2);
-    transform:translateY(-1px);
-  }
-
-  .hero-btn.primary{
-    background:var(--primary-btn-bg);
-    color:var(--primary-btn-text);
-    border-color:transparent;
-  }
-
-  .contact-section{
-    border-bottom:1px solid var(--line);
-  }
-
-  .contact-row{
-    display:grid;
-    grid-template-columns:.9fr 1.1fr;
-    gap:48px;
-    padding:42px 0 56px;
-    border-top:1px solid var(--line);
-    align-items:start;
-  }
-
-.contact-city{
-  margin:0;
-  font-size:clamp(28px, 4vw, 48px);
-  line-height:1;
-  font-weight:500;
-  letter-spacing:-.03em;
-}
-
-  .contact-table{
-    display:grid;
-    gap:0;
-  }
-
-  .contact-item{
-    display:grid;
-    grid-template-columns:220px 1fr;
-    gap:24px;
-    padding:10px 0;
-    border-bottom:1px solid var(--line);
-  }
-
-  .contact-item:last-child{
-    border-bottom:0;
-  }
-
-.contact-label{
-  font-size:12px;
-  color:var(--muted);
-  font-weight:400;
-}
-
-.contact-value,
-.contact-value a{
-  font-size:14px;
-  line-height:1.35;
-  font-weight:400;
-  color:var(--ink);
-}
-
-  .contact-value a:hover{
-    text-decoration:underline;
-    text-underline-offset:3px;
-  }
-
-  .follow-section{
-    padding:42px 0 28px;
-    border-top:1px solid var(--line);
-  }
-
-  .follow-grid{
-    display:grid;
-    grid-template-columns:.9fr 1.1fr;
-    gap:48px;
-    align-items:start;
-  }
-
-.follow-title{
-  margin:0;
-  font-size:clamp(28px, 4vw, 44px);
-  line-height:1;
-  font-weight:500;
-  letter-spacing:-.03em;
-}
-
-  .follow-links{
-    display:grid;
-    gap:8px;
-    justify-content:start;
-  }
-
-.follow-links a{
-  font-size:clamp(22px, 2.6vw, 42px);
-  line-height:1.05;
-  font-weight:400;
-  letter-spacing:-.03em;
-}
-
-  .follow-links a:hover{
-    opacity:.65;
-  }
-
-  .zsizart-footer{
-    margin-top:0;
-    padding:10px 0 14px;
-  }
-
-  .footer-bar{
-    width:min(var(--max), calc(100% - 32px));
-    margin:0 auto;
-    display:flex;
-    justify-content:space-between;
-    gap:16px;
-    align-items:center;
-    flex-wrap:wrap;
-    color:var(--muted-2);
-    font-size:11px;
-    font-weight:600;
-  }
-
-  .footer-bar a{
-    color:inherit;
-  }
-
-  .footer-bar a:hover{
-    color:var(--ink);
-  }
-
-  .newsletter-inline{
-    margin-top:24px;
-    max-width:520px;
-  }
-
-  .field{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    min-height:52px;
-    border-radius:999px;
-    border:1px solid var(--line);
-    background:var(--field-bg);
-    padding:0 8px 0 16px;
-  }
-
-  .field input{
-    flex:1;
-    min-width:0;
-    background:transparent;
-    border:0;
-    outline:0;
-    color:var(--ink);
-    padding:0;
-    height:auto;
-    border-radius:0;
-    box-shadow:none;
-    font-weight:600;
-  }
-
-  .field input::placeholder{color:var(--muted-3)}
-
-  .field button{
-    border:0;
-    outline:0;
-    cursor:pointer;
-    border-radius:999px;
-    background:var(--primary-btn-bg);
-    color:var(--primary-btn-text);
-    min-width:122px;
-    min-height:40px;
-    padding:0 16px;
-    font-size:11px;
-    font-weight:800;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    transition:.25s ease;
-    flex:0 0 auto;
-  }
-
-  .field button:hover{background:var(--primary-btn-hover-bg)}
-
-  .footer-status{
-    margin-top:10px;
-    color:var(--muted-2);
-    font-size:12px;
-    font-weight:600;
-  }
-
-  @media (max-width: 1080px){
-    .hero-grid,
-    .contact-row,
-    .follow-grid{
-      grid-template-columns:1fr;
-      gap:24px;
+    .hero h1{
+      margin:0;
+      font-size:clamp(34px, 6vw, 72px);
+      line-height:.96;
+      font-weight:600;
+      letter-spacing:-.04em;
+      text-transform:none;
     }
 
     .lead-wrap{
-      justify-self:start;
+      max-width:520px;
+      justify-self:end;
     }
-  }
 
-  @media (max-width: 768px){
-    .page{padding:18px 0 48px}
-    .hero{padding:28px 0 34px}
-    .contact-row{padding:28px 0 36px}
+    .lead-label{
+      display:block;
+      margin-bottom:10px;
+      font-size:11px;
+      font-weight:500;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    .lead{
+      margin:0 0 18px;
+      font-size:14px;
+      line-height:1.6;
+      color:var(--ink);
+      font-weight:400;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .hero-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:40px;
+      padding:0 16px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:var(--chip-bg);
+      color:var(--ink);
+      font-size:11px;
+      font-weight:500;
+      letter-spacing:.02em;
+      text-transform:none;
+      transition:.25s ease;
+      white-space:nowrap;
+    }
+    .hero-btn:hover{
+      background:var(--chip-hover);
+      border-color:var(--line-2);
+      transform:translateY(-1px);
+    }
+
+    .hero-btn.primary{
+      background:var(--primary-btn-bg);
+      color:var(--primary-btn-text);
+      border-color:transparent;
+    }
+
+    .contact-section{
+      border-bottom:1px solid var(--line);
+    }
+
+    .contact-row{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:48px;
+      padding:42px 0 56px;
+      border-top:1px solid var(--line);
+      align-items:start;
+    }
+
+    .contact-city{
+      margin:0;
+      font-size:clamp(28px, 4vw, 48px);
+      line-height:1;
+      font-weight:500;
+      letter-spacing:-.03em;
+    }
+
+    .contact-table{
+      display:grid;
+      gap:0;
+    }
+
     .contact-item{
-      grid-template-columns:1fr;
-      gap:6px;
-      padding:12px 0;
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:24px;
+      padding:10px 0;
+      border-bottom:1px solid var(--line);
     }
-    .field{
-      flex-direction:column;
-      align-items:stretch;
-      border-radius:24px;
-      padding:10px;
+
+    .contact-item:last-child{
+      border-bottom:0;
     }
-    .field button{width:100%}
-    .footer-bar{
-      flex-direction:column;
-      align-items:flex-start;
+
+    .contact-label{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:400;
     }
-  }
-</style>
+
+    .contact-value,
+    .contact-value a{
+      font-size:14px;
+      line-height:1.35;
+      font-weight:400;
+      color:var(--ink);
+    }
+
+    .contact-value a:hover{
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .follow-section{
+      padding:42px 0 28px;
+      border-top:1px solid var(--line);
+    }
+
+    .follow-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:48px;
+      align-items:start;
+    }
+
+    .follow-title{
+      margin:0;
+      font-size:clamp(28px, 4vw, 44px);
+      line-height:1;
+      font-weight:500;
+      letter-spacing:-.03em;
+    }
+
+    .follow-links{
+      display:grid;
+      gap:8px;
+      justify-content:start;
+    }
+
+    .follow-links a{
+      font-size:clamp(22px, 2.6vw, 42px);
+      line-height:1.05;
+      font-weight:400;
+      letter-spacing:-.03em;
+    }
+
+    .follow-links a:hover{
+      opacity:.65;
+    }
+
+    .zsizart-footer{
+      margin-top:0;
+      padding:24px 0 14px;
+      border-top:1px solid var(--line);
+    }
+
+    .footer-top,
+    .footer-main,
+    .footer-bottom{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .footer-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding-bottom:34px;
+    }
+
+    .footer-brand{
+      font-size:28px;
+      line-height:1;
+      font-weight:500;
+      letter-spacing:-.03em;
+    }
+
+    .footer-social{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .footer-social a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:var(--chip-bg);
+      font-size:12px;
+      font-weight:400;
+      color:var(--ink);
+      transition:.25s ease;
+    }
+
+    .footer-social a:hover{
+      background:var(--chip-hover);
+      border-color:var(--line-2);
+    }
+
+    .footer-main{
+      display:grid;
+      grid-template-columns:1.15fr .55fr .55fr;
+      gap:48px;
+      align-items:start;
+      padding-bottom:42px;
+    }
+
+    .footer-newsletter{
+      min-width:0;
+    }
+
+    .footer-label{
+      margin:0 0 12px;
+      font-size:14px;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .footer-subscribe{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      max-width:360px;
+      min-height:42px;
+      padding:4px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.22);
+    }
+
+    .footer-subscribe input{
+      flex:1;
+      min-width:0;
+      border:0;
+      outline:0;
+      background:transparent;
+      color:var(--ink);
+      padding:0 14px;
+      font-size:14px;
+      font-weight:400;
+    }
+
+    .footer-subscribe input::placeholder{
+      color:var(--muted-2);
+    }
+
+    .footer-subscribe button{
+      border:0;
+      outline:0;
+      min-width:110px;
+      min-height:34px;
+      padding:0 14px;
+      border-radius:999px;
+      background:#6f6f6f;
+      color:#fff;
+      font-size:13px;
+      font-weight:500;
+      cursor:pointer;
+      transition:.25s ease;
+    }
+
+    .footer-subscribe button:hover{
+      filter:brightness(.95);
+    }
+
+    .footer-time{
+      display:grid;
+      gap:18px;
+    }
+
+    .footer-time-row{
+      display:grid;
+      gap:4px;
+    }
+
+    .footer-time-city{
+      font-size:14px;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .footer-time-value{
+      font-size:28px;
+      line-height:1;
+      letter-spacing:-.03em;
+      font-weight:500;
+      font-variant-numeric:tabular-nums;
+    }
+
+    .footer-nav{
+      display:grid;
+      gap:10px;
+      justify-content:start;
+    }
+
+    .footer-nav a{
+      font-size:16px;
+      line-height:1.3;
+      color:var(--muted);
+      font-weight:400;
+      transition:.2s ease;
+    }
+
+    .footer-nav a:hover{
+      color:var(--ink);
+    }
+
+    .footer-bottom{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding-top:18px;
+      border-top:1px solid rgba(10,10,10,.04);
+      font-size:11px;
+      color:var(--muted-2);
+      font-weight:400;
+      flex-wrap:wrap;
+    }
+
+    .footer-bottom a{
+      color:inherit;
+    }
+
+    .footer-bottom a:hover{
+      color:var(--ink);
+    }
+
+    .footer-status{
+      margin-top:10px;
+      color:var(--muted-2);
+      font-size:12px;
+      font-weight:400;
+    }
+
+    @media (max-width: 1080px){
+      .hero-grid,
+      .contact-row,
+      .follow-grid{
+        grid-template-columns:1fr;
+        gap:24px;
+      }
+
+      .lead-wrap{
+        justify-self:start;
+      }
+    }
+
+    @media (max-width: 980px){
+      .footer-main{
+        grid-template-columns:1fr;
+        gap:28px;
+      }
+    }
+
+    @media (max-width: 768px){
+      .page{padding:18px 0 48px}
+      .hero{padding:28px 0 34px}
+      .contact-row{padding:28px 0 36px}
+      .contact-item{
+        grid-template-columns:1fr;
+        gap:6px;
+        padding:12px 0;
+      }
+    }
+
+    @media (max-width: 640px){
+      .footer-top{
+        flex-direction:column;
+        align-items:flex-start;
+        padding-bottom:24px;
+      }
+
+      .footer-brand{
+        font-size:24px;
+      }
+
+      .footer-subscribe{
+        max-width:none;
+        width:100%;
+      }
+
+      .footer-bottom{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -609,175 +735,165 @@
   </header>
 
   <div id="app">
-<main class="page">
-  <section class="hero" aria-label="Contact hero">
-    <div class="shell hero-grid">
-      <div>
-        <h1>Get in touch</h1>
-      </div>
-
-      <div class="lead-wrap">
-        <span class="lead-label">Enquiries</span>
-        <p class="lead">
-          For project enquiries and collaborations, please get in touch. We review each enquiry carefully and aim to respond within 24 hours.
-        </p>
-
-        <div class="hero-actions">
-          <a class="hero-btn primary" href="mailto:info@zsizart.com?subject=Project%20Enquiry">Enquire</a>
-          <a class="hero-btn" href="mailto:careers@zsizart.com?subject=Careers%20—%20Role%20—%20Name">Careers</a>
-          <a class="hero-btn" href="mailto:internship@zsizart.com?subject=Internship%20—%20Name">Internship</a>
-        </div>
-
-        <div class="newsletter-inline">
-          <form class="field" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
-            <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
-            <input type="hidden" name="type" value="newsletter_subscribe">
-            <button type="submit">Subscribe</button>
-          </form>
-
-          <div id="subscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
-          <div id="subscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact-section" aria-label="Contact details">
-    <div class="shell">
-      <div class="contact-row">
-        <h2 class="contact-city">London</h2>
-
-        <div class="contact-table">
-          <div class="contact-item">
-            <div class="contact-label">Working model</div>
-            <div class="contact-value">Global remote studio serving architecture, interiors, and real estate clients worldwide.</div>
+    <main class="page">
+      <section class="hero" aria-label="Contact hero">
+        <div class="shell hero-grid">
+          <div>
+            <h1>Get in touch</h1>
           </div>
 
-          <div class="contact-item">
-            <div class="contact-label">Website</div>
-            <div class="contact-value">
-              <a href="https://zsizart.com/" target="_blank" rel="noopener noreferrer">zsizart.com</a>
-            </div>
-          </div>
+          <div class="lead-wrap">
+            <span class="lead-label">Enquiries</span>
+            <p class="lead">
+              For project enquiries and collaborations, please get in touch. We review each enquiry carefully and aim to respond within 24 hours.
+            </p>
 
-          <div class="contact-item">
-            <div class="contact-label">Contact</div>
-            <div class="contact-value">
-              <a href="mailto:info@zsizart.com">info@zsizart.com</a><br>
-              <a href="https://wa.me/447575481249" target="_blank" rel="noopener noreferrer">+44 7575 481249</a>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-label">New business</div>
-            <div class="contact-value">
-              <a href="mailto:info@zsizart.com">info@zsizart.com</a>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-label">Careers</div>
-            <div class="contact-value">
-              <a href="mailto:careers@zsizart.com">careers@zsizart.com</a>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-label">Internship</div>
-            <div class="contact-value">
-              <a href="mailto:internship@zsizart.com">internship@zsizart.com</a>
+            <div class="hero-actions">
+              <a class="hero-btn primary" href="mailto:info@zsizart.com?subject=Project%20Enquiry">Enquire</a>
+              <a class="hero-btn" href="mailto:careers@zsizart.com?subject=Careers%20—%20Role%20—%20Name">Careers</a>
+              <a class="hero-btn" href="mailto:internship@zsizart.com?subject=Internship%20—%20Name">Internship</a>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="contact-row">
-        <h2 class="contact-city">Global</h2>
+      <section class="contact-section" aria-label="Contact details">
+        <div class="shell">
+          <div class="contact-row">
+            <h2 class="contact-city">London</h2>
 
-        <div class="contact-table">
-          <div class="contact-item">
-            <div class="contact-label">Base</div>
-            <div class="contact-value">London, England</div>
+            <div class="contact-table">
+              <div class="contact-item">
+                <div class="contact-label">Working model</div>
+                <div class="contact-value">Global remote studio serving architecture, interiors, and real estate clients worldwide.</div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-label">Website</div>
+                <div class="contact-value">
+                  <a href="https://zsizart.com/" target="_blank" rel="noopener noreferrer">zsizart.com</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-label">Contact</div>
+                <div class="contact-value">
+                  <a href="mailto:info@zsizart.com">info@zsizart.com</a><br>
+                  <a href="https://wa.me/447575481249" target="_blank" rel="noopener noreferrer">+44 7575 481249</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-label">New business</div>
+                <div class="contact-value">
+                  <a href="mailto:info@zsizart.com">info@zsizart.com</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-label">Careers</div>
+                <div class="contact-value">
+                  <a href="mailto:careers@zsizart.com">careers@zsizart.com</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-label">Internship</div>
+                <div class="contact-value">
+                  <a href="mailto:internship@zsizart.com">internship@zsizart.com</a>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="contact-item">
-            <div class="contact-label">Availability</div>
-            <div class="contact-value">Working remotely with international clients across multiple time zones.</div>
-          </div>
+          <div class="contact-row">
+            <h2 class="contact-city">Global</h2>
 
-          <div class="contact-item">
-            <div class="contact-label">Focus</div>
-            <div class="contact-value">Architectural visualization, CGI, motion, and visual direction for real estate and design brands.</div>
+            <div class="contact-table">
+              <div class="contact-item">
+                <div class="contact-label">Base</div>
+                <div class="contact-value">London, England</div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-label">Availability</div>
+                <div class="contact-value">Working remotely with international clients across multiple time zones.</div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-label">Focus</div>
+                <div class="contact-value">Architectural visualization, CGI, motion, and visual direction for real estate and design brands.</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <section class="follow-section" aria-label="Follow us">
-    <div class="shell follow-grid">
-      <h2 class="follow-title">Follow us</h2>
+      <section class="follow-section" aria-label="Follow us">
+        <div class="shell follow-grid">
+          <h2 class="follow-title">Follow us</h2>
 
-      <div class="follow-links">
-        <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <div class="follow-links">
+            <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://wa.me/447575481249" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="zsizart-footer">
+    <div class="footer-top">
+      <div class="footer-brand">ZSIZART Studio</div>
+
+      <div class="footer-social">
         <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://wa.me/447575481249" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      </div>
-    </div>
-  </section>
-</main>  </div>
-
-<footer class="zsizart-footer">
-  <div class="footer-top">
-    <div class="footer-brand">ZSIZART Studio</div>
-
-    <div class="footer-social">
-      <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    </div>
-  </div>
-
-  <div class="footer-main">
-    <div class="footer-newsletter">
-      <p class="footer-label">Keep in touch with us</p>
-
-      <form class="footer-subscribe" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
-        <input type="email" name="email" placeholder="Email Address" aria-label="Email address" required>
-        <input type="hidden" name="type" value="newsletter_subscribe">
-        <button type="submit">Subscribe</button>
-      </form>
-
-      <div id="subscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
-      <div id="subscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
-    </div>
-
-    <div class="footer-time">
-      <div class="footer-time-row">
-        <span class="footer-time-city">London</span>
-        <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
-      </div>
-
-      <div class="footer-time-row">
-        <span class="footer-time-city">Dubai</span>
-        <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
+        <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
 
-    <nav class="footer-nav" aria-label="Footer">
-      <a href="/work/">Projects</a>
-      <a href="/news/">News</a>
-      <a href="/studio/">Studio</a>
-      <a href="/careers/">Careers</a>
-      <a href="/contact/">Contact</a>
-    </nav>
-  </div>
+    <div class="footer-main">
+      <div class="footer-newsletter">
+        <p class="footer-label">Keep in touch with us</p>
 
-  <div class="footer-bottom">
-    <span>© 2026 ZSIZART Studio</span>
-    <span>Made by ZSIZART</span>
-    <a href="#">Privacy Policy</a>
-  </div>
-</footer>
+        <form class="footer-subscribe" id="footerSubscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+          <input type="email" name="email" placeholder="Email Address" aria-label="Email address" required>
+          <input type="hidden" name="type" value="newsletter_subscribe">
+          <button type="submit">Subscribe</button>
+        </form>
+
+        <div id="footerSubscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
+        <div id="footerSubscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+      </div>
+
+      <div class="footer-time">
+        <div class="footer-time-row">
+          <span class="footer-time-city">London</span>
+          <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
+        </div>
+
+        <div class="footer-time-row">
+          <span class="footer-time-city">Dubai</span>
+          <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/work/">Projects</a>
+        <a href="/news/">News</a>
+        <a href="/studio/">Studio</a>
+        <a href="/careers/">Careers</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 ZSIZART Studio</span>
+      <span>Made by ZSIZART</span>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </footer>
 
   <script>
     let lenis;
@@ -798,7 +914,10 @@
         infinite:false,
       });
 
-      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+      function raf(time){
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
     }
     window.addEventListener('load', initLenis);
@@ -844,11 +963,11 @@
     })();
 
     (function(){
-      const form = document.getElementById('subscribeForm');
+      const form = document.getElementById('footerSubscribeForm');
       if (!form) return;
 
-      const ok = document.getElementById('subscribeOk');
-      const err = document.getElementById('subscribeErr');
+      const ok = document.getElementById('footerSubscribeOk');
+      const err = document.getElementById('footerSubscribeErr');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -872,6 +991,32 @@
           if (err) err.style.display = 'block';
         }
       });
+    })();
+
+    (function(){
+      const londonEl = document.getElementById('clock-london-footer');
+      const dubaiEl = document.getElementById('clock-dubai-footer');
+
+      const formatTime = (timeZone) =>
+        new Intl.DateTimeFormat('en-GB', {
+          timeZone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+
+      const londonFmt = formatTime('Europe/London');
+      const dubaiFmt = formatTime('Asia/Dubai');
+
+      const tick = () => {
+        const now = new Date();
+        if (londonEl) londonEl.textContent = londonFmt.format(now);
+        if (dubaiEl) dubaiEl.textContent = dubaiFmt.format(now);
+      };
+
+      tick();
+      setInterval(tick, 1000);
     })();
   </script>
 </body>
