@@ -378,6 +378,13 @@
       border-color:transparent;
     }
 
+      .copy-email-btn{
+        cursor:pointer;
+      }
+
+      .copy-email-btn.copied{
+        opacity:.8;
+      }
     .contact-section{
       border-bottom:1px solid var(--line);
     }
@@ -1021,5 +1028,54 @@
       setInterval(tick, 1000);
     })();
   </script>
+
+<script>
+  (function(){
+    const buttons = document.querySelectorAll('.copy-email-btn');
+    if (!buttons.length) return;
+
+    const copyText = async (text) => {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'absolute';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    };
+
+    buttons.forEach((button) => {
+      const originalText = button.textContent;
+
+      button.addEventListener('click', async () => {
+        const email = button.dataset.email;
+        if (!email) return;
+
+        try {
+          await copyText(email);
+          button.textContent = 'Copied';
+          button.classList.add('copied');
+
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('copied');
+          }, 1400);
+        } catch {
+          button.textContent = 'Failed';
+          setTimeout(() => {
+            button.textContent = originalText;
+          }, 1400);
+        }
+      });
+    });
+  })();
+</script>
 </body>
 </html>
