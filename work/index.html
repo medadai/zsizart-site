@@ -50,9 +50,8 @@
       --radius-xl:34px;
       --radius-lg:28px;
       --radius-md:20px;
-      --max:1440px;
+      --max:2200px;
       --ease:cubic-bezier(.16,1,.3,1);
-      --page-gutter:6px;
     }
 
     html[data-theme="dark"]{
@@ -140,10 +139,8 @@
       padding-top:108px;
     }
 
-    .shell,
-    .header-inner{
-      width:calc(100% - (var(--page-gutter) * 2));
-      max-width:none;
+    .shell{
+      width:min(var(--max), calc(100% - 8px));
       margin:0 auto;
     }
 
@@ -162,6 +159,8 @@
     .site-header.scrolled{padding:10px 0}
 
     .header-inner{
+      width:min(var(--max), calc(100% - 12px));
+      margin-inline:auto;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -188,7 +187,16 @@
       white-space:nowrap;
     }
 
-    .brand .logo{height:34px;width:auto}
+    .brand .logo{
+      height:34px;
+      width:auto;
+      transition:.25s ease;
+    }
+
+    html[data-theme="dark"] .brand .logo{
+      filter:brightness(0) invert(1);
+    }
+
     .brand .wordmark{
       color:var(--soft);
       font-weight:700;
@@ -345,11 +353,12 @@
       transform:translateY(18px);
       animation:cardIn .75s var(--ease) forwards;
     }
-.project-stack{
-  width:fit-content;
-  max-width:100%;
-  margin:0 auto;
-}
+
+    .project-stack{
+      width:fit-content;
+      max-width:100%;
+      margin:0 auto;
+    }
 
     @keyframes cardIn{
       to{opacity:1;transform:none}
@@ -362,80 +371,75 @@
     .span-5{grid-column:span 5}
     .span-4{grid-column:span 4}
 
-      .project-thumb{
-        position:relative;
-        overflow:hidden;
-        border:0;
-        background:transparent;
-        box-shadow:none;
-        border-radius:0 !important;
-      }
+    .project-thumb{
+      position:relative;
+      display:block;
+      margin-bottom:8px;
+      height:auto;
+      min-height:0;
+      aspect-ratio:auto !important;
+      overflow:visible;
+      border:0;
+      background:transparent;
+      box-shadow:none;
+      border-radius:0 !important;
+    }
 
-      .detail-image,
-      .more-thumb{
-        position:relative;
-        overflow:hidden;
-        border:1px solid var(--line);
-        background:var(--card);
-        box-shadow:none;
-        border-radius:0 !important;
-      }
+    .detail-image,
+    .more-thumb{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:var(--card);
+      box-shadow:none;
+      border-radius:0 !important;
+    }
 
-.project-thumb{
-  display:block;
-  margin-bottom:8px;
-  height:auto;
-  min-height:0;
-  aspect-ratio:auto !important;
-  background:transparent;
-  border:0;
-  overflow:visible;
-}
+    .project-cover,
+    .project-video{
+      display:block;
+      width:100%;
+      height:auto;
+      max-width:100%;
+      border-radius:0 !important;
+      background:transparent;
+      object-fit:unset;
+    }
 
-.project-cover,
-.project-video{
-  display:block;
-  width:100%;
-  height:auto;
-  max-width:100%;
-  border-radius:0 !important;
-  background:transparent;
-  object-fit:unset;
-}
+    .project-cover{
+      position:relative;
+      z-index:1;
+      transition:opacity .22s ease, filter .8s ease;
+    }
 
-.project-cover{
-  position:relative;
-  z-index:1;
-  transition:opacity .22s ease, filter .8s ease;
-}
+    .project-video{
+      position:relative;
+      z-index:1;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .22s ease;
+    }
 
-.project-video{
-  position:relative;
-  z-index:1;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .22s ease;
-}
+    .project-thumb.has-video.is-video-visible .project-video{
+      display:block;
+      opacity:1;
+    }
 
-.project-thumb.has-video.is-video-visible .project-video{
-  display:block;
-  opacity:1;
-}
+    .project-thumb.has-video:not(.is-video-visible) .project-video{
+      display:none;
+    }
 
-.project-thumb.has-video:not(.is-video-visible) .project-video{
-  display:none;
-}
+    .project-thumb.has-video.is-video-visible .project-cover{
+      display:none;
+    }
 
-.project-thumb.has-video.is-video-visible .project-cover{
-  display:none;
-}
-.project-meta{
-  width:100%;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  gap:4px 12px;
-  align-items:end;
-}
+    .project-meta{
+      width:100%;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:4px 12px;
+      align-items:end;
+    }
 
     .project-title{
       margin:0;
@@ -788,194 +792,201 @@
       color:var(--muted);
     }
 
-    .nam-footer{
-      margin-top:84px;
-      padding:34px 0 56px;
+    .zsizart-footer{
+      margin-top:0;
+      padding:24px 0 14px;
       border-top:1px solid var(--line);
-      background:transparent;
-      color:var(--ink);
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     }
 
-    .footer-grid{
-      display:grid;
-      grid-template-columns:1.05fr 1.65fr .86fr .92fr;
-      gap:18px;
+    .footer-top,
+    .footer-main,
+    .footer-bottom{
+      width:min(var(--max), calc(100% - 8px));
+      margin:0 auto;
     }
 
-    .footer-card{
-      border:1px solid var(--line);
-      border-radius:28px;
-      padding:22px;
-      background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.02));
-      min-height:210px;
-      box-shadow:none;
+    .footer-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding-bottom:34px;
     }
 
-    html[data-theme="dark"] .footer-card{
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-    }
-
-    .footer-title{
-      font-size:13px;
-      font-weight:700;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--soft);
-      margin:0 0 18px;
-    }
-
-    .footer-list{
-      display:grid;
-      gap:12px;
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
-
-    .footer-list a,
-    .footer-list span{
-      color:var(--muted);
-      transition:.25s ease;
-      font-size:14px;
+    .footer-brand{
+      font-size:28px;
+      line-height:1;
       font-weight:500;
-      line-height:1.35;
+      letter-spacing:-.03em;
     }
 
-    .footer-list a:hover{color:var(--ink)}
-
-    .newsletter{
-      display:grid;
-      gap:12px;
-    }
-
-    .newsletter p{
-      color:var(--muted);
-      font-size:14px;
-      max-width:32ch;
-      margin:0;
-      line-height:1.45;
-    }
-
-    .field{
+    .footer-social{
       display:flex;
       align-items:center;
       gap:10px;
-      min-height:52px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:var(--field-bg);
-      padding:0 8px 0 16px;
-      margin-top:2px;
+      flex-wrap:wrap;
     }
 
-    .field input{
+    .footer-social a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:var(--chip-bg);
+      font-size:12px;
+      font-weight:400;
+      color:var(--ink);
+      transition:.25s ease;
+    }
+
+    .footer-social a:hover{
+      background:var(--chip-hover);
+      border-color:var(--line-2);
+    }
+
+    .footer-main{
+      display:grid;
+      grid-template-columns:1.15fr .55fr .55fr;
+      gap:48px;
+      align-items:start;
+      padding-bottom:42px;
+    }
+
+    .footer-newsletter{
+      min-width:0;
+    }
+
+    .footer-label{
+      margin:0 0 12px;
+      font-size:14px;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .footer-subscribe{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      max-width:360px;
+      min-height:42px;
+      padding:4px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.22);
+    }
+
+    .footer-subscribe input{
       flex:1;
       min-width:0;
+      border:0;
+      outline:0;
       background:transparent;
-      border:0;
-      outline:0;
       color:var(--ink);
-      font:inherit;
-      padding:0;
-      height:auto;
-      border-radius:0;
-      box-shadow:none;
+      padding:0 14px;
+      font-size:14px;
+      font-weight:400;
     }
 
-    .field input::placeholder{color:var(--muted-3)}
+    .footer-subscribe input::placeholder{
+      color:var(--muted-2);
+    }
 
-    .field button{
+    .footer-subscribe button{
       border:0;
       outline:0;
-      cursor:pointer;
+      min-width:110px;
+      min-height:34px;
+      padding:0 14px;
       border-radius:999px;
-      background:var(--primary-btn-bg);
-      color:var(--primary-btn-text);
-      min-width:122px;
-      min-height:40px;
-      padding:0 16px;
-      font:inherit;
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.1em;
-      text-transform:uppercase;
+      background:#6f6f6f;
+      color:#fff;
+      font-size:13px;
+      font-weight:500;
+      cursor:pointer;
       transition:.25s ease;
-      flex:0 0 auto;
     }
 
-    .field button:hover{
-      background:var(--primary-btn-hover-bg);
-      color:var(--primary-btn-text);
-      filter:none;
+    .footer-subscribe button:hover{
+      filter:brightness(.95);
+    }
+
+    .footer-time{
+      display:grid;
+      gap:18px;
+    }
+
+    .footer-time-row{
+      display:grid;
+      gap:4px;
+    }
+
+    .footer-time-city{
+      font-size:14px;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .footer-time-value{
+      font-size:28px;
+      line-height:1;
+      letter-spacing:-.03em;
+      font-weight:500;
+      font-variant-numeric:tabular-nums;
+    }
+
+    .footer-nav{
+      display:grid;
+      gap:10px;
+      justify-content:start;
+    }
+
+    .footer-nav a{
+      font-size:16px;
+      line-height:1.3;
+      color:var(--muted);
+      font-weight:400;
+      transition:.2s ease;
+    }
+
+    .footer-nav a:hover{
+      color:var(--ink);
+    }
+
+    .footer-bottom{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding-top:18px;
+      border-top:1px solid rgba(10,10,10,.04);
+      font-size:11px;
+      color:var(--muted-2);
+      font-weight:400;
+      flex-wrap:wrap;
+    }
+
+    .footer-bottom a{
+      color:inherit;
+    }
+
+    .footer-bottom a:hover{
+      color:var(--ink);
     }
 
     .footer-status{
       margin-top:10px;
       color:var(--muted-2);
       font-size:12px;
-      font-weight:500;
+      font-weight:400;
     }
-
-    .clock{
-      display:grid;
-      gap:14px;
-    }
-
-    .clock-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      border-bottom:1px solid var(--line);
-      padding-bottom:10px;
-    }
-
-    .clock-row:last-child{
-      border-bottom:0;
-      padding-bottom:0;
-    }
-
-    .clock-city{
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--muted);
-    }
-
-    .clock-time{
-      font-size:24px;
-      line-height:1;
-      font-weight:800;
-      letter-spacing:-.03em;
-      color:var(--ink);
-      font-variant-numeric:tabular-nums;
-    }
-
-    .legal{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      margin-top:18px;
-      color:var(--muted-2);
-      font-size:12px;
-      font-weight:500;
-      flex-wrap:wrap;
-    }
-
-    .legal a{color:inherit}
-    .legal a:hover{color:var(--ink)}
 
     @media (min-width: 1025px){
       .detail-aside{
         padding-left:56px;
       }
-    }
-
-    @media (max-width: 1100px){
-      .footer-grid{grid-template-columns:1fr 1fr}
     }
 
     @media (max-width: 1024px){
@@ -994,15 +1005,23 @@
       }
     }
 
+    @media (max-width: 980px){
+      .footer-main{
+        grid-template-columns:1fr;
+        gap:28px;
+      }
+    }
+
     @media (max-width: 900px){
       .projects-grid{gap:18px}
       .span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12 !important}
       .list-body{grid-template-columns:1fr}
       .list-preview{display:none}
-      .footer-grid{grid-template-columns:1fr}
-      .footer-card{min-height:auto}
       .header-inner,
-      .shell{
+      .shell,
+      .footer-top,
+      .footer-main,
+      .footer-bottom{
         width:calc(100% - 24px);
       }
     }
@@ -1019,15 +1038,18 @@
     }
 
     @media (max-width: 780px){
-      .nam-footer{padding:28px 0 40px}
-      .field{
+      .footer-subscribe{
         flex-direction:column;
         align-items:stretch;
         border-radius:24px;
         padding:10px;
+        max-width:none;
+        width:100%;
       }
-      .field button{width:100%}
-      .legal{
+
+      .footer-subscribe button{width:100%}
+
+      .footer-bottom{
         flex-direction:column;
         align-items:flex-start;
       }
@@ -1062,6 +1084,18 @@
       .nav a:nth-child(n+2){display:none}
     }
 
+    @media (max-width: 640px){
+      .footer-top{
+        flex-direction:column;
+        align-items:flex-start;
+        padding-bottom:24px;
+      }
+
+      .footer-brand{
+        font-size:24px;
+      }
+    }
+
     @media (max-width: 520px){
       .header-inner{padding:10px 12px}
       .shell{width:min(calc(100% - 24px), var(--max))}
@@ -1070,7 +1104,6 @@
       .list-shell{padding:18px 0 90px}
       .facts{grid-template-columns:1fr}
       .more-card{width:78vw}
-      .nam-footer{padding:22px 18px 14px}
     }
   </style>
 </head>
@@ -1101,62 +1134,55 @@
 
   <div id="app"></div>
 
-  <footer class="nam-footer">
-    <div class="footer-grid">
-      <section class="footer-card">
-        <div class="footer-title">ZSIZART Studio</div>
-        <ul class="footer-list">
-          <li><a href="#" aria-label="Instagram">Instagram</a></li>
-          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
-          <li><a href="/work/">Projects</a></li>
-          <li><a href="#">Privacy policy</a></li>
-        </ul>
-      </section>
+  <footer class="zsizart-footer">
+    <div class="footer-top">
+      <div class="footer-brand">ZSIZART Studio</div>
 
-      <section class="footer-card">
-        <div class="footer-title">Newsletter</div>
-        <div class="newsletter">
-          <p>Studio updates, selected work drops, and new releases delivered in a minimal format.</p>
-
-          <form class="field" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
-            <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
-            <input type="hidden" name="type" value="newsletter_subscribe">
-            <button type="submit">Subscribe</button>
-          </form>
-
-          <div id="subscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
-          <div id="subscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
-        </div>
-      </section>
-
-      <section class="footer-card">
-        <div class="footer-title">Local time</div>
-        <div class="clock">
-          <div class="clock-row">
-            <span class="clock-city">Egypt</span>
-            <span class="clock-time" id="clock-eg">00:00:00</span>
-          </div>
-          <div class="clock-row">
-            <span class="clock-city">Dubai</span>
-            <span class="clock-time" id="clock-dubai">00:00:00</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="footer-card">
-        <div class="footer-title">Contact</div>
-        <ul class="footer-list">
-          <li><a href="/contact/">Project enquiries</a></li>
-          <li><a href="mailto:info@zsizart.com">careers@zsizart.com</a></li>
-          <li><span>Egypt / Dubai</span></li>
-        </ul>
-      </section>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
     </div>
 
-    <div class="legal">
+    <div class="footer-main">
+      <div class="footer-newsletter">
+        <p class="footer-label">Keep in touch with us</p>
+
+        <form class="footer-subscribe" id="footerSubscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+          <input type="email" name="email" placeholder="Email Address" aria-label="Email address" required>
+          <input type="hidden" name="type" value="newsletter_subscribe">
+          <button type="submit">Subscribe</button>
+        </form>
+
+        <div id="footerSubscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
+        <div id="footerSubscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+      </div>
+
+      <div class="footer-time">
+        <div class="footer-time-row">
+          <span class="footer-time-city">London</span>
+          <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
+        </div>
+
+        <div class="footer-time-row">
+          <span class="footer-time-city">Dubai</span>
+          <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/work/">Projects</a>
+        <a href="/news/">News</a>
+        <a href="/studio/">Studio</a>
+        <a href="/careers/">Careers</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
       <span>© 2026 ZSIZART Studio</span>
-      <span>Built by ZSIZART</span>
-      <a href="#">Privacy Policy</a>
+      <span>Made by ZSIZART</span>
+      <a href="/privacy-policy/">Privacy Policy</a>
     </div>
   </footer>
 
@@ -1195,7 +1221,7 @@
         previewVideo: "/assets/work-01.mp4",
         images: [
           { src: "/assets/work-01.webp" },
-          { src: "/assets/work-01-01.webp", hoverSrc: "/assets/work-01-01ex.webp" },
+          { src: "/assets/work-01-01.webp", hoverSrc: "/assets/work-01-01ex.webp" }
         ],
         width: "span-4"
       },
@@ -1227,7 +1253,7 @@
         previewVideo: "/assets/work-04.mp4",
         images: [
           { src: "/assets/work-04.webp" },
-          { src: "/assets/work-04-01.webp", hoverSrc: "/assets/work-04-01ex.webp" },
+          { src: "/assets/work-04-01.webp", hoverSrc: "/assets/work-04-01ex.webp" }
         ],
         width: "span-4"
       },
@@ -1247,7 +1273,7 @@
           { src: "/assets/work-05.webp" },
           { src: "/assets/work-05.webp", hoverSrc: "/assets/work-05-ex.webp" },
           { src: "/assets/work-05-01.webp" }
-      ],
+        ],
         width: "span-4"
       },
       {
@@ -1265,7 +1291,7 @@
         images: [
           { src: "/assets/work-06.webp" },
           { src: "/assets/work-06-01.webp" }
-      ],
+        ],
         width: "span-4"
       }
     ];
@@ -1319,44 +1345,44 @@
     function renderGrid(){
       document.title = 'ZSIZART — Work';
 
-const cards = projects.map((project, index) => `
-  <a
-    class="project-card ${project.width || 'span-12'}"
-    style="animation-delay:${(index % 3) * 0.12}s"
-    href="#/projects/${project.slug}"
-    ${project.previewVideo ? `data-video="${project.previewVideo}"` : ''}
-  >
-    <div class="project-stack">
-      <div class="project-thumb ${project.previewVideo ? 'has-video' : ''}">
-        <img
-          class="project-cover"
-          src="${project.coverImage}"
-          alt="${escapeHtml(project.title)}"
-          loading="${index > 2 ? 'lazy' : 'eager'}"
+      const cards = projects.map((project, index) => `
+        <a
+          class="project-card ${project.width || 'span-12'}"
+          style="animation-delay:${(index % 3) * 0.12}s"
+          href="#/projects/${project.slug}"
+          ${project.previewVideo ? `data-video="${project.previewVideo}"` : ''}
         >
+          <div class="project-stack">
+            <div class="project-thumb ${project.previewVideo ? 'has-video' : ''}">
+              <img
+                class="project-cover"
+                src="${project.coverImage}"
+                alt="${escapeHtml(project.title)}"
+                loading="${index > 2 ? 'lazy' : 'eager'}"
+              >
 
-        ${project.previewVideo ? `
-          <video
-            class="project-video"
-            muted
-            loop
-            playsinline
-            webkit-playsinline
-            preload="metadata"
-            poster="${project.coverImage}"
-          >
-            <source src="${project.previewVideo}" type="video/mp4">
-          </video>
-        ` : ''}
-      </div>
+              ${project.previewVideo ? `
+                <video
+                  class="project-video"
+                  muted
+                  loop
+                  playsinline
+                  webkit-playsinline
+                  preload="metadata"
+                  poster="${project.coverImage}"
+                >
+                  <source src="${project.previewVideo}" type="video/mp4">
+                </video>
+              ` : ''}
+            </div>
 
-      <div class="project-meta">
-        <h2 class="project-title">${escapeHtml(project.title)}</h2>
-        <p class="project-services">${escapeHtml(project.services)}</p>
-      </div>
-    </div>
-  </a>
-`).join('');
+            <div class="project-meta">
+              <h2 class="project-title">${escapeHtml(project.title)}</h2>
+              <p class="project-services">${escapeHtml(project.services)}</p>
+            </div>
+          </div>
+        </a>
+      `).join('');
 
       app.innerHTML = `
         <main class="page grid-page">
@@ -1678,11 +1704,11 @@ const cards = projects.map((project, index) => `
     render();
 
     (function(){
-      const form = document.getElementById('subscribeForm');
+      const form = document.getElementById('footerSubscribeForm');
       if (!form) return;
 
-      const ok = document.getElementById('subscribeOk');
-      const err = document.getElementById('subscribeErr');
+      const ok = document.getElementById('footerSubscribeOk');
+      const err = document.getElementById('footerSubscribeErr');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -1710,29 +1736,31 @@ const cards = projects.map((project, index) => `
     })();
 
     (function(){
-      const fmt = (tz) => new Intl.DateTimeFormat('en-GB', {
-        timeZone: tz,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      });
+      const londonEl = document.getElementById('clock-london-footer');
+      const dubaiEl = document.getElementById('clock-dubai-footer');
 
-      const eg = document.getElementById('clock-eg');
-      const dubai = document.getElementById('clock-dubai');
+      const formatTime = (timeZone) =>
+        new Intl.DateTimeFormat('en-GB', {
+          timeZone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+
+      const londonFmt = formatTime('Europe/London');
+      const dubaiFmt = formatTime('Asia/Dubai');
 
       const tick = () => {
         const now = new Date();
-        if (eg) eg.textContent = fmt('Africa/Cairo').format(now);
-        if (dubai) dubai.textContent = fmt('Asia/Dubai').format(now);
+        if (londonEl) londonEl.textContent = londonFmt.format(now);
+        if (dubaiEl) dubaiEl.textContent = dubaiFmt.format(now);
       };
 
       tick();
       setInterval(tick, 1000);
     })();
-  </script>
 
-  <script>
     (function(){
       const header = document.getElementById('siteHeader');
       const root = document.documentElement;
