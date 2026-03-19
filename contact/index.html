@@ -189,7 +189,15 @@
       user-select:none;
       white-space:nowrap;
     }
-    .brand .logo{height:34px;width:auto}
+    .brand .logo{
+  height:34px;
+  width:auto;
+  transition:.25s ease;
+}
+
+html[data-theme="dark"] .brand .logo{
+  filter: brightness(0) invert(1);
+}
     .brand .wordmark{
       color:var(--soft);
       font-weight:800;
@@ -768,6 +776,13 @@
               <div class="contact-item">
                 <div class="contact-label">Working model</div>
                 <div class="contact-value">Global remote studio serving architecture, interiors, and real estate clients worldwide.</div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-label">Website</div>
+                <div class="contact-value">
+                  <a href="https://zsizart.com/" target="_blank" rel="noopener noreferrer">zsizart.com</a>
+                </div>
               </div>
 
               <div class="contact-item">
