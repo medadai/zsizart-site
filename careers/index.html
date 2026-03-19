@@ -11,6 +11,16 @@
   <link rel="canonical" href="https://zsizart.com/careers/">
   <meta name="robots" content="index, follow">
 
+  <meta property="og:title" content="ZSIZART — Careers">
+  <meta property="og:description" content="Careers at ZSIZART Studio — join a focused CGI team working across architectural imagery, film, and brand expression.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://zsizart.com/assets/og-cover.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZSIZART — Careers">
+  <meta name="twitter:description" content="Careers at ZSIZART Studio — join a focused CGI team working across architectural imagery, film, and brand expression.">
+  <meta name="twitter:image" content="https://zsizart.com/assets/og-cover.jpg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -51,7 +61,7 @@
       --radius-xl:34px;
       --radius-lg:28px;
       --radius-md:20px;
-      --max:1440px;
+      --max:2200px;
       --ease:cubic-bezier(.16,1,.3,1);
     }
 
@@ -136,9 +146,9 @@
     button,input{font:inherit}
 
     #app{flex:1;padding-top:98px}
-    .shell{width:min(var(--max), calc(100% - 32px));margin:0 auto}
+    .shell{width:min(var(--max), calc(100% - 8px));margin:0 auto}
+    @media (max-width:768px){ #app{padding-top:92px} }
 
-    /* ===== Header (نفس صفحتك) ===== */
     .site-header{
       position:fixed;
       inset:0 0 auto 0;
@@ -153,7 +163,7 @@
     .site-header.scrolled{padding:10px 0}
 
     .header-inner{
-      width:min(var(--max), calc(100% - 32px));
+      width:min(var(--max), calc(100% - 12px));
       margin-inline:auto;
       display:flex;
       align-items:center;
@@ -180,10 +190,19 @@
       white-space:nowrap;
     }
 
-    .brand .logo{height:34px;width:auto}
+    .brand .logo{
+      height:34px;
+      width:auto;
+      transition:.25s ease;
+    }
+
+    html[data-theme="dark"] .brand .logo{
+      filter:brightness(0) invert(1);
+    }
+
     .brand .wordmark{
       color:var(--soft);
-      font-weight:700;
+      font-weight:800;
       letter-spacing:.18em;
       font-size:13px;
       text-transform:uppercase;
@@ -211,7 +230,7 @@
       border-radius:999px;
       padding:0 16px;
       font-size:12px;
-      font-weight:700;
+      font-weight:900;
       letter-spacing:.08em;
       text-transform:uppercase;
       transition:.25s ease;
@@ -235,7 +254,6 @@
       border-color:transparent;
       min-height:46px;
     }
-
     .cta:hover{
       background:var(--primary-btn-hover-bg);
       color:var(--primary-btn-text);
@@ -260,7 +278,7 @@
     .theme-switch.is-dark .switch-thumb{transform:translateX(20px)}
     .switch-text{
       font-size:12px;
-      font-weight:700;
+      font-weight:900;
       letter-spacing:.08em;
       text-transform:uppercase;
     }
@@ -271,47 +289,44 @@
       .theme-switch{padding:0 12px}
       .switch-text{display:none}
       .header-inner{width:min(var(--max), calc(100% - 24px))}
-      #app{padding-top:92px}
       .nav a:nth-child(n+2){display:none}
     }
     @media (max-width: 520px){
       .header-inner{padding:10px 12px}
-      .shell{width:min(var(--max), calc(100% - 24px))}
     }
 
-    /* ===== Page ===== */
     .page{
       opacity:0;
       transform:translateY(18px);
       animation:pageIn .8s var(--ease) forwards;
-      padding:18px 0 72px;
+      padding:28px 0 72px;
     }
     @keyframes pageIn{to{opacity:1;transform:none}}
 
     .eyebrow{
       margin:0 0 14px;
-      font-size:10px;
-      font-weight:900;
-      letter-spacing:.18em;
+      font-size:11px;
+      font-weight:500;
+      letter-spacing:.12em;
       text-transform:uppercase;
       color:var(--muted);
     }
 
     .h1{
       margin:0 0 12px;
-      font-size:clamp(34px, 4.2vw, 64px);
+      font-size:clamp(30px, 5.2vw, 62px);
       line-height:.98;
-      font-weight:800;
-      letter-spacing:-0.055em;
+      font-weight:600;
+      letter-spacing:-.035em;
     }
 
     .lead{
       margin:0;
       font-size:14px;
-      line-height:1.85;
+      line-height:1.6;
       font-weight:400;
-      color:var(--muted);
-      max-width:76ch;
+      color:var(--ink);
+      max-width:520px;
     }
 
     .card{
@@ -323,7 +338,6 @@
       background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
     }
 
-    /* ===== Careers Hero ===== */
     .hero{
       display:grid;
       grid-template-columns: 1.25fr .75fr;
@@ -433,7 +447,6 @@
 
     @media (max-width: 1100px){ .hero{grid-template-columns:1fr} }
 
-    /* ===== Sections ===== */
     .section{margin-top:18px;display:grid;gap:18px}
     .pad{padding:22px}
 
@@ -441,20 +454,19 @@
       margin:0 0 10px;
       font-size:clamp(22px, 2.1vw, 30px);
       line-height:1.1;
-      font-weight:800;
-      letter-spacing:-0.03em;
+      font-weight:600;
+      letter-spacing:-.03em;
     }
 
     .copy{
       margin:0;
       font-size:14px;
-      line-height:1.85;
+      line-height:1.6;
       font-weight:400;
-      color:var(--muted);
+      color:var(--ink);
       max-width:82ch;
     }
 
-    /* ===== Roles ===== */
     .roles{
       display:grid;
       gap:10px;
@@ -535,7 +547,6 @@
       .role-meta{text-align:left;align-items:flex-start}
     }
 
-    /* ===== Apply block ===== */
     .apply{
       display:grid;
       grid-template-columns: 1.25fr .75fr;
@@ -602,7 +613,6 @@
 
     @media (max-width: 1000px){ .apply{grid-template-columns:1fr} }
 
-    /* ===== Bottom CTA (Start a Project) ===== */
     .project-cta{
       margin-top:18px;
       border-radius:var(--radius-xl);
@@ -627,8 +637,8 @@
       margin:0;
       font-size:clamp(26px, 3.2vw, 44px);
       line-height:1.05;
-      font-weight:900;
-      letter-spacing:-0.04em;
+      font-weight:600;
+      letter-spacing:-.04em;
     }
 
     .cta-lines .small{
@@ -663,184 +673,228 @@
       transform:translateY(-1px);
     }
 
-    /* ===== Footer (نفس صفحتك) ===== */
-    .nam-footer{
-      margin-top:84px;
-      padding:34px 0 56px;
+    .zsizart-footer{
+      margin-top:0;
+      padding:24px 0 14px;
       border-top:1px solid var(--line);
-      background:transparent;
-      color:var(--ink);
     }
 
-    .footer-grid{
+    .footer-top,
+    .footer-main,
+    .footer-bottom{
       width:min(var(--max), calc(100% - 32px));
       margin:0 auto;
-      display:grid;
-      grid-template-columns:1.05fr 1.65fr .86fr .92fr;
-      gap:18px;
     }
 
-    .footer-card{
-      border:1px solid var(--line);
-      border-radius:28px;
-      padding:22px;
-      background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.02));
-      min-height:210px;
-      box-shadow:none;
+    .footer-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding-bottom:34px;
     }
 
-    html[data-theme="dark"] .footer-card{
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-    }
-
-    .footer-title{
-      font-size:13px;
-      font-weight:700;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--soft);
-      margin:0 0 18px;
-    }
-
-    .footer-list{
-      display:grid;
-      gap:12px;
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
-
-    .footer-list a,
-    .footer-list span{
-      color:var(--muted);
-      transition:.25s ease;
-      font-size:14px;
+    .footer-brand{
+      font-size:28px;
+      line-height:1;
       font-weight:500;
-      line-height:1.35;
+      letter-spacing:-.03em;
     }
 
-    .footer-list a:hover{color:var(--ink)}
-
-    .newsletter{display:grid;gap:12px}
-    .newsletter p{
-      color:var(--muted);
-      font-size:14px;
-      max-width:32ch;
-      margin:0;
-      line-height:1.45;
-    }
-
-    .field{
+    .footer-social{
       display:flex;
       align-items:center;
       gap:10px;
-      min-height:52px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:var(--field-bg);
-      padding:0 8px 0 16px;
-      margin-top:2px;
+      flex-wrap:wrap;
     }
 
-    .field input{
+    .footer-social a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:var(--chip-bg);
+      font-size:12px;
+      font-weight:400;
+      color:var(--ink);
+      transition:.25s ease;
+    }
+
+    .footer-social a:hover{
+      background:var(--chip-hover);
+      border-color:var(--line-2);
+    }
+
+    .footer-main{
+      display:grid;
+      grid-template-columns:1.15fr .55fr .55fr;
+      gap:48px;
+      align-items:start;
+      padding-bottom:42px;
+    }
+
+    .footer-newsletter{
+      min-width:0;
+    }
+
+    .footer-label{
+      margin:0 0 12px;
+      font-size:14px;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .footer-subscribe{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      max-width:360px;
+      min-height:42px;
+      padding:4px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.22);
+    }
+
+    .footer-subscribe input{
       flex:1;
       min-width:0;
+      border:0;
+      outline:0;
       background:transparent;
-      border:0;
-      outline:0;
       color:var(--ink);
-      padding:0;
-      height:auto;
-      border-radius:0;
-      box-shadow:none;
+      padding:0 14px;
+      font-size:14px;
+      font-weight:400;
     }
 
-    .field input::placeholder{color:var(--muted-3)}
+    .footer-subscribe input::placeholder{
+      color:var(--muted-2);
+    }
 
-    .field button{
+    .footer-subscribe button{
       border:0;
       outline:0;
-      cursor:pointer;
+      min-width:110px;
+      min-height:34px;
+      padding:0 14px;
       border-radius:999px;
-      background:var(--primary-btn-bg);
-      color:var(--primary-btn-text);
-      min-width:122px;
-      min-height:40px;
-      padding:0 16px;
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.1em;
-      text-transform:uppercase;
+      background:#6f6f6f;
+      color:#fff;
+      font-size:13px;
+      font-weight:500;
+      cursor:pointer;
       transition:.25s ease;
-      flex:0 0 auto;
     }
 
-    .field button:hover{background:var(--primary-btn-hover-bg);filter:none}
+    .footer-subscribe button:hover{
+      filter:brightness(.95);
+    }
+
+    .footer-time{
+      display:grid;
+      gap:18px;
+    }
+
+    .footer-time-row{
+      display:grid;
+      gap:4px;
+    }
+
+    .footer-time-city{
+      font-size:14px;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .footer-time-value{
+      font-size:28px;
+      line-height:1;
+      letter-spacing:-.03em;
+      font-weight:500;
+      font-variant-numeric:tabular-nums;
+    }
+
+    .footer-nav{
+      display:grid;
+      gap:10px;
+      justify-content:start;
+    }
+
+    .footer-nav a{
+      font-size:16px;
+      line-height:1.3;
+      color:var(--muted);
+      font-weight:400;
+      transition:.2s ease;
+    }
+
+    .footer-nav a:hover{
+      color:var(--ink);
+    }
+
+    .footer-bottom{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding-top:18px;
+      border-top:1px solid rgba(10,10,10,.04);
+      font-size:11px;
+      color:var(--muted-2);
+      font-weight:400;
+      flex-wrap:wrap;
+    }
+
+    .footer-bottom a{
+      color:inherit;
+    }
+
+    .footer-bottom a:hover{
+      color:var(--ink);
+    }
 
     .footer-status{
       margin-top:10px;
       color:var(--muted-2);
       font-size:12px;
-      font-weight:500;
+      font-weight:400;
     }
 
-    .clock{display:grid;gap:14px}
-    .clock-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      border-bottom:1px solid var(--line);
-      padding-bottom:10px;
-    }
-    .clock-row:last-child{border-bottom:0;padding-bottom:0}
-    .clock-city{
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--muted);
-    }
-    .clock-time{
-      font-size:24px;
-      line-height:1;
-      font-weight:800;
-      letter-spacing:-.03em;
-      color:var(--ink);
-      font-variant-numeric:tabular-nums;
-    }
-
-    .legal{
-      width:min(var(--max), calc(100% - 32px));
-      margin:18px auto 0;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      color:var(--muted-2);
-      font-size:12px;
-      font-weight:500;
-      flex-wrap:wrap;
-    }
-
-    .legal a{color:inherit}
-    .legal a:hover{color:var(--ink)}
-
-    @media (max-width: 1100px){
-      .footer-grid{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width: 780px){
-      .nam-footer{padding:28px 0 40px}
-      .footer-grid{grid-template-columns:1fr}
-      .footer-card{min-height:auto}
-      .field{
-        flex-direction:column;
-        align-items:stretch;
-        border-radius:24px;
-        padding:10px;
+    @media (max-width: 1080px){
+      .footer-main{
+        grid-template-columns:1fr;
+        gap:28px;
       }
-      .field button{width:100%}
-      .legal{flex-direction:column;align-items:flex-start}
+    }
+
+    @media (max-width: 768px){
+      .page{padding:18px 0 48px}
+    }
+
+    @media (max-width: 640px){
+      .footer-top{
+        flex-direction:column;
+        align-items:flex-start;
+        padding-bottom:24px;
+      }
+
+      .footer-brand{
+        font-size:24px;
+      }
+
+      .footer-subscribe{
+        max-width:none;
+        width:100%;
+      }
+
+      .footer-bottom{
+        flex-direction:column;
+        align-items:flex-start;
+      }
     }
   </style>
 </head>
@@ -874,10 +928,8 @@
     <main class="page">
       <div class="shell">
 
-        <!-- HERO (صورة فوق زي NAM) -->
         <section class="hero" aria-label="Careers hero">
           <div class="hero-media">
-            <!-- حط الصورة هنا -->
             <img src="/assets/careers-hero.jpg" alt="ZSIZART Studio team" loading="eager" decoding="async">
             <div class="hero-overlay">
               <div class="hero-info">
@@ -907,7 +959,6 @@
           </div>
         </section>
 
-        <!-- OPEN POSITIONS -->
         <section class="section card pad" aria-label="Open positions">
           <p class="eyebrow">Open positions</p>
           <h2 class="h2">Roles</h2>
@@ -949,7 +1000,6 @@
           </div>
         </section>
 
-        <!-- INTERNSHIPS + APPLY -->
         <section class="section apply" aria-label="Internships and application">
           <div class="card pad">
             <p class="eyebrow">Internship opportunities</p>
@@ -987,7 +1037,6 @@
           </div>
         </section>
 
-        <!-- START A PROJECT (تحت خالص) -->
         <section class="project-cta" aria-label="Start a project">
           <div class="cta-lines">
             <p class="eyebrow" style="margin:0 0 10px;">Start a project</p>
@@ -1001,62 +1050,55 @@
     </main>
   </div>
 
-  <footer class="nam-footer">
-    <div class="footer-grid">
-      <section class="footer-card">
-        <div class="footer-title">ZSIZART Studio</div>
-        <ul class="footer-list">
-          <li><a href="#" aria-label="Instagram">Instagram</a></li>
-          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
-          <li><a href="/work/">Projects</a></li>
-          <li><a href="#">Privacy policy</a></li>
-        </ul>
-      </section>
+  <footer class="zsizart-footer">
+    <div class="footer-top">
+      <div class="footer-brand">ZSIZART Studio</div>
 
-      <section class="footer-card">
-        <div class="footer-title">Newsletter</div>
-        <div class="newsletter">
-          <p>Studio updates, selected work drops, and new releases delivered in a minimal format.</p>
-
-          <form class="field" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
-            <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
-            <input type="hidden" name="type" value="newsletter_subscribe">
-            <button type="submit">Subscribe</button>
-          </form>
-
-          <div id="subscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
-          <div id="subscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
-        </div>
-      </section>
-
-      <section class="footer-card">
-        <div class="footer-title">Local time</div>
-        <div class="clock">
-          <div class="clock-row">
-            <span class="clock-city">Egypt</span>
-            <span class="clock-time" id="clock-eg">00:00:00</span>
-          </div>
-          <div class="clock-row">
-            <span class="clock-city">Dubai</span>
-            <span class="clock-time" id="clock-dubai">00:00:00</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="footer-card">
-        <div class="footer-title">Contact</div>
-        <ul class="footer-list">
-          <li><a href="/contact/">Project enquiries</a></li>
-          <li><a href="mailto:career@zsizart.com">career@zsizart.com</a></li>
-          <li><span>Egypt / Dubai</span></li>
-        </ul>
-      </section>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
     </div>
 
-    <div class="legal">
+    <div class="footer-main">
+      <div class="footer-newsletter">
+        <p class="footer-label">Keep in touch with us</p>
+
+        <form class="footer-subscribe" id="footerSubscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+          <input type="email" name="email" placeholder="Email Address" aria-label="Email address" required>
+          <input type="hidden" name="type" value="newsletter_subscribe">
+          <button type="submit">Subscribe</button>
+        </form>
+
+        <div id="footerSubscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
+        <div id="footerSubscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+      </div>
+
+      <div class="footer-time">
+        <div class="footer-time-row">
+          <span class="footer-time-city">London</span>
+          <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
+        </div>
+
+        <div class="footer-time-row">
+          <span class="footer-time-city">Dubai</span>
+          <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/work/">Projects</a>
+        <a href="/news/">News</a>
+        <a href="/studio/">Studio</a>
+        <a href="/careers/">Careers</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
       <span>© 2026 ZSIZART Studio</span>
-      <span>Built by ZSIZART</span>
-      <a href="#">Privacy Policy</a>
+      <span>Made by ZSIZART</span>
+      <a href="/Privacy%20Policy/">Privacy Policy</a>
     </div>
   </footer>
 
@@ -1099,33 +1141,11 @@
     })();
 
     (function(){
-      const fmt = (tz) => new Intl.DateTimeFormat('en-GB', {
-        timeZone: tz,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      });
-
-      const eg = document.getElementById('clock-eg');
-      const dubai = document.getElementById('clock-dubai');
-
-      const tick = () => {
-        const now = new Date();
-        if (eg) eg.textContent = fmt('Africa/Cairo').format(now);
-        if (dubai) dubai.textContent = fmt('Asia/Dubai').format(now);
-      };
-
-      tick();
-      setInterval(tick, 1000);
-    })();
-
-    (function(){
-      const form = document.getElementById('subscribeForm');
+      const form = document.getElementById('footerSubscribeForm');
       if (!form) return;
 
-      const ok = document.getElementById('subscribeOk');
-      const err = document.getElementById('subscribeErr');
+      const ok = document.getElementById('footerSubscribeOk');
+      const err = document.getElementById('footerSubscribeErr');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -1150,6 +1170,32 @@
           if (err) err.style.display = 'block';
         }
       });
+    })();
+
+    (function(){
+      const londonEl = document.getElementById('clock-london-footer');
+      const dubaiEl = document.getElementById('clock-dubai-footer');
+
+      const formatTime = (timeZone) =>
+        new Intl.DateTimeFormat('en-GB', {
+          timeZone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+
+      const londonFmt = formatTime('Europe/London');
+      const dubaiFmt = formatTime('Asia/Dubai');
+
+      const tick = () => {
+        const now = new Date();
+        if (londonEl) londonEl.textContent = londonFmt.format(now);
+        if (dubaiEl) dubaiEl.textContent = dubaiFmt.format(now);
+      };
+
+      tick();
+      setInterval(tick, 1000);
     })();
 
     (function(){
