@@ -140,15 +140,12 @@
       padding-top:108px;
     }
 
-    .shell{
-  width:min(var(--max), calc(100% - 8px));
-  margin:0 auto;
-}
-
-.header-inner{
-  width:min(var(--max), calc(100% - 12px));
-  margin-inline:auto;
-}
+    .shell,
+    .header-inner{
+      width:calc(100% - (var(--page-gutter) * 2));
+      max-width:none;
+      margin:0 auto;
+    }
 
     .site-header{
       position:fixed;
@@ -194,7 +191,7 @@
     .brand .logo{height:34px;width:auto}
     .brand .wordmark{
       color:var(--soft);
-      font-weight:500;
+      font-weight:700;
       letter-spacing:.18em;
       font-size:13px;
       text-transform:uppercase;
@@ -223,8 +220,8 @@
       padding:0 16px;
       font:inherit;
       font-size:12px;
-      font-weight:500;
-      letter-spacing:.06em;
+      font-weight:700;
+      letter-spacing:.08em;
       text-transform:uppercase;
       transition:.25s ease;
       cursor:pointer;
@@ -441,13 +438,13 @@
 }
 
     .project-title{
-        margin:0;
-        font-size:clamp(18px,1.35vw,23px);
-        line-height:1.02;
-        letter-spacing:-0.04em;
-        font-weight:500;
-        color:var(--ink);
-      }
+      margin:0;
+      font-size:clamp(18px,1.35vw,23px);
+      line-height:1.02;
+      letter-spacing:-0.04em;
+      font-weight:800;
+      color:var(--ink);
+    }
 
     .project-services{
       margin:0;
@@ -480,8 +477,8 @@
     .more-title,
     .more-name{
       color:var(--ink);
-      font-weight:500;
-      letter-spacing:-.035em;
+      font-weight:800;
+      letter-spacing:-.045em;
     }
 
     .list-body{
@@ -1104,57 +1101,64 @@
 
   <div id="app"></div>
 
-  <footer class="zsizart-footer">
-  <div class="footer-top">
-    <div class="footer-brand">ZSIZART Studio</div>
+  <footer class="nam-footer">
+    <div class="footer-grid">
+      <section class="footer-card">
+        <div class="footer-title">ZSIZART Studio</div>
+        <ul class="footer-list">
+          <li><a href="#" aria-label="Instagram">Instagram</a></li>
+          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><a href="/work/">Projects</a></li>
+          <li><a href="#">Privacy policy</a></li>
+        </ul>
+      </section>
 
-    <div class="footer-social">
-      <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <section class="footer-card">
+        <div class="footer-title">Newsletter</div>
+        <div class="newsletter">
+          <p>Studio updates, selected work drops, and new releases delivered in a minimal format.</p>
+
+          <form class="field" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+            <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+            <input type="hidden" name="type" value="newsletter_subscribe">
+            <button type="submit">Subscribe</button>
+          </form>
+
+          <div id="subscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
+          <div id="subscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+        </div>
+      </section>
+
+      <section class="footer-card">
+        <div class="footer-title">Local time</div>
+        <div class="clock">
+          <div class="clock-row">
+            <span class="clock-city">Egypt</span>
+            <span class="clock-time" id="clock-eg">00:00:00</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-city">Dubai</span>
+            <span class="clock-time" id="clock-dubai">00:00:00</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="footer-card">
+        <div class="footer-title">Contact</div>
+        <ul class="footer-list">
+          <li><a href="/contact/">Project enquiries</a></li>
+          <li><a href="mailto:info@zsizart.com">careers@zsizart.com</a></li>
+          <li><span>Egypt / Dubai</span></li>
+        </ul>
+      </section>
     </div>
-  </div>
 
-  <div class="footer-main">
-    <div class="footer-newsletter">
-      <p class="footer-label">Keep in touch with us</p>
-
-      <form class="footer-subscribe" id="footerSubscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
-        <input type="email" name="email" placeholder="Email Address" aria-label="Email address" required>
-        <input type="hidden" name="type" value="newsletter_subscribe">
-        <button type="submit">Subscribe</button>
-      </form>
-
-      <div id="footerSubscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
-      <div id="footerSubscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+    <div class="legal">
+      <span>© 2026 ZSIZART Studio</span>
+      <span>Built by ZSIZART</span>
+      <a href="#">Privacy Policy</a>
     </div>
-
-    <div class="footer-time">
-      <div class="footer-time-row">
-        <span class="footer-time-city">London</span>
-        <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
-      </div>
-
-      <div class="footer-time-row">
-        <span class="footer-time-city">Dubai</span>
-        <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
-      </div>
-    </div>
-
-    <nav class="footer-nav" aria-label="Footer">
-      <a href="/work/">Projects</a>
-      <a href="/news/">News</a>
-      <a href="/studio/">Studio</a>
-      <a href="/careers/">Careers</a>
-      <a href="/contact/">Contact</a>
-    </nav>
-  </div>
-
-  <div class="footer-bottom">
-    <span>© 2026 ZSIZART Studio</span>
-    <span>Made by ZSIZART</span>
-    <a href="/Privacy%20Policy/">Privacy Policy</a>
-  </div>
-</footer>
+  </footer>
 
   <script>
     const projects = [
