@@ -51,7 +51,7 @@
       --radius-xl:34px;
       --radius-lg:28px;
       --radius-md:20px;
-      --max:1440px;
+      --max:2200px;
       --ease:cubic-bezier(.16,1,.3,1);
     }
 
@@ -136,7 +136,7 @@
     button,input{font:inherit}
 
     #app{flex:1;padding-top:98px}
-    .shell{width:min(var(--max), calc(100% - 32px));margin:0 auto}
+    .shell{width:min(var(--max), calc(100% - 8px));margin:0 auto}
 
     .site-header{
       position:fixed;
@@ -152,7 +152,7 @@
     .site-header.scrolled{padding:10px 0}
 
     .header-inner{
-      width:min(var(--max), calc(100% - 32px));
+      width:min(var(--max), calc(100% - 12px));
       margin-inline:auto;
       display:flex;
       align-items:center;
@@ -179,10 +179,14 @@
       white-space:nowrap;
     }
 
-    .brand .logo{height:34px;width:auto}
+    .brand .logo{height:34px;width:auto;transition:.25s ease}
+
+    html[data-theme="dark"] .brand .logo{
+      filter: brightness(0) invert(1);
+    }
     .brand .wordmark{
       color:var(--soft);
-      font-weight:700;
+      font-weight:800;
       letter-spacing:.18em;
       font-size:13px;
       text-transform:uppercase;
@@ -211,7 +215,7 @@
       padding:0 16px;
       font:inherit;
       font-size:12px;
-      font-weight:700;
+      font-weight:900;
       letter-spacing:.08em;
       text-transform:uppercase;
       transition:.25s ease;
@@ -275,7 +279,7 @@
 
     .switch-text{
       font-size:12px;
-      font-weight:700;
+      font-weight:900;
       letter-spacing:.08em;
       text-transform:uppercase;
     }
@@ -289,6 +293,7 @@
       .theme-switch{padding:0 12px}
       .switch-text{display:none}
       .header-inner{width:min(var(--max), calc(100% - 24px))}
+      .nav a:nth-child(n+2){display:none}
       #app{padding-top:92px}
     }
 
@@ -591,165 +596,220 @@
     }
 
     .zsizart-footer{
-      margin-top:40px;
-      padding:30px 0 52px;
+      margin-top:0;
+      padding:24px 0 14px;
       border-top:1px solid var(--line);
-      background:transparent;
-      color:var(--ink);
     }
 
-    .footer-grid{
+    .footer-top,
+    .footer-main,
+    .footer-bottom{
       width:min(var(--max), calc(100% - 32px));
       margin:0 auto;
-      display:grid;
-      grid-template-columns:1fr 1.55fr .95fr;
-      gap:18px;
-      align-items:stretch;
     }
 
-    .footer-card{
-      border:1px solid var(--line);
-      border-radius:28px;
-      padding:22px;
-      background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.02));
-      min-height:198px;
-      box-shadow:none;
+    .footer-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding-bottom:34px;
     }
 
-    html[data-theme="dark"] .footer-card{
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-    }
-
-    .footer-title{
-      font-size:13px;
-      font-weight:700;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--soft);
-      margin:0 0 18px;
-    }
-
-    .footer-list{
-      display:grid;
-      gap:12px;
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
-
-    .footer-list a,
-    .footer-list span{
-      color:var(--muted);
-      transition:.25s ease;
-      font-size:14px;
+    .footer-brand{
+      font-size:28px;
+      line-height:1;
       font-weight:500;
-      line-height:1.35;
+      letter-spacing:-.03em;
     }
 
-    .footer-list a:hover{color:var(--ink)}
-
-    .newsletter{
-      display:grid;
-      gap:12px;
-    }
-
-    .newsletter p{
-      color:var(--muted);
-      font-size:14px;
-      max-width:34ch;
-      margin:0;
-      line-height:1.45;
-    }
-
-    .field{
+    .footer-social{
       display:flex;
       align-items:center;
       gap:10px;
-      min-height:52px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:var(--field-bg);
-      padding:0 8px 0 16px;
-      margin-top:2px;
+      flex-wrap:wrap;
     }
 
-    .field input{
+    .footer-social a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:var(--chip-bg);
+      font-size:12px;
+      font-weight:400;
+      color:var(--ink);
+      transition:.25s ease;
+    }
+
+    .footer-social a:hover{
+      background:var(--chip-hover);
+      border-color:var(--line-2);
+    }
+
+    .footer-main{
+      display:grid;
+      grid-template-columns:1.15fr .55fr .55fr;
+      gap:48px;
+      align-items:start;
+      padding-bottom:42px;
+    }
+
+    .footer-newsletter{
+      min-width:0;
+    }
+
+    .footer-label{
+      margin:0 0 12px;
+      font-size:14px;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .footer-subscribe{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      max-width:360px;
+      min-height:42px;
+      padding:4px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.22);
+    }
+
+    .footer-subscribe input{
       flex:1;
       min-width:0;
+      border:0;
+      outline:0;
       background:transparent;
-      border:0;
-      outline:0;
       color:var(--ink);
-      font:inherit;
-      padding:0;
-      height:auto;
-      border-radius:0;
-      box-shadow:none;
+      padding:0 14px;
+      font-size:14px;
+      font-weight:400;
     }
 
-    .field input::placeholder{color:var(--muted-3)}
+    .footer-subscribe input::placeholder{
+      color:var(--muted-2);
+    }
 
-    .field button{
+    .footer-subscribe button{
       border:0;
       outline:0;
-      cursor:pointer;
+      min-width:110px;
+      min-height:34px;
+      padding:0 14px;
       border-radius:999px;
-      background:var(--primary-btn-bg);
-      color:var(--primary-btn-text);
-      min-width:122px;
-      min-height:40px;
-      padding:0 16px;
-      font:inherit;
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.1em;
-      text-transform:uppercase;
+      background:#6f6f6f;
+      color:#fff;
+      font-size:13px;
+      font-weight:500;
+      cursor:pointer;
       transition:.25s ease;
-      flex:0 0 auto;
     }
 
-    .field button:hover{background:var(--primary-btn-hover-bg);filter:none}
+    .footer-subscribe button:hover{
+      filter:brightness(.95);
+    }
+
+    .footer-time{
+      display:grid;
+      gap:18px;
+    }
+
+    .footer-time-row{
+      display:grid;
+      gap:4px;
+    }
+
+    .footer-time-city{
+      font-size:14px;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .footer-time-value{
+      font-size:28px;
+      line-height:1;
+      letter-spacing:-.03em;
+      font-weight:500;
+      font-variant-numeric:tabular-nums;
+    }
+
+    .footer-nav{
+      display:grid;
+      gap:10px;
+      justify-content:start;
+    }
+
+    .footer-nav a{
+      font-size:16px;
+      line-height:1.3;
+      color:var(--muted);
+      font-weight:400;
+      transition:.2s ease;
+    }
+
+    .footer-nav a:hover{
+      color:var(--ink);
+    }
+
+    .footer-bottom{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding-top:18px;
+      border-top:1px solid rgba(10,10,10,.04);
+      font-size:11px;
+      color:var(--muted-2);
+      font-weight:400;
+      flex-wrap:wrap;
+    }
+
+    .footer-bottom a{
+      color:inherit;
+    }
+
+    .footer-bottom a:hover{
+      color:var(--ink);
+    }
 
     .footer-status{
       margin-top:10px;
       color:var(--muted-2);
       font-size:12px;
-      font-weight:500;
+      font-weight:400;
     }
 
-    .legal{
-      width:min(var(--max), calc(100% - 32px));
-      margin:18px auto 0;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      color:var(--muted-2);
-      font-size:12px;
-      font-weight:500;
-      flex-wrap:wrap;
-    }
-
-    .legal a{color:inherit}
-    .legal a:hover{color:var(--ink)}
-
-    @media (max-width: 1100px){
-      .footer-grid{grid-template-columns:1fr 1fr}
-      .footer-card:last-child{grid-column:1 / -1}
-    }
-
-    @media (max-width: 780px){
-      .zsizart-footer{padding:28px 0 40px}
-      .footer-grid{grid-template-columns:1fr}
-      .footer-card{min-height:auto}
-      .field{
-        flex-direction:column;
-        align-items:stretch;
-        border-radius:24px;
-        padding:10px;
+    @media (max-width: 980px){
+      .footer-main{
+        grid-template-columns:1fr;
+        gap:28px;
       }
-      .field button{width:100%}
-      .legal{
+    }
+
+    @media (max-width: 640px){
+      .footer-top{
+        flex-direction:column;
+        align-items:flex-start;
+        padding-bottom:24px;
+      }
+
+      .footer-brand{
+        font-size:24px;
+      }
+
+      .footer-subscribe{
+        max-width:none;
+        width:100%;
+      }
+
+      .footer-bottom{
         flex-direction:column;
         align-items:flex-start;
       }
@@ -894,67 +954,54 @@
   </div>
 
 <footer class="zsizart-footer">
-  <div class="footer-grid">
-    <section class="footer-card">
-      <div class="footer-title">ZSIZART Studio</div>
-      <ul class="footer-list">
+    <div class="footer-top">
+      <div class="footer-brand">ZSIZART Studio</div>
 
-
-        <li><a href="/work/">Projects</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-
-        <li>
-          <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            LinkedIn
-          </a>
-        </li>
-
-        <li>
-          <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            Instagram
-          </a>
-        </li>
-
-        <li>
-          <a href="https://wa.me/447575481249" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-            WhatsApp
-         </a>
-        </li>
-
-
-      </ul>
-    </section>
-
-      <section class="footer-card">
-        <div class="footer-title">Newsletter</div>
-        <div class="newsletter">
-          <p>Studio updates, selected work drops, and new releases delivered in a minimal format.</p>
-
-          <form class="field" id="subscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
-            <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
-            <input type="hidden" name="type" value="newsletter_subscribe">
-            <button type="submit">Subscribe</button>
-          </form>
-
-          <div id="subscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
-          <div id="subscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
-        </div>
-      </section>
-
-      <section class="footer-card">
-        <div class="footer-title">Contact</div>
-        <ul class="footer-list">
-          <li><a href="/contact/">Project enquiries</a></li>
-          <li><a href="mailto:hello@zsizart.com">hello@zsizart.com</a></li>
-          <li><span>Global studio</span></li>
-        </ul>
-      </section>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
     </div>
 
-    <div class="legal">
+    <div class="footer-main">
+      <div class="footer-newsletter">
+        <p class="footer-label">Keep in touch with us</p>
+
+        <form class="footer-subscribe" id="footerSubscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+          <input type="email" name="email" placeholder="Email Address" aria-label="Email address" required>
+          <input type="hidden" name="type" value="newsletter_subscribe">
+          <button type="submit">Subscribe</button>
+        </form>
+
+        <div id="footerSubscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
+        <div id="footerSubscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+      </div>
+
+      <div class="footer-time">
+        <div class="footer-time-row">
+          <span class="footer-time-city">London</span>
+          <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
+        </div>
+
+        <div class="footer-time-row">
+          <span class="footer-time-city">Dubai</span>
+          <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/work/">Projects</a>
+        <a href="/news/">News</a>
+        <a href="/studio/">Studio</a>
+        <a href="/careers/">Careers</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
       <span>© 2026 ZSIZART Studio</span>
-      <span>Built by ZSIZART</span>
-      <a href="#">Privacy Policy</a>
+      <span>Made by ZSIZART</span>
+      <a href="/Privacy%20Policy/">Privacy Policy</a>
     </div>
   </footer>
 
@@ -986,11 +1033,11 @@
     window.addEventListener('load', initLenis);
 
     (function(){
-      const form = document.getElementById('subscribeForm');
+      const form = document.getElementById('footerSubscribeForm');
       if (!form) return;
 
-      const ok = document.getElementById('subscribeOk');
-      const err = document.getElementById('subscribeErr');
+      const ok = document.getElementById('footerSubscribeOk');
+      const err = document.getElementById('footerSubscribeErr');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -1015,6 +1062,32 @@
           if (err) err.style.display = 'block';
         }
       });
+    })();
+
+    (function(){
+      const londonEl = document.getElementById('clock-london-footer');
+      const dubaiEl = document.getElementById('clock-dubai-footer');
+
+      const formatTime = (timeZone) =>
+        new Intl.DateTimeFormat('en-GB', {
+          timeZone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+
+      const londonFmt = formatTime('Europe/London');
+      const dubaiFmt = formatTime('Asia/Dubai');
+
+      const tick = () => {
+        const now = new Date();
+        if (londonEl) londonEl.textContent = londonFmt.format(now);
+        if (dubaiEl) dubaiEl.textContent = dubaiFmt.format(now);
+      };
+
+      tick();
+      setInterval(tick, 1000);
     })();
 
     (function(){
