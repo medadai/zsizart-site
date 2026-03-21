@@ -1400,35 +1400,32 @@
 
         if (!thumb || !video) return;
 
-        let hasPlayedOnce = false;
-
         video.muted = true;
         video.loop = true;
         video.playsInline = true;
+        video.preload = 'metadata';
 
         const showVideo = () => {
           thumb.classList.add('is-video-visible');
         };
 
+        const hideVideo = () => {
+          thumb.classList.remove('is-video-visible');
+        };
+
         const playVideo = async () => {
+          showVideo();
           try {
+            video.currentTime = 0;
             await video.play();
           } catch (_) {}
         };
 
         const pauseVideo = () => {
           video.pause();
-          if (hasPlayedOnce || video.currentTime > 0.01) {
-            showVideo();
-          }
+          video.currentTime = 0;
+          hideVideo();
         };
-
-        video.addEventListener('timeupdate', () => {
-          if (video.currentTime > 0.01) {
-            hasPlayedOnce = true;
-            showVideo();
-          }
-        });
 
         card.addEventListener('mouseenter', playVideo);
         card.addEventListener('mouseleave', pauseVideo);
