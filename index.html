@@ -47,69 +47,44 @@
   </script>
 
   <script>
-    (function () {
-      const COUNTRY_CACHE_KEY = 'zsizart-country';
-      const COUNTRY_CACHE_TIME_KEY = 'zsizart-country-time';
-      const CACHE_DURATION = 1000 * 60 * 60 * 12;
+(function () {
+  const COUNTRY_CACHE_KEY = 'zsizart-country';
+  const COUNTRY_CACHE_TIME_KEY = 'zsizart-country-time';
+  const CACHE_DURATION = 1000 * 60 * 10;
 
-      async function getVisitorCountry() {
-        const cachedCountry = localStorage.getItem(COUNTRY_CACHE_KEY);
-        const cachedTime = localStorage.getItem(COUNTRY_CACHE_TIME_KEY);
+  async function getVisitorCountry() {
+    const cachedCountry = localStorage.getItem(COUNTRY_CACHE_KEY);
+    const cachedTime = localStorage.getItem(COUNTRY_CACHE_TIME_KEY);
 
-        if (cachedCountry && cachedTime && (Date.now() - Number(cachedTime) < CACHE_DURATION)) {
-          return cachedCountry;
-        }
+    if (cachedCountry && cachedTime && (Date.now() - Number(cachedTime) < CACHE_DURATION)) {
+      return cachedCountry;
+    }
 
-        try {
-          const res = await fetch('https://ipwho.is/');
-          const data = await res.json();
+    try {
+      const res = await fetch('https://ipwho.is/');
+      const data = await res.json();
 
-          if (data && data.success && data.country_code) {
-            localStorage.setItem(COUNTRY_CACHE_KEY, data.country_code);
-            localStorage.setItem(COUNTRY_CACHE_TIME_KEY, String(Date.now()));
-            return data.country_code;
-          }
-        } catch (e) {}
-
-        return 'EG';
+      if (data && data.success && data.country_code) {
+        const code = data.country_code.toUpperCase();
+        localStorage.setItem(COUNTRY_CACHE_KEY, code);
+        localStorage.setItem(COUNTRY_CACHE_TIME_KEY, String(Date.now()));
+        return code;
       }
+    } catch (e) {}
 
-      function applyCountryContent(country) {
-        const isGermany = country === 'DE';
-        document.documentElement.setAttribute('data-country', isGermany ? 'de' : 'eg');
+    return 'INTL';
+  }
 
-        document.querySelectorAll('[data-eg-text][data-de-text]').forEach(el => {
-          el.textContent = isGermany ? el.dataset.deText : el.dataset.egText;
-        });
+  document.addEventListener('DOMContentLoaded', async () => {
+    const country = await getVisitorCountry();
 
-        document.querySelectorAll('[data-eg-href][data-de-href]').forEach(el => {
-          el.href = isGermany ? el.dataset.deHref : el.dataset.egHref;
-        });
-
-        document.querySelectorAll('[data-eg-src][data-de-src]').forEach(el => {
-          el.src = isGermany ? el.dataset.deSrc : el.dataset.egSrc;
-        });
-
-        const countrySources = document.querySelectorAll('source[data-eg-src][data-de-src]');
-        const affectedVideos = new Set();
-
-        countrySources.forEach(source => {
-          source.src = isGermany ? source.dataset.deSrc : source.dataset.egSrc;
-          const parentVideo = source.closest('video');
-          if (parentVideo) affectedVideos.add(parentVideo);
-        });
-
-        affectedVideos.forEach(video => {
-          video.load();
-        });
-      }
-
-      window.addEventListener('load', async () => {
-        const country = await getVisitorCountry();
-        applyCountryContent(country);
-      });
-    })();
-  </script>
+    if (country === 'EG' || country === 'DE') {
+      document.body.innerHTML = '';
+      window.location.replace('/work/');
+    }
+  });
+})();
+</script>
 
   <script>
     function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");
@@ -1568,4 +1543,3 @@
   </script>
 </body>
 </html>
-
