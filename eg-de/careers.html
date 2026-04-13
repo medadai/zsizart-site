@@ -1,1 +1,460 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" oncontextmenu="return false">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZSIZART — Careers</title>
+  <meta name="description" content="Careers at ZSIZART Studio — join a focused CGI team working across architectural imagery, film, and brand expression." />
+  <meta name="theme-color" content="#f6f1e8" />
+  <link rel="canonical" href="https://zsizart.com/careers/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="ZSIZART — Careers">
+  <meta property="og:description" content="Careers at ZSIZART Studio — join a focused CGI team working across architectural imagery, film, and brand expression.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://zsizart.com/assets/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZSIZART — Careers">
+  <meta name="twitter:description" content="Careers at ZSIZART Studio — join a focused CGI team working across architectural imagery, film, and brand expression.">
+  <meta name="twitter:image" content="https://zsizart.com/assets/og-cover.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+  <style>
+    :root{
+      --bg:#f6f1e8;--bg-2:#f6f1e8;--card:#ffffff;--ink:#0d0d0d;--muted:#6f675e;--muted-2:#988f82;--muted-3:#b1a798;
+      --line:rgba(10,10,10,.08);--line-2:rgba(10,10,10,.14);--stroke:rgba(10,10,10,.10);--pill:rgba(0,0,0,.025);
+      --soft:#181818;--accent:#173128;--glass:rgba(246,241,232,.78);--spot-1:rgba(0,0,0,.035);--spot-2:rgba(23,49,40,.08);
+      --spot-3:rgba(0,0,0,.02);--grid:rgba(0,0,0,.04);--chip-bg:rgba(0,0,0,.025);--chip-hover:rgba(0,0,0,.05);
+      --field-bg:rgba(0,0,0,.02);--header-shadow:0 12px 40px rgba(0,0,0,.12);--shadow:0 24px 60px rgba(0,0,0,.08);
+      --primary-btn-bg:#0d0d0d;--primary-btn-text:#f6f1e8;--primary-btn-hover-bg:#000000;--radius-xl:34px;--radius-lg:28px;
+      --radius-md:20px;--max:2200px;--ease:cubic-bezier(.16,1,.3,1);
+    }
+    html[data-theme="dark"]{
+      --bg:#090909;--bg-2:#090909;--card:#111111;--ink:#f4efe7;--muted:#b7ae9f;--muted-2:#a79d8c;--muted-3:#8e8577;
+      --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.12);--stroke:rgba(255,255,255,.10);--pill:rgba(255,255,255,.02);
+      --soft:#ddd3c3;--glass:rgba(9,9,9,.78);--spot-1:rgba(255,255,255,.04);--spot-2:rgba(23,49,40,.24);--spot-3:rgba(255,255,255,.03);
+      --grid:rgba(255,255,255,.04);--chip-bg:rgba(255,255,255,.02);--chip-hover:rgba(255,255,255,.06);--field-bg:rgba(255,255,255,.02);
+      --header-shadow:0 12px 40px rgba(0,0,0,.28);--shadow:0 30px 80px rgba(0,0,0,.38);--primary-btn-bg:#f4efe7;
+      --primary-btn-text:#090909;--primary-btn-hover-bg:#ffffff;
+    }
+    *{box-sizing:border-box}*{caret-color:transparent}input,textarea,select{caret-color:auto}
+    html{scroll-behavior:smooth}html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:unset}html[data-theme="dark"]{color-scheme:dark}
+    body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font:16px/1.6 "Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-tap-highlight-color:transparent}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 20%, var(--spot-1), transparent 30%),radial-gradient(circle at 85% 10%, var(--spot-2), transparent 28%),radial-gradient(circle at 80% 85%, var(--spot-3), transparent 30%);z-index:-2}
+    body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:linear-gradient(var(--grid) 1px, transparent 1px),linear-gradient(90deg, var(--grid) 1px, transparent 1px);background-size:32px 32px;mask-image:radial-gradient(circle at center, black 35%, transparent 85%);z-index:-1}
+    a{color:inherit;text-decoration:none}img,video{display:block;max-width:100%}button,input{font:inherit}
+    #app{flex:1;padding-top:98px}.shell{width:min(var(--max), calc(100% - 8px));margin:0 auto}@media (max-width:768px){#app{padding-top:92px}}
+    .site-header{position:fixed;inset:0 0 auto 0;z-index:100;padding:14px 0;background:transparent;border-bottom:0;box-shadow:none;backdrop-filter:none;transition:.35s ease}
+    .site-header.scrolled{padding:10px 0}
+    .header-inner{width:min(var(--max), calc(100% - 12px));margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid transparent;border-radius:999px;padding:10px 14px;transition:.35s ease}
+    .site-header.scrolled .header-inner{background:var(--glass);backdrop-filter:blur(16px);border-color:var(--line-2);box-shadow:var(--header-shadow)}
+    .brand{display:flex;align-items:center;gap:12px;user-select:none;white-space:nowrap}
+    .brand .logo{height:34px;width:auto;transition:.25s ease}
+    html[data-theme="dark"] .brand .logo{filter:brightness(0) invert(1)}
+    .brand .wordmark{color:var(--soft);font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase}
+    .nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;min-width:0}
+    .nav-link,.nav button,.cta{display:inline-flex;align-items:center;justify-content:center;min-height:46px;border:1px solid var(--line);background:var(--chip-bg);color:var(--ink);border-radius:999px;padding:0 16px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;transition:.25s ease;cursor:pointer;white-space:nowrap}
+    .nav-link:hover,.nav button:hover,.cta:hover,.nav-link.active{background:var(--chip-hover);border-color:var(--line-2);color:var(--ink);transform:translateY(-1px)}
+    .cta{background:var(--primary-btn-bg);color:var(--primary-btn-text);border-color:transparent;min-height:46px}
+    .cta:hover{background:var(--primary-btn-hover-bg);color:var(--primary-btn-text);border-color:transparent}
+    .theme-switch{gap:10px;padding:0 14px}.switch-track{position:relative;width:46px;height:26px;border-radius:999px;background:rgba(0,0,0,.12);transition:.25s ease;flex:0 0 auto}
+    html[data-theme="dark"] .switch-track{background:rgba(255,255,255,.18)}
+    .switch-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--ink);transition:.25s ease}
+    .theme-switch.is-dark .switch-thumb{transform:translateX(20px)}
+    .switch-text{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    @media (max-width: 860px){.cta{display:none}}
+    @media (max-width: 768px){.nav{gap:6px}.theme-switch{padding:0 12px}.switch-text{display:none}.header-inner{width:min(var(--max), calc(100% - 24px))}.nav a:nth-child(n+2){display:none}}
+    @media (max-width: 520px){.header-inner{padding:10px 12px}}
+    .page{opacity:0;transform:translateY(18px);animation:pageIn .8s var(--ease) forwards;padding:28px 0 72px}
+    @keyframes pageIn{to{opacity:1;transform:none}}
+    .eyebrow{margin:0 0 14px;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .h1{margin:0 0 12px;font-size:clamp(30px, 5.2vw, 62px);line-height:.98;font-weight:600;letter-spacing:-.035em}
+    .lead{margin:0;font-size:14px;line-height:1.6;font-weight:400;color:var(--ink);max-width:520px}
+    .card{border:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.02));border-radius:var(--radius-xl)}
+    html[data-theme="dark"] .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015))}
+    .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;align-items:stretch;margin-top:10px}
+    .hero-media{position:relative;overflow:hidden;border-radius:var(--radius-xl);border:1px solid var(--line);box-shadow:var(--shadow);background:var(--card);min-height:min(62vh, 620px)}
+    .hero-media img{width:100%;height:100%;object-fit:cover;opacity:.96;transform:scale(1.01)}
+    .hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.48));pointer-events:none}
+    .hero-overlay{position:absolute;inset:auto 16px 14px 16px;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;z-index:2;color:#fff}
+    .hero-tag{display:inline-flex;gap:10px;align-items:center;padding:10px 14px;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.20);border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+    .hero-info{display:flex;flex-direction:column;gap:6px;max-width:70%}
+    .hero-info strong{font-size:13px;font-weight:800;letter-spacing:.02em}.hero-info span{font-size:12px;opacity:.78}
+    .hero-copy{padding:18px;border-radius:var(--radius-xl);border:1px solid var(--line);box-shadow:var(--shadow);background:var(--glass);backdrop-filter:blur(16px);display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border:1px solid var(--line);background:var(--chip-bg);color:var(--ink);border-radius:999px;padding:0 14px;font-size:11px;font-weight:900;letter-spacing:.10em;text-transform:uppercase}
+    @media (max-width: 1100px){.hero{grid-template-columns:1fr}}
+    .section{margin-top:18px;display:grid;gap:18px}.pad{padding:22px}
+    .h2{margin:0 0 10px;font-size:clamp(22px, 2.1vw, 30px);line-height:1.1;font-weight:600;letter-spacing:-.03em}
+    .copy{margin:0;font-size:14px;line-height:1.6;font-weight:400;color:var(--ink);max-width:82ch}
+    .roles{display:grid;gap:10px;margin-top:6px}
+    .role{border:1px solid var(--line);background:var(--chip-bg);border-radius:var(--radius-lg);padding:16px 16px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;transition:.25s ease}
+    .role:hover{background:var(--chip-hover);border-color:var(--line-2);transform:translateY(-1px)}
+    .role h3{margin:0 0 6px;font-size:14px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);line-height:1.25}
+    .role p{margin:0;font-size:13px;color:var(--muted);line-height:1.6;max-width:72ch}
+    .role-meta{text-align:right;display:flex;flex-direction:column;gap:8px;align-items:flex-end;flex:0 0 auto}
+    .meta-pill{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.02);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+    .meta-muted{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.02em;white-space:nowrap}
+    @media (max-width: 900px){.role{flex-direction:column;align-items:flex-start}.role-meta{text-align:left;align-items:flex-start}}
+    .apply{display:grid;grid-template-columns:1.25fr .75fr;gap:12px;align-items:start}
+    .apply-box{border:1px solid var(--line);background:var(--chip-bg);border-radius:var(--radius-lg);padding:16px}
+    .apply-box strong{display:block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+    .apply-actions{border:1px solid var(--line);background:var(--chip-bg);border-radius:var(--radius-lg);padding:16px;display:grid;gap:10px}
+    .copy-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:999px;background:var(--primary-btn-bg);color:var(--primary-btn-text);border:0;font-size:12px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;cursor:pointer;transition:.25s ease;width:100%}
+    .copy-btn:hover{background:var(--primary-btn-hover-bg)}
+    .copy-note{font-size:12px;color:var(--muted);font-weight:600;line-height:1.55}
+    .copy-status{font-size:12px;color:var(--muted-2);font-weight:700;min-height:16px}
+    @media (max-width: 1000px){.apply{grid-template-columns:1fr}}
+    .project-cta{margin-top:18px;border-radius:var(--radius-xl);border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(16px);box-shadow:var(--shadow);padding:22px;display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .cta-lines{display:grid;gap:8px}
+    .cta-lines .big{margin:0;font-size:clamp(26px, 3.2vw, 44px);line-height:1.05;font-weight:600;letter-spacing:-.04em}
+    .cta-lines .small{margin:0;color:var(--muted);font-size:14px;line-height:1.6;max-width:70ch}
+    .cta-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:var(--chip-bg);color:var(--ink);font-size:12px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;transition:.25s ease;white-space:nowrap}
+    .cta-link:hover{background:var(--chip-hover);border-color:var(--line-2);transform:translateY(-1px)}
+    .zsizart-footer{margin-top:0;padding:24px 0 14px;border-top:1px solid var(--line)}
+    .footer-top,.footer-main,.footer-bottom{width:min(var(--max), calc(100% - 32px));margin:0 auto}
+    .footer-top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:34px}
+    .footer-brand{font-size:28px;line-height:1;font-weight:500;letter-spacing:-.03em}
+    .footer-social{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .footer-social a{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--chip-bg);font-size:12px;font-weight:400;color:var(--ink);transition:.25s ease}
+    .footer-social a:hover{background:var(--chip-hover);border-color:var(--line-2)}
+    .footer-main{display:grid;grid-template-columns:1.15fr .55fr .55fr;gap:48px;align-items:start;padding-bottom:42px}
+    .footer-newsletter{min-width:0}
+    .footer-label{margin:0 0 12px;font-size:14px;color:var(--muted);font-weight:400}
+    .footer-subscribe{display:flex;align-items:center;gap:8px;max-width:360px;min-height:42px;padding:4px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.22)}
+    .footer-subscribe input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);padding:0 14px;font-size:14px;font-weight:400}
+    .footer-subscribe input::placeholder{color:var(--muted-2)}
+    .footer-subscribe button{border:0;outline:0;min-width:110px;min-height:34px;padding:0 14px;border-radius:999px;background:#6f6f6f;color:#fff;font-size:13px;font-weight:500;cursor:pointer;transition:.25s ease}
+    .footer-subscribe button:hover{filter:brightness(.95)}
+    .footer-time{display:grid;gap:18px}.footer-time-row{display:grid;gap:4px}
+    .footer-time-city{font-size:14px;color:var(--muted);font-weight:400}
+    .footer-time-value{font-size:28px;line-height:1;letter-spacing:-.03em;font-weight:500;font-variant-numeric:tabular-nums}
+    .footer-nav{display:grid;gap:10px;justify-content:start}
+    .footer-nav a{font-size:16px;line-height:1.3;color:var(--muted);font-weight:400;transition:.2s ease}
+    .footer-nav a:hover{color:var(--ink)}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:18px;border-top:1px solid rgba(10,10,10,.04);font-size:11px;color:var(--muted-2);font-weight:400;flex-wrap:wrap}
+    .footer-bottom a{color:inherit}.footer-bottom a:hover{color:var(--ink)}
+    .footer-status{margin-top:10px;color:var(--muted-2);font-size:12px;font-weight:400}
+    @media (max-width: 1080px){.footer-main{grid-template-columns:1fr;gap:28px}}
+    @media (max-width: 768px){.page{padding:18px 0 48px}}
+    @media (max-width: 640px){.footer-top{flex-direction:column;align-items:flex-start;padding-bottom:24px}.footer-brand{font-size:24px}.footer-subscribe{max-width:none;width:100%}.footer-bottom{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a class="brand" href="/">
+        <img src="/assets/logo.png" alt="ZSIZART Logo" class="logo" width="34" height="34" loading="eager" decoding="async">
+        <span class="wordmark">ZSIZART</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="/work/">Work</a>
+        <a class="nav-link" href="/services/">Services</a>
+        <a class="nav-link active" href="/careers/">Careers</a>
+        <a class="nav-link" href="/studio/">Studio</a>
+        <a class="nav-link" href="/contact/">Contact</a>
+        <button type="button" class="theme-switch" id="themeSwitch" aria-label="Toggle theme" aria-pressed="false">
+          <span class="switch-track"><span class="switch-thumb"></span></span>
+          <span class="switch-text" id="themeSwitchText">Dark</span>
+        </button>
+      </nav>
+      <a class="cta" href="/contact/">Start a Project</a>
+    </div>
+  </header>
 
+  <div id="app">
+    <main class="page">
+      <div class="shell">
+        <section class="hero" aria-label="Careers hero">
+          <div class="hero-media">
+            <img src="/assets/careers-zsizart.jpg" alt="ZSIZART Studio team" loading="eager" decoding="async">
+            <div class="hero-overlay">
+              <div class="hero-info">
+                <strong>Careers at ZSIZART</strong>
+                <span>Architectural CGI, film, and brand expression.</span>
+              </div>
+              <div class="hero-tag">Join the studio</div>
+            </div>
+          </div>
+          <div class="hero-copy">
+            <div>
+              <p class="eyebrow">Careers</p>
+              <h1 class="h1">A focused team. Clear creative standards.</h1>
+              <p class="lead">
+                We build photoreal architectural imagery and moving image for real estate and design brands.
+                We look for people with strong taste, disciplined execution, and a consistent eye for detail.
+              </p>
+              <div class="chips" aria-label="Culture tags">
+                <span class="chip">Clarity</span>
+                <span class="chip">Restraint</span>
+                <span class="chip">Craft</span>
+                <span class="chip">Reliability</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section card pad" aria-label="Open positions">
+          <p class="eyebrow">Open positions</p>
+          <h2 class="h2">Roles</h2>
+          <p class="copy">Full-time opportunities for artists and creatives working within our production standards.</p>
+          <div class="roles" role="list" aria-label="Positions list" style="margin-top:14px;">
+            <article class="role" role="listitem">
+              <div>
+                <h3>Junior 3D Artist</h3>
+                <p>Support production across modeling, scene setup, and render preparation with accuracy, speed, and attention to detail.</p>
+              </div>
+              <div class="role-meta">
+                <span class="meta-pill">Full time</span>
+                <span class="meta-muted">Remote considered</span>
+              </div>
+            </article>
+            <article class="role" role="listitem">
+              <div>
+                <h3>Senior 3D Artist</h3>
+                <p>Own lighting, look-development, image polish, and final visual quality with strong technical structure and refined artistic judgment.</p>
+              </div>
+              <div class="role-meta">
+                <span class="meta-pill">Full time</span>
+                <span class="meta-muted">Remote considered</span>
+              </div>
+            </article>
+            <article class="role" role="listitem">
+              <div>
+                <h3>Social Media Marketing</h3>
+                <p>Shape publishing, copy, sequencing, and platform presence with a visual-first mindset and a clear understanding of brand tone.</p>
+              </div>
+              <div class="role-meta">
+                <span class="meta-pill">Full time</span>
+                <span class="meta-muted">Remote considered</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section apply" aria-label="Internships and application">
+          <div class="card pad">
+            <p class="eyebrow">Internship opportunities</p>
+            <h2 class="h2">Student opportunities</h2>
+            <p class="copy">
+              We occasionally open internship opportunities for students interested in architectural CGI and visual direction.
+              Show thoughtful work, strong fundamentals, and a clear willingness to learn inside a focused studio environment.
+            </p>
+            <div style="margin-top:14px" class="apply-box">
+              <strong>Send portfolio + CV</strong>
+              <p class="copy" style="margin:0;">
+                Include the role you’re applying for, the tools you use, your availability, and a portfolio link.
+              </p>
+            </div>
+          </div>
+          <div class="card pad">
+            <p class="eyebrow">Apply</p>
+            <div class="apply-actions">
+              <button class="copy-btn" type="button" id="copyEmailBtn" data-email="career@zsizart.com">Copy email</button>
+              <div class="copy-note">Email: <strong style="color:var(--ink);font-weight:900;">career@zsizart.com</strong></div>
+              <div class="copy-status" id="copyStatus" aria-live="polite"></div>
+              <div class="apply-box">
+                <strong>Subject format</strong>
+                <div class="copy-note">CAREERS — Role — Name</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="project-cta" aria-label="Start a project">
+          <div class="cta-lines">
+            <p class="eyebrow" style="margin:0 0 10px;">Start a project</p>
+            <p class="big">Got a project in mind?</p>
+            <p class="small">Let’s talk scope, timeline, and the visuals needed for rollout.</p>
+          </div>
+          <a class="cta-link" href="/contact/">Get in touch</a>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="zsizart-footer">
+    <div class="footer-top">
+      <div class="footer-brand">ZSIZART Studio</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-main">
+      <div class="footer-newsletter">
+        <p class="footer-label">Keep in touch with us</p>
+        <form class="footer-subscribe" id="footerSubscribeForm" action="https://formspree.io/f/xpqjvrnn" method="POST">
+          <input type="email" name="email" placeholder="Email Address" aria-label="Email address" required>
+          <input type="hidden" name="type" value="newsletter_subscribe">
+          <button type="submit">Subscribe</button>
+        </form>
+        <div id="footerSubscribeOk" class="footer-status" style="display:none;">Subscribed successfully.</div>
+        <div id="footerSubscribeErr" class="footer-status" style="display:none;">Something went wrong. Try again.</div>
+      </div>
+      <div class="footer-time">
+        <div class="footer-time-row">
+          <span class="footer-time-city">London</span>
+          <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
+        </div>
+        <div class="footer-time-row">
+          <span class="footer-time-city">Dubai</span>
+          <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/work/">Projects</a>
+        <a href="/news/">News</a>
+        <a href="/studio/">Studio</a>
+        <a href="/careers/">Careers</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ZSIZART Studio</span>
+      <span>Made by ZSIZART</span>
+      <a href="/Privacy%20Policy/">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script>
+    let lenis;
+    function initLenis(){
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+      if (!window.Lenis) return;
+      lenis = new Lenis({
+        duration:1.2,
+        easing:(t)=>Math.min(1,1.001 - Math.pow(2, -10*t)),
+        direction:'vertical',
+        gestureDirection:'vertical',
+        smooth:true,
+        mouseMultiplier:1,
+        smoothTouch:false,
+        touchMultiplier:2,
+        infinite:false,
+      });
+      function raf(time){lenis.raf(time);requestAnimationFrame(raf);}
+      requestAnimationFrame(raf);
+    }
+    window.addEventListener('load', initLenis);
+
+    (function(){
+      const header = document.getElementById('siteHeader');
+      if (!header) return;
+      const syncHeader = () => {
+        if (window.scrollY > 14) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      };
+      syncHeader();
+      window.addEventListener('scroll', syncHeader, { passive:true });
+    })();
+
+    (function(){
+      const form = document.getElementById('footerSubscribeForm');
+      if (!form) return;
+      const ok = document.getElementById('footerSubscribeOk');
+      const err = document.getElementById('footerSubscribeErr');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (ok) ok.style.display = 'none';
+        if (err) err.style.display = 'none';
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            form.reset();
+            if (ok) ok.style.display = 'block';
+          } else {
+            if (err) err.style.display = 'block';
+          }
+        } catch (_) {
+          if (err) err.style.display = 'block';
+        }
+      });
+    })();
+
+    (function(){
+      const londonEl = document.getElementById('clock-london-footer');
+      const dubaiEl = document.getElementById('clock-dubai-footer');
+      const formatTime = (timeZone) => new Intl.DateTimeFormat('en-GB', {
+        timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      });
+      const londonFmt = formatTime('Europe/London');
+      const dubaiFmt = formatTime('Asia/Dubai');
+      const tick = () => {
+        const now = new Date();
+        if (londonEl) londonEl.textContent = londonFmt.format(now);
+        if (dubaiEl) dubaiEl.textContent = dubaiFmt.format(now);
+      };
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    (function(){
+      const root = document.documentElement;
+      const themeSwitch = document.getElementById('themeSwitch');
+      const themeSwitchText = document.getElementById('themeSwitchText');
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      function applyTheme(theme){
+        const isDark = theme === 'dark';
+        root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        if (themeSwitch){
+          themeSwitch.classList.toggle('is-dark', isDark);
+          themeSwitch.setAttribute('aria-pressed', String(isDark));
+        }
+        if (themeSwitchText) themeSwitchText.textContent = isDark ? 'Light' : 'Dark';
+        if (themeColor) themeColor.setAttribute('content', isDark ? '#090909' : '#f6f1e8');
+      }
+      const savedTheme = localStorage.getItem('zsizart-theme');
+      applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+      themeSwitch?.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('zsizart-theme', next);
+        applyTheme(next);
+      });
+    })();
+
+    (function(){
+      const btn = document.getElementById('copyEmailBtn');
+      const status = document.getElementById('copyStatus');
+      if (!btn) return;
+      const email = btn.getAttribute('data-email') || 'career@zsizart.com';
+      async function copyText(text){
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-1000px';
+        ta.style.left = '-1000px';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch(_) {}
+        document.body.removeChild(ta);
+        return ok;
+      }
+      btn.addEventListener('click', async () => {
+        if (status) status.textContent = '';
+        try {
+          const ok = await copyText(email);
+          if (status) status.textContent = ok ? 'Email copied.' : 'Copy failed.';
+        } catch (_) {
+          if (status) status.textContent = 'Copy failed.';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
