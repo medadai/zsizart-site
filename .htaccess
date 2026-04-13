@@ -1,5 +1,13 @@
 RewriteEngine On
 
+# مصر: الرئيسية تروح للنسخة المصرية
+RewriteCond %{ENV:IP2LOCATION_COUNTRY_SHORT} ^EG$
+RewriteRule ^$ /eg-de/ [L]
+
+# مصر: صفحة work تروح للنسخة المصرية
+RewriteCond %{ENV:IP2LOCATION_COUNTRY_SHORT} ^EG$
+RewriteRule ^work/?$ /eg-de/work/ [L]
+
 # remove .html from URL
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
