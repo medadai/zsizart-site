@@ -1215,6 +1215,10 @@
       window.addEventListener('scroll', sync, { passive:true });
     })();
 
+    function urlSlug(t){
+      return String(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
     function escapeHtml(value){
       return String(value)
         .replace(/&/g, '&amp;')
@@ -1296,7 +1300,7 @@
         <a
           class="project-card ${project.width || 'span-6'}"
           style="animation-delay:${(index % 2) * 0.08}s"
-          href="/work/#/projects/${project.slug}"
+          href="/work/${urlSlug(project.title)}/"
           ${project.previewVideo ? `data-video="${project.previewVideo}"` : ''}
         >
           <div class="project-stack">
