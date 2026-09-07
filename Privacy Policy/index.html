@@ -7,17 +7,17 @@
   <title>ZSIZART — Privacy Policy</title>
   <link rel="canonical" href="https://zsizart.com/privacy-policy/">
   <meta name="robots" content="index, follow">
-  <meta name="description" content="Privacy Policy for ZSIZART Studio.">
+  <meta name="description" content="Privacy Policy for ZSIZART — Mahmoud Refaey.">
   <meta name="theme-color" content="#f6f1e8">
 
   <meta property="og:title" content="ZSIZART — Privacy Policy">
-  <meta property="og:description" content="Privacy Policy for ZSIZART Studio.">
+  <meta property="og:description" content="Privacy Policy for ZSIZART — Mahmoud Refaey.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://zsizart.com/assets/og-cover.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ZSIZART — Privacy Policy">
-  <meta name="twitter:description" content="Privacy Policy for ZSIZART Studio.">
+  <meta name="twitter:description" content="Privacy Policy for ZSIZART — Mahmoud Refaey.">
   <meta name="twitter:image" content="https://zsizart.com/assets/og-cover.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -628,9 +628,7 @@
 
       <nav class="nav" aria-label="Primary">
         <a class="nav-link" href="/work/">Work</a>
-        <a class="nav-link" href="/services/">Services</a>
-        <a class="nav-link" href="/careers/">Careers</a>
-        <a class="nav-link" href="/studio/">Studio</a>
+        <a class="nav-link" href="/studio/">About</a>
         <a class="nav-link" href="/contact/">Contact</a>
 
         <button type="button" class="theme-switch" id="themeSwitch" aria-label="Toggle theme" aria-pressed="false">
@@ -657,7 +655,7 @@
               <h2>Overview</h2>
               <div>
                 <p>
-                  ZSIZART Studio respects your privacy and handles personal information with care, relevance, and restraint.
+                  ZSIZART — Mahmoud Refaey respects your privacy and handles personal information with care, relevance, and restraint.
                 </p>
               </div>
             </div>
@@ -732,11 +730,11 @@
 
   <footer class="zsizart-footer">
     <div class="footer-top">
-      <div class="footer-brand">ZSIZART Studio</div>
+      <div class="footer-brand">ZSIZART — Mahmoud Refaey</div>
 
       <div class="footer-social">
         <a href="https://www.instagram.com/zsizart/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://www.linkedin.com/company/zsizart-co" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/zsizart" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
 
@@ -756,28 +754,20 @@
 
       <div class="footer-time">
         <div class="footer-time-row">
-          <span class="footer-time-city">London</span>
-          <span class="footer-time-value" id="clock-london-footer">00:00:00</span>
-        </div>
-
-        <div class="footer-time-row">
-          <span class="footer-time-city">Dubai</span>
-          <span class="footer-time-value" id="clock-dubai-footer">00:00:00</span>
+          <span class="footer-time-city">Cairo</span>
+          <span class="footer-time-value" id="clock-cairo-footer">00:00:00</span>
         </div>
       </div>
 
       <nav class="footer-nav" aria-label="Footer">
         <a href="/work/">Projects</a>
-        <a href="/news/">News</a>
-        <a href="/studio/">Studio</a>
-        <a href="/careers/">Careers</a>
+        <a href="/studio/">About</a>
         <a href="/contact/">Contact</a>
       </nav>
     </div>
 
     <div class="footer-bottom">
-      <span>© 2026 ZSIZART Studio</span>
-      <span>Made by ZSIZART</span>
+      <span>© 2026 Mahmoud Refaey</span>
       <a href="/privacy-policy/">Privacy Policy</a>
     </div>
   </footer>
@@ -881,8 +871,7 @@
     })();
 
     (function(){
-      const londonEl = document.getElementById('clock-london-footer');
-      const dubaiEl = document.getElementById('clock-dubai-footer');
+      const cairoEl = document.getElementById('clock-cairo-footer');
 
       const formatTime = (timeZone) =>
         new Intl.DateTimeFormat('en-GB', {
@@ -893,13 +882,11 @@
           hour12: false
         });
 
-      const londonFmt = formatTime('Europe/London');
-      const dubaiFmt = formatTime('Asia/Dubai');
+      const cairoFmt = formatTime('Africa/Cairo');
 
       const tick = () => {
         const now = new Date();
-        if (londonEl) londonEl.textContent = londonFmt.format(now);
-        if (dubaiEl) dubaiEl.textContent = dubaiFmt.format(now);
+        if (cairoEl) cairoEl.textContent = cairoFmt.format(now);
       };
 
       tick();
