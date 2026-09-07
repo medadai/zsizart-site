@@ -1203,9 +1203,11 @@
   <script>
     const projects = [
       {
-        id: "The-Alder",
-        slug: "The-Alder",
-        title: "The-Alder",
+        id: "The-Alfred",
+        role: "Senior CG Artist — lighting, look development, technical modeling",
+        studio: "Produced at NAM Studio",
+        slug: "The-Alfred",
+        title: "The Alfred",
         services: "CGI / Film",
         client: "DANKAV",
         year: "2025",
@@ -1223,6 +1225,8 @@
       },
       {
         id: "hillside-serenity",
+        role: "Sole artist — modeling, lighting, look development, post",
+        studio: "Produced independently at ZSIZART",
         slug: "hillside-serenity",
         title: "Hillside Serenity",
         services: "CGI / Film",
@@ -1237,6 +1241,8 @@
       },
       {
         id: "Serene-Lines",
+        role: "Senior CG Artist — lighting, look development, technical modeling",
+        studio: "Produced at NAM Studio",
         slug: "Serene-Lines",
         title: "Serene Lines",
         services: "CGI / Film",
@@ -1255,6 +1261,8 @@
       },
       {
         id: "Macquarie-Park",
+        role: "Senior CG Artist — lighting, look development, technical modeling",
+        studio: "Produced at NAM Studio",
         slug: "Macquarie-Park",
         title: "Macquarie Park",
         services: "CGI / Film",
@@ -1274,6 +1282,8 @@
       },
       {
         id: "Quiet-Form",
+        role: "Interior CG Artist — lighting, materials, post",
+        studio: "Produced at Nara Studios",
         slug: "Quiet-Form",
         title: "Quiet Form",
         services: "CGI / Film",
@@ -1571,7 +1581,9 @@
         project.services ? `<div><p class="eyebrow">Services</p><p class="fact-value">${escapeHtml(project.services)}</p></div>` : '',
         project.client ? `<div><p class="eyebrow">Client</p><p class="fact-value">${escapeHtml(project.client)}</p></div>` : '',
         project.year ? `<div><p class="eyebrow">Year</p><p class="fact-value">${escapeHtml(project.year)}</p></div>` : '',
-        project.location ? `<div><p class="eyebrow">Location</p><p class="fact-value">${escapeHtml(project.location)}</p></div>` : ''
+        project.location ? `<div><p class="eyebrow">Location</p><p class="fact-value">${escapeHtml(project.location)}</p></div>` : '',
+        project.role ? `<div><p class="eyebrow">My role</p><p class="fact-value">${escapeHtml(project.role)}</p></div>` : '',
+        project.studio ? `<div><p class="eyebrow">Produced at</p><p class="fact-value">${escapeHtml(project.studio)}</p></div>` : ''
       ].filter(Boolean).join('');
 
       const galleryItems = (project.images && project.images.length)
