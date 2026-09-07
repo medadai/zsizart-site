@@ -1105,7 +1105,21 @@
       .detail-gallery{gap:20px}
       .more-section{margin-top:72px}
       .marquee-track{animation-duration:28s}
-      .nav a:nth-child(n+2){display:none}
+      .nav{
+          flex-wrap:nowrap;
+          overflow-x:auto;
+          scrollbar-width:none;
+          -webkit-overflow-scrolling:touch;
+        }
+        .nav::-webkit-scrollbar{display:none}
+        .nav-link{
+          flex:0 0 auto;
+          min-height:38px;
+          padding:0 11px;
+          font-size:10px;
+          letter-spacing:.05em;
+        }
+        .theme-switch{min-height:38px}
     }
 
     @media (max-width: 640px){
