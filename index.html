@@ -49,45 +49,7 @@
   }
   </script>
 
-  <script>
-(function () {
-  const COUNTRY_CACHE_KEY = 'zsizart-country';
-  const COUNTRY_CACHE_TIME_KEY = 'zsizart-country-time';
-  const CACHE_DURATION = 1000 * 60 * 10;
-
-  async function getVisitorCountry() {
-    const cachedCountry = localStorage.getItem(COUNTRY_CACHE_KEY);
-    const cachedTime = localStorage.getItem(COUNTRY_CACHE_TIME_KEY);
-
-    if (cachedCountry && cachedTime && (Date.now() - Number(cachedTime) < CACHE_DURATION)) {
-      return cachedCountry;
-    }
-
-    try {
-      const res = await fetch('https://ipwho.is/');
-      const data = await res.json();
-
-      if (data && data.success && data.country_code) {
-        const code = data.country_code.toUpperCase();
-        localStorage.setItem(COUNTRY_CACHE_KEY, code);
-        localStorage.setItem(COUNTRY_CACHE_TIME_KEY, String(Date.now()));
-        return code;
-      }
-    } catch (e) {}
-
-    return 'INTL';
-  }
-
-  document.addEventListener('DOMContentLoaded', async () => {
-    const country = await getVisitorCountry();
-
-    if (country === 'EG' || country === 'DE') {
-      document.body.innerHTML = '';
-      window.location.replace('/work/');
-    }
-  });
-})();
-</script>
+  
 
   <script>
     function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");
