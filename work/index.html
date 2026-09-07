@@ -1360,10 +1360,8 @@
 
     function getRoute(){
       const raw = (location.hash || '').replace(/^#/, '');
-      if (!raw || raw === '/' || raw === '') {
-        location.hash = '#/projects/grid';
-        return null;
-      }
+      // no hash -> the grid, without writing '#/projects/grid' into the URL
+      if (!raw || raw === '/') return '/projects/grid';
       return raw;
     }
 
@@ -1500,9 +1498,9 @@
               <div class="list-head">
                 <h1 class="list-title">Featured work</h1>
                 <div class="list-controls">
-                  <a class="list-viewall" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
+                  <a class="list-viewall" href="/work/"><span class="pill-dot"></span>View all projects</a>
                   <div class="subnav">
-                    <a href="#/projects/grid">Grid</a>
+                    <a href="/work/">Grid</a>
                     <span class="current">Lists</span>
                   </div>
                 </div>
@@ -1650,7 +1648,7 @@
             <section class="more-section">
               <div class="more-head">
                 <h2 class="more-title">More projects</h2>
-                <a class="pill-link" href="#/projects/grid"><span class="pill-dot"></span>View all projects</a>
+                <a class="pill-link" href="/work/"><span class="pill-dot"></span>View all projects</a>
               </div>
               <div class="marquee-wrap">
                 <div class="marquee-track">${trackItems}</div>
