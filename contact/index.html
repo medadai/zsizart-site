@@ -778,7 +778,7 @@
             </p>
 
           <div class="hero-actions">
-            <button type="button" class="hero-btn primary copy-email-btn" data-email="mahmoud@zsizart.com">Enquire</button>
+            <button type="button" class="hero-btn primary copy-email-btn" data-email="mahmoud@zsizart.com" data-mailto="mailto:mahmoud@zsizart.com?subject=Project%20enquiry">Enquire</button>
           </div>
         </div>
       </section>
@@ -798,7 +798,8 @@
                 <div class="contact-label">Contact</div>
                 <div class="contact-value">
                   <a href="mailto:mahmoud@zsizart.com">mahmoud@zsizart.com</a><br>
-                  <a href="https://wa.me/447575481249" target="_blank" rel="noopener noreferrer">+44 7575 481249</a>
+                  <a href="https://wa.me/447575481249" target="_blank" rel="noopener noreferrer">+44 7575 481249 — WhatsApp</a><br>
+                  <a href="tel:+201111429884">+20 111 142 9884 — Mobile</a>
                 </div>
               </div>
 
@@ -1039,15 +1040,25 @@
           button.textContent = 'Copied';
           button.classList.add('copied');
 
+          // Address is on the clipboard either way; also open the mail client
+          // for anyone who has one set up.
+          const mailto = button.dataset.mailto;
+          if (mailto) setTimeout(() => { window.location.href = mailto; }, 150);
+
           setTimeout(() => {
             button.textContent = originalText;
             button.classList.remove('copied');
           }, 1400);
         } catch {
-          button.textContent = 'Failed';
-          setTimeout(() => {
-            button.textContent = originalText;
-          }, 1400);
+          const mailto = button.dataset.mailto;
+          if (mailto) {
+            window.location.href = mailto;
+          } else {
+            button.textContent = 'Failed';
+            setTimeout(() => {
+              button.textContent = originalText;
+            }, 1400);
+          }
         }
       });
     });
