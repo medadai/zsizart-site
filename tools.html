@@ -51,6 +51,15 @@
   .actions { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
   .actions a { text-decoration:none; }
   footer { margin-top:40px; color:var(--dim); font-size:11px; line-height:1.7; }
+  .auth { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+  .auth img { width:26px; height:26px; border-radius:50%; }
+  .auth .who { font-size:12px; font-weight:600; }
+  .auth .left { font-size:11px; color:var(--muted); flex:1; }
+  .auth button { padding:8px 12px; font-size:11px; }
+  .hfbtn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; }
+  .tabs { position:absolute; top:10px; left:10px; z-index:2; display:flex; gap:6px; }
+  .tabs button { padding:6px 10px; font-size:10px; background:#0b0b0bcc; }
+  .tabs button.on { background:var(--ink); }
   .pill { font-size:10px; font-weight:900; border:1px solid var(--line); border-radius:999px; padding:3px 8px; color:var(--muted); }
 </style>
 </head>
@@ -63,11 +72,21 @@
 
   <h1>Photo to 3D furniture, sized for archviz.</h1>
   <p class="lead">Upload a furniture photo. <b>ZS-Model</b> recognises the piece, gives its real size, the right polygon
-    budget and its materials. Then <b>TRELLIS.2</b> builds a textured 3D model you can orbit and download (GLB).</p>
+    budget and its materials. <b>TRELLIS.2</b> builds the 3D model, then ZS-Model cleans it: <b>quad topology, real size in cm,
+    pivot on the floor</b>, ready for 3ds Max, Blender or Unreal.</p>
 
   <div class="grid">
     <!-- left: input -->
     <div class="card">
+      <div class="auth" id="auth">
+        <button class="hfbtn on" id="signin">🤗 SIGN IN WITH HUGGING FACE · FREE</button>
+        <span class="left" style="flex-basis:100%">Free account, 3 clean models a day. The 3D generation uses your own free Hugging Face GPU time.</span>
+      </div>
+      <div class="auth" id="me" hidden>
+        <img id="avatar" alt=""><span class="who" id="who"></span>
+        <span class="left" id="left"></span>
+        <button id="signout">SIGN OUT</button>
+      </div>
       <p class="label">1 · Photo</p>
       <div class="drop" id="drop" tabindex="0" role="button" aria-label="Upload a photo">
         <div id="dropText">Drop a photo here<br><small>or click to choose (JPG / PNG / WEBP)</small></div>
@@ -79,21 +98,26 @@
         <button data-v="hero">Hero</button><button data-v="mid" class="on">Mid</button><button data-v="bg">Far</button>
       </div>
 
-      <button class="primary" id="go" disabled>GENERATE 3D</button>
+      <button class="primary" id="go" disabled>SIGN IN TO GENERATE</button>
       <div class="bar"><i id="barFill"></i></div>
-      <div class="status" id="status">Free tool · about 2–4 minutes per model.</div>
+      <div class="status" id="status">Free tool · about 3–5 minutes per model.</div>
     </div>
 
     <!-- right: result -->
     <div class="card">
       <p class="label">3 · Result</p>
       <div class="viewer">
+        <div class="tabs" id="tabs" hidden>
+          <button data-v="clean" class="on">CLEAN QUADS</button><button data-v="raw">TEXTURED (RAW)</button>
+        </div>
         <model-viewer id="mv" camera-controls auto-rotate shadow-intensity="1" exposure="1" environment-image="neutral" hidden></model-viewer>
         <div class="empty" id="empty">Your 3D model will appear here.</div>
       </div>
       <div class="zs" id="zs" hidden></div>
       <div class="actions" id="actions" hidden>
-        <a id="dl" download="zsizart-model.glb"><button class="on">DOWNLOAD GLB</button></a>
+        <a id="dlObj" download="zsizart-model-quads.obj" hidden><button class="on">DOWNLOAD CLEAN OBJ (QUADS, CM)</button></a>
+        <a id="dlClean" download="zsizart-model-clean.glb" hidden><button>CLEAN GLB</button></a>
+        <a id="dl" download="zsizart-model-textured.glb"><button>TEXTURED GLB (RAW)</button></a>
         <a href="/"><button>3DS MAX PLUGIN · CONTACT ZSIZART</button></a>
       </div>
     </div>
@@ -102,7 +126,7 @@
   <footer>
     <span class="pill">ZS-Model powered by ZSIZART</span>
     3D generation: <a href="https://huggingface.co/spaces/microsoft/TRELLIS.2" target="_blank" rel="noopener">TRELLIS.2 by Microsoft</a> (MIT license),
-    runs on Hugging Face free GPUs (a daily free quota per visitor).
+    runs on Hugging Face free GPUs (a daily free quota per visitor). Sign-in is handled by Hugging Face; ZSIZART never sees your password.
     Photos are processed only to make your model and are not stored by ZSIZART.
   </footer>
 </div>
@@ -132,23 +156,74 @@
 
 <script type="module">
 import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client@1/dist/index.min.js";
+import { oauthLoginUrl, oauthHandleRedirectIfPresent } from "https://cdn.jsdelivr.net/npm/@huggingface/hub@2/+esm";
 
 const WORKER = "https://zsizart-tools.arc-mahmoud-refaey.workers.dev";   // ZS-Model (private, via Cloudflare)
 const TRELLIS = "microsoft/TRELLIS.2";                                     // public Hugging Face Space
+const HF_CLIENT_ID = "fd56b236-0d01-41a3-b8c2-a3bd3fba691b";                          // Hugging Face OAuth app (public id, not a secret)
+const HF_SCOPES = "openid profile inference-api";
 const $ = (id) => document.getElementById(id);
-let file = null, level = "mid", busy = false;
+let file = null, level = "mid", busy = false, oauth = null, rawUrl = null, cleanUrl = null;
 
 // ---------- UI helpers
 function status(msg, err = false) { $("status").textContent = msg; $("status").className = "status" + (err ? " err" : ""); }
 function bar(p) { $("barFill").style.width = p + "%"; }
+function refreshGo() {
+  $("go").disabled = busy || !file || !oauth;
+  $("go").textContent = oauth ? "GENERATE 3D" : "SIGN IN TO GENERATE";
+}
 
+// ---------- Hugging Face sign-in (free account; the visitor's own GPU quota)
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem("zs_oauth") || "null"); } catch (e) { return null; } },
+  set(v) { try { v ? localStorage.setItem("zs_oauth", JSON.stringify(v)) : localStorage.removeItem("zs_oauth"); } catch (e) {} },
+};
+async function initAuth() {
+  try {
+    const r = await oauthHandleRedirectIfPresent();
+    if (r) {
+      oauth = { token: r.accessToken, exp: +new Date(r.accessTokenExpiresAt),
+                name: r.userInfo.preferred_username || r.userInfo.name, avatar: r.userInfo.picture || r.userInfo.avatarUrl || "" };
+      store.set(oauth);
+      history.replaceState(null, "", location.pathname);        // clean the ?code=... from the address bar
+    }
+  } catch (e) { console.warn(e); status("Sign-in did not finish, please try again.", true); }
+  if (!oauth) oauth = store.get();
+  if (oauth && oauth.exp && oauth.exp < Date.now() + 60000) { oauth = null; store.set(null); }   // expired
+  showAuth();
+}
+function showAuth() {
+  $("auth").hidden = !!oauth; $("me").hidden = !oauth;
+  if (oauth) {
+    $("who").textContent = oauth.name;
+    if (oauth.avatar) $("avatar").src = oauth.avatar; else $("avatar").hidden = true;
+    quota();
+  }
+  refreshGo();
+}
+async function quota() {
+  try {
+    const r = await fetch(WORKER + "/api/quota", { headers: { "X-HF-Token": oauth.token } });
+    const j = await r.json();
+    if (r.status === 401) { oauth = null; store.set(null); return showAuth(); }
+    $("left").textContent = `${j.left} of ${j.limit} free models left today`;
+    return j;
+  } catch (e) { return null; }
+}
+$("signin").onclick = async () => {
+  if (HF_CLIENT_ID.startsWith("PASTE")) return status("Sign-in is being set up, come back soon.", true);
+  location.href = await oauthLoginUrl({ clientId: HF_CLIENT_ID, scopes: HF_SCOPES, redirectUrl: location.origin + location.pathname });
+};
+$("signout").onclick = () => { oauth = null; store.set(null); showAuth(); };
+
+// ---------- photo input
 function pick(f) {
   if (!f || !f.type.startsWith("image/")) return status("Please choose an image file.", true);
   file = f;
   const img = new Image(); img.src = URL.createObjectURL(f); img.alt = "Your photo";
   $("drop").replaceChildren(img);
-  $("go").disabled = false;
-  status("Ready. Press GENERATE 3D.");
+  refreshGo();
+  status(oauth ? "Ready. Press GENERATE 3D." : "Sign in with Hugging Face (free) to generate.");
 }
 $("drop").onclick = () => $("file").click();
 $("drop").onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") $("file").click(); };
@@ -160,6 +235,11 @@ $("level").onclick = (e) => {
   if (!e.target.dataset.v) return;
   level = e.target.dataset.v;
   [...$("level").children].forEach(b => b.classList.toggle("on", b === e.target));
+};
+$("tabs").onclick = (e) => {
+  const v = e.target.dataset.v; if (!v) return;
+  [...$("tabs").children].forEach(b => b.classList.toggle("on", b === e.target));
+  $("mv").src = v === "clean" ? cleanUrl : rawUrl;
 };
 
 // shrink big photos before sending (faster, same result)
@@ -186,15 +266,17 @@ async function zsModel(blob) {
   throw new Error("ZS-Model is still waking up, try again in a minute.");
 }
 
-function showZS(z) {
+function showZS(z, clean) {
   const cm = (v) => v ? Math.round(v) + " cm" : "–";
   const sw = (z.material_colors || []).map(c => `<span class="sw" style="background:rgb(${c.join(",")})"></span>`).join("");
   const name = z.category.replace("_", " ");
+  const size = clean ? clean.size_cm.map(Math.round).join(" × ") + " cm" : null;
   $("zs").innerHTML = `
     <div class="stat"><small>Type</small><b>${name}</b><span style="color:var(--muted);font-size:11px">${Math.round(z.confidence*100)}% sure</span></div>
     <div class="stat"><small>Height</small><b>${cm(z.height_cm)}</b></div>
-    <div class="stat"><small>Width (approx.)</small><b>${cm(z.width_cm_hint)}</b></div>
-    <div class="stat"><small>Polygon budget</small><b>${(z.faces/1000).toFixed(0)}k</b><span style="color:var(--muted);font-size:11px">${level === "bg" ? "far" : level}</span></div>
+    ${size ? `<div class="stat"><small>Model size (W × H × D)</small><b style="font-size:15px">${size}</b></div>`
+           : `<div class="stat"><small>Width (approx.)</small><b>${cm(z.width_cm_hint)}</b></div>`}
+    <div class="stat"><small>${clean ? "Clean quads" : "Polygon budget"}</small><b>${((clean ? clean.polys : z.faces)/1000).toFixed(1)}k</b><span style="color:var(--muted);font-size:11px">${level === "bg" ? "far" : level}</span></div>
     <div class="stat"><small>Materials</small><b>${sw || ""}${z.materials}</b></div>
     <div class="stat"><small>Edges</small><b>${z.soft ? "soft" : "hard"}</b><span style="color:var(--muted);font-size:11px">${z.turbosmooth ? "TurboSmooth on render" : "no smoothing"}</span></div>`;
   $("zs").hidden = false;
@@ -203,49 +285,93 @@ function showZS(z) {
 // ---------- TRELLIS.2 (runs on the visitor's own free Hugging Face quota)
 let step = "";
 async function trellis(f, z) {
-  step = "connect to TRELLIS.2"; status("Connecting to TRELLIS.2…"); bar(35);
-  const app = await Client.connect(TRELLIS);
-  status("Removing the background…"); bar(40);
+  step = "connect to TRELLIS.2"; status("Connecting to TRELLIS.2…"); bar(25);
+  const app = await Client.connect(TRELLIS, { hf_token: oauth.token });
+  status("Removing the background…"); bar(30);
   let img;
   try { img = (await app.predict("/preprocess_image", [f])).data[0]; }
   catch (e) { img = f; }                                   // fallback: send the photo as it is
   step = "build the 3D model";
-  status("Building the 3D shape and texture… (1–3 min, queue included)"); bar(50);
+  status("Building the 3D shape and texture… (1–3 min, queue included)"); bar(40);
   const seed = Math.floor(Math.random() * 2147483647);
   await app.predict("/image_to_3d", [img, seed, "1024",
     7.5, 0.7, 12, 5.0,       // stage 1: structure
     7.5, 0.5, 12, 3.0,       // stage 2: shape
     1.0, 0.0, 12, 3.0]);     // stage 3: material
-  step = "export the GLB"; status("Exporting the GLB…"); bar(85);
-  const target = Math.max(100000, Math.min(500000, (z?.faces || 15000) * 10));   // clean retopo happens later in Max
+  step = "export the GLB"; status("Exporting the GLB…"); bar(70);
+  const target = Math.max(100000, Math.min(500000, (z?.faces || 15000) * 10));   // dense: the cleanup re-builds it
   const out = await app.predict("/extract_glb", [target, 2048]);
   const glb = out.data[0];
   return glb.url || glb;
 }
 
+// ---------- ZS-Model cleanup (quad retopology + real size, on ZSIZART's server)
+function b64url(b64, type) {
+  const bin = atob(b64), u = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+  return URL.createObjectURL(new Blob([u], { type }));
+}
+async function cleanModel(glbUrl, z) {
+  step = "clean the model"; status("ZS-Model is cleaning it: quad topology + real size…"); bar(80);
+  for (let i = 0; i < 3; i++) {
+    const r = await fetch(WORKER + "/api/clean", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-HF-Token": oauth.token },
+      body: JSON.stringify({ glb_url: glbUrl, faces: z?.faces || 15000, height_cm: z?.height_cm || 0, crease: z?.crease || 30 }),
+    });
+    if (r.status === 503) { status("ZS-Model is waking up… (up to a minute)"); await new Promise(res => setTimeout(res, 20000)); continue; }
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw Object.assign(new Error(j.error || "cleanup failed"), { code: r.status });
+    return j;
+  }
+  throw new Error("ZS-Model is still waking up");
+}
+
 $("go").onclick = async () => {
-  if (!file || busy) return;
-  busy = true; $("go").disabled = true; $("actions").hidden = true; bar(5);
+  if (!file || busy || !oauth) return;
+  busy = true; refreshGo(); $("actions").hidden = true; $("tabs").hidden = true; bar(5);
   try {
+    const q = await quota();
+    if (q && q.left <= 0) throw Object.assign(new Error("limit"), { code: 429 });
     status("ZS-Model is reading your photo…"); bar(10);
     const small = await shrink(file);
     let z = null;
     try { z = await zsModel(small); showZS(z); } catch (e) { status(e.message + " (continuing with the 3D model)", true); }
-    bar(30);
-    const url = await trellis(small, z);
-    $("mv").src = url; $("mv").hidden = false; $("empty").hidden = true;
-    $("dl").href = url;
-    $("actions").hidden = false;
-    bar(100); status("Done. Orbit the model, then download the GLB.");
+    rawUrl = await trellis(small, z);
+    $("dl").href = rawUrl;
+    let c = null;
+    try { c = await cleanModel(rawUrl, z); }
+    catch (e) {
+      if (e.code === 429) throw e;
+      console.warn(e);
+    }
+    $("mv").hidden = false; $("empty").hidden = true; $("actions").hidden = false;
+    if (c) {
+      cleanUrl = b64url(c.glb_b64, "model/gltf-binary");
+      $("dlObj").href = b64url(c.obj_b64, "text/plain"); $("dlClean").href = cleanUrl;
+      $("dlObj").hidden = $("dlClean").hidden = false; $("tabs").hidden = false;
+      [...$("tabs").children].forEach(b => b.classList.toggle("on", b.dataset.v === "clean"));
+      $("mv").src = cleanUrl;
+      if (z) showZS(z, c);
+      bar(100); status("Done. Clean quad model at real size (cm). Download the OBJ for 3ds Max / Blender.");
+    } else {
+      $("dlObj").hidden = $("dlClean").hidden = true;
+      $("mv").src = rawUrl;
+      bar(100); status("The 3D model is ready, but the cleanup failed this time. You can still download the textured GLB.", true);
+    }
+    quota();
   } catch (e) {
     console.error(e);
     const m = String(e && (e.message || e));
-    if (/quota|GPU|exceeded/i.test(m)) status("Today's free GPU time on Hugging Face is used up. Log in to huggingface.co in this browser for more, or try again later.", true);
-    else if (/fetch|network/i.test(m)) status("Could not " + (step || "reach the server") + ". If you use Brave, turn Shields off for this page (lion icon), or try Chrome / Edge. The TRELLIS.2 Space may also be busy: try again in a few minutes.", true);
+    if (e && e.code === 429) status("You used your 3 free models for today. Come back tomorrow!", true);
+    else if (/quota|GPU|exceeded/i.test(m)) status("Your free Hugging Face GPU time for today is used up. Try again later, or get more with Hugging Face PRO.", true);
+    else if (/fetch|network/i.test(m)) status("Could not " + (step || "reach the server") + ". If you use Brave, turn Shields off for this page (lion icon), or try Chrome / Edge. TRELLIS.2 may also be busy: try again in a few minutes.", true);
     else status("Could not " + (step || "finish") + ": " + m.slice(0, 160), true);
     bar(0);
-  } finally { busy = false; $("go").disabled = !file; }
+  } finally { busy = false; refreshGo(); }
 };
+
+initAuth();
 </script>
 </body>
 </html>
