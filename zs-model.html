@@ -159,7 +159,7 @@ import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client@1/dist/index
    - 2 free models per visitor. The Worker counts them (by IP); if the Worker has no demo
      counter yet, the page falls back to a counter in this browser. */
 const WORKER = "https://zsizart-tools.arc-mahmoud-refaey.workers.dev";   // ZS-Model analyze + cleanup (Cloudflare)
-const ENGINES = ["tencent/Hunyuan3D-2.1", "tencent/Hunyuan3D-2"];        // first one that works is used
+const ENGINES = ["tencent/Hunyuan3D-2", "tencent/Hunyuan3D-2.1"];        // first one that works is used (2.1 sometimes adds a floor plate)
 const FREE = 2;                                                          // free models per visitor
 
 const $ = (id) => document.getElementById(id);
